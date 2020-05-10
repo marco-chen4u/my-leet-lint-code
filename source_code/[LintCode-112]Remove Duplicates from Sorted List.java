@@ -35,29 +35,31 @@ public class Solution {
      */
     public ListNode deleteDuplicates(ListNode head) {
         // check corner case
-		if (head == null || head.next == null) {
-			return head;
-		}
-		
-		ListNode dummy = new ListNode(0);
-		dummy.next = head;
-		ListNode current = head;
-		ListNode pre = dummy;
-		
-		while (current != null && current.next != null) {
-			if (current.val == current.next.val) {
-				int duplicate = current.val;
-				while (current != null && current.next != null 
-						&& current.next.val == duplicate) {
-					pre.next = current.next;
-					current = current.next;
-				}
-			}
-			
-			pre = pre.next;
-			current = current.next;
-		}
-		
-		return dummy.next;
+	if (head == null || head.next == null) {
+            return head;
+	}
+
+	ListNode dummy = new ListNode(0);
+	dummy.next = head;
+	ListNode current = head;
+	ListNode pre = dummy;
+
+	while (current != null && current.next != null) {
+
+            if (current.val == current.next.val) {
+                int duplicate = current.val;
+                while (current != null && 
+	               current.next != null && 
+	               current.next.val == duplicate) {
+                    pre.next = current.next;
+                    current = current.next;
+                }// end of while
+            }// end of if
+
+            pre = pre.next;
+            current = current.next;
+	}// end of while
+
+	return dummy.next;
     }
 }
