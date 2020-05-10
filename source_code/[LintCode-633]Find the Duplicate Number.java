@@ -32,9 +32,9 @@ public class Solution {
      * @return: the duplicate one
      */
     public int findDuplicate(int[] nums) {
-	// check corner case
-	if (nums == null || nums.length == 0) {
-		return 0;
+        // check corner case    
+        if (nums == null || nums.length == 0) {
+	    return 0;
 	}
 
 	int size = nums.length;
@@ -44,34 +44,34 @@ public class Solution {
 	int end = n;
 
 	while (start + 1 < end) {
-		int mid = start + (end - start) / 2;
+            int mid = start + (end - start) / 2;
 
-		if (getCount(nums, mid) > mid) {
-			end = mid;
-		}
-		else {
-			start = mid;
-		}//enf if
+            if (getCount(nums, mid) > mid) {
+                end = mid;
+	    }
+            else {
+                start = mid;
+	    }//enf if
 	}// end while
 
 	if (getCount(nums, start) > start) {
-		return start;
+            return start;
 	}
 	else {
-		return end;
+            return end;
 	}// end if
     }
-	
-	/***
-	* get the count of item that is <= target
-	**/
-	private int getCount(int[] nums, int target) {
-		int count = 0;
 
-		for (int num : nums) {
-			count += (num <= target) ? 1 : 0;
-		}// end for
+    /***
+    * get the count of item that is <= target
+    **/
+    private int getCount(int[] nums, int target) {
+        int count = 0;
 
-		return count;
-	}
+        for (int num : nums) {
+            count += (num <= target) ? 1 : 0;
+	}// end for
+        
+        return count;
+    }
 }
