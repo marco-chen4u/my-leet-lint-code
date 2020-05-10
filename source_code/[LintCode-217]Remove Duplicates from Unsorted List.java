@@ -33,30 +33,30 @@ public class Solution {
      */
     public ListNode removeDuplicates(ListNode head) {
         // check corner case
-		if (head == null) {
-			return head;
-		}
-		
-		Set<Integer> set = new HashSet<Integer>();
-		ListNode dummy = new ListNode(0);
-		dummy.next = head;
-		ListNode pre = dummy;
-		ListNode current = head;
-		
-		while (current != null) {
-			int value = current.val;
-			
-			if (set.contains(value)) {
-				pre.next = current.next;
-				current = current.next;
-				continue;
-			}			
-			
-			set.add(value);
-			pre = pre.next;
-			current = current.next;			
-		}
-		
-		return dummy.next;
+	if (head == null) {
+            return head;
+	}
+
+	Set<Integer> set = new HashSet<Integer>();
+	ListNode dummy = new ListNode(0);
+	dummy.next = head;
+	ListNode pre = dummy;
+	ListNode current = head;
+
+	while (current != null) {
+	    int value = current.val;
+
+	    if (set.contains(value)) {
+                pre.next = current.next;
+                current = current.next;
+                continue;
+	    }
+
+	    set.add(value);
+	    pre = pre.next;
+	    current = current.next;
+	}
+
+	return dummy.next;
     }
 }
