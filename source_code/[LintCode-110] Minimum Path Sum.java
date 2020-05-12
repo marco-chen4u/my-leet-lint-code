@@ -22,50 +22,52 @@ Example
 Notice
 	You can only go right or down in the path.
 ***/
+//version-1
 public class Solution {
     /**
      * @param grid: a list of lists of integers
      * @return: An integer, minimizes the sum of all numbers along its path
      */
     public int minPathSum(int[][] grid) {
-		// check corner case
-		if (grid == null || grid.length == 0 || 
-			grid[0] == null || grid[0].length == 0) {
-			return 0;
-		}
+        // check corner case
+        if (grid == null || grid.length == 0 || 
+		grid[0] == null || grid[0].length == 0) {
+		return 0;
+        }
 			
-		int n = grid.length;
-		int m = grid[0].length;
-		int[][] dp = new int[n][m];
-		for (int[] row : dp) {
-			Arrays.fill(row, Integer.MAX_VALUE);
-		}
+        int n = grid.length;
+        int m = grid[0].length;
+        int[][] dp = new int[n][m];
+        for (int[] row : dp) {
+            Arrays.fill(row, Integer.MAX_VALUE);
+        }
 		
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (i == 0 && j == 0) {
-					dp[i][j] = grid[i][j];
-					continue;
-				}
-				
-				if (i == 0) {
-					dp[i][j] = dp[i][j - 1] + grid[i][j];
-					continue;
-				}
-				
-				if (j == 0) {
-					dp[i][j] = dp[i - 1][j] + grid[i][j];
-					continue;
-				}
-				
-				dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
-			}
-		}
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = grid[i][j];
+                    continue;
+                }
+
+                if (i == 0) {
+                    dp[i][j] = dp[i][j - 1] + grid[i][j];
+                    continue;
+                }
+
+                if (j == 0) {
+                    dp[i][j] = dp[i - 1][j] + grid[i][j];
+                    continue;
+                }
+
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+	    }// for j
+        }// for i
 		
-		return dp[n - 1][m - 1];
-	}
+        return dp[n - 1][m - 1];
+    }
 }
 
+//version-2
 public class Solution {
     /**
      * @param grid: a list of lists of integers
@@ -104,5 +106,36 @@ public class Solution {
         }
         
         return dp[(n - 1) % 2][m - 1];
+    }
+}
+
+//version-3
+class Solution {
+    public int minPathSum(int[][] grid) {
+        // check corner case
+        if (grid == null || grid.length == 0) {
+            return 0;
+        }
+        
+        // normal case
+        int n = grid.length;// row size
+        int m = grid[0].length;// column size
+        
+        // initialize
+        for (int j = 1; j < m; j++) { // 1st row
+            grid[0][j] += grid[0][j - 1];
+        }
+        
+        for (int i = 1; i < n; i++) {// 1st column
+            grid[i][0] += grid[i - 1][0];
+        }
+        
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+            }
+        }
+        
+        return grid[n - 1][m - 1];
     }
 }
