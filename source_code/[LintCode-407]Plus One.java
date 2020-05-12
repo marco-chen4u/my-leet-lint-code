@@ -85,3 +85,37 @@ public class Solution {
         return result;
     }
 }
+
+//version-3
+class Solution {
+    public int[] plusOne(int[] digits) {
+        // check corner case
+        if (digits == null || digits.length == 0) {
+            return new int[1];
+        }
+        
+        int size = digits.length;
+        int carry = 1;//initialize
+        
+        for (int currentPos = size - 1; carry > 0 && currentPos >= 0; currentPos--) {
+            int sum = digits[currentPos] + carry;
+            digits[currentPos] = sum % 10;
+            carry = sum / 10;
+        }
+        
+        if (carry == 0) {
+            return digits;
+        }
+        
+        // having carray outside of the highest digit value in digits
+        int values[] = new int[size + 1];
+        values[0] = carry;
+        int index = 1;
+        for (int digit : digits) {
+            values[index++] = digit;
+        }
+        
+        return values;
+        
+    }
+}
