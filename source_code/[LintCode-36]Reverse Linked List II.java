@@ -101,6 +101,56 @@ class Solution {
         // normal case
         ListNode dummy = new ListNode(0);
         dummy.next = head;
+        
+        ListNode current = head;
+        ListNode start = dummy;
+        ListNode end = null;
+        
+        for (int i = 1; i < m; i++) {
+            start = current;
+            current = current.next;
+        }
+        
+        end = current;//after reverse m-n;
+        
+        // reversiing m-n nodes
+        ListNode pre = null;
+        for (int i = m; i <= n; i++) {
+            ListNode next = current.next;
+            current.next = pre;
+            pre = current;
+            
+            current = next;
+        }
+        
+        end.next = current;
+        start.next = pre;
+        
+        return dummy.next;
+    }
+}
+
+//version-3
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        // check corner case
+        if (head == null || head.next == null || m == n) {
+            return head;
+        }
+        
+        // normal case
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
         ListNode preM = dummy;
         ListNode mNode = head;
         ListNode nNode = head;
