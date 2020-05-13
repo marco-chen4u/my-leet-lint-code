@@ -113,7 +113,7 @@ class Solution {
         
         end = current;//after reverse m-n;
         
-        // reversiing m-n nodes
+        // reversing m-n nodes
         ListNode pre = null;
         for (int i = m; i <= n; i++) {
             ListNode next = current.next;
