@@ -6,8 +6,8 @@ find a path from top left to bottom right which minimizes the sum of all numbers
 Example
 	Example 1:
 		Input:  [[1,3,1],
-				 [1,5,1],
-				 [4,2,1]]
+                         [1,5,1],
+			 [4,2,1]]
 		Output: 7	
 		Explanation:
 		Path is: 1 -> 3 -> 1 -> 1 -> 1
