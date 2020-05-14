@@ -96,3 +96,61 @@ public class Solution {
         return false;
     }
 }
+
+//version-2: two-demension position in matrix transfer to one-demension position
+class Solution {
+    
+    // fields
+    private int rowCount; //matrix's row size
+    private int columnCount;// matrix's column size
+    
+    public boolean searchMatrix(int[][] matrix, int target) {
+        boolean result = false;
+        // check corner case
+        if (matrix == null || matrix.length == 0) {
+            return result;
+        }
+        
+        if (matrix[0] == null || matrix[0].length == 0) {
+            return result;
+        }
+        
+        rowCount = matrix.length; // row size
+        columnCount = matrix[0].length; // column size
+        
+        int start = 0;
+        int end = rowCount * columnCount - 1; // last postition of the array
+        
+        // binary search
+        while (start + 1< end) {
+            int mid = start + (end - start) / 2;
+            int value = getValue(matrix, mid);
+            
+            if (value > target) {
+                end = mid;
+            }
+            else {
+                start = mid;
+            }
+        }
+        
+        if (getValue(matrix, start) == target) {
+            result = true;
+        }
+        
+        if (getValue(matrix, end) == target) {
+            result = true;
+        }
+        
+        return result;
+    }
+    
+    // helper method
+    private int getValue(int[][] matrix, int currentOneDemensionPos) {
+        
+        int rowPos = currentOneDemensionPos / columnCount;// row location
+        int colPos = currentOneDemensionPos % columnCount;// column location
+        
+        return matrix[rowPos][colPos];
+    }
+}
