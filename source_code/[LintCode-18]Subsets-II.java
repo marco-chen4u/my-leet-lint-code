@@ -34,48 +34,48 @@ Notice
 ***/
 public class Solution {
 	
-	// helper method
-	private void findSubsetsWithDup(List<List<Integer>> result, 
-										List<Integer> subset, 
-										int[] nums, 
-										int startIndex) {
-		result.add(new ArrayList<Integer>(subset));// deep copy
-		
-		for (int i = startIndex; i < nums.length; i++) {
+    // helper method
+    private void findSubsetsWithDup(List<List<Integer>> result, 
+					List<Integer> subset, 
+					int[] nums, 
+					int startIndex) {
+        result.add(new ArrayList<Integer>(subset));// deep copy
+	
+        for (int i = startIndex; i < nums.length; i++) {
 			
-			if (i > startIndex && nums[i] == nums[i - 1]) {
-				continue;
-			}
-			
-			subset.add(nums[i]);
-			findSubsetsWithDup(result, subset, nums, i + 1);
-			subset.remove(subset.size() - 1);
-		}
-	}
+            if (i > startIndex && nums[i] == nums[i - 1]) {
+                continue;
+            } //end of if
+	
+            subset.add(nums[i]);
+            findSubsetsWithDup(result, subset, nums, i + 1);
+            subset.remove(subset.size() - 1);
+        }//end for i
+    }
 	
     /**
      * @param nums: A set of numbers
      * @return: A list of lists
      */
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
-		List<Integer> subset = new ArrayList<Integer>();
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> subset = new ArrayList<Integer>();
+	
+        // check corner case-1
+        if (nums == null) {
+            return result;
+        }
+
+        // check corner case-2
+        if (nums.length == 0) {
+            result.add(subset);
+            return result;
+        }
+	
+        Arrays.sort(nums);
 		
-		// check corner case-1
-		if (nums == null) {
-			return result;
-		}
-		
-		// check corner case-2
-		if (nums.length == 0) {
-			result.add(subset);
-			return result;
-		}
-		
-		Arrays.sort(nums);
-		
-		findSubsetsWithDup(result, subset, nums, 0);
-		
-		return result;
+        findSubsetsWithDup(result, subset, nums, 0);
+	
+        return result;
     }
 }
