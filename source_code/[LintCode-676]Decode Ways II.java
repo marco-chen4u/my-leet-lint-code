@@ -66,9 +66,11 @@ public class Solution {
 	    case '0' :
 	        count = 0;
 	        break;
+
 	    case '*' :
 	        count = 9;
 	        break;
+
 	    default : 
 	        count = 1;
 	        break;
@@ -106,6 +108,7 @@ public class Solution {
 
 	        count = 0;
 	        break;
+
 	    case '*' : //ch2 = '*'
 	        if (ch1 >= '0' && ch1 <= '6') {
 		    count = 2;
@@ -118,7 +121,8 @@ public class Solution {
 	        }
 
 	        count = 15;
-	        break;	
+	        break;
+
 	    default : // ch2 ='3' - '9'
 	        count = 0;
 	        break;
