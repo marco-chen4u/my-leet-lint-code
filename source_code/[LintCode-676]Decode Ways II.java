@@ -81,6 +81,7 @@ public class Solution {
 	
     private int getCount2(char ch2, char ch1) {
         int count = 0;
+
         switch (ch2) {
 	    case '0' :
 	        count = 0;
@@ -126,7 +127,7 @@ public class Solution {
 	    default : // ch2 ='3' - '9'
 	        count = 0;
 	        break;
-            }
+        }
 		
         return count;
     }
