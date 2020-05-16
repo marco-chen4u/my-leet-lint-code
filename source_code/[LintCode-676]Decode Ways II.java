@@ -26,8 +26,8 @@ Notice
 	2.The input string will only contain the character * and digits 0 - 9.
 ***/
 public class Solution {
-	// fields
-	private final long MOD_VALUE = 1000000007;
+    // fields
+    private final long MOD_VALUE = 1000000007;
 	
     /**
      * @param s: a message being encoded
@@ -59,70 +59,71 @@ public class Solution {
         return (int)dp[n];
     }
 	
-	// helper method
-	private int getCount1(char ch) {
-		int count = 0;
-		switch (ch) {
-			case '0' :
-				count = 0;
-				break;
-			case '*' :
-				count = 9;
-				break;
-			default : 
-				count = 1;
-				break;
-		}
-		
-		return count;
+    // helper method
+    private int getCount1(char ch) {
+	int count = 0;
+	switch (ch) {
+	    case '0' :
+	        count = 0;
+	        break;
+	    case '*' :
+	        count = 9;
+	        break;
+	    default : 
+	        count = 1;
+	        break;
 	}
+
+	return count;
+    }
 	
-	private int getCount2(char ch2, char ch1) {
-		int count = 0;
-		switch (ch2) {
-			case '0' :
-				count = 0;
-				break;
-				
-			case '1' : // ch2 = '1'
-				if (ch1 == '*') {
-					count = 9;// ch1 = '11' - '19'
-					break;
-				}
-				
-				count = 1;
-				break;
-			case '2' : // ch2 = '2'
-				if (ch1 == '*') {
-					count = 6; // '20' - '26'
-					break;
-				}
-				
-				if (ch1 >= '0' && ch1 <= '6') {
-					count = 1;
-					break;
-				}
-				
-				count = 0;
-				break;
-			case '*' : //ch2 = '*'
-				if (ch1 >= '0' && ch1 <= '6') {
-					count = 2;
-					break;
-				}
-				
-				if (ch1 >= '7' && ch1 <= '9') {
-					count = 1;
-					break;
-				}
-				
-				count = 15;
-				break;	
-			default : // ch2 ='3' - '9'
-				count = 0;
-				break;
-		}
+    private int getCount2(char ch2, char ch1) {
+        int count = 0;
+        switch (ch2) {
+	    case '0' :
+	        count = 0;
+	        break;
+
+	    case '1' : // ch2 = '1'
+	        if (ch1 == '*') {
+		    count = 9;// ch1 = '11' - '19'
+		    break;
+	        }
+
+	        count = 1;
+	        break;
+			
+	    case '2' : // ch2 = '2'
+	        if (ch1 == '*') {
+		    count = 6; // '20' - '26'
+		    break;
+	        }
+
+	        if (ch1 >= '0' && ch1 <= '6') {
+		    count = 1;
+		    break;
+	        }
+
+	        count = 0;
+	        break;
+	    case '*' : //ch2 = '*'
+	        if (ch1 >= '0' && ch1 <= '6') {
+		    count = 2;
+		    break;
+	        }
+
+	        if (ch1 >= '7' && ch1 <= '9') {
+		    count = 1;
+		    break;
+	        }
+
+	        count = 15;
+	        break;	
+	    default : // ch2 ='3' - '9'
+	        count = 0;
+	        break;
+            }
 		
-		return count;
-	}
+        return count;
+    }
 }
