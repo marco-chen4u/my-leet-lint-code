@@ -33,18 +33,25 @@ public class Solution {
      * @return: A list of root
      */
     public List<TreeNode> generateTrees(int n) {
+	// check corner case
+	if (n == 0) {
+	    return new ArrayList<TreeNode>();
+	}
+
         return helper(1, n);
     }
     
     // helper method
     private List<TreeNode> helper(int start, int end) {
         List<TreeNode> result = new ArrayList<TreeNode>();
+
         // check corner case
         if (start > end) {
             result.add(null);
             return result;
         }
         
+	// normal case
         for (int i = start; i <= end; i++) {
             List<TreeNode> left = helper(start, i - 1);
             List<TreeNode> right = helper(i + 1, end);
@@ -58,7 +65,7 @@ public class Solution {
                     result.add(currentNode);
                 }
             }
-        }
+        }// for i
         
         return result;
     }
