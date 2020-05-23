@@ -35,57 +35,57 @@ Example
  * }
  */
 public class Solution {
-	// inner class
-	class ResultType {
-		// fields
-		boolean isBst;
-		TreeNode maxNode;
-		TreeNode minNode;
-		// constructors
-		public ResultType(boolean isBst) {
-			this.isBst = isBst;
-			this.maxNode = null;
-			this.minNode = null;
-		}
-		
-		public ResultType(boolean isBst, TreeNode max, TreeNode min) {
-			this.isBst = isBst;
-			this.maxNode = max;
-			this.minNode = min;
-		}
-	}
+    // inner class
+    class ResultType {
+        // fields
+        boolean isBst;
+        TreeNode maxNode;
+        TreeNode minNode;
+        // constructors
+        public ResultType(boolean isBst) {
+            this.isBst = isBst;
+            this.maxNode = null;
+            this.minNode = null;
+        }
+
+        public ResultType(boolean isBst, TreeNode max, TreeNode min) {
+            this.isBst = isBst;
+            this.maxNode = max;
+            this.minNode = min;
+        }
+    }
 	
-	// helper method
-	private ResultType helper(TreeNode node) {
-		if (node == null) {
-			return new ResultType(true);
-		}
-		
-		ResultType leftResult = helper(node.left);
-		ResultType rightResult = helper(node.right);
-		
-		if (!leftResult.isBst || !rightResult.isBst) {
-			return new ResultType(false);
-		}
-		
-		if ((leftResult.maxNode != null && leftResult.maxNode.val >= node.val) ||
-				(rightResult.minNode != null && rightResult.minNode.val <= node.val)) {
-			return new ResultType(false);
-		}
-		
-		return new ResultType(true, (rightResult.maxNode != null) ? rightResult.maxNode : node, 
-									(leftResult.minNode != null) ? leftResult.minNode : node);
-	}
+    // helper method
+    private ResultType helper(TreeNode node) {
+        if (node == null) {
+            return new ResultType(true);
+        }
+
+        ResultType leftResult = helper(node.left);
+        ResultType rightResult = helper(node.right);
+	
+        if (!leftResult.isBst || !rightResult.isBst) {
+            return new ResultType(false);
+        }
+	
+        if ((leftResult.maxNode != null && leftResult.maxNode.val >= node.val) ||
+                (rightResult.minNode != null && rightResult.minNode.val <= node.val)) {
+            return new ResultType(false);
+        }
+
+        return new ResultType(true, (rightResult.maxNode != null) ? rightResult.maxNode : node, 
+                                    (leftResult.minNode != null) ? leftResult.minNode : node);
+    }
 	
     /**
      * @param root: The root of binary tree.
      * @return: True if the binary tree is BST, or false
      */
     public boolean isValidBST(TreeNode root) {
-		if (root == null || (root.left == null && root.right == null)) {
-			return true;
-		}
+        if (root == null || (root.left == null && root.right == null)) {
+	    return true;
+        }
 		
-		return helper(root).isBst;
+        return helper(root).isBst;
     }
 }
