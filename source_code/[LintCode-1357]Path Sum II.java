@@ -44,7 +44,7 @@ Notice
  *     }
  * }
  */
-
+//version-1[when the tree is children has the same value like, root = {0, 1, 1}, sum = 1], it will get failure
 public class Solution {
     /**
      * @param root: a binary tree
@@ -84,5 +84,114 @@ public class Solution {
         helper(result, path, node.right, sum- node.val);
         
         path.remove(path.size() -1);
+    }
+}
+
+//version-2
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<Integer>();
+        
+        // check corner cases
+        if (root == null) {
+            return result;
+        }
+        
+        // normal case
+        List<List<Integer>> pathSet = new ArrayList<List<Integer>>();
+        helper(pathSet, path, root, sum);
+        
+        result.addAll(pathSet);
+        
+        return result;
+    }
+    
+    // helper method
+    private void helper(List<List<Integer>> pathSet, 
+                            List<Integer> path, 
+                            TreeNode node, 
+                            int sum) {
+        // check corner case
+        if (node == null) {
+            return;
+        }
+        
+        sum = sum - node.val;
+        TreeNode leftNode = node.left;
+        TreeNode rightNode = node.right;
+        
+        path.add(node.val);
+        
+        if (sum == 0 && 
+	    leftNode == null && rightNode == null) {
+            pathSet.add(new ArrayList<Integer>(path));
+        }
+        else {
+            helper(pathSet, path, leftNode, sum);
+            helper(pathSet, path, rightNode, sum);
+        }
+        
+        path.remove(path.size() - 1);
+    }
+}
+
+//version-3
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     * @param root: a binary tree
+     * @param sum: the sum
+     * @return: the scheme
+     */
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (root == null) {
+            return result;
+        }
+        
+        List<Integer> path = new ArrayList<Integer>();
+        helper(result, path, root, sum);
+        
+        return result;
+    }
+    
+    // helper method
+    private void helper(List<List<Integer>> result, List<Integer> path, TreeNode node, int sum) {
+        // check corner case
+        if (node == null) {
+            return;
+        }
+        
+        // normal case
+        path.add(node.val);
+        sum = sum - node.val;
+        if (sum == 0 && isLeaf(node)) {
+            result.add(new ArrayList<Integer>(path));
+        }
+        else {
+            helper(result, path, node.left, sum);
+            helper(result, path, node.right, sum);            
+        }
+        
+        path.remove(path.size() -1);
+    }
+    
+    private boolean isLeaf(TreeNode node) {
+        return node != null && node.left == null && node.right == null;
     }
 }
