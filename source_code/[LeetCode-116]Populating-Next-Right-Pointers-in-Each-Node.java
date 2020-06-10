@@ -45,7 +45,7 @@ class Node {
     }
 };
 */
-
+//version-1: BFS(with Queue)
 class Solution {
     public Node connect(Node root) {
         if (root == null || isLeaf(root)) {
@@ -83,5 +83,63 @@ class Solution {
     // helper method
     private boolean isLeaf(Node node) {
         return node != null && node.left == null && node.right == null;
+    }
+}
+
+//version-2: BFS(without Queue)
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+    public Node connect(Node root) {
+        // check corner case
+        if (root == null ||
+           root.left == null && root.right == null) {
+            return root;
+        }
+        
+        // regular case[BFS without queque]
+        Node leftPivot = root;
+        while (leftPivot != null) {// depth by left most process
+            
+            Node current = leftPivot;
+            while(current != null) {// level scan process
+                
+                if (current.left != null) {
+                    current.left.next = current.right;
+                }
+                
+                if (current.right != null && 
+                    current.next != null) {
+                    current.right.next = current.next.left;
+                } 
+                
+                current = current.next;
+            }// while current
+            
+            leftPivot = leftPivot.left;
+        }// while leftPivot
+        
+        return root;
     }
 }
