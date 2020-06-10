@@ -120,3 +120,38 @@ class Solution {
         return root;
     }
 }
+
+//version-3: DFS
+class Solution {
+    public Node connect(Node root) {
+        // check corner case
+        if (root == null ||
+            root.left == null && root.right == null) {
+            return root;
+        }
+        
+        connectNext(root);
+        
+        return root;
+    }
+    
+    // helper method
+    private void connectNext(Node node) {
+        // corner case
+        if (node == null) {
+            return;
+        }
+        
+        if (node.left != null) {
+            node.left.next = node.right;
+        }
+        
+        if (node.right != null &&
+            node.next != null) {
+            node.right.next = node.next.left;
+        }
+        
+        connectNext(node.left);
+        connectNext(node.right);
+    }
+}
