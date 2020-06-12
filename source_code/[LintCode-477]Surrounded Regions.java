@@ -230,3 +230,89 @@ public class Solution {
 		}
 	}
 }
+
+//version3: BFS with Queue and Pair object
+class Solution {
+    private final char MARKER = 'M';
+    private int n;// row size
+    private int m;// column size
+    
+    private int[] DIRECTION_X = new int[]{1, 0, 0, -1};
+    private int[] DIRECTION_Y = new int[]{0, 1, -1, 0};
+    
+    public void solve(char[][] board) {
+        // check corner case
+        if (board == null || board.length == 0 ||
+            board[0] == null || board[0].length == 0) {
+            return;
+        } 
+        
+        // regular case
+        n = board.length;
+        m = board[0].length;
+        
+        setMarked(board, 'O', MARKER);
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (isOnBorder(i, j) && board[i][j] == MARKER) {
+                    traverseByBFS(board, i, j, MARKER);               
+                }
+            }
+        }
+        
+        setMarked(board, MARKER, 'X');
+    }
+    
+    // helper method
+    private void traverseByBFS(char[][] board, int x, int y, char marker) {
+        
+        board[x][y] = 'O';
+        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair(x, y));
+        
+        while (!queue.isEmpty()) {
+            Pair<Integer, Integer> current = queue.poll();
+            int currentX = current.getKey();
+            int currentY = current.getValue();
+            
+            for (int i = 0; i < 4; i++) {
+                int nextX = currentX + DIRECTION_X[i];
+                int nextY = currentY + DIRECTION_Y[i];
+                
+                if (nextX < 0 || nextX >= n ||
+                    nextY < 0 || nextY >= m ||
+                    board[nextX][nextY] != marker) {
+                    continue;
+                } 
+                
+                board[nextX][nextY] = 'O';
+                queue.offer(new Pair(nextX, nextY));
+            }
+
+        }
+    }
+    
+    private boolean isOnBorder(int x, int y) {
+        if (x == 0 || y == 0) {
+            return true;
+        }
+        
+        if (x == n - 1 || 
+            y == m - 1) {
+            return true;
+        }
+        
+        return false;
+    } 
+    
+    private void setMarked(char[][] board, char markerA, char markerB) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] == markerA) {
+                    board[i][j] = markerB;
+                }
+            }
+        }
+    }
+}
