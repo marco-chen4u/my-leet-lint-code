@@ -151,84 +151,84 @@ public class Solution {
      * @return: nothing
      */
     public void surroundedRegions(char[][] board) {
-		// check corner cases
-		if (board == null || board.length == 0 ||
-			board[0] == null || board[0].length == 0) {
-			return;
-		}
-		
-		n = board.length; // row size
-		m = board[0].length; // column size
-		// normal case
-		// check from sourrounded board sides
-		for (int i = 0; i < n; i++) {// row
-			// left-side
-			traverseByBFS(board, i, 0);
-			// right-side
-			traverseByBFS(board, i, m - 1);
-		}
-		
-		for (int j = 0; j < m; j++) {// column
-			// top-side
-			traverseByBFS(board, 0, j);
-			// bottom-side
-			traverseByBFS(board, n - 1, j);
-		}
-		
-		// kill all the sourrounded regions, turn all marked regions into their origin value which are not able to sourround
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (board[i][j] == MARKED) {
-					board[i][j] = 'O';
-					continue;
-				}
-				
-				if (board[i][j] == 'O') {
-					board[i][j] = 'X';
-				}
-			}
-		}
-		
-	}
-	
-	// helper method
-	private void traverseByBFS(char[][] board, int row, int col) {
-		// check corner case
-		if (row < 0 || row >= n ||
-			col < 0 || col >= m || 
-			board[row][col] != 'O') {
-			return;
-		}
-		
-		// initialize
-		Queue<Integer> queueX = new LinkedList<Integer>();
-		Queue<Integer> queueY = new LinkedList<Integer>();
-		
-		queueX.offer(row);
-		queueY.offer(col);
-		board[row][col] = MARKED;
-		
-		// start Breadth First Searching
-		while (!queueX.isEmpty()) {
-			int currentX = queueX.poll();
-			int currentY = queueY.poll();
-			
-			for (int i = 0; i < 4; i++) {
-				int nextX = currentX + DIRECTION_X[i];
-				int nextY = currentY + DIRECTION_Y[i];
-				
-				if (nextX < 0 || nextX >= n || 
-					nextY < 0 || nextY >= m ||
-					board[nextX][nextY] != 'O') {
-					continue;
-				}
-				
-				board[nextX][nextY] = MARKED;
-				queueX.offer(nextX);
-				queueY.offer(nextY);
-			}
-		}
-	}
+        // check corner cases
+        if (board == null || board.length == 0 ||
+            board[0] == null || board[0].length == 0) {
+            return;
+        }
+
+        n = board.length; // row size
+        m = board[0].length; // column size
+        // normal case
+        // check from sourrounded board sides
+        for (int i = 0; i < n; i++) {// row
+            // left-side
+            traverseByBFS(board, i, 0);
+            // right-side
+            traverseByBFS(board, i, m - 1);
+        }
+
+        for (int j = 0; j < m; j++) {// column
+            // top-side
+            traverseByBFS(board, 0, j);
+            // bottom-side
+            traverseByBFS(board, n - 1, j);
+        }
+
+        // kill all the sourrounded regions, turn all marked regions into their origin value which are not able to sourround
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] == MARKED) {
+                    board[i][j] = 'O';
+                    continue;
+                }
+
+                if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+
+    }
+
+    // helper method
+    private void traverseByBFS(char[][] board, int row, int col) {
+        // check corner case
+        if (row < 0 || row >= n ||
+            col < 0 || col >= m || 
+            board[row][col] != 'O') {
+            return;
+        }
+
+        // initialize
+        Queue<Integer> queueX = new LinkedList<Integer>();
+        Queue<Integer> queueY = new LinkedList<Integer>();
+
+        queueX.offer(row);
+        queueY.offer(col);
+        board[row][col] = MARKED;
+
+        // start Breadth First Searching
+        while (!queueX.isEmpty()) {
+            int currentX = queueX.poll();
+            int currentY = queueY.poll();
+
+            for (int i = 0; i < 4; i++) {
+                int nextX = currentX + DIRECTION_X[i];
+                int nextY = currentY + DIRECTION_Y[i];
+
+                if (nextX < 0 || nextX >= n || 
+                    nextY < 0 || nextY >= m ||
+                    board[nextX][nextY] != 'O') {
+                    continue;
+                }
+
+                board[nextX][nextY] = MARKED;
+                queueX.offer(nextX);
+                queueY.offer(nextY);
+            }
+        }
+    }
 }
 
 //version3: BFS with Queue and Pair object
