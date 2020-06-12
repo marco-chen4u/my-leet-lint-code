@@ -154,3 +154,63 @@ public class Solution {
         return result;
     }
 }
+
+//version-4: top-down regular iteration, O(n) with extra space
+public class Solution {
+    /**
+     * @param triangle: a list of lists of integers
+     * @return: An integer, minimum path sum
+     */
+    public int minimumTotal(int[][] triangle) {
+        // check corner cases
+        if (triangle == null || triangle.length == 0 ||
+            triangle[0] == null || triangle[0].length == 0) {
+            return 0;
+        }
+        
+        int size = triangle.length;
+        
+        if (size == 1) {
+            return triangle[0][0];
+        }
+        
+        // regular case
+        int last = size - 1;
+        int minPath = Integer.MAX_VALUE;
+        
+        for (int i = 1; i < size; i++) {
+            int[] current = triangle[i];
+            int[] pre = triangle[i - 1];
+            int[] newValues = new int[current.length];
+            
+            int length = current.length;
+            int start = 0;
+            int end = length - 1;
+            
+            for (int j = 0; j < length; j++) {
+                int value = current[j];
+                
+                if (j == start) { 
+                    value += pre[start];
+                }
+                else if (j == end) { 
+                    value += pre[end - 1];
+                }
+                else { 
+                    value += Math.min(pre[j - 1], pre[j]);
+                }
+                
+                newValues[j] = value;
+            }
+            
+            triangle[i] = newValues;//repalce the current array into the triangle to save the current path sum calculation.
+        }
+        
+        // find the minimum path sum value in the last row of path calculation inside this triangle
+        for (int pathSum : triangle[last]) {
+            minPath = Math.min(minPath, pathSum);
+        }
+        
+        return minPath;
+    }
+}
