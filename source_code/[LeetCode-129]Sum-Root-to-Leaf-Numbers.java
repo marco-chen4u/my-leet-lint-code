@@ -73,7 +73,7 @@ class Solution {
         return result;
     }
     
-    // helper method
+    // helper methods
     private void findPath(List<Integer> pathValues, TreeNode node, int pathValue) {
         int newPathValue = pathValue * 10 + node.val;
         
@@ -93,6 +93,44 @@ class Solution {
         
     }
     
+    private boolean isLeaf(TreeNode node) {
+        return node != null && node.left == null && node.right == null;
+    }
+}
+
+//version-2: iteration with stack
+class Solution {
+    public int sumNumbers(TreeNode root) {
+        int result = 0;
+        int pathSum = 0;
+        
+        Stack<Pair<TreeNode, Integer>> stack = new Stack<>();
+        stack.push(new Pair(root, pathSum));
+        
+        while (!stack.isEmpty()) {
+            Pair<TreeNode, Integer> current = stack.pop();
+            TreeNode currentNode = current.getKey();
+            pathSum = current.getValue();
+            
+            if (currentNode == null) {
+                continue;
+            }
+            
+            pathSum = pathSum * 10 + ((currentNode != null) ? currentNode.val : 0);
+            
+            if (isLeaf(currentNode)) {
+                result += pathSum;
+                continue;
+            }
+            
+            stack.push(new Pair(currentNode.left, pathSum));
+            stack.push(new Pair(currentNode.right, pathSum));
+        }
+        
+        return result;
+    }
+    
+    // helper method
     private boolean isLeaf(TreeNode node) {
         return node != null && node.left == null && node.right == null;
     }
