@@ -4,11 +4,11 @@ Given a string s, partition s such that every substring of the partition is a pa
 Return all possible palindrome partitioning of s.
 
 Example
-	Given s = "aab", return:
-		[
-		  ["aa","b"],
-		  ["a","a","b"]
-		]
+    Given s = "aab", return:
+        [
+          ["aa","b"],
+          ["a","a","b"]
+        ]
 ***/
 // version 1: DP
 public class Solution {
@@ -20,7 +20,9 @@ public class Solution {
      * @return: A list of lists of string
      */
     public List<List<String>> partition(String s) {
-        results = new ArrayList<>();
+        results = new ArrayList<List<>>();
+        
+        // check corner case
         if (s == null || s.length() == 0) {
             return results;
         }
@@ -33,11 +35,11 @@ public class Solution {
     }
     
     private void getIsPalindrome(String s) {
-		// initialize
+        // initialize
         int n = s.length();
         isPalindrome = new boolean[n][n];
         
-		// state
+        // state
         for (int i = 0; i < n; i++) {
             isPalindrome[i][i] = true;
         }
@@ -45,14 +47,14 @@ public class Solution {
             isPalindrome[i][i + 1] = (s.charAt(i) == s.charAt(i + 1));
         }
         
-		// function
+        // function
         for (int i = n - 3; i >= 0; i--) {
             for (int j = i + 2; j < n; j++) {
                 isPalindrome[i][j] = isPalindrome[i + 1][j - 1] && s.charAt(i) == s.charAt(j);
             }
         }
     }
-    
+
     private void helper(String s,
                         int startIndex,
                         List<Integer> partition) {
