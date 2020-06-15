@@ -12,7 +12,7 @@ Example
         Input: "a", ["a"]
         Output:  true
 ***/
-
+//version-1: dp,sequential type dynampic programming
 public class Solution {
     /*
      * @param s: A string
