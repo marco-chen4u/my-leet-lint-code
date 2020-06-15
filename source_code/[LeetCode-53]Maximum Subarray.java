@@ -10,6 +10,7 @@ Example:
 Follow up:
 	If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 ***/
+//version-1: recursion
 class Solution {
     private final int DEFAULT = Integer.MIN_VALUE;
     
@@ -48,5 +49,43 @@ class Solution {
         }
         
         return Math.max(leftMax, Math.max(rightMax, leftContinuousSum + nums[mid] + rightContinuousSum));
+    }
+}
+
+//version-2: prefix
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int currentSum = 0;
+        int maxSum = Integer.MIN_VALUE;
+        
+        for (int num : nums) {
+            
+            if (currentSum < 0) {
+                currentSum = 0;
+            }
+            
+            currentSum += num;
+            
+            
+            maxSum = Math.max(maxSum, currentSum);
+        }
+        
+        return maxSum;
+    }
+}
+
+//version-3: prefix(refined)
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int prefixSum = 0;
+        int maxSum = Integer.MIN_VALUE;
+        
+        for (int num : nums) {
+            prefixSum = Math.max(num, prefixSum + num);
+            
+            maxSum = Math.max(maxSum, prefixSum);
+        }
+        
+        return maxSum;
     }
 }
