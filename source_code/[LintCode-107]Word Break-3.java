@@ -4,18 +4,18 @@ Given a string s and a dictionary of words dict,
 determine if s can be break into a space-separated sequence of one or more dictionary words.
 
 Example
-	Example 1:
-		Input:  "lintcode", ["lint", "code"]
-		Output:  true
+    Example 1:
+        Input:  "lintcode", ["lint", "code"]
+        Output:  true
 
-	Example 2:
-		Input: "a", ["a"]
-		Output:  true
-	
+    Example 2:
+        Input: "a", ["a"]
+        Output:  true
 ***/
+
 public class Solution {
 
-	//helper mehtod to get the max length of the dictionary
+    //helper mehtod to get the max length of the dictionary
     private int getMaxWordLength(Set<String> dict) {
         if (dict == null || dict.size() == 0) {
             return 0;
@@ -28,6 +28,7 @@ public class Solution {
         
         return max;
     }
+
     /*
      * @param s: A string
      * @param dict: A dictionary of words dict
