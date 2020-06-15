@@ -4,15 +4,14 @@ Given an integer array, find a subarray with sum closest to zero.
 Return the indexes of the first number and last number.
 
 Example
-Example1
-	Input: 
-		[-3,1,1,-3,5] 
-	Output: 
-		[0,2]
-	Explanation: [0,2], [1,3], [1,1], [2,2], [0,4]
+    Input: 
+        [-3,1,1,-3,5] 
+    Output: 
+        [0,2]
+    Explanation: [0,2], [1,3], [1,1], [2,2], [0,4]
 
 Challenge
-	O(nlogn) time
+    O(nlogn) time
 ***/
 
 class SumElement {
