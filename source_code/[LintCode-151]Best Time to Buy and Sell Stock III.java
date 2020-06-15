@@ -11,7 +11,7 @@ Example
 Notice
     You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
 ***/
-//version-1
+//version-1: scan line solution
 public class Solution {
     /**
      * @param prices: Given an integer array
@@ -63,7 +63,7 @@ public class Solution {
     }
 }
 
-//version-2
+//version-2: DP, backpack solution
 public class Solution {
     /**
      * @param prices: Given an integer array
