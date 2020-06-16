@@ -78,6 +78,25 @@ public class Solution {
             }
         }
     }
+        
+    private List<String> getNextWords(String word, Set<String> dict) {
+        List<String> result = new ArrayList<String>();
+
+        for (char c = 'a'; c <= 'z'; c++) {
+            for (int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) == c) {
+                    continue;
+                }
+
+                String newWord = replace(word, i, c);
+                if (dict.contains(newWord)) {
+                    result.add(newWord);
+                }
+            }
+        }
+
+        return result;
+    }
     
     private String replace(String word, int index, char c) {
         char[] wordCharArray = word.toCharArray();
@@ -110,24 +129,5 @@ public class Solution {
         }
         
         path.remove(path.size() - 1);
-    }
-    
-    private List<String> getNextWords(String word, Set<String> dict) {
-        List<String> result = new ArrayList<String>();
-
-        for (char c = 'a'; c <= 'z'; c++) {
-            for (int i = 0; i < word.length(); i++) {
-                if (word.charAt(i) == c) {
-                    continue;
-                }
-
-                String newWord = replace(word, i, c);
-                if (dict.contains(newWord)) {
-                    result.add(newWord);
-                }
-            }
-        }
-
-        return result;
     }
 }
