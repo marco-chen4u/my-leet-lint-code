@@ -8,6 +8,7 @@ Example
 	dict = ["de", "ding", "co", "code", "lint"].
 	A solution is ["lint code", "lint co de"].
 ***/
+//version-1: recursion
 public class Solution {
     // field
     private static final String EMPTY = "";
@@ -51,5 +52,74 @@ public class Solution {
         
         map.put(s, result);        
         return result;
+    }
+}
+
+//version-2: recursion
+class Solution {
+    // fields
+    private int n; // string size
+    private int maxLength; // word's max length
+    
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> result = new ArrayList<String>();
+        
+        // check corner case
+        if (s == null || s.isEmpty() ||
+            wordDict == null || wordDict.isEmpty()) {
+            return result;
+        }
+        
+        n = s.length();
+        Set<String> dict = new HashSet<String>(wordDict);
+        if (!isWordBreak(s, dict)) {
+            return result;
+        }
+        
+        search(result, dict, new StringBuilder(), s, 0);
+        
+        return result;
+    }
+    
+    // helper methods
+    private boolean isWordBreak(String s, Set<String> dict) {
+        boolean[] dp = new boolean[n + 1];
+        
+        dp[0] = true;
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && dict.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return dp[n];
+    }
+    
+    private void search(List<String> result, 
+                        Set<String> dict, 
+                        StringBuilder sb, 
+                        String s, 
+                        int startIndex) {
+        if (startIndex == n) {
+            sb.setLength(sb.length() - 1);
+            result.add(new String(sb));
+            return;
+        }
+        
+        for (int i = startIndex; i < n; i++) {
+            if (!dict.contains(s.substring(startIndex, i + 1))) {
+                continue;
+            }
+            
+            int length = sb.length();
+            sb.append(s.substring(startIndex, i + 1));
+            sb.append(" ");
+            search(result, dict, sb, s, i + 1);
+            sb.setLength(length);
+        }
     }
 }
