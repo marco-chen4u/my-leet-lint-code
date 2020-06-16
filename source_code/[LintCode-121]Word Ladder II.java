@@ -20,8 +20,37 @@ Notice
     All words contain only lowercase alphabetic characters.
 ***/
 public class Solution {
-    // helper methods
+    /*
+     * @param start: a string
+     * @param end: a string
+     * @param dict: a set of string
+     * @return: a list of lists of string
+     */
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+        // initialize
+        List<List<String>> ladders = new ArrayList<List<String>>();// result
+        Map<String, List<String>> map = new HashMap<String, List<String>>();// keep record of each node's neighboring nodes
+        Map<String, Integer> distance = new HashMap<String, Integer>(); // keep record of each node's distance[start->current]
 
+        // check corner case
+        if (dict == null || dict.size() == 0) {
+            return ladders;
+        }
+
+        dict.add(start);
+        dict.add(end);
+
+        // use BFS to traverse every node of the graph, keep records of each node's neighboring nodes and distance
+        traverse(start, end, dict, map, distance);
+
+        List<String> path = new ArrayList<String>();
+        // use DFS to get all path of ladders from end back-tracking to start
+        getLadderPaths(end, start, map, distance, path, ladders);
+
+        return ladders;
+    }
+
+    // helper methods
     private String replace(String word, int index, char c) {
         char[] wordCharArray = word.toCharArray();
         wordCharArray[index] = c;
@@ -100,35 +129,5 @@ public class Solution {
         }
         
         path.remove(path.size() - 1);
-    }
-	
-    /*
-     * @param start: a string
-     * @param end: a string
-     * @param dict: a set of string
-     * @return: a list of lists of string
-     */
-    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
-        // initialize
-        List<List<String>> ladders = new ArrayList<List<String>>();// result
-        Map<String, List<String>> map = new HashMap<String, List<String>>();// keep record of each node's neighboring nodes
-        Map<String, Integer> distance = new HashMap<String, Integer>(); // keep record of each node's distance[start->current]
-
-        // check corner case
-        if (dict == null || dict.size() == 0) {
-            return ladders;
-        }
-
-        dict.add(start);
-        dict.add(end);
-
-        // use BFS to traverse every node of the graph, keep records of each node's neighboring nodes and distance
-        traverse(start, end, dict, map, distance);
-
-        List<String> path = new ArrayList<String>();
-        // use DFS to get all path of ladders from end back-tracking to start
-        getLadderPaths(end, start, map, distance, path, ladders);
-
-        return ladders;
     }
 }
