@@ -108,11 +108,11 @@ public class Solution {
     * use DFS to get all path of ladders from end back-tracking to start
     */
     private void getLadderPaths(String current,
-                        String start,
-                        Map<String, List<String>>map,
-                        Map<String, Integer>distance,
-                        List<String>path,
-                        List<List<String>>ladders) {
+                                String start,
+                                Map<String, List<String>>map,
+                                Map<String, Integer>distance,
+                                List<String>path,
+                                List<List<String>>ladders) {
         path.add(current);
         
         if (current.equals(start)) {
