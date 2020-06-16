@@ -45,7 +45,7 @@ public class Solution {
 
         List<String> path = new ArrayList<String>();
         // use DFS to get all path of ladders from end back-tracking to start
-        getLadderPaths(end, start, map, distance, path, ladders);
+        getLadderPaths(start, end, map, distance, path, ladders);
 
         return ladders;
     }
@@ -105,7 +105,7 @@ public class Solution {
     }
 
     /*
-    * use DFS to get all path of ladders from end back-tracking to start
+    * use DFS to get all path of ladders from start to end
     */
     private void getLadderPaths(String current,
                                 String start,
@@ -116,15 +116,13 @@ public class Solution {
         path.add(current);
         
         if (current.equals(start)) {
-            Collections.reverse(path);
             ladders.add(new ArrayList<String>(path));//deep copy
-            Collections.reverse(path);//reset it back
         }
         else {
-            for (String pre : map.get(current)) {
-                if (distance.containsKey(pre) &&
-                        distance.get(current) == distance.get(pre) + 1)
-                    getLadderPaths(pre, start, map, distance, path, ladders);
+            for (String next : map.get(current)) {
+                if (distance.containsKey(next) &&
+                        distance.get(current) + 1 == distance.get(next))
+                    getLadderPaths(next, end, map, distance, path, ladders);
             }
         }
         
