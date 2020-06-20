@@ -55,7 +55,7 @@ public class Solution {
         return result;
     }
     
-	// helper method
+    // helper method
     private ListNode getStartNodeOfCycleLinkedList(ListNode head) {
         
         ListNode slow = head;
