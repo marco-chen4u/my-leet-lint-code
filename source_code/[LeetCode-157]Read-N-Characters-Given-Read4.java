@@ -66,6 +66,7 @@ Note:
  * The read4 API is defined in the parent class Reader4.
  *     int read4(char[] buf);
  */
+//version-1: mimic
 public class Solution extends Reader4 {
     /**
      * @param buf Destination buffer
@@ -119,5 +120,39 @@ public class Solution extends Reader4 {
 
     private boolean isReadingEnd(int currentIndex) {
         return currentIndex == 0;
+    }
+}
+
+//version-2: two-pointers&queue
+public class Solution extends Reader4 {
+    /**
+     * @param buf Destination buffer
+     * @param n   Number of characters to read
+     * @return    The number of actual characters read
+     */
+    public int read(char[] buf, int n) {
+        char[] readingBuffer = new char[4];// queue
+        // two pointers
+        int head = 0;
+        int tail = 0;
+        
+        // counter
+        int i = 0;
+        while (i < n) {
+            if (head == tail) {
+                head = 0; //reset to initial 0 before every read4 operation
+                tail = read4(readingBuffer);//enqueue
+                
+                if (tail == 0) {// is it to the end of file ?
+                    break;
+                }
+            }
+            
+            while (i < n && head < tail) {
+                buf[i++] = readingBuffer[head++];// dequeue for readingBuffer on every read4 ops
+            }
+        }
+        
+        return i;
     }
 }
