@@ -3,15 +3,15 @@
 Given two strings S and T, determine if they are both one edit distance apart.
 
 Example
-	Example 1:
-		Input: s = "aDb", t = "adb" 
-		Output: true
-	Example 2:
-		Input: s = "ab", t = "ab" 
-		Output: false
+    Example 1:
+        Input: s = "aDb", t = "adb" 
+        Output: true
+    Example 2:
+        Input: s = "ab", t = "ab" 
+        Output: false
 
 Explanation:
-	s=t ,so they aren't one edit distance apart
+    s=t ,so they aren't one edit distance apart
 ***/
 /*
 * 若两个字符串长度相差大于1或相等，直接返回false。 
@@ -127,5 +127,44 @@ public class Solution {
         
         return false;
         
+    }
+}
+
+//version-3: two pointers
+class Solution {
+    public boolean isOneEditDistance(String s, String t) {
+        // check corner case
+        if (s == null || t == null) {
+            return false;
+        }
+        
+        if (Math.abs(s.length() -t.length()) > 1) {
+            return false;
+        }
+        
+        if (s.length() > t.length()) {
+            return isOneEditDistance(t, s);
+        }
+        
+        int size1 = s.length();
+        int size2 = t.length();
+        
+        // two pointers
+        int i = 0; // for s
+        int j = 0; // for t
+        
+        while (i < size1 && j < size2) {
+            
+            if (s.charAt(i) != t.charAt(j)) {
+                return s.substring(i + 1).equals(t.substring(j + 1)) ||
+                        s.substring(i).equals(t.substring(j + 1));
+            }
+            
+            
+            i++;
+            j++;
+        }
+        
+        return i + 1 == size2;
     }
 }
