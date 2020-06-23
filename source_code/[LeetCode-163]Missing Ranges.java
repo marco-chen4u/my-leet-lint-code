@@ -15,24 +15,24 @@ class Solution {
         }
         
         int size = nums.length;
-        int firstItemValue = nums[0];
-        int lastItemValue = nums[size - 1];
-        
+
+        long firstItemValue = nums[0];        
         addRange(result, lower, firstItemValue - 1);
         
         for (int i = 1; i < size; i++) {
-            int start = nums[i - 1] + 1;
-            int end = nums[i] - 1;
+            long start = (long)nums[i - 1] + 1;
+            long end = (long)nums[i] - 1;
             addRange(result, start, end);
         }
-        
+
+        long lastItemValue = nums[size - 1];
         addRange(result, lastItemValue + 1, upper);
         
         return result;
     }
     
     // helper method
-    private void addRange(List<String> result, int start, int end) {
+    private void addRange(List<String> result, long start, long end) {
         // check corner case
         if (start > end) {
             return;
