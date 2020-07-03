@@ -75,8 +75,7 @@ class Solution {
     }
     
     // helper methods
-    private void addRange(List<String> result, 
-                            int[] nums,
+    private void addRange(List<String> result,
                             long start, 
                             long end) {
         // check corner cases
