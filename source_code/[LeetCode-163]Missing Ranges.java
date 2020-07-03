@@ -55,7 +55,7 @@ class Solution {
         List<String> result = new ArrayList<String>();
         // check corner case
         if (nums == null || nums.length == 0) {
-            addRange(result, nums, lower, upper);
+            addRange(result, lower, upper);
             return result;
         }
         
@@ -63,13 +63,13 @@ class Solution {
         int size = nums.length;
         int last = size -1;
         int first = 0;
-        addRange(result, nums, (long)lower, (long)nums[first] - 1);
+        addRange(result, (long)lower, (long)nums[first] - 1);
         
         for (int i = 1; i < size; i++) {
-            addRange(result, nums, (long)nums[i - 1] + 1, (long)nums[i] - 1);
+            addRange(result, (long)nums[i - 1] + 1, (long)nums[i] - 1);
         }
         
-        addRange(result, nums, (long)nums[last] + 1, (long)upper);
+        addRange(result, (long)nums[last] + 1, (long)upper);
         
         return result;
     }
