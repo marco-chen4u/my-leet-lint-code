@@ -4,18 +4,20 @@ Given an unsorted array, find the maximum difference between the successive elem
 Return 0 if the array contains less than 2 elements.
 
 Example
-	Example 1:
-		Input: [1, 9, 2, 5]
-		Output: 4
-		Explanation: The sorted form is [1, 2, 5, 9], and the maximum gap is between 5 and 9.
-	Example 2:
-		Input: [1]
-		Output: 0
-		Explanation: The array contains less than 2 elements.
+    Example 1:
+        Input: [1, 9, 2, 5]
+        Output: 4
+        Explanation: The sorted form is [1, 2, 5, 9], and the maximum gap is between 5 and 9.
+    Example 2:
+        Input: [1]
+        Output: 0
+        Explanation: The array contains less than 2 elements.
+
 Challenge
-	Sort is easy but will cost O(nlogn) time. Try to solve it in linear time and space.
+    Sort is easy but will cost O(nlogn) time. Try to solve it in linear time and space.
+
 Notice
-	You may assume all elements in the array are non-negative integers and fit in the 32-bit signed integer range.
+    You may assume all elements in the array are non-negative integers and fit in the 32-bit signed integer range.
 ***/
 //version-1: sort and cost O(nlogn) time
 public class Solution {
@@ -49,6 +51,6 @@ public class Solution {
      * @return: the maximun difference
      */
     public int maximumGap(int[] nums) {
-		
-	}
+        
+    }
 }
