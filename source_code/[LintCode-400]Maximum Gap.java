@@ -44,7 +44,7 @@ public class Solution {
     }
 }
 
-//version-2: O(n)
+//version-2: O(n) - Bucket selection
 class Solution {
     
     //inn class
@@ -79,8 +79,7 @@ class Solution {
         // regular case
         int size = nums.length;
         Bucket[] buckets = new Bucket[size - 1];
-        
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < buckets.length; i++) {
             buckets[i] = new Bucket();
         }
         
@@ -102,7 +101,7 @@ class Solution {
         
         int result = 0;
         int currentMin = min;
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < buckets.length; i++) {
             if (buckets[i].min == Integer.MAX_VALUE) {
                 continue;
             }
@@ -116,7 +115,7 @@ class Solution {
     
     // helper method
     private int findIndex(int value, int min, int max, int n) {
-        float size = (float)(max - min) / n;
-        return (int)Math.min(n - 1, (value - min) / size);
+        float avgSize = (float)(max - min) / n;
+        return (int)Math.min(n - 1, (value - min) / avgSize);
     }
 }
