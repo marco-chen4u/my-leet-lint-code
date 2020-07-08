@@ -45,12 +45,78 @@ public class Solution {
 }
 
 //version-2: O(n)
-public class Solution {
-    /**
-     * @param nums: an array of integers
-     * @return: the maximun difference
-     */
-    public int maximumGap(int[] nums) {
+class Solution {
+    
+    //inn class
+    class Bucket {
+        // fields
+        int min;
+        int max;
+        // constructor
+        public Bucket() {
+            max = 0;
+            min = Integer.MAX_VALUE;
+        }
         
+        // methods
+        public void update(int value) {
+            max = Math.max(max, value);
+            min = Math.min(min, value);
+        }
+    }
+    
+    
+    public int maximumGap(int[] nums) {
+        // check corner cases
+        if (nums == null || nums.length < 2) {
+            return 0;
+        }
+        
+        if (nums.length == 2) {
+            return Math.abs(nums[0] - nums[1]);
+        }
+        
+        // regular case
+        int size = nums.length;
+        Bucket[] buckets = new Bucket[size - 1];
+        
+        for (int i = 0; i < size - 1; i++) {
+            buckets[i] = new Bucket();
+        }
+        
+        int min = nums[0];
+        int max = nums[0];
+        for (int num : nums) {
+            min = Math.min(min, num);
+            max = Math.max(max, num);
+        }
+        
+        if (max == min) {
+            return 0;
+        }
+        
+        for (int i = 0; i < size; i++) {
+            int index = findIndex(nums[i], min, max, size - 1);
+            buckets[index].update(nums[i]);
+        }
+        
+        int result = 0;
+        int currentMin = min;
+        for (int i = 0; i < size - 1; i++) {
+            if (buckets[i].min == Integer.MAX_VALUE) {
+                continue;
+            }
+            
+            result = Math.max(result, buckets[i].min - currentMin);
+            currentMin = Math.max(currentMin, buckets[i].max);
+        }
+        
+        return result;
+    }
+    
+    // helper method
+    private int findIndex(int value, int min, int max, int n) {
+        float size = (float)(max - min) / n;
+        return (int)Math.min(n - 1, (value - min) / size);
     }
 }
