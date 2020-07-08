@@ -8,13 +8,13 @@ The . character does not represent a decimal point and is used to separate numbe
 For instance, 2.5 is not "two and a half" or "half way to version three", it is the fifth second-level revision of the second first-level revision.
 
 Example
-	Example1
-		Input: version1 = "1"，version2 = "01"
-		Output: 0
+    Example1
+        Input: version1 = "1"，version2 = "01"
+        Output: 0
 
-	Example2
-		Input: version1 = "4.9"，version2 = "4.5"
-		Output: 1
+    Example2
+        Input: version1 = "4.9"，version2 = "4.5"
+        Output: 1
 ***/
 public class Solution {
     // field
@@ -33,17 +33,14 @@ public class Solution {
         int size = Math.max(levels1.length, levels2.length);
         
         for (int i = 0; i < size; i++) {
-            Integer value1 = (i < levels1.length) ? Integer.valueOf(levels1[i]) : 0;
-            Integer value2 = (i < levels2.length) ? Integer.valueOf(levels2[i]) : 0;
+            int value1 = (i < levels1.length) ? Integer.valueOf(levels1[i]) : 0;
+            int value2 = (i < levels2.length) ? Integer.valueOf(levels2[i]) : 0;
             
-            if (value1 == value2) {
-                continue;
+            if (value1 != value2) {
+                return value1 > value2 ? 1 : -1;
             }
-            
-            result = value1.compareTo(value2);
-            break;
         }
         
-        return result;
+        return 0;
     }
 }
