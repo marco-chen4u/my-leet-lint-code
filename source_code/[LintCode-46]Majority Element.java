@@ -3,18 +3,18 @@
 Given an array of integers, the majority number is the number that occurs more than half of the size of the array. Find it.
 
 Example
-	Example 1:
-		Input: [1, 1, 1, 1, 2, 2, 2]
-		Output: 1
-	Example 2:
-		Input: [1, 1, 1, 2, 2, 2, 2]
-		Output: 2
+    Example 1:
+        Input: [1, 1, 1, 1, 2, 2, 2]
+        Output: 1
+    Example 2:
+        Input: [1, 1, 1, 2, 2, 2, 2]
+        Output: 2
 
 Challenge
-	O(n) time and O(1) extra space
+    O(n) time and O(1) extra space
 
 Notice
-	You may assume that the array is non-empty and the majority number always exist in the array.
+    You may assume that the array is non-empty and the majority number always exist in the array.
 ***/
 //version-1: brute force, time complexity : O(n^2)
 public class Solution {
@@ -59,59 +59,59 @@ public class Solution {
         }
         
         int size = nums.size();
-		int value = helper(values, 0, size - 1);
-		
-		int count = getOccurence(values, 0, size - 1, value);
-		if ((count == (size /2)) && 
-	            getCategoriesOfNum(values) == 2) {
+        int value = helper(values, 0, size - 1);
+
+        int count = getOccurence(values, 0, size - 1, value);
+        if ((count == (size /2)) && 
+                getCategoriesOfNum(values) == 2) {
 		    return -1;
-		}
-		
-		return value;
-	}
-	
-	// helper methods
-	private int helper(int[] nums, int start, int end) {
-		// check corner case
-		if (start == end) {
-			return nums[start];
-		}
-		
-		int mid = start + (end - start) / 2;
-		
-		int leftNum = helper(nums, start, mid);
-		int rightNum = helper(nums, mid + 1, end);
-		
-		int leftCount = getOccurence(nums, start, end, leftNum);
-		int rightCount = getOccurence(nums, start, end, rightNum);
-		
-		// check corner case
-		/*if (leftCount == rightCount) {
-		    return -1;
-		}*/
-		
-		return (leftCount > rightCount) ? leftNum : rightNum;
-	}
-	
-	private int getOccurence(int[] nums, int start, int end, int value) {
-		int count = 0;
-		
-		for (int num : nums) {
-			count += (num == value) ? 1 : 0;
-		}
-		
-		return count;
-	}
-	
-	private int getCategoriesOfNum(int[] nums) {
-	    Set<Integer> categorySet = new HashSet<Integer>();
-	    
-	    for (int num : nums) {
-	        categorySet.add(num);
-	    }
-	    
-	    return categorySet.size();
-	}
+        }
+
+        return value;
+    }
+
+    // helper methods
+    private int helper(int[] nums, int start, int end) {
+        // check corner case
+        if (start == end) {
+            return nums[start];
+        }
+
+        int mid = start + (end - start) / 2;
+
+        int leftNum = helper(nums, start, mid);
+        int rightNum = helper(nums, mid + 1, end);
+
+        int leftCount = getOccurence(nums, start, end, leftNum);
+        int rightCount = getOccurence(nums, start, end, rightNum);
+
+        // check corner case
+        /*if (leftCount == rightCount) {
+            return -1;
+        }*/
+
+        return (leftCount > rightCount) ? leftNum : rightNum;
+    }
+
+    private int getOccurence(int[] nums, int start, int end, int value) {
+        int count = 0;
+
+        for (int num : nums) {
+            count += (num == value) ? 1 : 0;
+        }
+
+        return count;
+    }
+
+    private int getCategoriesOfNum(int[] nums) {
+        Set<Integer> categorySet = new HashSet<Integer>();
+
+        for (int num : nums) {
+            categorySet.add(num);
+        }
+
+        return categorySet.size();
+    }
 }
 
 //version-3: Boyer-Moore Voting Algorithm, time complexity: O(n)
