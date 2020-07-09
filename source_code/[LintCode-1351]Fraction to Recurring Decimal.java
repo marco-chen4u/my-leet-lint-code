@@ -161,3 +161,63 @@ public class Solution {
         return result;
     }
 }
+
+//version-3: best solution
+class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+        String result = "";
+        if (numerator == 0) {
+            return "0";
+        }
+        
+        String integralPart = "";
+        String fractionalPart = "";
+        
+        if (numerator < 0 ^ denominator < 0) {//either one of two, is negative
+            integralPart = "-";
+        }
+        
+        long dividend = Math.abs(Long.valueOf(numerator));
+        long divisor = Math.abs(Long.valueOf(denominator));
+        
+        long integralValue = dividend / divisor;
+        long remainer = dividend % divisor;
+        
+        if (remainer == 0) {
+            result = integralPart + String.valueOf(integralValue);
+            return result;
+        }
+        
+        if (remainer != 0) {
+            integralPart += String.valueOf(integralValue) + ".";
+        }
+        
+        StringBuilder sb = new StringBuilder(fractionalPart);
+        Map<Long, Integer> map = new HashMap<Long, Integer>();
+        
+        long value = remainer;
+        map.put(value, 0);
+        while (value != 0) {
+            
+            value *= 10;
+            sb.append(value / divisor);
+            
+            value %= denominator;
+            
+            if (map.containsKey(value)) {
+                int pos = map.get(value);
+                sb.insert(pos, "(");
+                sb.append(")");
+                break;
+            }            
+            
+            map.put(value, sb.length());
+        }
+        
+        fractionalPart = sb.toString();
+        
+        result = integralPart + fractionalPart;
+        
+        return result;
+    }
+}
