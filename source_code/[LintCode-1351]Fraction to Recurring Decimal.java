@@ -162,7 +162,7 @@ public class Solution {
     }
 }
 
-//version-3: best solution
+//version-3: best solution[leetcode version]
 class Solution {
     public String fractionToDecimal(int numerator, int denominator) {
         String result = "";
