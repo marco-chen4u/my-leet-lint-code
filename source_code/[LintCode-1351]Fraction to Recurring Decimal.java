@@ -202,7 +202,7 @@ class Solution {
             value *= 10;
             sb.append(value / divisor);
             
-            value %= denominator;
+            value %= divisor;
             
             if (map.containsKey(value)) {
                 int pos = map.get(value);
