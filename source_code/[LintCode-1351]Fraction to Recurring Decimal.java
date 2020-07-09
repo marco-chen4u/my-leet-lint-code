@@ -173,8 +173,8 @@ class Solution {
         String integralPart = "";
         String fractionalPart = "";
         
-        if (numerator < 0 ^ denominator < 0) {//either one of two, is negative
-            integralPart = "-";
+        if (numerator < 0 ^ denominator < 0) {
+            integralPart = "-";// if either one of them is negative, result should be negative
         }
         
         long dividend = Math.abs(Long.valueOf(numerator));
@@ -183,25 +183,21 @@ class Solution {
         long integralValue = dividend / divisor;
         long remainer = dividend % divisor;
         
+        integralPart += String.valueOf(integralValue);
+        
         if (remainer == 0) {
-            result = integralPart + String.valueOf(integralValue);
-            return result;
+            return integralPart;
         }
         
-        if (remainer != 0) {
-            integralPart += String.valueOf(integralValue) + ".";
-        }
-        
-        StringBuilder sb = new StringBuilder(fractionalPart);
-        Map<Long, Integer> map = new HashMap<Long, Integer>();
-        
+        integralPart += ".";
+        Map<Long, Integer> map = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
         long value = remainer;
+        
         map.put(value, 0);
         while (value != 0) {
-            
             value *= 10;
             sb.append(value / divisor);
-            
             value %= divisor;
             
             if (map.containsKey(value)) {
@@ -209,15 +205,13 @@ class Solution {
                 sb.insert(pos, "(");
                 sb.append(")");
                 break;
-            }            
+            }
             
             map.put(value, sb.length());
         }
         
         fractionalPart = sb.toString();
-        
         result = integralPart + fractionalPart;
-        
         return result;
     }
 }
