@@ -135,3 +135,57 @@ public class Solution {
         return (count > 0) ? candidate : -1;
     }
 }
+
+//version-4: O(n), HashMap
+public class Solution {
+    /*
+     * @param nums: a list of integers
+     * @return: find a  majority number
+     */
+    public int majorityNumber(List<Integer> nums) {
+        int[] values = new int[nums.size()];
+        int index = 0;
+        for (int num : nums) {
+            values[index++] = num;
+        }
+        
+        if (values == null || values.length == 0) {
+            return -1;
+        }
+        
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int value : values) {
+            map.put(value, map.getOrDefault(value, 0) + 1);
+        }
+        
+        Map.Entry<Integer, Integer> majorityEntry = null;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (majorityEntry == null ||
+                majorityEntry.getValue() < entry.getValue()) {
+                majorityEntry = entry;  
+            }
+        }
+        
+        return majorityEntry.getKey();
+    }
+}
+
+//version-5: O(nlogn), sorting
+public class Solution {
+    /*
+     * @param nums: a list of integers
+     * @return: find a  majority number
+     */
+    public int majorityNumber(List<Integer> nums) {
+        int size = nums.size();
+        int[] values = new int[size];
+        int index = 0;
+        for (int num : nums) {
+            values[index++] = num;
+        }
+        
+        Arrays.sort(values);
+        
+        return values[size/2];
+    }
+}
