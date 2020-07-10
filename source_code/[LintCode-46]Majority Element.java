@@ -189,3 +189,36 @@ public class Solution {
         return values[size/2];
     }
 }
+
+//version-6: O(n), bit manipulation
+public class Solution {
+    /*
+     * @param nums: a list of integers
+     * @return: find a  majority number
+     */
+    public int majorityNumber(List<Integer> nums) {
+        int size = nums.size();
+        int[] values = new int[size];
+        int index = 0;
+        for (int num : nums) {
+            values[index++] = num;
+        }
+        
+        int[] bit = new int[32];
+        for (int value : values) {
+            for (int i = 0; i < 32; i++) {
+                bit[i] += ((value >> i & 1) == 1) ? 1 : 0;
+            }
+        }
+        
+        int result = 0; // majority candidate
+        int majorityCount = size / 2;
+        
+        for (int i = 0; i < 32; i++) {
+            bit[i] = (bit[i] > majorityCount) ? 1 : 0;
+            result += (bit[i] << i);
+        }
+        
+        return result;
+    }
+}
