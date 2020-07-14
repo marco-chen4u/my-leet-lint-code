@@ -10,11 +10,11 @@ Example
         Output:  [1, 6, 10, 11, 12]
         Explanation:
             The BST is look like this:
-              10
-              /\
-             1 11
-              \  \
-               6  12
+                  10
+                  /\
+                 1 11
+                  \  \
+                   6  12
         You can return the inorder traversal of a BST [1, 6, 10, 11, 12]
 
     Example 2
@@ -63,7 +63,6 @@ public class BSTIterator {
 
         while (current != null) {
             stack.push(current);
-            treeSet.add(current);
             current = current.left;
         }
 
