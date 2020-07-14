@@ -94,6 +94,7 @@ public class BSTIterator {
         return (current == null) ? null : lowerTop();
     }
     
+    // helper method for pre() method
     private TreeNode lowerTop() {
         if (backUpStack.isEmpty) {
             return null;
