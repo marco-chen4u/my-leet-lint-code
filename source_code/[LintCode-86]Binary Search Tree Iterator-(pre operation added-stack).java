@@ -60,13 +60,6 @@ public class BSTIterator {
         this.backUpStack = new Stack<TreeNode>();
 
         this.current = root;
-
-        while (current != null) {
-            stack.push(current);
-            current = current.left;
-        }
-
-        current = stack.peek();
     }
 
     /*
@@ -80,22 +73,20 @@ public class BSTIterator {
      * @return: return next node
      */
     public TreeNode next() {
-        TreeNode result = null;		
-
-        result = current;	
-        stack.pop();
-        backUpStack.push(current);
-
-        current = current.right;
+        TreeNode result = null;	
+        
         while (current != null) {
             stack.push(current);
             current = current.left;
         }
 
-        if (current == null) {
-            current = stack.peek();
-        }
-
+        current = stack.pop();
+        
+        result = current;
+        backUpStack.push(result);
+        
+        current = current.right;
+        
         return result;
     }
 
