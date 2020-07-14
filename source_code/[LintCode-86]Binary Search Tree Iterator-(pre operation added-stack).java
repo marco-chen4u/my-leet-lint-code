@@ -91,6 +91,20 @@ public class BSTIterator {
     }
 
     public TreeNode pre() {
-        return (current == null) ? null : backUpStack.peek();
+        return (current == null) ? null : lowerTop();
+    }
+    
+    private TreeNode lowerTop() {
+        if (backUpStack.isEmpty) {
+            return null;
+        }
+        
+        TreeNode top = backUpStack.pop();
+        
+        TreeNode result = backUpStack.isEmpty() ? null : backUpStack.peek();
+        
+        backUpStack.push(top);
+        
+        return result;
     }
 }
