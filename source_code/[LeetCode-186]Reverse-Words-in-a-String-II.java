@@ -21,27 +21,29 @@ Link: https://leetcode.com/problems/reverse-words-in-a-string-ii/
 */
 class Solution {
     public void reverseWords(char[] s) {
+        // check corner case
         if (s == null || s.length <= 1) {
             return;
         }
         
-        int size = s.length;
-        reverse(s, 0, size - 1);
+        int lastPos = s.length - 1;
+        // reverse the whole string
+        reverse(s, 0, lastPos);
         
+        // reverse each word
         int start = 0;
-        for (int i = 0; i < size; i++) {
-            if (s[i] == ' ') {
-                reverse(s, start, i - 1);
-                start = i + 1;
-            }
-            
-            if (i == size -1) {
-                reverse(s, start, i);
+        int end = -1;
+        for (int i = 0; i <= lastPos; i++) {
+            if (s[i] == ' ' || i == lastPos) {
+                end = (s[i] == ' ') ? i - 1 : i;
+                reverse(s, start, end);
+                
+                start = i + 1;// process next word
             }
         }
     }
     
-    // helper
+    // helper method
     private void reverse(char[] chars, int i, int j) {
         if (i >= j) {
             return;
@@ -51,6 +53,7 @@ class Solution {
             char tmp = chars[i];
             chars[i] = chars[j];
             chars[j] = tmp;
+            
             i++;
             j--;
         }
