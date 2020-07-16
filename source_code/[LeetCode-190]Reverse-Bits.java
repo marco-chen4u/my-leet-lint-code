@@ -40,3 +40,21 @@ public class Solution {
         return result;
     }
 }
+
+//solution-2:
+public class Solution {
+    /**
+     * @param n: an integer
+     * @return: return an integer
+     */
+    public int reverseBits(int n) {
+        
+        int result = 0;
+        for (int i = 0; i < 32; i++) {
+            result = (result << 1) | (n & 1);
+            n = n >> 1;
+        }
+        
+        return result;
+    }
+}
