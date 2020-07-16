@@ -76,3 +76,36 @@ public class Solution {
         return value;
     }
 }
+
+// solution-2
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> result = new ArrayList<String>();
+        if (s == null || s.length() < 10) {
+            return result;
+        }
+        
+        int size = s.length();
+        Set<String> set = new HashSet<>();
+        Set<String> repeatedDnaSet = new HashSet<>();
+        
+        int start = 0;
+        for (int i = 9; i < size; i++) {
+            String dnaSeq = s.substring(start, i + 1);
+            
+            if (set.contains(dnaSeq)) {
+                if (!repeatedDnaSet.contains(dnaSeq)) {
+                    repeatedDnaSet.add(dnaSeq);
+                    result.add(dnaSeq);
+                }
+            }
+            else {
+                set.add(dnaSeq);
+            }// if else
+            
+            start++;
+        }// for 
+        
+        return result;
+    }
+}
