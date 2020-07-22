@@ -45,12 +45,57 @@ Note
  * }
  */
 
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+ 
+class ResultType {
+    // fields
+    public int rob;//max money to get when current house in robbed state
+    public int notRob;// max money to get when current house in not robbed state
+    
+    // constructor
+    public ResultType() {
+        this.rob = 0;
+        this.notRob = 0;
+    }
+}
+
 public class Solution {
     /**
      * @param root: The root of binary tree.
      * @return: The maximum amount of money you can rob tonight
      */
     public int houseRobber3(TreeNode root) {
-        // write your code here
+        ResultType result = visit(root);
+        return Math.max(result.rob, result.notRob);
+    }
+    
+    // helper method
+    private ResultType visit(TreeNode node) {
+        ResultType result = new ResultType();
+        // check corner case
+        if (node == null) {
+            return result;
+        }
+        
+        ResultType left = visit(node.left);
+        ResultType right = visit(node.right);
+        
+        // if current house robed
+        result.rob = node.val + left.notRob + right.notRob;
+        
+        // if current house not robbed
+        result.notRob = Math.max(left.rob, left.notRob) + Math.max(right.rob, right.notRob);
+        
+        return result;
     }
 }
