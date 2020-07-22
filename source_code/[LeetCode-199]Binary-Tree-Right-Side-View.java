@@ -43,7 +43,7 @@ class Solution {
         
         while (!queue.isEmpty()) {
             int size = queue.size();
-            int last = size - 1;
+            int lastValue = - 1;
             for (int i = 0; i < size; i++) {
                 TreeNode current = queue.poll();
                 
@@ -55,10 +55,10 @@ class Solution {
                     queue.offer(current.left);
                 }
                 
-                if (current.right != null) {
-                    queue.offer(current.right);
-                }
+                lastValue = current.val;
             }
+            
+            result.add(lastValue);
         }
         
         return result;
