@@ -28,7 +28,7 @@ Example:
  *     }
  * }
  */
-//solution: BFS, level orientation traversal of the binary tree
+//solution-1: BFS, level orientation traversal of the binary tree
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<Integer>();
@@ -62,5 +62,35 @@ class Solution {
         }
         
         return result;
+    }
+}
+
+//solution-2: DFS
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        // check corner case
+        if (root == null) {
+            return result;
+        }
+        
+        traverse(result, root, 0);
+        
+        return result;
+    }
+    
+    // helper method
+    private void traverse(List<Integer> result, TreeNode node, int height) {
+        // check corner case
+        if (node == null) {
+            return;
+        }
+        
+        if (result.size() <= height) {
+            result.add(node.val);
+        }
+        
+        traverse(result, node.right, height + 1);
+        traverse(result, node.left, height + 1);
     }
 }
