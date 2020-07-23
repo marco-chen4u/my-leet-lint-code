@@ -3,14 +3,14 @@
 Count the number of prime numbers less than a non-negative number, n.
 
 Example
-	Example 1：
-		Input: n = 2
-		Output: 0
+    Example 1：
+        Input: n = 2
+        Output: 0
 
-	Example 2：
-		Input: n = 4
-		Output: 2
-		Explanation：2, 3 are prime number
+    Example 2：
+        Input: n = 4
+        Output: 2
+        Explanation：2, 3 are prime number
 ***/
 public class Solution {
     /**
@@ -19,11 +19,13 @@ public class Solution {
      */
     public int countPrimes(int n) {
         int count = 0;
+
         // check corner case
         if (n <= 2) {
             return count;
         }
         
+        // regualur case
         for (int i = 2; i < n; i++) {
             count += isPrimeNumber(i) ? 1 : 0;
         }
