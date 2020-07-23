@@ -28,6 +28,7 @@ class Solution {
             return (head.val == val) ? null : head;
         }
         
+        // regular case
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
         ListNode pre = dummy;
