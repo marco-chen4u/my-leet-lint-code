@@ -21,6 +21,8 @@ Example 3:
 
 Note:
     You may assume both s and t have the same length.
+
+Link: https://leetcode.com/problems/isomorphic-strings/
 ***/
 //solution1: HashMap
 public class Solution {
@@ -91,8 +93,8 @@ class Solution {
         int size = s.length();
         char[] sCharArray = s.toCharArray();
         char[] tCharArray = t.toCharArray();
-        Arrays.fill(map, 0);
         
+        Arrays.fill(map, 0);
         for (int i = 0; i < size; i++) {
             int sIndex = sCharArray[i];
             int tValue = tCharArray[i];
