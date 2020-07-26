@@ -2,31 +2,31 @@
 * LintCode 442. Implement Trie (Prefix Tree)
 Implement a Trie with insert, search, and startsWith methods.
 Example
-	Example 1:
-		Input:
-		  insert("lintcode")
-		  search("lint")
-		  startsWith("lint")
-		Output:
-		  false
-		  true
-	Example 2:
-		Input:
-		  insert("lintcode")
-		  search("code")
-		  startsWith("lint")
-		  startsWith("linterror")
-		  insert("linterror")
-		  search("lintcode)
-		  startsWith("linterror")
-		Output:
-		  false
-		  true
-		  false
-		  true
-		  true  
+    Example 1:
+        Input:
+            insert("lintcode")
+            search("lint")
+            startsWith("lint")
+        Output:
+            false
+            true
+    Example 2:
+        Input:
+            insert("lintcode")
+            search("code")
+            startsWith("lint")
+            startsWith("linterror")
+            insert("linterror")
+            search("lintcode)
+            startsWith("linterror")
+        Output:
+            false
+            true
+            false
+            true
+            true  
 Notice
-	You may assume that all inputs are consist of lowercase letters a-z.
+    You may assume that all inputs are consist of lowercase letters a-z.
 ***/
 public class Trie {
     // inner class
