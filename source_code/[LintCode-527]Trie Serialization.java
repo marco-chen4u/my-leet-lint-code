@@ -12,24 +12,24 @@ new_trie = deserialize(str)
 // The new tree should be identical to the old one
 
 Example
-	Example 1:
-		Input: <a<b<e<>>c<>d<f<>>>>
-		Output: <a<b<e<>>c<>d<f<>>>>
-		Explanation:
-			The trie is look like this.
-				 root
-				  /
-				 a
-			   / | \
-			  b  c  d
-			 /       \
-			e         f
-	Example 2:
-		Input: <a<>>
-		Output: <a<>>
-		
+    Example 1:
+        Input: <a<b<e<>>c<>d<f<>>>>
+        Output: <a<b<e<>>c<>d<f<>>>>
+        Explanation:
+            The trie is look like this.
+                 root
+                  /
+                 a
+               / | \
+              b  c  d
+             /       \
+            e         f
+    Example 2:
+        Input: <a<>>
+        Output: <a<>>
+	
 Notice
-	You don't have to serialize like the test data, you can design your own format.
+    You don't have to serialize like the test data, you can design your own format.
 ***/
 /**
  * Definition of TrieNode:
@@ -43,13 +43,12 @@ Notice
 
 
 class Solution {
-	// fields
-	private final char SEPERATOR_START = '<';
-	private final char SEPERATOR_END = '>';
-	
-	private final String EMPTY = "<>";
-	
-	
+    // fields
+    private final char SEPERATOR_START = '<';
+    private final char SEPERATOR_END = '>';
+
+    private final String EMPTY = "<>";
+
     /**
      * This method will be invoked first, you should design your own algorithm 
      * to serialize a trie which denote by a root node to a string which
@@ -57,21 +56,21 @@ class Solution {
      */
     public String serialize(TrieNode root) {
         String result = "";
-		
-		if (root == null || root.children == null || root.children.isEmpty()) {
-			return result;
-		}
-		
-		result += SEPERATOR_START;
-		for (Map.Entry<Character, TrieNode> entry : root.children.entrySet()) {
-			char key = entry.getKey();
-			TrieNode value = entry.getValue();
-			
-			result += key + serialize(value);
-		}
-		result += SEPERATOR_END;
-		
-		return result;
+
+        if (root == null || root.children == null || root.children.isEmpty()) {
+            return result;
+        }
+
+        result += SEPERATOR_START;
+        for (Map.Entry<Character, TrieNode> entry : root.children.entrySet()) {
+            char key = entry.getKey();
+            TrieNode value = entry.getValue();
+
+            result += key + serialize(value);
+        }
+        result += SEPERATOR_END;
+
+        return result;
     }
 
     /**
@@ -83,29 +82,29 @@ class Solution {
      */
     public TrieNode deserialize(String data) {
         // check corner case
-		if (data == null || data.length() == 0) {
-			return null;
-		}
-		
-		TrieNode root = new TrieNode();
-		Stack<TrieNode> stack = new Stack<TrieNode>();
-		
-		TrieNode current = root;		
-		for (char ch : data.toCharArray()) {
-			switch (ch) {
-				case SEPERATOR_START: 
-					stack.push(current);
-					break;
-				case SEPERATOR_END:
-					stack.pop();
-					break;
-				default:
-					TrieNode node = new TrieNode();
-					stack.peek().children.put(ch, node);
-					current = node;
-			}
-		}
-		
-		return root;
+        if (data == null || data.length() == 0) {
+            return null;
+        }
+
+        TrieNode root = new TrieNode();
+        Stack<TrieNode> stack = new Stack<TrieNode>();
+
+        TrieNode current = root;		
+        for (char ch : data.toCharArray()) {
+            switch (ch) {
+                case SEPERATOR_START: 
+                    stack.push(current);
+                    break;
+                case SEPERATOR_END:
+                    stack.pop();
+                    break;
+                default:
+                    TrieNode node = new TrieNode();
+                    stack.peek().children.put(ch, node);
+                    current = node;
+            }
+        }
+
+        return root;
     }
 }
