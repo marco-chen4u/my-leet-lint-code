@@ -41,7 +41,6 @@ Notice
  * }
  */
 
-
 class Solution {
     // fields
     private final char SEPERATOR_START = '<';
