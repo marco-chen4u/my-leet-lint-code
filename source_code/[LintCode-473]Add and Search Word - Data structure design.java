@@ -6,40 +6,43 @@ search(word) can search a literal word or a regular expression string containing
 A . means it can represent any one letter.
 
 Example
-	Example 1:
-		Input:
-		  addWord("a")
-		  search(".")
-		Output:
-		  true
-	Example 2:
-		Input:
-		  addWord("bad")
-		  addWord("dad")
-		  addWord("mad")
-		  search("pad")  
-		  search("bad")  
-		  search(".ad")  
-		  search("b..")  
-		Output:
-		  false
-		  true
-		  true
-		  true
+    Example 1:
+        Input:
+          addWord("a")
+          search(".")
+        Output:
+          true
+    Example 2:
+        Input:
+          addWord("bad")
+          addWord("dad")
+          addWord("mad")
+          search("pad")  
+          search("bad")  
+          search(".ad")  
+          search("b..")  
+        Output:
+          false
+          true
+          true
+          true
 Notice
-	You may assume that all words are consist of lowercase letters a-z.
+    You may assume that all words are consist of lowercase letters a-z.
 ***/
 class TrieNode {
     //fields
     Map<Character, TrieNode> children;
     boolean isEndOfWord;
+
     // constructor
     public TrieNode() {
         children = new HashMap<Character, TrieNode>();
         isEndOfWord = false;
     }
 }
+
 public class WordDictionary {
+    // field
     private TrieNode root = new TrieNode();
     
     /*
