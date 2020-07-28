@@ -115,7 +115,6 @@ public class WordDictionary {
 
 //solution-2: TrieNode with Array
 class WordDictionary {
-    
     // inner class
     class TrieNode {
         // fields
@@ -123,18 +122,18 @@ class WordDictionary {
         boolean isEndOfWord;
         
         // constructor
-        TrieNode() {
+        public TrieNode() {
             this.children = new TrieNode[26];
             this.isEndOfWord = false;
         }
-    }
+    } 
     
     // field
     TrieNode root;
-
+    
     /** Initialize your data structure here. */
     public WordDictionary() {
-        root = new TrieNode();
+        this.root = new TrieNode();
     }
     
     /** Adds a word into the data structure. */
@@ -144,11 +143,10 @@ class WordDictionary {
         }
         
         TrieNode node = root;
-        for ( char ch : word.toCharArray()) {
+        for (char ch : word.toCharArray()) {
             if (node.children[ch - 'a'] == null) {
                 node.children[ch - 'a'] = new TrieNode();
             }
-            
             node = node.children[ch - 'a'];
         }
         
@@ -157,7 +155,6 @@ class WordDictionary {
     
     /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
     public boolean search(String word) {
-        // check corner case
         if (word == null || word.isEmpty()) {
             return false;
         }
@@ -167,44 +164,30 @@ class WordDictionary {
     
     // helper method
     private boolean search(String word, TrieNode node, int index) {
-        // check corner case
-        if (index == word.length()) {
+        // check corner cases
+        if (node == null) {
+            return false;
+        }
+        
+        if (word.length() == index) {
             return node.isEndOfWord;
         }
         
         // regular case
-        char key = word.charAt(index);
-        
-        if (key != '.') {
-            node = node.children[key - 'a'];
-            if (node == null) {
-                return false;
-            }
+        char current = word.charAt(index);
+        if (current != '.') {
+            TrieNode next = node.children[current - 'a'];
             
-            return search(word, node, index + 1);
+            return search(word, next, index + 1);
         }
         
         for (TrieNode next : node.children) {
-            if (next == null) {
-                continue;
-            }
-            
             if (search(word, next, index + 1)) {
                 return true;
             }
         }
         
         return false;
-    }
-    
-    boolean isEmpty(TrieNode[] children) {
-        for (TrieNode node : children) {
-            if (node != null) {
-                return false;
-            }
-        }
-        
-        return true;
     }
 }
 
