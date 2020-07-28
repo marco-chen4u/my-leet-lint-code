@@ -85,11 +85,7 @@ public class WordDictionary {
     private boolean search(String word, TrieNode node, int index) {
         // check corner case
         if (index == word.length()) {
-            if (node.children.isEmpty()) {
-                return true;
-            }
-            
-            return false;
+            return node.isEndOfWord;
         }
         
         // normal case
@@ -99,26 +95,18 @@ public class WordDictionary {
         if (key == '.') {
             for (Map.Entry<Character, TrieNode> entry : children.entrySet()) {
                 // corner case
-                if ((index == word.length() - 1) && 
-                        (entry.getValue().isEndOfWord)) {
-                    return true;
-                }
+                TrieNode next = entry.getValue();
                 
-                if (search(word, entry.getValue(), index + 1)) {
+                if (search(word, next, index + 1)) {
                     return true;
                 }
             }
         }
         
         if (children.containsKey(key)) {
-            node = children.get(key);
+            TrieNode next = children.get(key);
             
-            //corner case
-            if ((index == word.length() - 1) && node.isEndOfWord) {
-                return true;
-            }
-            
-            return search(word, node, index + 1);
+            return search(word, next, index + 1);
         }
         
         return false;
@@ -181,7 +169,7 @@ class WordDictionary {
     private boolean search(String word, TrieNode node, int index) {
         // check corner case
         if (index == word.length()) {
-            return isEmpty(node.children);
+            return node.isEndOfWord;
         }
         
         // regular case
@@ -189,13 +177,8 @@ class WordDictionary {
         
         if (key != '.') {
             node = node.children[key - 'a'];
-            
             if (node == null) {
                 return false;
-            }
-            
-            if (index == word.length() - 1 && node.isEndOfWord) {
-                return true;
             }
             
             return search(word, node, index + 1);
@@ -204,10 +187,6 @@ class WordDictionary {
         for (TrieNode next : node.children) {
             if (next == null) {
                 continue;
-            }
-            
-            if (index == word.length() - 1 && next.isEndOfWord) {
-                return true;
             }
             
             if (search(word, next, index + 1)) {
