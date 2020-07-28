@@ -29,6 +29,7 @@ Example
 Notice
     You may assume that all words are consist of lowercase letters a-z.
 ***/
+//solution-1: TrieNode with HashMap
 class TrieNode {
     //fields
     Map<Character, TrieNode> children;
@@ -123,3 +124,114 @@ public class WordDictionary {
         return false;
     }
 }
+
+//solution-2: TrieNode with Array
+class WordDictionary {
+    
+    // inner class
+    class TrieNode {
+        // fields
+        TrieNode[] children;
+        boolean isEndOfWord;
+        
+        // constructor
+        TrieNode() {
+            this.children = new TrieNode[26];
+            this.isEndOfWord = false;
+        }
+    }
+    
+    // field
+    TrieNode root;
+
+    /** Initialize your data structure here. */
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+    
+    /** Adds a word into the data structure. */
+    public void addWord(String word) {
+        if (word == null || word.isEmpty()) {
+            return;
+        }
+        
+        TrieNode node = root;
+        for ( char ch : word.toCharArray()) {
+            if (node.children[ch - 'a'] == null) {
+                node.children[ch - 'a'] = new TrieNode();
+            }
+            
+            node = node.children[ch - 'a'];
+        }
+        
+        node.isEndOfWord = true;
+    }
+    
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    public boolean search(String word) {
+        // check corner case
+        if (word == null || word.isEmpty()) {
+            return false;
+        }
+        
+        return search(word, root, 0);
+    }
+    
+    // helper method
+    private boolean search(String word, TrieNode node, int index) {
+        // check corner case
+        if (index == word.length()) {
+            return isEmpty(node.children);
+        }
+        
+        // regular case
+        char key = word.charAt(index);
+        
+        if (key != '.') {
+            node = node.children[key - 'a'];
+            
+            if (node == null) {
+                return false;
+            }
+            
+            if (index == word.length() - 1 && node.isEndOfWord) {
+                return true;
+            }
+            
+            return search(word, node, index + 1);
+        }
+        
+        for (TrieNode next : node.children) {
+            if (next == null) {
+                continue;
+            }
+            
+            if (index == word.length() - 1 && next.isEndOfWord) {
+                return true;
+            }
+            
+            if (search(word, next, index + 1)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    boolean isEmpty(TrieNode[] children) {
+        for (TrieNode node : children) {
+            if (node != null) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord(word);
+ * boolean param_2 = obj.search(word);
+ */
