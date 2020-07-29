@@ -54,24 +54,24 @@ public class Solution {
         
         // methods
         public void insert(String word) {
-			// check corner case
-			if (word == null || word.length() == 0) {
-				return;
-			}
-			
+            // check corner case
+            if (word == null || word.length() == 0) {
+                return;
+            }
+
             TrieNode node = root;
-            
+
             for (char ch : word.toCharArray()) {
                 Map<Character, TrieNode> children = node.children;
                 children.putIfAbsent(ch, new TrieNode());
                 node = children.get(ch);
             }
-            
+
             node.isEndOfWord = true;
             node.word = word;
         }
     }
-    
+
     // fields
     private final int[] DIRECTION_X = new int[] {0, 1, -1, 0};
     private final int[] DIRECTION_Y = new int[] {1, 0, 0, -1};
@@ -100,7 +100,7 @@ public class Solution {
         for (String word : words) {
             tree.insert(word);
         }
-        
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 visited[i][j] = true;
@@ -108,10 +108,10 @@ public class Solution {
                 visited[i][j] = false;
             }
         }
-        
+
         return result;
     }
-    
+
     // helper method
     private void search(List<String> result, char[][] board, int i, int j, 
                             boolean[][] visited, TrieNode node) {
@@ -119,12 +119,12 @@ public class Solution {
         if (node == null) {
             return;
         }
-        
+
         Map<Character, TrieNode> children = node.children;
         if (!children.containsKey(board[i][j])) {
             return;
         }
-        
+
         TrieNode child = children.get(board[i][j]);
         
         if ((child.isEndOfWord && child.word != null) && 
