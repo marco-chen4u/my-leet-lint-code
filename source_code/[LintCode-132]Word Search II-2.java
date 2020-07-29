@@ -182,6 +182,7 @@ class Solution {
             return result;
         }
         
+	// regular case
         this.root = new TrieNode();
         
         for (String word : words) {
@@ -230,6 +231,7 @@ class Solution {
             
         }
         
+	// regular case
         for (int i = 0; i < 4; i++) {
             int nextX = x + NEXT_X[i];
             int nextY = y + NEXT_Y[i];
