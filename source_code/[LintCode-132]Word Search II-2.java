@@ -206,7 +206,7 @@ class Solution {
         return result;
     }
     
-    // helper method
+    // helper methods
     private void search(List<String> result, char[][] board,
                         TrieNode node, String testString, 
                         boolean[][] visited,
