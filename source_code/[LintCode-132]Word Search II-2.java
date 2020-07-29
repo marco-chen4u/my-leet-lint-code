@@ -27,7 +27,7 @@ Example 2:
             a
         search in Matrix，return null.
 ***/
-// version-2 : Trie data structure
+// version-2 : Trie data structure with HashMap
 public class Solution {
     // inner classes
     class TrieNode {
@@ -146,5 +146,132 @@ public class Solution {
             search(result, board, x, y, visited, child);
             visited[x][y] = false;
         }
+    }
+}
+
+class TrieNode {
+    // fields
+    TrieNode[] children;
+    boolean isEndOfWord;
+    String word;
+    
+    // constructor
+    public TrieNode() {
+        this.children = new TrieNode[26];
+        this.isEndOfWord = false;
+        this.word = null;
+    }
+}
+
+//version-3: Trie data structur with Array(prefered)
+class Solution {
+    // fields
+    private int n; // row size
+    private int m; // column size
+    private int[] NEXT_X = new int[] {0, 1, -1, 0};
+    private int[] NEXT_Y = new int[] {1, 0, 0, -1};
+    private TrieNode root;
+    
+    public List<String> findWords(char[][] board, String[] words) {
+        List<String> result = new ArrayList<>();
+        
+        // check corner case
+        if (board == null || board.length == 0 ||
+            board[0] == null || board[0].length == 0 ||
+            words == null || words.length == 0) {
+            return result;
+        }
+        
+        this.root = new TrieNode();
+        
+        for (String word : words) {
+            this.insert(word);
+        }
+        
+        this.n = board.length;   // row size
+        this.m = board[0].length;// column size
+        
+        boolean[][] visited = new boolean[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                visited[i][j] = true;
+                search(result, board, 
+                       root, String.valueOf(board[i][j]),
+                       visited,
+                       i, j);
+                visited[i][j] = false;
+            }
+        }
+        
+        return result;
+    }
+    
+    // helper method
+    private void search(List<String> result, char[][] board,
+                        TrieNode node, String testString, 
+                        boolean[][] visited,
+                        int x, int y) {
+        // check corner cases
+        if (node == null) {
+            return;
+        }
+        
+        char currentChar = board[x][y];
+        TrieNode currentNode = node.children[currentChar - 'a'];
+        if (currentNode == null) {
+            return;
+        }
+        
+        if (currentNode.isEndOfWord && !isEmptyStr(currentNode.word)) {
+            
+            if (!result.contains(testString)) {
+                result.add(testString);
+            }
+            
+        }
+        
+        for (int i = 0; i < 4; i++) {
+            int nextX = x + NEXT_X[i];
+            int nextY = y + NEXT_Y[i];
+            
+            if (!inBound(nextX, nextY) || visited[nextX][nextY]) {
+                continue;
+            }
+            
+            visited[nextX][nextY] = true;
+            search(result, board, 
+                   currentNode, testString + board[nextX][nextY], 
+                   visited, 
+                   nextX, nextY);
+            visited[nextX][nextY] = false;
+        }
+    }
+    
+    private boolean isEmptyStr(String str) {
+        return str == null || str.isEmpty();
+    }
+    
+    private boolean inBound(int x, int y) {
+        return x >=0 && x < n &&
+                y >= 0 && y < m;
+    }
+    
+    // for tire operation, trie data strcuture is equivalent to HashMap which is better than the latter as for storage. 
+    private void insert(String word) {
+        if (word == null || word.isEmpty()) {
+            return;
+        }
+        
+        TrieNode node = root;
+        for (char ch : word.toCharArray()) {
+            if (node.children[ch - 'a'] == null) {
+                node.children[ch - 'a'] = new TrieNode();
+            }
+            
+            node = node.children[ch - 'a'];
+        }
+        
+        node.isEndOfWord = true;
+        node.word = word;
     }
 }
