@@ -20,6 +20,55 @@ Example
 Notice
     This is an extension of House Robber.
 ***/
+/***
+* 这属于序列型动态规划问题
+***/
+//version-1: DP with Array
+class Solution {
+    /**
+     * @param nums: An array of non-negative integers.
+     * @return: The maximum amount of money you can rob tonight
+     */
+    public int houseRobber2(int[] nums) {
+        // check corner case
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        
+        int size = nums.length;
+        int last = size - 1;
+        
+        return Math.max(rob(nums, 0, last - 1), rob(nums, 1, last));
+    }
+    
+    // helper method
+    private int rob(int[] nums, int startIndex, int endIndex) {
+        // check corner cases
+        if (startIndex >= endIndex) {
+            return nums[startIndex];
+        }
+        
+        int n = endIndex - startIndex + 1;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, 0);
+        
+        dp[0] = 0;
+        dp[1] = nums[startIndex];
+        
+        for (int i = 2; i <=n; i++) {
+            dp[i] = dp[i - 1];
+            int current = nums[startIndex + i - 1];
+            dp[i] = Math.max(dp[i], dp[i - 2] + current);
+        }
+        
+        return dp[n];
+    }
+}
+//version-2: dp with rotated Array
 public class Solution {
     /**
      * @param nums: An array of non-negative integers.
@@ -64,7 +113,7 @@ public class Solution {
     }
 }
 
-//version-2: DP-2 pointers
+//version-3: DP-2 pointers
 public class Solution {
     /**
      * @param nums: An array of non-negative integers.
