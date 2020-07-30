@@ -71,7 +71,11 @@ class Solution {
 
 //version-2: dp with rotated Array
 class Solution {
-    public int rob(int[] nums) {
+    /**
+     * @param nums: An array of non-negative integers.
+     * @return: The maximum amount of money you can rob tonight
+     */
+    public int houseRobber2(int[] nums) {
         // check corner case
         if (nums == null || nums.length == 0){
             return 0;
