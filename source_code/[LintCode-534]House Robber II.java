@@ -68,7 +68,50 @@ class Solution {
         return dp[n];
     }
 }
+
 //version-2: dp with rotated Array
+class Solution {
+    public int rob(int[] nums) {
+        // check corner case
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        
+        int size = nums.length;
+        int last = size - 1;
+        
+        return Math.max(rob(nums, 0, last - 1), rob(nums, 1, last));
+    }
+    
+    // helper method
+    private int rob(int[] nums, int startIndex, int endIndex) {
+        // check corner cases
+        if (startIndex >= endIndex) {
+            return nums[startIndex];
+        }
+        
+        int n = endIndex - startIndex + 1;
+        int[] dp = new int[3];
+        Arrays.fill(dp, 0);
+        
+        dp[0] = 0;
+        dp[1] = nums[startIndex];
+        
+        for (int i = 2; i <=n; i++) {
+            dp[i%3] = dp[(i - 1)%3];
+            int current = nums[startIndex + i - 1];
+            dp[i%3] = Math.max(dp[i%3], dp[(i - 2)%3] + current);
+        }
+        
+        return dp[n%3];
+    }
+}
+
+//version-3: dp with rotated Array
 public class Solution {
     /**
      * @param nums: An array of non-negative integers.
@@ -113,7 +156,7 @@ public class Solution {
     }
 }
 
-//version-3: DP-2 pointers
+//version-4: DP-2 pointers
 public class Solution {
     /**
      * @param nums: An array of non-negative integers.
