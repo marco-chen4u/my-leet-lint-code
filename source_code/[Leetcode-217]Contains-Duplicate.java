@@ -56,3 +56,16 @@ class Solution {
     }
 }
 
+// solution-3: Java8 Stream only working in IDE
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        // check corner case
+        if (nums == null || nums.length <= 1) {
+            return false;
+        }
+        
+        Set<Integer> set = Arrays.stream(nums).collect(Collectors.toSet());
+        
+        return nums.length != set.size();
+    }
+}
