@@ -4,25 +4,25 @@
 Find K-th largest element in an array.
 
 Example
-	Example 1:
-		Input:
-			n = 1, nums = [1,3,4,2]
-		Output:
-			4
+    Example 1:
+        Input:
+            n = 1, nums = [1,3,4,2]
+        Output:
+            4
 
-	Example 2:
-		Input:
-			n = 3, nums = [9,3,2,4,8]
-		Output:
-			4
+    Example 2:
+        Input:
+            n = 3, nums = [9,3,2,4,8]
+        Output:
+            4
 
 Challenge
-	O(n) time, O(1) extra memory.
+    O(n) time, O(1) extra memory.
 
 Notice
-	You can swap elements in the array
+    You can swap elements in the array
 ***/
-//version-1
+//version-1: quick select
 public class Solution {
     
     /**
@@ -86,7 +86,7 @@ public class Solution {
     }
 }
 
-//version-2
+//version-2: quick select
 public class Solution {
     /**
      * @param n: An integer
@@ -146,5 +146,27 @@ public class Solution {
         else {
             return nums[k];
         }
+    }
+}
+
+//version-3: minHeap
+class Solution {
+    /**
+     * @param nums: An array
+     * @param k: An integer
+     * @return: the Kth largest element
+     */
+    public int findKthLargest(int[] nums, int k) {
+        Queue<Integer> minHeap = new PriorityQueue<>(k);
+        
+        for (int num : nums) {
+            minHeap.offer(num);
+            
+            if (minHeap.size() > k) {
+                minHeap.poll();
+            }
+        }
+        
+        return minHeap.peek();
     }
 }
