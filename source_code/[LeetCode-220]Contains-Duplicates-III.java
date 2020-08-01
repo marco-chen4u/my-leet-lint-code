@@ -43,7 +43,34 @@ class Solution {
     }
 }
 
-//solution-2: sliding window, with Map<ArrayElelementValue, ArrayIndexPos> key pair. feasible but with Time Limit Exceeded
+//solution-2: two pointer with sliding window
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        // check corner case
+        if (nums == null || nums.length == 0 || 
+            k == 0 || t < 0) {
+            return false;
+        }
+        
+        int size = nums.length;
+        int last = size - 1;
+        for (int i = 0; i < size - 1; i++) {
+            int j = i + 1;
+            while (j > i && j < size && j - i <= k) {
+                long diff = Math.abs((long)nums[j] - (long)nums[i]);
+                if (diff <= t) {
+                    return true;
+                }
+                
+                j++;
+            }
+        }
+        
+        return false;
+    }
+}
+
+//solution-3: sliding window, with Map<ArrayElelementValue, ArrayIndexPos> key pair. feasible but with Time Limit Exceeded
 class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
         // check corener cases
@@ -87,5 +114,5 @@ class Solution {
     }
 }
 
-//solution-3: sliding windows + bucket selection
+//solution-4: sliding windows + bucket selection
 ...
