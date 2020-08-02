@@ -54,3 +54,41 @@ class Solution {
         
     }
 }
+
+//solution-2: recursion
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        // check corner case
+        if (k == 0 || n < 1) {
+            return result;
+        }
+        
+        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+        
+        search(result, new ArrayList<Integer>(), nums, 0, k, n);
+        
+        return result;
+    }
+    
+    // helper method
+    private void search(List<List<Integer>> result, List<Integer> list, 
+                        int[] nums, int startIndex, 
+                        int k, int sum) {
+        // check corner cases
+        if (list.size() == k && sum == 0) {
+            result.add(new ArrayList<Integer>(list));
+            return;
+        }
+        
+        if (list.size() > k || sum < 0 || startIndex > 8) {
+            return;
+        }
+        
+        for (int i = startIndex; i < 9; i++) {
+            list.add(nums[i]);
+            search(result, list, nums, i + 1, k, sum - nums[i]);
+            list.remove(list.size() - 1);
+        }
+    }
+}
