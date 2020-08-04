@@ -44,7 +44,7 @@ Example
 * 时间复杂度O(m * n)， 空间复杂度O(m * n),空间复杂度可以优化为O(n) 
 */
 
-//version-1: DP
+// solution-1: DP
 public class Solution {
     /**
      * @param matrix: a matrix of 0 and 1
@@ -90,7 +90,7 @@ public class Solution {
     }
 }
 
-// version-2: DP
+// solution-2: DP
 public class Solution {
     /**
      * @param matrix: a matrix of 0 and 1
@@ -148,7 +148,7 @@ public class Solution {
     }
 }
 
-// version-3: rotated Array and DP
+// solution-3: rotated Array and DP
 public class Solution {
     /**
      * @param matrix: a matrix of 0 and 1
@@ -202,5 +202,40 @@ public class Solution {
         }
         
         return length * length;
+    }
+}
+
+// solution-4: more elegant code but similar to solution-1
+public class Solution {
+    /**
+     * @param matrix: a matrix of 0 and 1
+     * @return: an integer
+     */
+    public int maxSquare(int[][] matrix) {
+        // check corner case
+        if (matrix == null || matrix.length == 0 ||
+            matrix[0] == null || matrix[0].length == 0) {
+            return 0;
+        }
+        
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        int maxLength = 0;
+        int[][] dp = new int[n + 1][m + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (matrix[i - 1][j - 1] == 0) {
+                    continue;
+                }
+                
+                dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                
+                maxLength = Math.max(maxLength, dp[i][j]);
+            }
+        }
+        
+        return maxLength * maxLength;
+        
     }
 }
