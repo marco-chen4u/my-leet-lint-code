@@ -43,6 +43,7 @@ Example
 *
 * 时间复杂度O(m * n)， 空间复杂度O(m * n),空间复杂度可以优化为O(n) 
 */
+
 //version-1: DP
 public class Solution {
     /**
@@ -89,7 +90,6 @@ public class Solution {
     }
 }
 
-/***LintCode 436. Maximal Square***/
 // version-2: DP
 public class Solution {
     /**
@@ -148,7 +148,6 @@ public class Solution {
     }
 }
 
-/***LintCode 436. Maximal Square***/
 // version-3: rotated Array and DP
 public class Solution {
     /**
