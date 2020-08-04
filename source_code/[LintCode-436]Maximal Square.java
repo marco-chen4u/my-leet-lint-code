@@ -3,22 +3,22 @@
 Given a 2D binary matrix filled with 0's and 1's, 
 find the largest square containing all 1's and return its area.
 Example
-	Example 1:
-		Input:
-			[
-			  [1, 0, 1, 0, 0],
-			  [1, 0, 1, 1, 1],
-			  [1, 1, 1, 1, 1],
-			  [1, 0, 0, 1, 0]
-			]
-		Output: 4
-	Example 2:
-		Input:
-			[
-			  [0, 0, 0],
-			  [1, 1, 1]
-			]
-		Output: 1
+    Example 1:
+        Input:
+            [
+              [1, 0, 1, 0, 0],
+              [1, 0, 1, 1, 1],
+              [1, 1, 1, 1, 1],
+              [1, 0, 0, 1, 0]
+            ]
+        Output: 4
+    Example 2:
+        Input:
+            [
+              [0, 0, 0],
+              [1, 1, 1]
+            ]
+        Output: 1
 ***/
 /*
 * 像这类型（长方形，正方形面积问题）的跟序列型问题差不多，突破口是看最后一个点（长方形、正方形的最后一个点是其右下角的那个点，序列则是最右一个点），从此点最为最后一步进行分析 
