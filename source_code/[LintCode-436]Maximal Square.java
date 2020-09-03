@@ -239,3 +239,64 @@ public class Solution {
         
     }
 }
+
+
+// solution-5: BFS(leetcode)
+TBD
+
+// solution-6: Monotonic stack(LeetCode)
+class Solution {
+    public int maximalSquare(char[][] matrix) {
+        // check corner case
+        if (matrix == null || matrix.length == 0 || 
+            matrix[0] == null || matrix[0].length == 0) {
+            return 0;
+        }
+        
+        int m = matrix.length;// row size
+        int n = matrix[0].length; // column size
+        
+        int[] heights = new int[n];
+        int max = 0;
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                heights[j] = (matrix[i][j] != '1') ? 0 : heights[j] + 1;
+            }
+            
+            max = Math.max(max, getMaxSquare(heights));
+        }
+        
+        return max;
+    }
+    
+    // helper method
+    private int getMaxSquare(int[] heights) {
+        int size = heights.length;
+        Stack<Integer> stack = new Stack<>();
+        int result = 0;
+        
+        for (int i = 0; i <= size; i++) {
+            int current = (i == size) ? 0 : heights[i];
+            
+            if (stack.isEmpty() || current > heights[stack.peek()]) {
+                stack.push(i);
+            }
+            else {
+                current = heights[stack.pop()];
+                int currentSquare = Math.min(getSquare(current), 
+                    getSquare(stack.isEmpty() ? i : i - stack.peek() - 1));
+                result = Math.max(result, currentSquare);
+                i--;
+            }
+        }// for i
+        
+        return result;
+    }
+    
+    private int getSquare(int size) {
+        return (int)Math.pow(size, 2);
+    }
+    
+}
+
