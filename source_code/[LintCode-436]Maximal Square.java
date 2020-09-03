@@ -242,7 +242,79 @@ public class Solution {
 
 
 // solution-5: BFS(leetcode)
-TBD
+class Solution {
+    // fields
+    private int[] directionX = new int[] {1, 1, 0};
+    private int[] directionY = new int[] {0, 1, 1};
+    private int n; // row size
+    private int m; // column size
+    
+    public int maximalSquare(char[][] matrix) {
+        // check corner cases
+        if (matrix == null || 
+            matrix.length == 0 ||
+            matrix[0] == null || 
+            matrix[0].length == 0) {
+            return 0;
+        }
+        
+        m = matrix.length; // row size
+        n = matrix[0].length; // column size
+        
+        
+        int result = 0;
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                
+                if (matrix[i][j] == '0') {
+                    continue;
+                }
+                
+                int current = bfs(matrix, i, j);
+                result = Math.max(result, current);
+            }
+        }
+        
+        return result;
+    }
+    
+    // helper method
+    private int bfs(char[][] matrix, int x, int y) {
+        Queue<int[]> queue = new LinkedList<>();
+        int maxSquare = 1;
+        int cycle = 1;
+        
+        queue.offer(new int[]{x, y});
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int[] current = queue.poll();
+                
+                for (int index = 0; index < 3; index++) {
+                    int nextX = current[0] + directionX[index];
+                    int nextY = current[1] + directionY[index];
+                    
+                    if (nextX < 0 || nextX >= m || 
+                        nextY < 0 || nextY >= n || 
+                        matrix[nextX][nextY] == '0') {
+                        return maxSquare;
+                    }
+                    
+                    queue.offer(new int[]{nextX, nextY});
+                    
+                }// for index
+                
+            }// for i
+            
+            cycle++;
+            maxSquare = cycle * cycle;
+        }
+        
+        return maxSquare;
+    }
+}
 
 // solution-6: Monotonic stack(LeetCode)
 class Solution {
