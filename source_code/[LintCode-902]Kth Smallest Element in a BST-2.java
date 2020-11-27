@@ -3,14 +3,14 @@
 Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
 
 Example
-	Given root = {1,#,2}, k = 2, return 2.
+    Given root = {1,#,2}, k = 2, return 2.
 
 Challenge
-	What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? 
-	How would you optimize the kthSmallest routine?
+    What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? 
+    How would you optimize the kthSmallest routine?
 
 Notice
-	You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+    You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
 ***/
 /**
  * Definition of TreeNode:
