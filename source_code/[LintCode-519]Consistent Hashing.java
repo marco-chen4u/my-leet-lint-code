@@ -76,12 +76,12 @@ public class Solution {
         machine.add(1); // machine id
         result.add(machine);
         
-		//add new machine and re-allocate the largest token-range make it half to the new adding machine
+	//add new machine and re-allocate the largest token-range make it half to the new adding machine
         for (int i = 1; i < n; i++) {
             int index = 0;
             List<Integer> shardingMachine = result.get(index);
             
-			//[1]to find the largest token-range to be sharded
+	    //[1]to find the largest token-range to be sharded
             for (int j = 0; j < i; j++) {
                 List<Integer> currentMachine = result.get(j);
                 int currentInterval = currentMachine.get(1) - currentMachine.get(0) + 1;
@@ -95,15 +95,15 @@ public class Solution {
                 }
             }
             
-			//[2]after getting the largest token-range, then start sharding and add new machine
-			//[2-A]re-allocate the token-range(frist half) to the original
+	    //[2]after getting the largest token-range, then start sharding and add new machine
+	    //[2-A]re-allocate the token-range(frist half) to the original
             int start = shardingMachine.get(0);// interval start
             int end = shardingMachine.get(1);// interval end
             int mid = (start + end) / 2;
             //shardingMachine.set(0, start);
             shardingMachine.set(1, mid);
             
-			//[2-B]allocate the remaining token-range(second half) to the new adding machine
+	    //[2-B]allocate the remaining token-range(second half) to the new adding machine
             List<Integer> newMachine = new ArrayList<Integer>();
             newMachine.add(mid + 1); // interval start
             newMachine.add(end); // interval end
