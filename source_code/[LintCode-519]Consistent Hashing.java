@@ -9,40 +9,40 @@ There are many ways to implement this algorithm. Here we implement a simple Cons
 	Suppose all the data is on one machine at the beginning. When adding to the nth machine, what is the distribution of the interval and the corresponding machine number?
 
 Example
-	Example 1:
-		Input:
-			n = 1, 
-		Output:
-			[
-			  [0,359,1]
-			]
-		Explanation:
-			represent 0~359 belongs to machine 1.
-	Example 2:
-		Input:
-			n = 2,
-		Output:
-			[
-			  [0,179,1],
-			  [180,359,2]
-			]
-		Explanation:
-			represent 0~179 belongs to machine 1.
-			represent 180~359 belongs to machine 2.
-	Example 3:
-		Input:
-			n = 3,
-		Output:
-			[
-			  [0,89,1]
-			  [90,179,3],
-			  [180,359,2]
-			]
+    Example 1:
+	Input:
+            n = 1, 
+	Output:
+            [
+              [0,359,1]
+            ]
+	Explanation:
+            represent 0~359 belongs to machine 1.
+    Example 2:
+	Input:
+            n = 2,
+	Output:
+            [
+              [0,179,1],
+              [180,359,2]
+            ]
+	Explanation:
+            represent 0~179 belongs to machine 1.
+            represent 180~359 belongs to machine 2.
+    Example 3:
+	Input:
+            n = 3,
+	Output:
+            [
+                [0,89,1]
+                [90,179,3],
+                [180,359,2]
+             ]
 
 Clarification
 If the maximal interval is [x, y], and it belongs to machine id z, 
 when you add a new machine with id n, you should divide [x, y, z] into two intervals:
-	[x, (x + y) / 2, z] and [(x + y) / 2 + 1, y, n]
+    [x, (x + y) / 2, z] and [(x + y) / 2 + 1, y, n]
 
 Notice
 You can assume n <= 360. At the same time, 
