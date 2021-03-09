@@ -6,31 +6,31 @@ There are m Class B items, the volume of the i th Class B item is b[i], and the 
 Find the maximum value can be obtained.
 
 Example
-	Example 1:
-		Given k1 = `3`,k2 = `2`,c = ` 7`,n = `2`,m = `3`,a = `[4,3]`,b = `[1,3,2]`，return `23`.
-		Input:
-			3 2 7 2 3
-			[4,3]
-			[1,3,2]
-		Output:
-			23
-		Explanation:
-			2 * (7-1)+2*(6-2) + 3 * (4-3) = 23
+    Example 1:
+        Given k1 = `3`,k2 = `2`,c = ` 7`,n = `2`,m = `3`,a = `[4,3]`,b = `[1,3,2]`，return `23`.
+        Input:
+            3 2 7 2 3
+            [4,3]
+            [1,3,2]
+        Output:
+            23
+        Explanation:
+            2 * (7-1)+2*(6-2) + 3 * (4-3) = 23
 
-	Example 2:
-		Given k1 = `1`,k2 = `2`,c = ` 5`,n = `1`,m = `1`,a = `[2]`,b = `[1]`，return `10`.
-		Input:
-			1 2 5 1 1
-			[2]
-			[1]
-		Output:
-			10
-		Explanation:
-			2 * (5-1)+1*(4-2) = 10
+    Example 2:
+        Given k1 = `1`,k2 = `2`,c = ` 5`,n = `1`,m = `1`,a = `[2]`,b = `[1]`，return `10`.
+        Input:
+            1 2 5 1 1
+            [2]
+            [1]
+        Output:
+            10
+        Explanation:
+            2 * (5-1)+1*(4-2) = 10
 
 Notice
-	1 <= k1, k2, c, a[i], b[i] <= 10^7
-	1 <= n, m <= 1000
+    1 <= k1, k2, c, a[i], b[i] <= 10^7
+    1 <= n, m <= 1000
 ***/
 /*
 * 证明对于依次放入的两个同类物品，重量必须从小到大。(这个证明，必须理解)
@@ -48,9 +48,9 @@ Notice
 *                得分，取决于前(i + j) - 1个物品，的最大得分。越大越好。要求其最大值，只能寄托于其前（i + j）-1个物品的子问题求其最大值。
 *        设dp[i][j]，表示取A类物品的前i个和B类物品的前j个，放到背包，所得到的最大价值。
 *        dp[i][j] = max{
-*	                       dp[i - 1][j] + k1(fixed_value)      即最后一个物品是A[i - 1]
+*	                 dp[i - 1][j] + k1(fixed_value)      即最后一个物品是A[i - 1]
 *                          ,
-*                          dp[i][j - 1]  + k2(fixed_value)     即最后一个物品是B[j - 1]
+*                        dp[i][j - 1]  + k2(fixed_value)     即最后一个物品是B[j - 1]
 *                      }
 *
 * 初始条件： dp[0][0] = 0
@@ -83,69 +83,69 @@ public class Solution {
      * @return: Return the max value you can get
      */
     public long getMaxValue(int k1, int k2, int c, int n, int m, int[] a, int[] b) {
-		// check corner case
-		if (c == 0 || (isEmpty(a) && isEmpty(b))) {
-			return 0;
-		}
-        
+        // check corner case
+        if (c == 0 || (isEmpty(a) && isEmpty(b))) {
+            return 0;
+        }
+
         // sort all the items by ascending order
-		Arrays.sort(a);
-		long[] prefixSumA = getPrefixSum(a);
+        Arrays.sort(a);
+        long[] prefixSumA = getPrefixSum(a);
 		
-		Arrays.sort(b);
-		long[] prefixSumB = getPrefixSum(b);
+        Arrays.sort(b);
+        long[] prefixSumB = getPrefixSum(b);
 		
-		// state
-		long result = 0;
-		long[][] dp = new long[n + 1][m + 1];
+        // state
+        long result = 0;
+        long[][] dp = new long[n + 1][m + 1];
 		
-		// initialize
-		//dp[0][0] = 0;
+        // initialize
+        //dp[0][0] = 0;
 		
-		for (int i = 0; i <= n; i++) {
-			for (int j = 0; j <= m; j++) {
-				if (i == 0 && j == 0) {
-					dp[i][j] = 0;
-					continue;
-				}
-				
-				long remainSpace = c - (prefixSumA[i] + prefixSumB[j]);
-				
-				if (remainSpace < 0) {
-				    continue;
-				}
-				
-				if (i > 0) {
-				    dp[i][j] = Math.max(dp[i][j],
-				                        dp[i - 1][j] + k1 * remainSpace);
-				}
-				
-				if (j > 0) {
-				    dp[i][j] = Math.max(dp[i][j],
-				                        dp[i][j - 1] + k2 * remainSpace);
-				}
-				
-				result = Math.max(result, dp[i][j]);
-			}
-		}
-		
-		return result;
-		
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = 0;
+                    continue;
+                }
+
+                long remainSpace = c - (prefixSumA[i] + prefixSumB[j]);
+
+                if (remainSpace < 0) {
+                    continue;
+                }
+
+                if (i > 0) {
+                    dp[i][j] = Math.max(dp[i][j],
+                                        dp[i - 1][j] + k1 * remainSpace);
+                }
+
+                if (j > 0) {
+                    dp[i][j] = Math.max(dp[i][j],
+                                        dp[i][j - 1] + k2 * remainSpace);
+                }
+
+                result = Math.max(result, dp[i][j]);
+            }
+        }
+
+        return result;
+
     }
 	
-	// get it's prefix sum
-	private long[] getPrefixSum(int[] values) {
-	    int n = values.length;
-	    long[] prefixSum = new long[n + 1];
-	    
-		for (int i = 1; i <= n; i ++) {
-			prefixSum[i] = prefixSum[i - 1] + values[i - 1];
-		}
-		
-		return prefixSum;
-	}
-	
-	private boolean isEmpty(int[] values) {
-		return values == null || values.length == 0;
-	}
+    // get it's prefix sum
+    private long[] getPrefixSum(int[] values) {
+        int n = values.length;
+        long[] prefixSum = new long[n + 1];
+
+        for (int i = 1; i <= n; i ++) {
+            prefixSum[i] = prefixSum[i - 1] + values[i - 1];
+        }
+
+        return prefixSum;
+    }
+
+    private boolean isEmpty(int[] values) {
+        return values == null || values.length == 0;
+    }
 }
