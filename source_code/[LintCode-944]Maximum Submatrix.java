@@ -50,7 +50,7 @@ public class Solution {
             return 0;
         }
 
-	    if (matrix[0] == null || matrix[0].length == 0) {
+	if (matrix[0] == null || matrix[0].length == 0) {
             return 0;
         }
 
