@@ -48,29 +48,27 @@ public class Solution {
 
 	int duration = 1;//second
 	switch (type) {
-		case "m"://minute
-			duration *= 60;
-			break;
-		case "h": // hour
-			duration *= 60 * 60;
-			break;
-		case "d": // day
-			duration += 60 * 60 * 24;
-			break;
+	    case "m"://minute
+		duration *= 60;
+		break;
+	    case "h": // hour
+		duration *= 60 * 60;
+		break;
+	    case "d": // day
+		duration += 60 * 60 * 24;
+		break;
 	}
 
 	int startTimeStamp = timestamp - duration + 1;//the duration before the current timestamp
 
 	map.putIfAbsent(event, new ArrayList<Integer>());
 
-
-
 	int size = map.get(event).size();
 	int count = getCountAfter(map.get(event), startTimeStamp);
 	boolean isRatelimited = count >= limit;
 
 	if (increment && !isRatelimited) {
-		map.get(event).add(timestamp);//we should increase the counter
+	    map.get(event).add(timestamp);//we should increase the counter
 	}
 
 	return isRatelimited;
@@ -78,42 +76,42 @@ public class Solution {
 	
     // helper method
     private int getCountAfter(List<Integer> eventsList, int startTimeStamp) {
-    int count = 0;
-    if (eventsList == null || eventsList.isEmpty()) {
-        return count;
-    }
+        int count = 0;
+        if (eventsList == null || eventsList.isEmpty()) {
+            return count;
+        }
 
-    int size = eventsList.size();
-    int lastPos = size - 1;
-    if (eventsList.get(lastPos) < startTimeStamp) {
-	return count;
-    }
+        int size = eventsList.size();
+        int lastPos = size - 1;
+        if (eventsList.get(lastPos) < startTimeStamp) {
+	    return count;
+        }
 
-    int start = 0;
-    int end = lastPos;
-    int index = start;
+        int start = 0;
+        int end = lastPos;
+        int index = start;
 
-    // binary search
-    while (start + 1 < end) {
-        int mid = start + (end - start) / 2;
+        // binary search
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
 
-        if (eventsList.get(mid) < startTimeStamp) {
-            start = mid;
+            if (eventsList.get(mid) < startTimeStamp) {
+                start = mid;
+            }
+            else {
+                end = mid;
+            }
+        }
+
+        if (eventsList.get(start) >= startTimeStamp) {
+            index = start;
         }
         else {
-            end = mid;
-        }			
-    }
+            index = end;
+        }
 
-    if (eventsList.get(start) >= startTimeStamp) {
-        index = start;
-    }
-    else {
-        index = end;
-    }
+        count = lastPos - index + 1;
 
-    count = lastPos - index + 1;
-
-    return count;
-}
+        return count;
+    }
 }
