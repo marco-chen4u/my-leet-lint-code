@@ -232,3 +232,111 @@ class Solution {
         return result;
     }
 }
+
+//solution-4
+class Solution {
+    
+    // inner class
+    private class Interval implements Comparable<Interval>{
+        // fields
+        public int start;
+        public int end;
+        
+        // constructor
+        public Interval(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+        
+        // method
+        @Override
+        public int compareTo(Interval other) {
+            if (this.start != other.start) {
+                return this.start - other.start;
+            }
+            
+            return this.end - other.end;
+        }
+    }
+    
+    public String addBoldTag(String s, String[] dict) {
+        
+        int size = s.length();
+        
+        // build intervfals
+        List<Interval> intervals = buildUp(dict, s);
+        
+        // sort intervals
+        Collections.sort(intervals);
+        
+        // merge intervals
+        List<Interval> mergedIntervals = mergeIntervals(intervals);       
+        
+        
+        // process result
+        int pre = 0;
+        StringBuilder sb = new StringBuilder();
+        
+        for (Interval interval : mergedIntervals) {
+            sb.append(s.substring(pre, interval.start));
+            sb.append("<b>").append(s.substring(interval.start, interval.end)).append("</b>");
+            pre = interval.end;
+        }
+        
+        sb.append((pre < size) ? s.substring(pre) : "");
+        
+        // return result
+        return sb.toString();
+    }
+    
+    // helper methods
+    private List<Interval> buildUp(String[] words, String s) {
+        List<Interval> result = new ArrayList<>();
+        // check corner case
+        if (words == null || words.length == 0 ||
+            s == null || s.isEmpty()) {
+            return result;
+        }
+        
+        for (String word: words) {
+            int index = s.indexOf(word, 0);
+            while (index != -1) {
+                result.add(new Interval(index, index + word.length()));
+                index = s.indexOf(word, index + 1);
+            }// end of while
+        }// end of for
+        
+        return result;
+    }
+    
+    
+    private List<Interval> mergeIntervals(List<Interval> intervals) {
+        List<Interval> result = new ArrayList<>();
+        if (intervals == null || intervals.isEmpty()) {
+            return result;
+        }
+        
+        Interval pre = null;
+        for (Interval current : intervals) {
+            if (pre == null) {
+                pre = current;
+                continue;
+            }
+            
+            if (pre.end < current.start) {
+                result.add(pre);
+                
+                pre = current;
+                continue;
+            }
+            
+            pre.end = Math.max(pre.end, current.end);
+        }
+        
+        if (pre != null) {
+            result.add(pre);
+        }
+        
+        return result;
+    }
+}
