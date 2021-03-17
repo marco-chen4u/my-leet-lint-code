@@ -307,8 +307,7 @@ class Solution {
         }// end of for
         
         return result;
-    }
-    
+    }    
     
     private List<Interval> mergeIntervals(List<Interval> intervals) {
         List<Interval> result = new ArrayList<>();
