@@ -1,6 +1,10 @@
 /***
 * LintCode 1790. Rotate String II
-Given a string(Given in the way of char array), a right offset and a left offset, rotate the string by offset in place.(left offset represents the offset of a string to the left,right offset represents the offset of a string to the right,the total offset is calculated from the left offset and the right offset,split two strings at the total offset and swap positions)。
+Given a string(Given in the way of char array), a right offset and a left offset, rotate the string by offset in place.
+(left offset represents the offset of a string to the left,
+ right offset represents the offset of a string to the right,
+ the total offset is calculated from the left offset and the right offset,
+ split two strings at the total offset and swap positions).
 
 Example
     Example 1:
