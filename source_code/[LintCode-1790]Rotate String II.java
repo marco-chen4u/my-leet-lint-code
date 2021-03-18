@@ -26,6 +26,7 @@ Example
             The left offset is 1, the right offset is 2, and the total offset is right 1. 
 	    Therefore, the original string moves to the left and becomes "g" + "abcdef".
 ***/
+//solution-1: substring
 public class Solution {
     /**
     * @param str: Input string to rotate
@@ -50,5 +51,60 @@ public class Solution {
         result = rightPart.concat(leftPart);//rotate
 		
         return result;
+    }
+}
+
+//solution-2: 2-pointers, 三步反转法
+public class Solution {
+    /**
+     * @param str: An array of char
+     * @param left: a left offset
+     * @param right: a right offset
+     * @return: return a rotate string
+     */
+    public String RotateString2(String str, int left, int right) {
+        // check corner case
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        int size = str.length();
+        int offset = (size - left + right) % size;
+        offset += (offset >= 0) ? 0 : size;
+
+        //System.out.println("offset = " + offset);
+
+        char[] charArray = str.toCharArray();
+        int lastPos = size - 1;
+        
+        reverse(charArray, 0, size - offset - 1);
+        reverse(charArray, size - offset, lastPos);
+        reverse(charArray, 0, lastPos);
+
+        return String.valueOf(charArray);
+    }
+
+    // helper methods
+    private void reverse(char[] charArray, int i, int j) {
+        // check corner case
+        if (charArray == null || charArray.length == 0) {
+            return;
+        }
+
+        if (i == j) {
+            return;
+        }
+
+        while (i < j) {
+            swap(charArray, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    private void swap(char[] charArray, int i, int j) {
+        char temp = charArray[i];
+        charArray[i] = charArray[j];
+        charArray[j] = temp;
     }
 }
