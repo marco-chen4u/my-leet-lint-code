@@ -4,20 +4,20 @@ Given n distinct positive integers, integer k (k <= n) and a number target.
 Find k numbers where sum is target. Calculate how many solutions there are?
 
 Example
-	Example 1
-		Input:
-			List = [1,2,3,4]
-			k = 2
-			target = 5
-		Output: 2
-		Explanation: 1 + 4 = 2 + 3 = 5
-	Example 2
-		Input:
-			List = [1,2,3,4,5]
-			k = 3
-			target = 6
-		Output: 1
-		Explanation: There is only one method. 1 + 2 + 3 = 6
+    Example 1
+        Input:
+            List = [1,2,3,4]
+            k = 2
+            target = 5
+        Output: 2
+        Explanation: 1 + 4 = 2 + 3 = 5
+    Example 2
+        Input:
+            List = [1,2,3,4,5]
+            k = 3
+            target = 6
+        Output: 1
+        Explanation: There is only one method. 1 + 2 + 3 = 6
 ***/
 /*
 * 最后一步： 最后一个数A[n -1],是否选入这k个数
@@ -58,35 +58,35 @@ public class Solution {
      */
     public int kSum(int[] A, int k, int target) {
         // check corner cases
-		if (A == null || A.length == 0 || k <= 0 || target <= 0) {
-			return 0;
-		}
-		
-		// state
-		int n = A.length;
-		int[][][] dp = new int[n + 1][k + 1][target + 1];
-		
-		// intialize
-		dp[0][0][0] = 1;
-		
-		for (int i = 1; i <= n; i++) {
-			dp[i][0][0] = 1;//initialize
-			
-			for (int j = 1; j <= k; j++) {
-				for (int t = 1; t <= target; t++) {
-					dp[i][j][t] = 0;
-					if (t >= A[i - 1]) {
-						dp[i][j][t] += dp[i - 1][j -1][t - A[i - 1]];
-					}
-					
-					dp[i][j][t] += dp[i - 1][j][t];
-				}// for t
-			}// for j
-			
-		}// for i
-		
-		// answer
-		return dp[n][k][target];
+        if (A == null || A.length == 0 || k <= 0 || target <= 0) {
+            return 0;
+        }
+
+        // state
+        int n = A.length;
+        int[][][] dp = new int[n + 1][k + 1][target + 1];
+
+        // intialize
+        dp[0][0][0] = 1;
+
+        for (int i = 1; i <= n; i++) {
+            dp[i][0][0] = 1;//initialize
+
+            for (int j = 1; j <= k; j++) {
+                for (int t = 1; t <= target; t++) {
+                    dp[i][j][t] = 0;
+                    if (t >= A[i - 1]) {
+                        dp[i][j][t] += dp[i - 1][j -1][t - A[i - 1]];
+                    }
+
+                    dp[i][j][t] += dp[i - 1][j][t];
+                }// for t
+            }// for j
+
+        }// for i
+
+        // answer
+        return dp[n][k][target];
     }
 }// Time complexicty-O(n*k*target), space complexity-O(n*k*target)
 
@@ -100,33 +100,33 @@ public class Solution {
      */
     public int kSum(int[] A, int k, int target) {
         // check corner cases
-		if (A == null || A.length == 0 || k <= 0 || target <= 0) {
-			return 0;
-		}
-		
-		// state
-		int n = A.length;
-		int[][][] dp = new int[2][k + 1][target + 1];
-		
-		// intialize
-		dp[0][0][0] = 1;
-		
-		for (int i = 1; i <= n; i++) {
-			dp[i % 2][0][0] = 1;//initialize
-			
-			for (int j = 1; j <= k; j++) {
-				for (int t = 1; t <= target; t++) {
-					dp[i % 2][j][t] = 0;
-					if (t >= A[i - 1]) {
-						dp[i % 2][j][t] += dp[(i - 1) % 2][j -1][t - A[i - 1]];
-					}
-					
-					dp[i % 2][j][t] += dp[(i - 1) % 2][j][t];
-				}// for t
-			}// for j
-		}// for i
-		
-		// answer
-		return dp[n % 2][k][target];
+        if (A == null || A.length == 0 || k <= 0 || target <= 0) {
+            return 0;
+        }
+
+        // state
+        int n = A.length;
+        int[][][] dp = new int[2][k + 1][target + 1];
+
+        // intialize
+        dp[0][0][0] = 1;
+
+        for (int i = 1; i <= n; i++) {
+            dp[i % 2][0][0] = 1;//initialize
+
+            for (int j = 1; j <= k; j++) {
+                for (int t = 1; t <= target; t++) {
+                    dp[i % 2][j][t] = 0;
+                    if (t >= A[i - 1]) {
+                        dp[i % 2][j][t] += dp[(i - 1) % 2][j -1][t - A[i - 1]];
+                    }
+
+                    dp[i % 2][j][t] += dp[(i - 1) % 2][j][t];
+                }// for t
+            }// for j
+        }// for i
+
+        // answer
+        return dp[n % 2][k][target];
     }
 }// Time complexicty-O(n*k*target), space complexity-O(k*target)
