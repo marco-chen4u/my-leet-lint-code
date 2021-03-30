@@ -1,33 +1,33 @@
-Address: Next Door Cafe(Chicago)
-Time : 2/23/2020 16:00~18:00
+/*Address: Next Door Cafe(Chicago)
+Time : 2/23/2020 16:00~18:00*/
 
 /*
 (1)Array Product except itself
     [1,3,5,2] => [30,10,6,15]
 */
 public class Solution {
-	public int[] getProduct(int[] nums) {
-		// check corer case
-		if (nums == null || nums.length <= 1) {
-			return nums;
-		}
-		
-		// normal case
-		int size = nums.length;
-		int[] result = new int[size];
-		
-		int biggestProduct = 1;
-		for (int num : nums) {
-			biggestProduct *= num;
-		}
-		
-		int index = 0;
-		for (int num : nums) {
-			result[index++] = biggestProduct / num;
-		}
-		
-		return result;
-	}
+    public int[] getProduct(int[] nums) {
+        // check corer case
+        if (nums == null || nums.length <= 1) {
+            return nums;
+        }
+
+        // normal case
+        int size = nums.length;
+        int[] result = new int[size];
+
+        int biggestProduct = 1;
+        for (int num : nums) {
+            biggestProduct *= num;
+        }
+
+        int index = 0;
+        for (int num : nums) {
+            result[index++] = biggestProduct / num;
+        }
+
+        return result;
+    }
 }
 
 /*
