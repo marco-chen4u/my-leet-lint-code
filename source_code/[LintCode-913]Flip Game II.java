@@ -5,19 +5,19 @@ You are playing the following Flip Game with your friend: Given a string that co
 Write a function to determine if the starting player can guarantee a win.
 
 Example
-	Example1
-		Input:  s = "++++"
-		Output: true
-		Explanation:
-			The starting player can guarantee a win by flipping the middle "++" to become "+--+".
+    Example1
+        Input:  s = "++++"
+        Output: true
+        Explanation:
+            The starting player can guarantee a win by flipping the middle "++" to become "+--+".
 
-	Example2
-		Input: s = "+++++"
-		Output: false 
-		Explanation:
-			The starting player can not win 
-			"+++--" --> "+----"
-			"++--+" --> "----+"
+    Example2
+        Input: s = "+++++"
+        Output: false 
+        Explanation:
+            The starting player can not win 
+            "+++--" --> "+----"
+            "++--+" --> "----+"
 
 Challenge
 	Derive your algorithm's runtime complexity.
