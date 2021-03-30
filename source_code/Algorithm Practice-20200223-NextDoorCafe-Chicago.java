@@ -3,8 +3,7 @@ Time : 2/23/2020 16:00~18:00
 
 /*
 (1)Array Product except itself
-	[1,3,5,2] => [30,10,6,15]
-
+    [1,3,5,2] => [30,10,6,15]
 */
 public class Solution {
 	public int[] getProduct(int[] nums) {
@@ -33,103 +32,102 @@ public class Solution {
 
 /*
 (3)Flatten Binary Tree to LinkedList
-    1
-   / \
-  2   5
- / \   \
-3  4   6
+        1
+       / \
+      2   5
+     / \   \
+    3  4   6
 
-     1
-      \
-       2
-        \
-         3
-		  \
-		   4
-		    \
-			 5
-			  \
-			   6
+         1
+          \
+           2
+            \
+             3
+              \
+               4
+                \
+                 5
+                  \
+                   6
 				 
 	
 */
 public class Solution {
-	public void flatten(TreeNode node) {
-		if (node == null ) {
-			return;
-		}
-		
-		flattenHelper(node);
-	}
-	
-	// helper method
-	private TreeNode flattenHelper(TreeNode node) {
-	    if (node == null) {
-	        return node;
-	    }
-	    
-		TreeNode leftLast = flattenHelper(node.left);
-		TreeNode rightLast = flattenHelper(node.right);
-		
-		if (leftLast != null) {
-			leftLast.right = node.right;
-			node.right = node.left;
-			node.left = null;
-		}
-		
-		if (rightLast != null) {
-			return rightLast;
-		}
-		
-		return node;
-	}
+    public void flatten(TreeNode node) {
+        if (node == null ) {
+            return;
+        }
+
+        flattenHelper(node);
+    }
+
+    // helper method
+    private TreeNode flattenHelper(TreeNode node) {
+        if (node == null) {
+            return node;
+        }
+
+        TreeNode leftLast = flattenHelper(node.left);
+        TreeNode rightLast = flattenHelper(node.right);
+
+        if (leftLast != null) {
+            leftLast.right = node.right;
+            node.right = node.left;
+            node.left = null;
+        }
+
+        if (rightLast != null) {
+            return rightLast;
+        }
+
+        return node;
+    }
 
 /*
 (2) Merge Intervals
-	[[8,10], [2,6], [1,3],[15, 18]] => [[8,10], [1,6], [15, 18]]
+    [[8,10], [2,6], [1,3],[15, 18]] => [[8,10], [1,6], [15, 18]]
 */
 public class Solution {
-	// fields
-	Comparator<Interval> comparator = new Comparator<Interval> {
-		@Override
-		public int compare(Interval a, Interval b) {
-			return a.start - b.start;
-		}
-	}
+    // fields
+    Comparator<Interval> comparator = new Comparator<Interval> {
+        @Override
+        public int compare(Interval a, Interval b) {
+            return a.start - b.start;
+        }
+    }
+
+    public void mergeIntervals(Interval[] intervals) {
+
+        //sort intervals
+        sort(intervals);
+
+        Interval pre = null;
+        for (Interval interval : intervals) {
+            merge(interval, pre);
+        }
+    }
 	
-	public void mergeIntervals(Interval[] intervals) {
-		
-		//sort intervals
-		sort(intervals);
-		
-		
-		Interval pre = null;
-		for (Interval interval : intervals) {
-			merge(interval, pre);
-		}
-	}
-	
-	// helper method 
-	private void merge(Interval current, Interval pre) {
-		if (pre == null) {
-			pre = current;
-			return;
-		}
-		
-		if (pre.end < current.start) {
-			pre = current;
-			return;
-		}
-		
-		if (pre.end < current.end) {
-			pre.end = Math.max(pre.end, current.end);
-			return;
-		}
-	}
-	
-	private void sort(Interval[] intervals) {
-		Arrays.sort(intervals, comparator);
-	}
+    // helper method 
+    private void merge(Interval current, Interval pre) {
+        if (pre == null) {
+            pre = current;
+            return;
+        }
+
+        if (pre.end < current.start) {
+            pre = current;
+            return;
+        }
+
+        if (pre.end < current.end) {
+            pre.end = Math.max(pre.end, current.end);
+            return;
+        }
+    }
+
+    private void sort(Interval[] intervals) {
+        Arrays.sort(intervals, comparator);
+    }
 }
 
 /*
@@ -158,18 +156,18 @@ class Solution {
         for (int value : blacklist) {
             blackListSet.add(value);
         }
-        
+
         random = new Random();
     }
     
     public int pick() {
         int value = random.nextInt(limit);
-		
-		while (blackListSet.contains(value)) {
-			value = random.nextInt(limit);
-		}
-		
-		return value;
+
+        while (blackListSet.contains(value)) {
+            value = random.nextInt(limit);
+        }
+
+        return value;
     }
 }
 
