@@ -1,6 +1,7 @@
 /**
 *LintCodet 255. Multi-string search
-Given a source string sourceString and a target string array targetStrings, determine whether each string in the target string array is a substring of the source string
+Given a source string sourceString and a target string array targetStrings, 
+determine whether each string in the target string array is a substring of the source string
     len(sourceString) <= 1000
     sum(len(targetStrings[i])) <= 1000
 
