@@ -22,7 +22,7 @@ Example
  *     }
  * }
  */
-
+// solution-1
 public class Solution {
     /**
      * @param head: The head of linked list.
@@ -45,6 +45,59 @@ public class Solution {
         node.next = current.next;
         current.next = node;
         
+        return dummy.next;
+    }
+}
+
+// solution-2
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param head: The head of linked list.
+     * @param val: An integer.
+     * @return: The head of new linked list.
+     */
+    public ListNode insertNode(ListNode head, int val) {
+        ListNode newNode = new ListNode(val);
+        // check corner case
+        if (head == null) {
+            return newNode;
+        }
+
+        if (head.val >= val) {
+            newNode.next = head;
+            return newNode;
+        }
+
+        // regular case
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode current = head;
+
+        while (current != null) {
+            if (current.val >= val) {
+                break;
+            }
+
+            pre = current;
+            current = current.next;
+        }
+
+        pre.next = newNode;
+        newNode.next = current;
+
         return dummy.next;
     }
 }
