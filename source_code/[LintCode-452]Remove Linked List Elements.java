@@ -23,6 +23,7 @@ Example
  * }
  */
 
+//solution-1
 public class Solution {
     /**
      * @param head: a ListNode
@@ -51,6 +52,40 @@ public class Solution {
             }
         }
         
+        return dummy.next;
+    }
+}
+
+//solution-2
+public class Solution {
+    /**
+     * @param head: a ListNode
+     * @param val: An integer
+     * @return: a ListNode
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        // check corner case
+        if (head == null) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode current = head;
+
+        while (current != null) {
+
+            if (current.val == val) {
+                pre.next = current.next;
+                current = current.next;
+                continue;
+            }
+
+            pre = current;
+            current = current.next;
+        }
+
         return dummy.next;
     }
 }
