@@ -25,7 +25,7 @@ Challenge
  *     }
  * }
  */
-
+//solution-1: dummy node + pre&current pointers
 public class Solution {
     /**
      * @param head: The first node of linked list.
@@ -56,6 +56,45 @@ public class Solution {
 	    pre = pre.next;
 	    current = current.next;
 	}
+
+        return dummy.next;
+    }
+}
+
+//solution-2: dummy node + two pointers(fast and slow)
+public class Solution {
+    /**
+     * @param head: The first node of linked list.
+     * @return: Head node.
+     */
+    public ListNode removeDuplicates(ListNode head) {
+        // check corner case
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // regular case
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (slow.next != null) {
+            if (fast.next == null) {
+                slow = slow.next;
+                fast = slow;//reset the starting position
+                continue;
+            }
+
+            if (fast.next.val == slow.val) {
+                fast.next = fast.next.next;
+
+                continue;
+            }
+
+            fast = fast.next;
+        }
 
         return dummy.next;
     }
