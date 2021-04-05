@@ -3,15 +3,15 @@
 Write code to remove duplicates from an unsorted linked list.
 
 Example
-	Example 1:
-		Input: 1->2->1->3->3->5->6->3->null
-		Output: 1->2->3->5->6->null
-	Example 2:
-		Input: 2->2->2->2->2->null
-		Output: 2->null
+    Example 1:
+        Input: 1->2->1->3->3->5->6->3->null
+        Output: 1->2->3->5->6->null
+    Example 2:
+        Input: 2->2->2->2->2->null
+        Output: 2->null
 
 Challenge
-	(hard) How would you solve this problem if a temporary buffer is not allowed? In this case, you don't need to keep the order of nodes.
+    (hard) How would you solve this problem if a temporary buffer is not allowed? In this case, you don't need to keep the order of nodes.
 ***/
 
 /**
@@ -57,6 +57,6 @@ public class Solution {
 	    current = current.next;
 	}
 
-	return dummy.next;
+        return dummy.next;
     }
 }
