@@ -6,16 +6,16 @@ It's guaranteed there is no duplicate values in the linked list.
 If v1 or v2 does not exist in the given linked list, do nothing.
 
 Example
-	Example 1:
-		Input: 1->2->3->4->null, v1 = 2, v2 = 4
-		Output: 1->4->3->2->null
-	Example 2:
-		Input: 1->null, v1 = 2, v2 = 1
-		Output: 1->null
+    Example 1:
+        Input: 1->2->3->4->null, v1 = 2, v2 = 4
+        Output: 1->4->3->2->null
+    Example 2:
+        Input: 1->null, v1 = 2, v2 = 1
+        Output: 1->null
 
 Notice
-	You should swap the two nodes with values v1 and v2. 
-	Do not directly swap the values of the two nodes.
+    You should swap the two nodes with values v1 and v2. 
+    Do not directly swap the values of the two nodes.
 ***/
 /**
  * Definition for ListNode
