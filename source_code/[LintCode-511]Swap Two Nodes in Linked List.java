@@ -17,6 +17,7 @@ Notice
     You should swap the two nodes with values v1 and v2. 
     Do not directly swap the values of the two nodes.
 ***/
+
 /**
  * Definition for ListNode
  * public class ListNode {
@@ -37,54 +38,55 @@ public class Solution {
      * @return: a new head of singly-linked list
      */
     public ListNode swapNodes(ListNode head, int v1, int v2) {
-        // check corner case
+        // check corner cases
         if (head == null || head.next == null) {
             return head;
         }
-        
-        ListNode dummy = new ListNode(0);
+
+        // regular case
+        int count = 0;
+        ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        ListNode current = dummy;
-        ListNode node1Pre = null;
-        ListNode node2Pre = null;
-        
-        while (current.next != null) {
-            if (current.next.val == v1) {
-                node1Pre = current;
+        ListNode pre = dummy;
+        ListNode current = head;
+        ListNode pre1 = null;
+        ListNode v1Node = null;
+        ListNode pre2 = null;
+        ListNode v2Node = null;
+
+        while (current != null) {
+            if (count == 2) {
+                break;
             }
-            else if (current.next.val == v2) {
-                node2Pre = current;
+
+            if (current.val == v1) {
+                count++;
+                v1Node = current;
+                pre1 = pre;
             }
+
+            if (current.val == v2) {
+                count++;
+                v2Node = current;
+                pre2 = pre;
+            }
+            
+            pre = current;
             current = current.next;
         }
-        
-        if (node1Pre == null || node2Pre == null) {
+
+        if (v1Node == null || v2Node == null) {
             return head;
         }
-        
-        if (node2Pre.next == node1Pre) {
-            ListNode tmp = node1Pre;
-            node1Pre = node2Pre;
-            node2Pre = tmp;
-        }
-        
-        ListNode node1 = node1Pre.next;
-        ListNode node2 = node2Pre.next;
-        ListNode node2Next = node2.next;
-        
-        if (node1Pre.next == node2Pre) {
-            node1Pre.next = node2;
-            node2.next = node1;
-            node1.next = node2Next;
-        }
-        else {
-            node1Pre.next = node2;
-            node2.next = node1.next;
-            
-            node2Pre.next = node1;
-            node1.next = node2Next;
-        }
-        
+
+        // regular case
+        pre1.next = v2Node;
+        pre2.next = v1Node;
+
+        ListNode temp = v1Node.next;
+        v1Node.next = v2Node.next;
+        v2Node.next= temp;
+
         return dummy.next;
     }
 }
