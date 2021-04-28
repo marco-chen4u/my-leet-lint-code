@@ -106,63 +106,63 @@ class Solution {
 //version-2: while loop & stack
 class Solution {
     public int[] asteroidCollision(int[] asteroids) {
-		int[] result = new int[0]; // default value
-		
-		// check corner case
-		if (asteroids == null || asteroids.length == 0) {
-			return result;
-		}
-		
-		Stack<Integer> stack = new Stack<Integer>();
-		
-		for (int value : asteroids) {
-			if (value > 0) {
-				stack.push(value);
-				continue;
-			}
-			
-			if (value < 0) {
-				if (stack.isEmpty() || stack.peek() < 0) {
-					stack.push(value);
-					continue;
-				}
-				
-				boolean flag = true;
-				while (!stack.isEmpty() && stack.peek() > 0) {
-					if (stack.peek() == Math.abs(value)) {
-						flag = false;
-						stack.pop();
-						break;
-					}
-					
-					if (stack.peek() < Math.abs(value)) {
-						stack.pop();
-						continue;
-					}
-					
-					if (stack.peek() > Math.abs(value)) {
-						flag = false;
-						break;
-					}
-				}
-				
-				if (flag) {
-					stack.push(value);
-				}
-			}
-		}
-		
-		if (stack.isEmpty()) {
-			return result;
-		}
-		
-		int size = stack.size();
-		result = new int[size];
-		int index = size - 1;
-		while (!stack.isEmpty()) {
-			result[index--] = stack.pop();
-		}
-		
-		return result;
-	}
+        int[] result = new int[0]; // default value
+
+        // check corner case
+        if (asteroids == null || asteroids.length == 0) {
+            return result;
+        }
+
+        Stack<Integer> stack = new Stack<Integer>();
+
+        for (int value : asteroids) {
+            if (value > 0) {
+                stack.push(value);
+                continue;
+            }
+
+            if (value < 0) {
+                if (stack.isEmpty() || stack.peek() < 0) {
+                    stack.push(value);
+                    continue;
+                }
+
+                boolean flag = true;
+                while (!stack.isEmpty() && stack.peek() > 0) {
+                    if (stack.peek() == Math.abs(value)) {
+                        flag = false;
+                        stack.pop();
+                        break;
+                    }
+	
+                    if (stack.peek() < Math.abs(value)) {
+                        stack.pop();
+                        continue;
+                    }
+
+                    if (stack.peek() > Math.abs(value)) {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if (flag) {
+                    stack.push(value);
+                }
+            }
+        }
+
+        if (stack.isEmpty()) {
+            return result;
+        }
+
+        int size = stack.size();
+        result = new int[size];
+        int index = size - 1;
+        while (!stack.isEmpty()) {
+            result[index--] = stack.pop();
+        }
+
+        return result;
+    }
 }
