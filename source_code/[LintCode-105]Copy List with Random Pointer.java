@@ -15,7 +15,7 @@ Challenge
  *     RandomListNode(int x) { this.label = x; }
  * };
  */
-// version-1
+// version-1: Map + dummy node.  O(n)space
 public class Solution {
     /**
      * @param head: The head of linked list with a random pointer.
@@ -27,41 +27,36 @@ public class Solution {
             return head;
         }
 
-        Map<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
-        RandomListNode dummy = new RandomListNode(0);
+        // regular case
+        Map<RandomListNode, RandomListNode> map = new HashMap<>();
+
+        RandomListNode dummy = new RandomListNode(-1);
         RandomListNode pre = dummy;
+        RandomListNode current = head;
+        while (current != null) {
+            map.putIfAbsent(current, new RandomListNode(current.label));
 
-        RandomListNode current = null;
+            RandomListNode copy = map.get(current);
 
-        while (head != null) {
-            if (map.containsKey(head)) {
-                current = map.get(head);
-            }
-            else {
-                current = new RandomListNode(head.label);
-                map.put(head, current);
-            }
+            if (current.random != null) {
+                RandomListNode random = current.random;
+                map.putIfAbsent(random, new RandomListNode(random.label));
 
-            pre.next = current;
-
-            RandomListNode random = head.random;
-
-            if (head.random != null) {
-                if (!map.containsKey(random)) {
-                    map.put(random, new RandomListNode(random.label));				
-                }
-                current.random = map.get(random);				
+                copy.random = map.get(random);
             }
 
-            pre = pre.next;
-            head = head.next;
+            pre.next = copy;
+            pre = copy;
+
+            current = current.next;
         }
 
-        return dummy.next;		
+        return dummy.next;
+
     }
 }
 
-//version-2:
+//version-2: link current node next to the copy node, then split. O(1) space
 public class Solution {
     /**
      * @param head: The head of linked list with a random pointer.
@@ -73,25 +68,46 @@ public class Solution {
             return head;
         }
         
-        Map<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
-        RandomListNode dummy = new RandomListNode(0);
-        RandomListNode pre = dummy;
+        copyNext(head);
+        copyRandom(head);
         
-        RandomListNode current = null;
-        
+        return splitList(head);
+    }
+    
+    // helper methods
+    private void copyNext(RandomListNode head) {
         while (head != null) {
-            map.putIfAbsent(head, new RandomListNode(head.label));
+            RandomListNode newNode = new RandomListNode(head.label);
+            newNode.next = head.next;
+            newNode.random = head.random;
+            head.next = newNode;
             
-            current = map.get(head);
-            
-            RandomListNode random = head.random;
-            if (random != null) {
-                 map.putIfAbsent(random, new RandomListNode(random.label));
-                 current.random = map.get(random);
+            head = head.next.next;
+        }
+    }
+    
+    private void copyRandom(RandomListNode head) {
+        while (head != null) {
+            if (head.random != null) {
+                head.next.random = head.random.next;
             }
             
-            pre.next = current;
-            pre = pre.next;
+            head = head.next.next;
+        }
+    }
+    
+    private RandomListNode splitList(RandomListNode head) {
+        RandomListNode dummy = new RandomListNode(0);
+        dummy.next = head.next;
+        
+        while (head != null) {
+            RandomListNode tmp = head.next;
+            head.next = tmp.next;
+            
+            if (tmp.next != null) {
+                tmp.next = tmp.next.next;
+            }
+            
             head = head.next;
         }
         
