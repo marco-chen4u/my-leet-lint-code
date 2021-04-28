@@ -1,14 +1,15 @@
 /***
 * LeetCode 32. Longest Valid Parentheses
-Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
+Given a string containing just the characters '(' and ')', 
+find the length of the longest valid (well-formed) parentheses substring.
 Example 1:
-	Input: "(()"
-	Output: 2
-	Explanation: The longest valid parentheses substring is "()"
+    Input: "(()"
+    Output: 2
+    Explanation: The longest valid parentheses substring is "()"
 Example 2:
-	Input: ")()())"
-	Output: 4
-	Explanation: The longest valid parentheses substring is "()()"
+    Input: ")()())"
+    Output: 4
+    Explanation: The longest valid parentheses substring is "()()"
 ***/
 /*
 * (1) stack to keep track all left bracket position in the char array
@@ -31,49 +32,49 @@ Example 2:
 	 )      10          8        empty      9          10 - 8  = 2, max(8, 2) = 8
 	 
 * (5) return max(result)
-	 
+
 */
 class Solution {
 	
     public int longestValidParentheses(String s) {
         int result = 0;
-		
-		// check cornrer case
-		if (s == null || s.length() == 0) {
-			return result;
-		}
-		
-		char[] charArray = s.toCharArray();
-		int size = charArray.length;
-		Stack<Integer> stack = new Stack<Integer>();
-		int leftMost = -1;
-		
-		for (int i = 0; i < size; i++) {
-			char ch = charArray[i];
-			
-			if (isLeftBracket(ch)) {
-				stack.push(i);
-			}
-			else {// is right barcket
-				if (stack.isEmpty()) {
-					leftMost = i;
-				}
-				else {
-					int j = stack.pop();
-					
-					int currentSize =  (!stack.isEmpty()) ? i - stack.peek() : i - leftMost;
-					result = Math.max(result, currentSize);
-				}
-			}
-		}
-		
-		return result;
+
+        // check cornrer case
+        if (s == null || s.length() == 0) {
+            return result;
+        }
+
+        char[] charArray = s.toCharArray();
+        int size = charArray.length;
+        Stack<Integer> stack = new Stack<Integer>();
+        int leftMost = -1;
+
+        for (int i = 0; i < size; i++) {
+            char ch = charArray[i];
+
+            if (isLeftBracket(ch)) {
+                stack.push(i);
+            }
+            else {// is right barcket
+                if (stack.isEmpty()) {
+                    leftMost = i;
+                }
+                else {
+                    int j = stack.pop();
+
+                    int currentSize =  (!stack.isEmpty()) ? i - stack.peek() : i - leftMost;
+                    result = Math.max(result, currentSize);
+                }
+            }
+        }
+
+        return result;
     }
-	
-	// helper method
-	private boolean isLeftBracket(char ch) {
-		return ch == '(';
-	}
+
+    // helper method
+    private boolean isLeftBracket(char ch) {
+        return ch == '(';
+    }
 }
 
 /*
