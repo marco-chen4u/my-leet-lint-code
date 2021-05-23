@@ -40,6 +40,7 @@ Example 2:
 Challenge
     implement it by two stacks, do not use any other data structure and push, pop and top should be O(1) by AVERAGE.
 ***/
+//solution-1: fair thinking
 public class MyQueue {
     // fields
     private final int DEFAULT_VALUE = -1;
@@ -112,3 +113,70 @@ public class MyQueue {
         }
     }
 }
+
+//solution-2: better thinking
+public class MyQueue {
+    // fields
+    private final int DEFAULT_VALUE = -1;
+    private Stack<Integer> stack1;
+    private Stack<Integer> stack2;
+
+    // constructor
+    public MyQueue() {
+        // do intialization if necessary
+        this.stack1 = new Stack<Integer>();
+        this.stack2 = new Stack<Integer>();
+    }
+
+    /*
+     * @param element: An integer
+     * @return: nothing
+     */
+    public void push(int element) {
+        stack1.push(element);
+    }
+
+    /*
+     * @return: An integer
+     */
+    public int pop() {
+        // check corner case
+        if (isEmpty()) {
+            return DEFAULT_VALUE;
+        }
+
+        if (stack2.isEmpty()) {
+            moveItemsToStack2();
+        }
+        
+        return stack2.pop();
+    }
+
+    /*
+     * @return: An integer
+     */
+    public int top() {
+        // check corner case
+        if (isEmpty()) {
+            return DEFAULT_VALUE;
+        }
+
+        if (stack2.isEmpty()) {
+            moveItemsToStack2();
+        }
+
+        return stack2.peek();
+    }
+
+    // helper methods
+    private boolean isEmpty() {
+        return stack1.isEmpty() && stack2.isEmpty();
+    }
+
+    private void moveItemsToStack2() {
+        while (!stack1.isEmpty()) {
+            stack2.push(stack1.pop());
+        }
+    }
+}
+
