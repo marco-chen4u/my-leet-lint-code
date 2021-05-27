@@ -83,7 +83,6 @@ public class Solution {
             return s;
         }
 
-        Stack<Integer> stack = new Stack<>();
         char[] charArray = s.toCharArray();
         int size = charArray.length;
         int index = 0;
