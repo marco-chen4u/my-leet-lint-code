@@ -96,10 +96,12 @@ public class Solution {
 
             if (isLetter(ch)) {
                 sb.append(ch);
+                continue;
             }
 
             if (isDigit(ch)) {
                 currentValue = currentValue * 10 + (ch - '0');
+                continue;
             }
 
             if (isLeftBracket(ch)) {
