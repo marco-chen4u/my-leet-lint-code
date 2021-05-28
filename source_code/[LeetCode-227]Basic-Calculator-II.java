@@ -165,3 +165,71 @@ class Solution {
         return Character.isWhitespace(ch);
     }
 }
+
+//version-3
+public class Solution {
+    /**
+     * @param s: the given expression
+     * @return: the result of expression
+     */
+    public int calculate(String s) {
+        int result = 0;
+        // check corner case
+        if (s == null || s.isEmpty()) {
+            return result;
+        }
+
+        // regular case
+        Stack<Integer> stack = new Stack<>();
+        int value = 0;
+        char[] charArray = s.toCharArray();
+        int size = charArray.length;
+        char preOperator = '+';
+
+        for (int i = 0; i < size; i++) {
+            char ch = charArray[i];
+
+            if (isDigit(ch)) {
+                value = value * 10 + (ch - '0');
+            }
+
+            if (!isOperator(ch) && i != size - 1) {
+                continue;
+            }
+
+            if (preOperator == '+') {
+                stack.push(value);
+            }
+
+            if (preOperator == '-') {
+                stack.push(-value);
+            }
+
+            if (preOperator == '*') {
+                stack.push(stack.pop() * value);
+            }
+
+            if (preOperator == '/') {
+                stack.push(stack.pop() / value);
+            }
+
+            preOperator = ch;
+            value = 0;//reset
+        }
+
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+
+        return result;
+    }
+
+    // helper methods
+    private boolean isDigit(char ch) {
+        return Character.isDigit(ch);
+    }
+
+    private boolean isOperator(char ch) {
+        return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+    }
+}
