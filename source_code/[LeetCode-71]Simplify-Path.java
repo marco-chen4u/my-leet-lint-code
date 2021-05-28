@@ -33,6 +33,7 @@ Example 6:
     Input: "/a//b////c/d//././/.."
     Output: "/a/b/c"
 ***/
+//version-1
 public class Solution {
     private final String SEPARATOR = "/";
     
@@ -81,5 +82,61 @@ public class Solution {
         }
         
         return sb.toString();
+    }
+}
+
+//version-2
+public class Solution {
+    private final String SEPARATOR = "/";
+    /**
+     * @param path: the original path
+     * @return: the simplified path
+     */
+    public String simplifyPath(String path) {
+        // check corner case
+        if (isEmpty(path)) {
+            return path;
+        }
+
+        // regular case
+        String[] tokens = path.split(SEPARATOR);
+        Stack<String> stack = new Stack<>();
+        for (String token : tokens) {
+            if (isEmpty(token)) {
+                continue;
+            }
+
+            if (".".equals(token)) {
+                continue;
+            }
+
+            if ("..".equals(token)) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+                continue;
+            }
+
+            stack.push(token);
+        }
+
+        // check corner case
+        if (stack.isEmpty()) {
+            return SEPARATOR;
+        }
+
+        // regular case
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            String fileName = SEPARATOR + stack.pop();
+            sb.insert(0, fileName);
+        }
+
+        return sb.toString();
+    }
+
+    //helper emthods
+    private boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
     }
 }
