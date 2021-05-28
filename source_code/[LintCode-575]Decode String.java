@@ -68,7 +68,62 @@ public class Solution {
     }
 }
 
-//solution-2: no stack but with recursion
+//solution-2: stack(Object)
+public class Solution {
+    /**
+     * @param s: an expression includes numbers, letters and brackets
+     * @return: a string
+     */
+    public String expressionExpand(String s) {
+        // check corner case
+        if (s == null || s.isEmpty()) {
+            return s;
+        }
+
+        // regular case
+        Stack<Object> stack = new Stack<>();
+        int countValue = 0;
+
+        for (char ch : s.toCharArray()) {
+            if (Character.isDigit(ch)) {
+                countValue = countValue * 10 + (ch - '0');
+                continue;
+            }
+
+            if (Character.isLetter(ch)) {
+                stack.push(String.valueOf(ch));
+                continue;
+            }
+
+            if (ch == '[') {
+                stack.push(Integer.valueOf(countValue));
+                countValue = 0; //reset
+                continue;
+            }
+
+            if (ch == ']') {
+                String str = "";
+                while (!stack.isEmpty() && stack.peek() instanceof String) {
+                    str = (String)stack.pop() + str;
+                }
+
+                int count = (Integer) stack.pop();
+                for (int i = 0; i < count; i++) {
+                    stack.push(str);
+                }
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.insert(0, (String)stack.pop());
+        }
+
+        return sb.toString();
+    }
+}
+
+//solution-3: no stack but with recursion
 public class Solution {
     private final String EMPTY = "";
     private final int DEFAULT_VALUE = -1;
