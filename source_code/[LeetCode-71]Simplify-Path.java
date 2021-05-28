@@ -32,6 +32,8 @@ Example 5:
 Example 6:
     Input: "/a//b////c/d//././/.."
     Output: "/a/b/c"
+
+Link: https://leetcode.com/problems/simplify-path/
 ***/
 //version-1
 public class Solution {
