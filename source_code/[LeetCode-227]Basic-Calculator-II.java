@@ -95,78 +95,6 @@ class Solution {
 }
 
 // solution-2: using stack, time complexity:O(n)
-class Solution {
-    public int calculate(String s) {
-        // initialization
-        int result = 0;
-        int currentValue = 0;
-        char operator = '+';
-        
-        // check corner case
-        if (s == null || s.isEmpty()) {
-            return result;
-        }
-        
-        // regular case
-        int size = s.length();
-        int lastPos = size - 1;
-        Stack<Integer> stack = new Stack<>();
-        
-        for (int i = 0; i < size; i++) {
-            char ch = s.charAt(i);
-            
-            if (isDigit(ch)) {
-                currentValue = currentValue * 10 + (ch - '0');
-            }
-            
-           if (!isDigit(ch) && !isBlank(ch) || i == size - 1){
-                switch (operator) {
-                    case '+':
-                        stack.push(currentValue);
-                        break;
-                    case '-':
-                        stack.push(-currentValue);
-                        break;
-                    case '*':
-                        stack.push(stack.pop() * currentValue);
-                        break;
-                    case '/':
-                        stack.push(stack.pop() / currentValue);
-                        break;
-                }
-
-                operator = ch;
-                currentValue = 0;                
-            }
-
-        }
-        
-        while (!stack.isEmpty()) {
-            result += stack.pop();
-        }
-        
-        return result;
-        
-    }
-    
-    // helper methods
-    private boolean isDigit(char ch) {
-        return Character.isDigit(ch);
-    }
-    
-    private boolean isOperator(char ch) {
-        return ch == '+' ||
-                ch == '-' ||
-                ch == '*' ||
-                ch == '/';
-    }
-    
-    private boolean isBlank(char ch) {
-        return Character.isWhitespace(ch);
-    }
-}
-
-//version-3
 public class Solution {
     /**
      * @param s: the given expression
@@ -180,41 +108,42 @@ public class Solution {
         }
 
         // regular case
+        char preOperator = '+';
         Stack<Integer> stack = new Stack<>();
         int value = 0;
+
         char[] charArray = s.toCharArray();
         int size = charArray.length;
-        char preOperator = '+';
+        int lastPos = size - 1;
 
         for (int i = 0; i < size; i++) {
             char ch = charArray[i];
 
-            if (isDigit(ch)) {
+            if (Character.isDigit(ch)) {
                 value = value * 10 + (ch - '0');
             }
 
-            if (!isOperator(ch) && i != size - 1) {
+            if (!isOperator(ch) && i != lastPos) {
                 continue;
             }
 
-            if (preOperator == '+') {
-                stack.push(value);
-            }
-
-            if (preOperator == '-') {
-                stack.push(-value);
-            }
-
-            if (preOperator == '*') {
-                stack.push(stack.pop() * value);
-            }
-
-            if (preOperator == '/') {
-                stack.push(stack.pop() / value);
+            switch(preOperator) {
+                case '+':
+                    stack.push(value);
+                    break;
+                case '-':
+                    stack.push(-value);
+                    break;
+                case '*':
+                    stack.push(stack.pop() * value);
+                    break;
+                case '/':
+                    stack.push(stack.pop() / value);
+                    break;
             }
 
             preOperator = ch;
-            value = 0;//reset
+            value = 0;// reset
         }
 
         while (!stack.isEmpty()) {
@@ -224,12 +153,8 @@ public class Solution {
         return result;
     }
 
-    // helper methods
-    private boolean isDigit(char ch) {
-        return Character.isDigit(ch);
-    }
-
+    // helper method
     private boolean isOperator(char ch) {
-        return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+        return ch == '+' || ch == '-' || ch =='*' || ch == '/';
     }
 }
