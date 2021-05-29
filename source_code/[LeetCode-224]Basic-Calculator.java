@@ -21,123 +21,122 @@ Note:
     Do not use the eval built-in library function.
 ***/
 //solution-1: using stack and recursion
-class Solution {
+public class Solution {
+    /**
+     * @param s: the given expression
+     * @return: the result of expression
+     */
     public int calculate(String s) {
-        //initialization
         int result = 0;
-        int currentValue = 0;
-        char operator = '+';
-        
         // check corner case
         if (s == null || s.isEmpty()) {
             return result;
         }
-        
+
         // regular case
-        int size = s.length();
+        char preOperator = '+';
+        int value = 0;
+
+        char[] charArray = s.toCharArray();
+        int size = charArray.length;
         int lastPos = size - 1;
+
         Stack<Integer> stack = new Stack<>();
-        
+
         for (int i = 0; i < size; i++) {
-            char ch = s.charAt(i);
-            
-            if (!isValid(ch)) {
-                continue;
-            }
-            
+            char ch = charArray[i];            
+
             if (isLeftBracket(ch)) {
-                int end = findPair(s, i);
-                currentValue = calculate(s.substring(i + 1, end));
-                i = end;//next loop will be i +=1;
-                continue;
+                int j = findPair(i, charArray);
+                String str = String.valueOf(Arrays.copyOfRange(charArray, i, j));
+                value = calculate(str);
+                i = j;
             }
-            
+
             if (isDigit(ch)) {
-                currentValue = currentValue * 10 + (ch - '0');
+                value = value * 10 + (ch - '0');
+            }
+
+            if (!isOperator(ch) && i != lastPos) {
                 continue;
             }
-            
-            pushValueIntoStack(currentValue, operator, stack);
-            
-            operator = ch;
-            currentValue = 0;
+
+            if (preOperator == '+') {
+                stack.push(value);
+            }
+
+            if (preOperator == '-') {
+                stack.push(-value);
+            }
+
+            preOperator = ch;
+            value = 0;//reset
         }
-        
-        // handle the last operator
-        pushValueIntoStack(currentValue, operator, stack);
-        
+
+        //System.out.println("stack = " + stack);
         while (!stack.isEmpty()) {
             result += stack.pop();
         }
-        
+
         return result;
     }
-    
+
     // helper methods
     private boolean isValid(char ch) {
-        return isDigit(ch) || isOperator(ch) || isLeftBracket(ch) || isRightBracket(ch);
+        return isDigit(ch) || isBracket(ch) || isOperator(ch);
     }
-    
     private boolean isDigit(char ch) {
         return Character.isDigit(ch);
     }
-    
-    private boolean isOperator(char ch) {
-        return ch == '+' || 
-                ch == '-';
+
+    private boolean isBracket(char ch) {
+        return isLeftBracket(ch) || isRightBracket(ch);
     }
-    
-    private boolean isBlank(char ch) {
-        return Character.isWhitespace(ch);
-    }
-    
+
     private boolean isLeftBracket(char ch) {
         return ch == '(';
     }
-    
+
     private boolean isRightBracket(char ch) {
         return ch == ')';
     }
-    
-    private void pushValueIntoStack(int currentValue, char operator, Stack<Integer> stack) {
-        switch (operator) {
-            case '+':
-                stack.push(currentValue);
-                break;
-            case '-':
-                stack.push(-currentValue);
-                break;
-            case '*':
-                stack.push(stack.pop() * currentValue);
-                break;
-            case '/':
-                stack.push(stack.pop() / currentValue);
-                break;
-        }
-    }
-    
-    private int findPair(String s, int i) {
-        int count = 0;
 
-        int index = i;
-        while (index < s.length()) {
-            char ch = s.charAt(index);
+    private boolean isOperator(char ch) {
+        return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+    }
+
+    private int findPair(int startPos, char[] charArray) {
+        int result = -1;
+        // check corner case
+        int size = charArray.length;
+        if (startPos < 0 || startPos >= size) {
+            return -1;
+        }
+
+        result = startPos;
+        if (!isLeftBracket(charArray[startPos])) {
+            return result;
+        }
+
+        // regular case
+        int count = 0;
+        int index = startPos;
+        for (; index < size; index++) {
+            char ch = charArray[index];
             if (isLeftBracket(ch)) {
-                count++;
+                count ++;
+                continue;
             }
-            else if (isRightBracket(ch)) {
+
+            if (isRightBracket(ch)) {
                 count--;
-                
                 if (count == 0) {
+                    result = index;
                     break;
                 }
             }
-            
-            index ++;
         }
-        
-        return index;
+
+        return result;
     }
 }
-
-
