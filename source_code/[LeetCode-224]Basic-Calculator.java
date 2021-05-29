@@ -72,8 +72,7 @@ public class Solution {
             preOperator = ch;
             value = 0;//reset
         }
-
-        //System.out.println("stack = " + stack);
+  
         while (!stack.isEmpty()) {
             result += stack.pop();
         }
