@@ -227,3 +227,47 @@ public class Solution {
         return str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/");
     }
 }
+
+//version-4
+public class Solution {
+    /**
+     * @param tokens: The Reverse Polish Notation
+     * @return: the value
+     */
+    public int evalRPN(String[] tokens) {
+        int result = 0;
+        // check corner case
+        if (tokens == null || tokens.length == 0) {
+            return result;
+        }
+
+        Stack<Integer> stack = new Stack<>();
+        for (String token : tokens) {
+            if (!"+-*/".contains(token)) {
+                stack.push(Integer.valueOf(token));
+                continue;
+            }
+
+            int right = stack.pop();
+            int left = stack.pop();
+            switch(token) {
+                case "+":
+                    stack.push(left + right);
+                    break;
+                case "-":
+                    stack.push(left - right);
+                    break;
+                case "*":
+                    stack.push(left * right);
+                    break;
+                case "/":
+                    stack.push(left / right);
+                    break;
+            }
+        }
+
+        result = stack.peek();
+
+        return result;
+    }
+}
