@@ -25,7 +25,7 @@ Clarification
     Definition of Reverse Polish Notation:
     -https://en.wikipedia.org/wiki/Reverse_Polish_notation
 ***/
-// version-1
+// version-1: Mono Stack<Operator+Brackets> 
 public class Solution {
     /**
      * @param expression: A string array
@@ -44,23 +44,29 @@ public class Solution {
         for (String current : expression) {
             if (isLeftBracket(current)) {
                 stack.push(current);
+                continue;
             }
-            else if (isRightBracket(current)) {
+            
+            if (isRightBracket(current)) {
                 while (!stack.isEmpty() && !isLeftBracket(stack.peek())) {
                     result.add(stack.pop());
                 }
                 
                 stack.pop(); // pop out the left bracket from the stack
+                continue;
             }
-            else if (isOperator(current)) {
+            
+            if (isOperator(current)) {
                 currentPriority = getPriority(current);
                 while (!stack.isEmpty() &&
                         currentPriority <= getPriority(stack.peek())) {
                     result.add(stack.pop());
                 }
                 stack.push(current);
+                continue;
             }
-            else if (isNumeric(current)) {
+            
+            if (isNumeric(current)) {
                 result.add(current);
             }
         }
