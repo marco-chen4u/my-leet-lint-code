@@ -25,6 +25,11 @@ Clarification
     Definition of Reverse Polish Notation:
     -https://en.wikipedia.org/wiki/Reverse_Polish_notation
 ***/
+/*
+conclusion:
+    if it is polish notation processing, then scan the expression from the end index to the beginning index of elements. [backward traversing tokens]
+    if it is reverse polish notation processing, then scan the expression from the beginning to the end index of elements.[forward traversing tokens]
+*/
 // version-1: Mono Stack<Operator+Brackets> 
 public class Solution {
     /**
