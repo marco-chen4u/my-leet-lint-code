@@ -19,6 +19,12 @@ Clarification
     -http://en.wikipedia.org/wiki/Polish_notation
     -http://baike.baidu.com/view/7857952.htm
 ***/
+/*
+conclusion:
+    if it is polish notation processing, then scan the expression from the end index to the beginning index of elements. [backward traversing tokens]
+    if it is reverse polish notation processing, then scan the expression from the beginning to the end index of elements.[forward traversing tokens]
+*/
+//version-1: Mono Stack to Store all operators including the brackets
 public class Solution {
     /**
      * @param expression: A string array
@@ -113,5 +119,104 @@ public class Solution {
         }
 
         return priority;
+    }
+}
+
+//version-2: Mono Stack to store all operators
+public class Solution {
+    /**
+     * @param expression: A string array
+     * @return: The Polish notation of this expression
+     */
+    public List<String> convertToPN(String[] expression) {
+        List<String> result = new ArrayList<>();
+        // check corner case
+        if (expression == null || expression.length == 0) {
+            return result;
+        }
+
+        // regular case
+        Stack<String> stack = new Stack<>();//mono stack to store operators
+        int size = expression.length;
+        for (int i = size - 1; i >= 0; i--) {
+            String token = expression[i];
+
+            if (isRightBracket(token)) {
+                stack.push(token);
+                continue;
+            }
+
+            if (isLeftBracket(token)) {
+                while (!stack.isEmpty() && !isRightBracket(stack.peek())) {
+                    result.add(0, stack.pop());
+                }
+
+                stack.pop();
+                continue;
+            }
+
+            if (isNumeric(token)) {
+                result.add(0, token);
+                continue;
+            }
+
+            if (isOperator(token)) {
+                int currentPriority = getPriority(token);
+                while (!stack.isEmpty() && currentPriority < getPriority(stack.peek())) {
+                    result.add(0, stack.pop());
+                }
+
+                stack.push(token);
+                continue;
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            result.add(0, stack.pop());
+        }
+
+        return result;
+    }
+
+    // helper method
+    private boolean isNumeric(String token) {
+        for (char ch : token.toCharArray()) {
+            if (!Character.isDigit(ch)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isOperator(String token) {
+        return "+-*/".contains(token);
+    }
+
+    private boolean isLeftBracket(String token) {
+        return "(".equals(token);
+    }
+
+    private boolean isRightBracket(String token) {
+        return ")".equals(token);
+    }
+
+    private int getPriority(String token) {
+        int result = 0;
+        switch (token) {
+            case "+":
+            case "-":
+                result = 1;
+                break;
+            case "*":
+            case "/":
+                result = 2;
+                break;
+            default:
+                result = 0;
+                break;
+        }
+
+        return result;
     }
 }
