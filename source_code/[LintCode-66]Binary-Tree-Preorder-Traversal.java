@@ -30,6 +30,8 @@ Example 2:
         It will be serialized as {1, #, 2, 3}
 Challenge
     Can you do it without recursion?
+    
+Link: https://www.lintcode.com/problem/66/
 ***/
 
 /**
