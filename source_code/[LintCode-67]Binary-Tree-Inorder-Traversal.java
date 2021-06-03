@@ -29,7 +29,7 @@ Example 2:
 Challenge
     Can you do it without recursion?
     
-Link: https://www.lintcode.com/problem/66/
+Link: https://www.lintcode.com/problem/67/
 ***/
 
 /**
