@@ -33,7 +33,6 @@ Example
 //version-1: recursion
 public class Solution {
     private final String SEPARATOR = "->";
-    private final String EMPTY = "";
 
     /**
      * @param root: the root of the binary tree
