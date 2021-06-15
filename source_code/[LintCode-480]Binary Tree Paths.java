@@ -19,7 +19,7 @@ Example
 		 /   
 		2     
 ***/
-/**
+/*
  * Definition of TreeNode:
  * public class TreeNode {
  *     public int val;
@@ -30,8 +30,100 @@ Example
  *     }
  * }
  */
- 
-//version-1
+//version-1: recursion
+public class Solution {
+    private final String SEPARATOR = "->";
+    private final String EMPTY = "";
+
+    /**
+     * @param root: the root of the binary tree
+     * @return: all root-to-leaf paths
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> result = new ArrayList<>();
+        // check corner case
+        if (root == null) {
+            return result;
+        }
+
+        String path = String.valueOf(root.val);
+        if (root.left == null && root.right == null) {
+            result.add(path);
+            return result;
+        }
+
+        // normal case
+        if (root.left != null) {
+            helper(result, path, root.left);
+        }
+
+        if (root.right != null) {
+            helper(result, path, root.right);
+        }
+
+        return result;
+    }
+
+    // helper method
+    private void helper(List<String> result, String path, TreeNode node) {
+        path += SEPARATOR + String.valueOf(node.val);
+
+        if (node.left == null && node.right == null) {
+            result.add(path);
+            return;
+        }
+
+        if (node.left != null) {
+            helper(result, path, node.left);
+        }
+
+        if (node.right != null) {
+            helper(result, path, node.right);
+        }
+    }
+}
+
+//version-2: recurision with Divide&Conquer
+public class Solution {
+    private final String SEPARATOR = "->";
+
+    /**
+     * @param root: the root of the binary tree
+     * @return: all root-to-leaf paths
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> result = new ArrayList<>();
+        // check corner cases
+        if (root == null) {
+            return result;
+        }
+
+        int currentVal = root.val;
+        if (root.left == null && root.right == null) {
+            result.add(String.valueOf(currentVal));
+            return result;
+        }
+
+        // regular case
+        // divide
+        List<String> leftPaths = binaryTreePaths(root.left);
+        List<String> rightPaths = binaryTreePaths(root.right);
+
+        // conquar
+        for (String path : leftPaths) {
+            result.add(currentVal + SEPARATOR + path);
+        }
+
+        for (String path : rightPaths) {
+            result.add(currentVal + SEPARATOR + path);
+        }
+
+        // return
+        return result;
+    }
+}
+
+//version-3: recursion
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> result = new ArrayList<String>();
@@ -65,37 +157,5 @@ public class Solution {
             helper(result, path, node.right);
         }        
         path.delete(path.length() - value.length(), path.length());
-    }
-}
-
-//version-2
-public class Solution {
-    /**
-     * @param root: the root of the binary tree
-     * @return: all root-to-leaf paths
-     */
-    public List<String> binaryTreePaths(TreeNode root) {
-        List<String> result = new ArrayList<String>();
-        // check corner case
-        if (root == null) {
-            return result;
-        }
-        
-        List<String> leftPaths = binaryTreePaths(root.left);
-        List<String> rightPaths = binaryTreePaths(root.right);
-        
-        for (String leftPath : leftPaths) {
-            result.add(root.val + "->" + leftPath);
-        }
-        
-        for (String rightPath : rightPaths) {
-            result.add(root.val + "->" + rightPath);
-        }
-        
-        if (result.size() == 0) {
-            result.add(String.valueOf(root.val));
-        }
-        
-        return result;
     }
 }
