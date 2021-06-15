@@ -109,7 +109,7 @@ public class Solution {
         List<String> leftPaths = binaryTreePaths(root.left);
         List<String> rightPaths = binaryTreePaths(root.right);
 
-        // conquar
+        // conquer
         for (String path : leftPaths) {
             result.add(currentVal + SEPARATOR + path);
         }
