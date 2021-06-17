@@ -34,6 +34,79 @@ Example
  *     }
  * }
  */
+//version-1: non-recursion, in-order traversal with stack
+public class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: True if the binary tree is BST, or false
+     */
+    public boolean isValidBST(TreeNode root) {
+        // check corner case
+        if (root == null) {
+            return true;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null;
+        TreeNode current = root;
+
+        while (!stack.isEmpty() || current != null) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+            
+            if (pre != null && pre.val >= current.val) {
+                return false;
+            }
+
+            pre = current;
+
+            current = current.right;
+        }
+
+        return true;
+    }
+}
+
+//version-2: all the nodes of BST are layout in order with Inorder traversal, the previous visti node should be less then current node, we should be mindful this characteristic of BST
+public class Solution {
+
+    private boolean isFirstNode = true;
+    private int lastVal = Integer.MAX_VALUE;
+
+    /**
+     * @param root: The root of binary tree.
+     * @return: True if the binary tree is BST, or false
+     */
+    public boolean isValidBST(TreeNode root) {
+        // check corner case
+        if (root == null) {
+            return true;
+        }
+
+        if (!isValidBST(root.left)) {
+            return false;
+        }
+
+        if (!isFirstNode && lastVal >= root.val) {
+            return false;
+        }
+
+        isFirstNode = false;
+        lastVal = root.val;
+
+        if (!isValidBST(root.right)) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+//vesion-3: recursion + new data type
 public class Solution {
     // inner class
     class ResultType {
