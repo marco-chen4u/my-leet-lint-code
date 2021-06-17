@@ -91,11 +91,9 @@ public class Solution {
             if (node.val >= current.val) {
                 current = current.right;
                 continue;
-            }
-            
+            }            
             
             current = current.left;
-            
         }
 
         if (pre == null) {
