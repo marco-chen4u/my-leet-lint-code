@@ -56,26 +56,25 @@ class Solution {
         // tow pointers
         ListNode slow = head;
         ListNode fast = head;
-        if (fast != null && fast.next != null) {
-            fast = fast.next.next;
-        }
+        ListNode pre = null;
         
         while(fast != null && fast.next != null) {
+            pre = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
         
-        ListNode pre = slow;
-        ListNode median = slow.next;
+        //System.out.println("median = " + slow.val);
+        ListNode median = slow;
         ListNode next = median.next;
         
         pre.next = null;
         median.next = null;
-        TreeNode root = new TreeNode(median.val);
+        TreeNode node = new TreeNode(median.val);
         
-        root.left = sortedListToBST(head);
-        root.right = sortedListToBST(next);
+        node.left = sortedListToBST(head);
+        node.right = sortedListToBST(next);
         
-        return root;
+        return node;
     }
 }
