@@ -4,23 +4,23 @@ Given a binary tree, imagine yourself standing on the right side of it,
 return the values of the nodes you can see ordered from top to bottom
 
 Example
-	Example 1
-		Input: {1,2,3,#,5,#,4}
-		Output: [1,3,4]
-		Explanation:
-			   1
-			 /   \
-			2     3
-			 \     \
-			  5     4
-	  
-	Example 2
-		Input: {1,2,3}
-		Output: [1,3]
-		Explanation:
-			   1
-			 /   \
-			2     3
+    Example 1
+        Input: {1,2,3,#,5,#,4}
+        Output: [1,3,4]
+        Explanation:
+               1
+             /   \
+            2     3
+             \     \
+              5     4
+ 
+    Example 2
+        Input: {1,2,3}
+        Output: [1,3]
+        Explanation:
+               1
+             /   \
+            2     3
 ***/
 /**
  * Definition of TreeNode:
@@ -51,7 +51,8 @@ public class Solution {
         
         while (!queue.isEmpty()) {
             int size = queue.size();
-            
+            int lastPos = size - 1;
+
             for (int i = 0; i < size; i++) {
                 TreeNode current = queue.poll();
                 
@@ -63,12 +64,12 @@ public class Solution {
                     queue.offer(current.right);
                 }
                 
-                if (i == size - 1) {
+                if (i == lastPos) {
                     result.add(current.val);
                 }
             }
         }
-        
+
         return result;
     }
 }
