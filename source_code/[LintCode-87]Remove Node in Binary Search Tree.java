@@ -65,18 +65,7 @@ Example
  * }
  */
 
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- */
-
+//version-1:recursion
 public class Solution {
     /*
      * @param root: The root of the binary search tree.
@@ -118,4 +107,61 @@ public class Solution {
         return root;
     }
     
+}
+
+//version-2: recursion
+public class Solution {
+    /*
+     * @param root: The root of the binary search tree.
+     * @param value: Remove the node with given value.
+     * @return: The root of the binary search tree after removal.
+     */
+    public TreeNode removeNode(TreeNode root, int value) {
+        // check corner cases
+        if (root == null) {
+            return root;
+        }
+
+        // normal case
+        if (value > root.val) {
+            root.right = removeNode(root.right, value);
+            return root;
+        }
+
+        if (value < root.val) {
+            root.left = removeNode(root.left, value);
+            return root;
+        }
+
+        //value == root.val
+        if (root.left == null && root.right == null) {
+            return null;
+        }
+
+        if (root.left == null) {
+            return root.right;
+        }
+
+        if (root.right == null) {
+            return root.left;
+        }
+
+        TreeNode node = root.right;
+        TreeNode current = node;
+        TreeNode pre = null;
+        while (current.left != null) {
+            pre = current;
+            current = current.left;
+        }
+
+        root.val = current.val;
+        if (pre == null) {
+            root.right = null;
+        }
+        else {
+            pre.left = null;
+        }
+
+        return root;
+    }
 }
