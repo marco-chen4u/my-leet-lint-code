@@ -165,3 +165,58 @@ public class Solution {
         return root;
     }
 }
+
+//version-3: recursion
+public class Solution {
+    /*
+     * @param root: The root of the binary search tree.
+     * @param value: Remove the node with given value.
+     * @return: The root of the binary search tree after removal.
+     */
+    public TreeNode removeNode(TreeNode root, int value) {
+        // check corner case
+        if (root == null) {
+            return null;
+        }
+
+        // normal case
+        if (value < root.val) {
+            root.left = removeNode(root.left, value);
+            return root;
+        }
+
+        if (value > root.val) {
+            root.right = removeNode(root.right, value);
+            return root;
+        }
+
+        if (root.left == null && root.right == null) {
+            return null;
+        }
+
+        if (root.left == null) {
+            return root.right;
+        }
+
+        if (root.right == null) {
+            return root.left;
+        }
+
+        TreeNode pre = null;
+        TreeNode node = root.right;
+        while (node.left != null) {
+            pre = node;
+            node = node.left;
+        }
+
+        root.val = node.val;
+        if (pre == null) {            
+            root.right = removeNode(node, node.val);
+        }
+        else {
+            pre.left = null;
+        }
+
+        return root;
+    }
+}
