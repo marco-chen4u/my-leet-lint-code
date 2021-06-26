@@ -95,8 +95,58 @@ public class Solution {
     }
 }
 
+//recursion-2:
+public class Solution {
+    /**
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: nothing
+     */
+    public void flatten(TreeNode root) {
+        // check corner cases
+        if (root == null) {
+            return;
+        }
 
-//version-2: none-recursion
+        if (root.left == null && root.right == null) {
+            return;
+        }
+
+        if (root.left == null) {
+            flatten(root.right);
+            return;
+        }
+
+        // normal case
+        TreeNode leftNode = root.left;
+        TreeNode rightNode = root.right;
+
+        // divide
+        flatten(leftNode);
+        flatten(rightNode);
+
+        // conquer
+        root.right = leftNode;
+        root.left = null;//remove its left branch, since left branch has been flattened and shift to right side
+
+         if (rightNode == null) {
+            return;
+        }
+
+        // check the flattened left branch nodes, find the last node to link the right branch headed node
+        TreeNode pre = leftNode;
+        TreeNode current = leftNode;
+
+        while (current != null) {
+            pre = current;
+            current = current.right;
+        }
+
+        // let the last node to connected right branch headed node
+        pre.right = rightNode;
+    }
+}
+
+//version-4: none-recursion
 public class Solution {
     /**
      * @param root: a TreeNode, the root of the binary tree
