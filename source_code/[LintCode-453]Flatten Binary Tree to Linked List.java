@@ -95,7 +95,7 @@ public class Solution {
     }
 }
 
-//recursion-2:
+//recursion-2: recursion
 public class Solution {
     /**
      * @param root: a TreeNode, the root of the binary tree
@@ -133,20 +133,18 @@ public class Solution {
         }
 
         // check the flattened left branch nodes, find the last node to link the right branch headed node
-        TreeNode pre = leftNode;
         TreeNode current = leftNode;
 
-        while (current != null) {
-            pre = current;
+        while (current.right != null) {
             current = current.right;
         }
 
         // let the last node to connected right branch headed node
-        pre.right = rightNode;
+        current.right = rightNode;
     }
 }
 
-//version-4: none-recursion
+//version-3 none-recursion
 public class Solution {
     /**
      * @param root: a TreeNode, the root of the binary tree
