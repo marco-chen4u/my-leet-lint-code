@@ -50,16 +50,16 @@ Example
      * @return: the length of the longest consecutive sequence path
      */
     public int longestConsecutive(TreeNode root) {
-        return helper(root, null, 0);
+        return find(root, null, 0);
     }
 	
 	// helper method
-	private int helper(TreeNode node, TreeNode parent, int lengthInSubtree) {
+	private int find(TreeNode node, TreeNode parent, int orginalLength) {
 		if (nood == null) {
 			return 0;
 		}
 		
-		int length = (parrent != null && parent.val + 1 == node.val) ? lengthInSubtree + 1: 1;
+		int length = (parrent != null && parent.val + 1 == node.val) ? orginalLength + 1: 1;
 		
 		int left = helper(node.left, node, length);
 		int right = helper(node.right, node, length);
