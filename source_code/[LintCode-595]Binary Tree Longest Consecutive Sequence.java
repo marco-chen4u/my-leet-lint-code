@@ -73,7 +73,7 @@ Example
 //version-2: recursion, divide and conquer, with global variable
 public class Solution {
 
-    private int maxSize = 0;
+    private int maxLength = 0;
     /**
      * @param root: the root of binary tree
      * @return: the length of the longest consecutive sequence path
@@ -84,13 +84,9 @@ public class Solution {
             return 0;
         }
 
-        if (root.left == null && root.right == null) {
-            return 1;
-        }
-
         find(root);
 
-        return maxSize;
+        return maxLength;
     }
 
     // helper method
@@ -99,25 +95,21 @@ public class Solution {
             return 0;
         }
 
-        int size = 1;
+        int length = 1;
+        int left = find(node.left);
+        int right = find(node.right);
 
-        int leftSize = find(node.left);
-        int rightSize = find(node.right);
-
-        int currentVal = node.val;
-        int leftVal = (node.left == null) ? 0 : node.left.val;
-        int rightVal = (node.right == null) ? 0 : node.right.val;
-
-        if (leftVal - currentVal == 1) {
-            size = Math.max(leftSize + 1, size);
+        if (node.left != null && node.left.val == node.val + 1) {
+            length = Math.max(length, left + 1);
         }
 
-        if (rightVal - currentVal == 1) {
-            size = Math.max(rightSize + 1, size);
+        if (node.right != null && node.right.val == node.val + 1) {
+            length = Math.max(length, right + 1);
         }
 
-        maxSize = Math.max(maxSize, size);
+        maxLength = Math.max(length, maxLength);
 
-        return size;
+        return length;
     }
+}
 }
