@@ -44,6 +44,8 @@ Example
  *     }
  * }
  */
+
+//version-1: recursion, divide and conquer, without global variable
  public class Solution {
     /**
      * @param root: the root of binary tree
@@ -53,17 +55,69 @@ Example
         return find(root, null, 0);
     }
 	
-	// helper method
-	private int find(TreeNode node, TreeNode parent, int orginalLength) {
-		if (nood == null) {
-			return 0;
-		}
-		
-		int length = (parrent != null && parent.val + 1 == node.val) ? orginalLength + 1: 1;
-		
-		int left = helper(node.left, node, length);
-		int right = helper(node.right, node, length);
-		
-		return Math.max(length, Math.max(lef, right));
-	}
+    // helper method
+    private int find(TreeNode node, TreeNode parent, int orginalLength) {
+        if (nood == null) {
+            return 0;
+        }
+
+        int length = (parrent != null && parent.val + 1 == node.val) ? orginalLength + 1: 1;
+
+        int left = helper(node.left, node, length);
+        int right = helper(node.right, node, length);
+
+        return Math.max(length, Math.max(lef, right));
+    }
+}
+
+//version-2: recursion, divide and conquer, with global variable
+public class Solution {
+
+    private int maxSize = 0;
+    /**
+     * @param root: the root of binary tree
+     * @return: the length of the longest consecutive sequence path
+     */
+    public int longestConsecutive(TreeNode root) {
+        // check corner case
+        if (root == null) {
+            return 0;
+        }
+
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+
+        find(root);
+
+        return maxSize;
+    }
+
+    // helper method
+    private int find(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int size = 1;
+
+        int leftSize = find(node.left);
+        int rightSize = find(node.right);
+
+        int currentVal = node.val;
+        int leftVal = (node.left == null) ? 0 : node.left.val;
+        int rightVal = (node.right == null) ? 0 : node.right.val;
+
+        if (leftVal - currentVal == 1) {
+            size = Math.max(leftSize + 1, size);
+        }
+
+        if (rightVal - currentVal == 1) {
+            size = Math.max(rightSize + 1, size);
+        }
+
+        maxSize = Math.max(maxSize, size);
+
+        return size;
+    }
 }
