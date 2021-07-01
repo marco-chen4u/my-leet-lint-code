@@ -44,26 +44,72 @@ Example
  *     }
  * }
  */
+
+//version-1: recursion, divide and conquer, without global variable
  public class Solution {
     /**
      * @param root: the root of binary tree
      * @return: the length of the longest consecutive sequence path
      */
     public int longestConsecutive(TreeNode root) {
-        return helper(root, null, 0);
+        return find(root, null, 0);
     }
 	
-	// helper method
-	private int helper(TreeNode node, TreeNode parent, int lengthInSubtree) {
-		if (nood == null) {
-			return 0;
-		}
-		
-		int length = (parrent != null && parent.val + 1 == node.val) ? lengthInSubtree + 1: 1;
-		
-		int left = helper(node.left, node, length);
-		int right = helper(node.right, node, length);
-		
-		return Math.max(length, Math.max(lef, right));
-	}
+    // helper method
+    private int find(TreeNode node, TreeNode parent, int orginalLength) {
+        if (nood == null) {
+            return 0;
+        }
+
+        int length = (parrent != null && parent.val + 1 == node.val) ? orginalLength + 1: 1;
+
+        int left = helper(node.left, node, length);
+        int right = helper(node.right, node, length);
+
+        return Math.max(length, Math.max(lef, right));
+    }
+}
+
+//version-2: recursion, divide and conquer, with global variable
+public class Solution {
+
+    private int maxLength = 0;
+    /**
+     * @param root: the root of binary tree
+     * @return: the length of the longest consecutive sequence path
+     */
+    public int longestConsecutive(TreeNode root) {
+        // check corner case
+        if (root == null) {
+            return 0;
+        }
+
+        find(root);
+
+        return maxLength;
+    }
+
+    // helper method
+    private int find(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int length = 1;
+        int left = find(node.left);
+        int right = find(node.right);
+
+        if (node.left != null && node.left.val == node.val + 1) {
+            length = Math.max(length, left + 1);
+        }
+
+        if (node.right != null && node.right.val == node.val + 1) {
+            length = Math.max(length, right + 1);
+        }
+
+        maxLength = Math.max(length, maxLength);
+
+        return length;
+    }
+}
 }
