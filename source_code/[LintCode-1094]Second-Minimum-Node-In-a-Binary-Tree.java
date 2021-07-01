@@ -45,6 +45,7 @@ Link: https://www.lintcode.com/problem/1094/
  */
 //version-1: non-recursion, preorder, with 1st min and 2nd min values to check
 public class Solution {
+    
     private final int DEFAULT_VALUE = Integer.MAX_VALUE;
 
     /**
@@ -87,5 +88,61 @@ public class Solution {
         }
 
         return min2 == DEFAULT_VALUE ? -1 : min2;
+    }
+}
+
+//version-2:no-recursion, preorder traversal, maxHeap + Set(to remove duplicate)
+public class Solution {
+    /**
+     * @param root: the root
+     * @return: the second minimum value in the set made of all the nodes' value in the whole tree
+     */
+    public int findSecondMinimumValue(TreeNode root) {
+        // check corner case
+        if (root == null) {
+            return -1;
+        }
+
+        if (root.left == null && root.right == null) {
+            return -1;
+        }
+
+        Set<Integer> set = new HashSet<>();
+        Queue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        Stack<TreeNode> stack = new Stack<>();
+
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode current = stack.pop();
+
+            if (current.right != null) {
+                stack.push(current.right);
+            }
+
+            if (current.left != null) {
+                stack.push(current.left);
+            }
+
+            int currentVal = current.val;
+            if (set.contains(currentVal)) {
+                continue;
+            }
+
+            set.add(currentVal);
+            maxHeap.offer(currentVal);
+
+            if (maxHeap.size() > 2) {
+                maxHeap.poll();
+            }
+        }
+
+        //System.out.println("set = " + set);
+        //System.out.println("maxHeap = " + maxHeap);
+
+        if (maxHeap.isEmpty() || maxHeap.size() == 1) {
+            return -1;
+        }
+
+        return maxHeap.peek();
     }
 }
