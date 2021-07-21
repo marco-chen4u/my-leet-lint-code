@@ -15,6 +15,114 @@ Example2
 	Explanation:
 		No reverse pair
 ***/
+//version-1: brute-force, O(n^2)
+public class Solution {
+    /**
+     * @param A: an array
+     * @return: total of reverse pairs
+     */
+    public long reversePairs(int[] nums) {
+        int result = 0;
+        // check corner case
+        if (nums == null || nums.length <= 1) {
+            return result;
+        }
+
+        int size = nums.length;
+        int lastPos = size - 1;
+
+        for (int i = 0; i < lastPos; i++) {
+            for (int j = i + 1; j <= lastPos; j++) {
+                result += (nums[i] > nums[j]) ? 1 : 0;
+            }
+        }
+
+        return result;
+    }
+}
+
+
+//version-2: mergeSort + 2 pointers, O(nlogn)
+public class Solution {
+
+    /**
+     * @param A: an array
+     * @return: total of reverse pairs
+     */
+    public long reversePairs(int[] nums) {
+        int result = 0;
+        // check corner case
+        if (nums == null || nums.length <= 1) {
+            return result;
+        }
+
+        int start = 0;
+        int end = nums.length - 1;
+
+        return mergeSort(nums, 0, end);
+    }
+
+    // helper method
+    private int mergeSort(int[] nums, int start, int end) {
+        int result = 0;
+        // check corner case
+        if (start >= end) {
+            return result;
+        }
+
+        // normal case
+        int mid = start + (end - start) / 2;
+        result += mergeSort(nums, start, mid);
+        result += mergeSort(nums, mid + 1, end);
+
+        result +=merge(nums, start, mid, end);
+
+        return result;
+    }
+
+    private int merge(int[] nums, int start, int mid, int end) {
+        int count = 0;
+        int size = end - start + 1;
+        int[] result = new int[size];
+
+        int leftStart = start;
+        int leftEnd = mid;
+        int rightStart = mid + 1;
+        int rightEnd = end;
+
+        int i = leftStart;
+        int j = rightStart;
+
+        int index = 0;
+
+        while (i <= leftEnd && j <= rightEnd) {
+            if (nums[i] <= nums[j]) {
+                result[index++] = nums[i++]; 
+            }
+            else {
+                count+= mid - i + 1;
+                result[index++] = nums[j++];
+            }
+        }
+
+        while (i <= leftEnd) {
+            result[index++] = nums[i++];
+        }
+
+        while (j <= rightEnd) {
+            result[index++] = nums[j++];
+        }
+
+        index = 0;
+        for (int k = start; k <= end; k++) {
+            nums[k] = result[index++];
+        }
+
+        return count;
+    }
+}
+
+//version-3:binary search tree, O(nlogn), space : O(n)
 public class Solution {
     class Node {
         int val, count;
