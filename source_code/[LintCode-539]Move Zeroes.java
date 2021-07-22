@@ -40,6 +40,7 @@ public class Solution {
         }
     }
 }
+
 //version-2
 public class Solution {
     /**
@@ -57,6 +58,47 @@ public class Solution {
                 left++;
             }
             right++;
+        }
+    }
+}
+
+//version-3: best for more 0 in a array
+public class Solution {
+    /**
+     * @param nums: an integer array
+     * @return: nothing
+     */
+    public void moveZeroes(int[] nums) {
+        // check corner case
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
+
+        // normal case
+        int size = nums.length;
+        int left = 0;
+        int right = 0;
+
+        while (left < size) {
+
+            if (nums[left] != 0){
+                left++;
+                right++;
+                continue;
+            }
+            
+            while (right < size && nums[right] == 0) {
+                right++;
+            }
+
+            if (right < size && nums[left] == 0) {
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+            }
+
+            // next iteration
+            left++;
         }
     }
 }
