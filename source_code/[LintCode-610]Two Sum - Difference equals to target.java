@@ -4,22 +4,60 @@ Given an array of integers, find two numbers that their difference equals to a t
 where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are NOT zero-based.
 
 Example
-	Example 1:
-		Input: nums = [2, 7, 15, 24], target = 5 
-		Output: [1, 2] 
-		Explanation:
-			(7 - 2 = 5)
+    Example 1:
+        Input: nums = [2, 7, 15, 24], target = 5 
+        Output: [1, 2] 
+        Explanation:
+            (7 - 2 = 5)
 
-	Example 2:
-		Input: nums = [1, 1], target = 0
-		Output: [1, 2] 
-		Explanation:
-			(1 - 1 = 0)
+    Example 2:
+        Input: nums = [1, 1], target = 0
+        Output: [1, 2] 
+        Explanation:
+            (1 - 1 = 0)
 
 Notice
-	It's guaranteed there is only one available solution
+    It's guaranteed there is only one available solution
 ***/
-//version-1
+//version-1:two pointers(slow + fast pointers), sliding window
+public class Solution {
+    /**
+     * @param nums: an array of Integer
+     * @param target: an integer
+     * @return: [num1, num2] (num1 < num2)
+     */
+    public int[] twoSum7(int[] nums, int target) {
+        int DEFAULT_VALUE = -1;
+        int[] DEFAULT_RESULT = new int[] {DEFAULT_VALUE, DEFAULT_VALUE};
+        // check corner cases
+        if (nums == null || nums.length <=1) {
+            return DEFAULT_RESULT;
+        }
+
+        // normal case
+        int size = nums.length;
+        target = Math.abs(target);
+        
+        int i;// slow pointer
+        int j;// fast pointer
+
+        for (i = 0, j = i + 1; i < size; i++) {
+            j = (j <= i) ? i + 1 : j;// make sure fast pointer is right ahead of the slow on
+
+            while (j < size && nums[j] - nums[i] < target) {
+                j++;
+            }
+
+            if (j < size && nums[j] - nums[i] == target) {
+                return new int[]{nums[i], nums[j]};
+            }
+        }
+
+        return DEFAULT_RESULT;
+    }
+}
+
+//version-2:
 public class Solution {
     // inner class
     class Pair {
@@ -76,7 +114,7 @@ public class Solution {
     }
 }
 
-// version-2
+// version-3:
 public class Solution {
     /**
      * @param nums: an array of Integer
