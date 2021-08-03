@@ -62,4 +62,37 @@ public class Solution {
 }
 
 // version-2: two pointers, without set/map, better solution
-...
+public class Solution {
+    /**
+     * @param nums: an array of integers
+     * @return: the number of unique integers
+     */
+    public int deduplication(int[] nums) {
+        // check corner case
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        if (nums.length == 1) {
+            return 1;
+        }
+
+        int size = nums.length;
+
+        Arrays.sort(nums);
+        
+        int left = 0;
+        for (int i = 0; i < size; i++) {
+            while (i < size && nums[i] == nums[left]) {
+                i++;
+            }
+
+            if (i < size && nums[i] != nums[left]) {
+                left++;
+                nums[left] = nums[i];                
+            }
+        }
+
+        return left + 1;
+    }
+}
