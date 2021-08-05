@@ -67,6 +67,7 @@ public class Solution {
             preSum[i + 1] = preSum[i] + nums[i];
         }
 
+        // scanning by [k-left, l-right] windows
         for (int i = 0; i < size - l; i++) {
             if (i + k > size) {
                 continue;
@@ -82,7 +83,7 @@ public class Solution {
             result = Math.max(result, kLeftSum + lRightSum);
         }
 
-        // scanning by [l-left, k-right] window
+        // scanning by [l-left, k-right] windows
         for (int i = 0; i < size - k; i++) {
             if (i + l > size) {
                 continue;
