@@ -19,39 +19,46 @@ Notice
 ***/
 public class Solution {
     /**
-     * @param A: An integer array
+     * @param nums: An integer array
      * @param start: An integer
      * @param end: An integer
      * @return: the number of possible answer
      */
-    public int subarraySumII(int[] A, int start, int end) {
-        // check corner case
-        if (isEmpty(A)) {
-            return 0;
-        }
-
-        int n = A.length;
-        int preSum = new int[n + 1];
-        for (int i = 0; i < n; i++) {
-            preSum[i + 1] = preSum[i] + A[i];
-        }
-
+    public int subarraySumII(int[] nums, int start, int end) {
         int result = 0;
+        // check corner case
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
 
-        // two pointers
-        int left = right = 0;
-        for (int i = 1; i <= n; i++) {
-            while (i > left && (preSum[i] - preSum[left]) > end) {
+        // normal case
+        int size = nums.length;
+        int[] preSum = new int[size + 1];
+        for (int i = 0; i < size; i++) {
+            preSum[i + 1] = preSum[i] + nums[i];
+        }
+        
+        int left = 0;
+        int right = 0;
+
+        for (int i = 0; i <= size; i++) {
+            while (left < i && getRange(preSum, left, i) > end) {
                 left++;
             }
 
-            while (i > right && (preSum[i] - preSum[right]) >= start) {
+            while (right < i && getRange(preSum, right, i) >= start) {
                 right++;
             }
 
-            result += (right - left);
+            result += right - left;
         }
 
         return result;
+
+    }
+
+    // helper method
+    private int getRange(int[] preSum, int i, int j) {
+        return preSum[j] - preSum[i];
     }
 }
