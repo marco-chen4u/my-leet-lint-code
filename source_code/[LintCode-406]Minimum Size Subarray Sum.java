@@ -16,7 +16,39 @@ Example
 Challenge
     If you have figured out the O(nlog n) solution, try coding another solution of which the time complexity is O(n).
 ***/
-//solution-1: O(n), Two pointers, Silding Window
+//version-1: two pointer, sliding window
+public class Solution {
+    /**
+     * @param nums: an array of integers
+     * @param s: An integer
+     * @return: an integer representing the minimum size of subarray
+     */
+    public int minimumSize(int[] nums, int s) {
+        int result = -1;
+        // check corner case
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
+
+        int sum = 0;
+        int left = 0;
+        int size = nums.length;
+        result = Integer.MAX_VALUE;
+
+        for (int i = 0; i < size; i++) {
+            sum += nums[i];
+            while (left <= i && sum >= s) {
+                result = Math.min(result, i - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+        }
+
+        return result == Integer.MAX_VALUE ? -1 : result;
+    }
+}
+
+//version-2: O(n), Two pointers, Silding Window
 public class Solution {
     /**
      * @param nums: an array of integers
@@ -54,7 +86,7 @@ public class Solution {
     }	
 }
 
-//solution-2: PrefixSum + BinarySearch
+//solution-3: PrefixSum + BinarySearch
 class Solution {
     public int minimumSize(int[] nums, int target) {
         // check corner case
