@@ -98,32 +98,32 @@ public class Solution {
      */
     public List<List<Integer>> fourSum(int[] nums, int target) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
-		// check corner case
-		if (nums == null || nums.length < 4) {
-			return result;
-		}
-		
-		// sort
-		Arrays.sort(nums);
-		
-		// make the 4sum as a 3sum problem to solve
-		for (int i = 0; i < nums.length - 3; i++) {
-			// skip the duplicate with the first same numbers
-			if (i != 0 && nums[i] == nums[i - 1]) {
-				continue;
-			}
-			
-			// make the 3sum as a 2sum problem to solve
-			for (int j = i + 1; j < nums.length - 2; j++) {
-				// skip the duplicate
-				if (j != i + 1 && nums[j] == nums[j - 1]) {
-					continue;
-				}
-				
-				int left =j + 1;
-				int right = nums.length - 1;
-				while (left < right) {
-			        int twoSum = nums[i] + nums[j] + nums[left] + nums[right];
+        // check corner case
+        if (nums == null || nums.length < 4) {
+            return result;
+        }
+
+        // sort
+        Arrays.sort(nums);
+
+        // make the 4sum as a 3sum problem to solve
+        for (int i = 0; i < nums.length - 3; i++) {
+            // skip the duplicate with the first same numbers
+            if (i != 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            // make the 3sum as a 2sum problem to solve
+            for (int j = i + 1; j < nums.length - 2; j++) {
+                // skip the duplicate
+                if (j != i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+
+                int left =j + 1;
+                int right = nums.length - 1;
+                while (left < right) {
+                    int twoSum = nums[i] + nums[j] + nums[left] + nums[right];
                     if (twoSum == target) {
                         List<Integer> quadruplet = new ArrayList<Integer>();
                         quadruplet.add(nums[i]);
@@ -150,10 +150,10 @@ public class Solution {
                     else {
                         left++;
                     }
-				}
-			}
-		}
-		return result;
+                }
+            }
+        }
+        return result;
     }
 }
 
