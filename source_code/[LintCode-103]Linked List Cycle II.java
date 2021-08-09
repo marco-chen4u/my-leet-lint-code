@@ -34,34 +34,49 @@ Challenge
  * }
  */
 
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
 public class Solution {
     /**
      * @param head: The first node of linked list.
      * @return: The node where the cycle begins. if there is no cycle, return null
      */
     public ListNode detectCycle(ListNode head) {
+        ListNode result = null;
         // check corner case
         if (head == null || head.next == null) {
-            return null;
+            return result;
         }
-        
-        ListNode fast = head.next;
+
+        // normal case
         ListNode slow = head;
-        
+        ListNode fast = head.next;
+
         while (slow != fast) {
             if (fast == null || fast.next == null) {
-                return null;//no cycle
+                return null;
             }
-            
+
+            slow = slow.next;
             fast = fast.next.next;
-            slow = slow.next;
         }
-        
-        while (head != slow.next) {
-            head = head.next;
+
+        ListNode current = head;
+        while (current != slow.next) {
             slow = slow.next;
+            current = current.next;
         }
-        
-        return head;
+
+        return current;
     }
 }
