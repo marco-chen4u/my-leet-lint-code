@@ -30,6 +30,42 @@ Notice
  *     }
  * }
  */
+//version: Linked List traverse + HashSet to record the visiting nodes, time-complexity: O(n), space-complexity: O(n)
+public class Solution {
+    /**
+     * @param headA: the first list
+     * @param headB: the second list
+     * @return: a ListNode
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode result = null;
+        // check corner case
+        if (headA == null || headB == null) {
+            return result;
+        }
+
+        // normal case
+        Set<ListNode> visited = new HashSet<ListNode>();
+        ListNode current = headA;
+        while (current != null) {
+            visited.add(current);
+            current = current.next;
+        }
+
+        current = headB;
+        while (current != null) {
+            if (visited.contains(current)) {
+                result = current;
+                break;
+            }
+            current = current.next;
+        }
+
+        return result;
+    }
+}
+
+//version-2: Linked List cycle process, time-complexity: O(n), space-complexity: O(1)
 public class Solution {
     /**
      * @param headA: the first list
