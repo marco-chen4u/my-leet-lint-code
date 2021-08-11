@@ -64,29 +64,29 @@ public class Solution {
 
         result = Integer.MAX_VALUE;
 
-        int i = 0, j = 0;
+        int left = 0, right = 0;
 
         int size = nums.length;
         int sum = 0;
 
-        for (; i < size; i++) {
-            while (j < size && sum < s) {
-                sum += nums[j];
-                j++;
+        for (; left < size; left++) {
+            while (right < size && sum < s) {
+                sum += nums[right];
+                right++;
             }
 
             if (sum >= s) {
-                result = Math.min(result, j - i);				
+                result = Math.min(result, right - left);				
             }
 
-            sum -= nums[i];
+            sum -= nums[left];
         }
 
         return (result == Integer.MAX_VALUE) ? -1 : result;
     }	
 }
 
-//solution-3: PrefixSum + BinarySearch
+//version-3: PrefixSum + BinarySearch
 class Solution {
     public int minimumSize(int[] nums, int target) {
         // check corner case
@@ -133,3 +133,44 @@ class Solution {
         return start;
     }
 }
+
+//version-4: preSum + TreeMap
+public class Solution {
+    /**
+     * @param nums: an array of integers
+     * @param target: An integer
+     * @return: an integer representing the minimum size of subarray
+     */
+    public int minimumSize(int[] nums, int target) {
+        int result = -1;
+        // check corner case
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
+
+        // normal case
+        int size = nums.length;
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        map.put(0, -1);
+
+        int sum = 0;
+        result = Integer.MAX_VALUE;;
+        for (int i = 0; i < size; i++) {
+            sum += nums[i];
+            map.put(sum, i);
+
+            if (sum < target) {
+                continue;
+            }
+
+            if (map.floorKey(sum -  target) != null) {
+                result = Math.min(result, i - map.floorEntry(sum- target).getValue());
+            }
+            
+        }
+
+        return result == Integer.MAX_VALUE ? -1 : result;
+    }
+}
+
