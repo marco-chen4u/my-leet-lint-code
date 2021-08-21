@@ -34,6 +34,8 @@ Example 2:
 ***/
 //version-1: BFS,time-complexity: O(|V| + |E|), space-complexity: O(|V|)
 //note: |V| : number of vertics, |E| : number of edge 
+//      in this scenario, the number of vertics is the size of word dict, the number of edge is the length of each keyWord, 
+//      coz each one character diff of the keyWord, could be the next keyWord in the graph.
 public class Solution {
     /*
      * @param start: a string
