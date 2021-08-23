@@ -6,29 +6,28 @@ We only consider up/down/left/right adjacent.
 
 Find the number of islands.
 
-Example
-	Example 1:
-		Input:
-			[
-			  [1,1,0,0,0],
-			  [0,1,0,0,1],
-			  [0,0,0,1,1],
-			  [0,0,0,0,0],
-			  [0,0,0,0,1]
-			]
-		Output:
-			3
-	Example 2:
-		Input:
-			[
-			  [1,1]
-			]
-		Output:
-			1
+Example 1:
+    Input:
+        [
+          [1,1,0,0,0],
+          [0,1,0,0,1],
+          [0,0,0,1,1],
+          [0,0,0,0,0],
+          [0,0,0,0,1]
+        ]
+    Output:
+        3
+Example 2:
+    Input:
+        [
+          [1,1]
+        ]
+    Output:
+        1
 ***/
 // version-1: BFS
 public class Solution {
-    
+
     // inner class
     class Element {
         int x;
@@ -38,21 +37,22 @@ public class Solution {
             this.y = y;
         }
     }
+
     /**
      * @param grid: a boolean 2D matrix
      * @return: an integer
      */
     public int numIslands(boolean[][] grid) {
         int count = 0;
-        
+
         // check corner cases
         if (grid == null || grid.length == 0 || grid[0] == null || grid[0].length == 0) {
             return count;
         }
-        
+
         int n = grid.length;
         int m = grid[0].length;
-        
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (grid[i][j]) {
@@ -61,10 +61,10 @@ public class Solution {
                 }
             }
         }
-        
+
         return count;
     }
-    
+
     // helper methods
     private void markVisted(boolean[][] grid, int rowIndex, int colIndex) {
         int[] directionX = new int[]{0,1,-1,0};
@@ -77,7 +77,7 @@ public class Solution {
         
         while (!queue.isEmpty()) {
             current = queue.poll();
-            
+
             for (int i = 0; i < 4; i++) {
                 int x = current.x + directionX[i];
                 int y = current.y + directionY[i];
@@ -96,11 +96,11 @@ public class Solution {
             }
         }
     }
-    
+
     private boolean isInBound(boolean[][] grid, int x, int y) {
         int n = grid.length; // row size
         int m = grid[0].length; // column size
-        
+
         return x >=0 && x < n &&  // row boundary check
                 y >= 0 && y < m;  // column boundary check
     }
