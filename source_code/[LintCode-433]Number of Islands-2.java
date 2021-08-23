@@ -7,24 +7,24 @@ We only consider up/down/left/right adjacent.
 Find the number of islands.
 
 Example
-	Example 1:
-		Input:
-			[
-			  [1,1,0,0,0],
-			  [0,1,0,0,1],
-			  [0,0,0,1,1],
-			  [0,0,0,0,0],
-			  [0,0,0,0,1]
-			]
-		Output:
-			3
-	Example 2:
-		Input:
-			[
-			  [1,1]
-			]
-		Output:
-			1
+    Example 1:
+        Input:
+            [
+              [1,1,0,0,0],
+              [0,1,0,0,1],
+              [0,0,0,1,1],
+              [0,0,0,0,0],
+              [0,0,0,0,1]
+            ]
+        Output:
+            3
+    Example 2:
+        Input:
+            [
+              [1,1]
+            ]
+        Output:
+            1
 ***/
 
 //version-2: Union Find
