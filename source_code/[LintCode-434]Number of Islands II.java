@@ -129,8 +129,8 @@ public class Solution {
                     int parentOfNext = unionFind.find(nextPos);
 
                     if (parentOfCurrent != parentOfNext) {
-                        unionFind.union(parentOfCurrent, parentOfNext);
-                        count--;
+                        unionFind.union(pos, nextPos);
+                        count--;//merge
                     }
                 }				
             }
