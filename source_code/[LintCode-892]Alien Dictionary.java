@@ -31,6 +31,52 @@ Notice
 ***/
 public class Solution {
     
+    /**
+     * @param words: a list of words
+     * @return: a string which is correct order
+     */
+    public String alienOrder(String[] words) {
+        StringBuilder result = new StringBuilder();
+        // check corner case
+        if (words == null || words.length == 0) {
+            return result.toString();
+        }
+        
+        // build a graph
+        Map<Character, Set<Character>> graph = getGraph(words);
+        
+        // get all in-degree records
+        Map<Character, Integer> indegreeMap = getIndegree(graph);
+        
+        Queue<Character> queue = new PriorityQueue<Character>();
+        // in-queue all 0-indegree node of the graph
+        for (Map.Entry<Character, Integer> entry : indegreeMap.entrySet()) {
+            if (entry.getValue() == 0) {
+                queue.offer(entry.getKey());
+            }
+        }
+        
+        while (!queue.isEmpty()) {
+            char currentCharacter = queue.poll();
+            result.append(currentCharacter);
+            
+            // updete current node's neighbor indegree by - 1
+            for (char neighbor : graph.get(currentCharacter)) {
+                indegreeMap.put(neighbor, indegreeMap.get(neighbor) - 1);
+                
+                if (indegreeMap.get(neighbor) == 0) {
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        
+        if (result.length() != indegreeMap.size()) {
+            return "";
+        }
+        
+        return result.toString();
+    }
+
     // helper methods
     private Map<Character, Set<Character>> getGraph(String[] words) {
         Map<Character, Set<Character>> graph = new HashMap<Character, Set<Character>>();
@@ -85,51 +131,5 @@ public class Solution {
         }
         
         return indegreeMap;
-    }
-    
-    /**
-     * @param words: a list of words
-     * @return: a string which is correct order
-     */
-    public String alienOrder(String[] words) {
-        StringBuilder result = new StringBuilder();
-        // check corner case
-        if (words == null || words.length == 0) {
-            return result.toString();
-        }
-        
-        // build a graph
-        Map<Character, Set<Character>> graph = getGraph(words);
-        
-        // get all in-degree records
-        Map<Character, Integer> indegreeMap = getIndegree(graph);
-        
-        Queue<Character> queue = new PriorityQueue<Character>();
-        // in-queue all 0-indegree node of the graph
-        for (Map.Entry<Character, Integer> entry : indegreeMap.entrySet()) {
-            if (entry.getValue() == 0) {
-                queue.offer(entry.getKey());
-            }
-        }
-        
-        while (!queue.isEmpty()) {
-            char currentCharacter = queue.poll();
-            result.append(currentCharacter);
-            
-            // updete current node's neighbor indegree by - 1
-            for (char neighbor : graph.get(currentCharacter)) {
-                indegreeMap.put(neighbor, indegreeMap.get(neighbor) - 1);
-                
-                if (indegreeMap.get(neighbor) == 0) {
-                    queue.offer(neighbor);
-                }
-            }
-        }
-        
-        if (result.length() != indegreeMap.size()) {
-            return "";
-        }
-        
-        return result.toString();
     }
 }
