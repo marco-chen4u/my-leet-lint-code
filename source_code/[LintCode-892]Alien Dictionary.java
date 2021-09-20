@@ -31,6 +31,9 @@ Notice
 ***/
 public class Solution {
     
+    // fields
+    private final Map<Character, Set<Character>> EMPTY_GRAPH = new HashMap<Character, Set<Character>>();
+    
     /**
      * @param words: a list of words
      * @return: a string which is correct order
@@ -78,7 +81,7 @@ public class Solution {
     }
 
     // helper methods
-    private Map<Character, Set<Character>> getGraph(String[] words) {
+    private Map<Character, Set<Character>> getGraph(String[] words) {        
         Map<Character, Set<Character>> graph = new HashMap<Character, Set<Character>>();
         
         // build nodes
@@ -94,9 +97,20 @@ public class Solution {
         // build edges
         for (int i = 0; i < words.length - 1; i++) {
             int index = 0;
-            while (index < words[i].length() && index < words[i + 1].length()) {
-                if (words[i].charAt(index) != words[i + 1].charAt(index)) {
-                    graph.get(words[i].charAt(index)).add(words[i + 1].charAt(index));
+            
+            //corner case
+            string current = words[i];
+            String next = words[i + 1];
+            if (current.length() > next.length() && 
+                current.startsWith(next)) {
+                return EMPTY_GRAPH;
+            }
+            
+            
+            // regular case
+            while (index < current.length() && index < next.length()) {
+                if (current.charAt(index) != next.charAt(index)) {
+                    graph.get(current.charAt(index)).add(next.charAt(index));
                     break;
                 }
                 
