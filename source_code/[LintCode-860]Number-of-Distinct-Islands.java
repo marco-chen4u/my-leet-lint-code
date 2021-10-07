@@ -139,3 +139,72 @@ public class Solution {
 }
 
 //version-2: DFS
+public class Solution {
+    // fields
+    private int n; // row size
+    private int m; // column size
+
+    private final String UP = "up";
+    private final String DOWN = "down";
+    private final String LEFT = "left";
+    private final String RIGHT = "right";
+
+    private final String START = "start";
+    private final String END = "end";
+
+    private final int ISLAND = 1;
+
+    /**
+     * @param grid: a list of lists of integers
+     * @return: return an integer, denote the number of distinct islands
+     */
+    public int numberofDistinctIslands(int[][] grid) {
+        // check corner cases
+        if (grid == null || grid.length == 0 || grid[0] == null || grid[0].length == 0) {
+            return 0;
+        }
+
+        n = grid.length;
+        m = grid[0].length;
+
+        boolean[][] visited = new boolean[n][m];
+
+        Set<String> set = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] != ISLAND || visited[i][j]) {
+                    continue;
+                }
+
+                StringBuilder sb = new StringBuilder();
+                dfs(grid, i, j, visited, sb, START);
+                set.add(sb.toString());
+            }
+        }
+
+        return set.size();        
+
+    }
+
+    // helper method
+    private void dfs(int[][] grid, int x, int y, 
+                    boolean[][] visited, StringBuilder sb, 
+                    String str) {
+        if (x < 0 || x >= n || y < 0 || y >= m || 
+            visited[x][y] || grid[x][y] != ISLAND) {
+            return;
+        }
+
+        visited[x][y] = true;
+
+        sb.append(str);
+
+        dfs(grid, x, y + 1, visited, sb, UP);
+        dfs(grid, x, y - 1, visited, sb, DOWN);
+        dfs(grid, x - 1, y, visited, sb, LEFT);
+        dfs(grid, x + 1, y, visited, sb, RIGHT);
+        
+        sb.append(END);
+    }
+}
