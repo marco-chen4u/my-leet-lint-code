@@ -49,7 +49,7 @@ Notice
  *     Point(int a, int b) { x = a; y = b; }
  * }
  */
-
+// version-1: UnionFind
 // helper class
 class UnionFind {
     // fields
@@ -135,6 +135,126 @@ public class Solution {
                 }				
             }
 
+            result.add(count);
+        }
+
+        return result;
+    }
+}
+
+//version-2: UnionFind
+public class Solution {
+    // inner class
+    class UnionFind {
+        // fields
+        private Map<Integer, Integer> fathers;
+        private int count;
+        
+        // constructor
+        public UnionFind() {
+            fathers = new HashMap<Integer, Integer>();
+
+            this.count = 0;
+        }
+
+        // method
+        public void add(int x) {
+            if (fathers.containsKey(x)) {
+                return;
+            }
+
+            fathers.put(x, x);
+            count++;
+        }
+
+        public int find(int x) {
+            int parent = fathers.get(x);
+            while (x != parent) {
+                x = parent;
+                parent = fathers.get(parent);
+            }
+
+            return parent;
+        }
+
+        public boolean isSameParent(int x, int y) {
+            return find(x) == find(y);
+        }
+
+        public void union(int x, int y) {
+            int parentX = find(x);
+            int parentY = find(y);
+
+            if (parentX != parentY) {
+                fathers.put(parentX, parentY);
+                
+                count += (count != 0) ? -1 : 0;
+            }
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+    }
+
+    // fields
+    private static final int[] DIRECTION_X = new int[]{0, 1, -1, 0};
+    private static final int[] DIRECTION_Y = new int[]{1, 0, 0, -1};
+    private static final int SEA = 0;
+    private static final int ISLAND = 1;
+
+    /**
+     * @param n: An integer
+     * @param m: An integer
+     * @param operators: an array of point
+     * @return: an integer array
+     */
+    public List<Integer> numIslands2(int n, int m, Point[] operators) {
+        List<Integer> result = new ArrayList<>();
+        int size = n * m;
+        // check corner case
+        if (size == 0 || operators == null || operators.length == 0) {
+            return result;
+        }
+
+        UnionFind unionFind = new UnionFind();
+        int[][] grid = new int[n][m];
+
+        int count = unionFind.getCount();;
+
+        for (Point current : operators) {
+            int x = current.x;
+            int y = current.y;                    
+
+            if (grid[x][y] == ISLAND) {
+                result.add(count);
+                continue;
+            }
+
+            grid[x][y] = ISLAND;
+            int currentPos = x * m + y;
+            unionFind.add(currentPos);
+
+            for(int i = 0; i < 4; i++) {
+                int nextX = x + DIRECTION_X[i];
+                int nextY = y + DIRECTION_Y[i];                
+
+                if (nextX < 0 || nextX >= n || 
+                    nextY < 0 || nextY >= m || 
+                    grid[nextX][nextY] == SEA) {
+                    continue;
+                }
+
+                int nextPos = nextX * m + nextY;
+                unionFind.add(nextPos);
+
+                if (!unionFind.isSameParent(currentPos, nextPos)) {
+                    unionFind.union(currentPos, nextPos);
+                }                
+            }
+            
+            count = unionFind.getCount();
             result.add(count);
         }
 
