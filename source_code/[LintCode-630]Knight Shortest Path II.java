@@ -25,7 +25,86 @@ Clarification
 		(x - 2, y + 1)
 
 ***/
-//version-1: DP, time complexity : O(n^2)
+//version-1: BFS
+public class Solution {
+    // inner class 
+    class Point {
+        // fields
+        int x;
+        int y;
+
+        // constructor
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    // constants
+    private static final int[] DIRECTION_X = new int[]{1, -1, 2, -2};
+    private static final int[] DIRECTION_Y = new int[]{2, 2, 1, 1};
+
+    // fields
+    private int n; // row size
+    private int m; // column size
+
+    /**
+     * @param grid: a chessboard included 0 and 1
+     * @return: the shortest path
+     */
+    public int shortestPath2(boolean[][] grid) {
+        // check corner case
+        if (grid == null || grid.length == 0 || grid[0] == null || grid[0].length == 0) {
+            return -1;
+        }
+
+        // initialize
+        n = grid.length;
+        m = grid[0].length;
+
+        if (n == 1 && m == 1) {
+            return 0;
+        }
+
+        Point source = new Point(0, 0);
+        Point destination = new Point(n - 1, m - 1);
+        Queue<Point> queue = new LinkedList<>();
+        queue.offer(source);
+        //grid[0][0] = true; // marked as visited
+
+        int step = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Point current = queue.poll();
+                int x = current.x;
+                int y = current.y;
+                
+                if (x == n - 1 && y == m - 1) {
+                    return step;
+                }
+                
+                for (int index = 0; index < 4; index ++) {
+                    int nextX = x + DIRECTION_X[index];
+                    int nextY = y + DIRECTION_Y[index];
+
+                    if (nextX < 0 || nextX >= n || nextY < 0 || nextY >= m || grid[nextX][nextY]) {
+                        continue;
+                    }
+
+                    grid[nextX][nextY] = true;
+                    Point next = new Point(nextX, nextY);
+                    queue.offer(next);
+                }// for index
+            }// for i
+            step ++;
+        }// for while
+
+        return -1;
+    }
+}
+
+//version-2: DP, time complexity : O(n^2)
 public class Solution {
     // fields
     private final int DEFAULT_MAX = Integer.MAX_VALUE;
