@@ -26,6 +26,7 @@ public class Solution {
      * @return: Sum of elements in subsets
      */
     public int subSum(int n) {
+        // check corner case
         if (n <= 1) {
             return n;
         }
@@ -34,23 +35,23 @@ public class Solution {
         // initialize
         result = 0;
 
-        dfs(new ArrayList<Integer>(), 1, n);
+        List<Integer> path = new ArrayList<>();
+        dfs(path, 1, n);
 
         return result;
     }
 
     // helper methods
     private void dfs(List<Integer> path, int start, int end) {
+        // check corner case
         if (start > end) {
             return;
         }
 
         for (int i = start; i <= end; i++) {
             path.add(i);
-            
             result += getSum(path);
             dfs(path, i + 1, end);
-
             path.remove(path.size() - 1);
         }
     }
