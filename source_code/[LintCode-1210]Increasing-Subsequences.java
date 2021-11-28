@@ -61,3 +61,48 @@ public class Solution {
         }
     }
 }
+
+//version-2: DFS(faster)
+class Solution {
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        
+        // corner cases
+        if (nums == null || nums.length <= 1) {
+            return result;
+        }
+        
+        // regular case
+        List<Integer> list = new ArrayList<>();
+        dfs(nums, 0, list, result);
+        
+        return result;        
+    }
+    
+    // helper method
+    private void dfs(int[] nums, int startIndex, List<Integer> list, List<List<Integer>> result) {
+        // check corner cases
+        if (list.size() >= 2) {
+            result.add(new ArrayList<>(list));
+        }
+        
+        if (startIndex >= nums.length) {
+            return;
+        }
+        
+        // normal case
+        Set<Integer> visited = new HashSet<>();
+        for (int i = startIndex; i < nums.length; i++) {
+            
+            if (visited.contains(nums[i]) ||
+               !list.isEmpty() && list.get(list.size() - 1) > nums[i]) {
+                continue;
+            }
+            
+            list.add(nums[i]);
+            visited.add(nums[i]);
+            dfs(nums, i + 1, list, result);
+            list.remove(list.size() - 1);
+        }
+    }
+}
