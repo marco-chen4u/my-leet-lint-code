@@ -79,4 +79,40 @@ public class Solution {
 }
 
 //version-2: enumeration
-// to do
+public class Solution {
+    /**
+     * @param nums: A set of numbers
+     * @return: A list of lists
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        // check corner cases
+        if (nums == null) {
+            return result;
+        }
+
+        result.add(new ArrayList<>());
+        if (nums.length == 0) {            
+            return result;
+        }
+
+        Arrays.sort(nums);
+        
+        // normal case
+        for (int i = 0; i < nums.length; i++) {
+
+            List<List<Integer>> subResult = new ArrayList<List<Integer>>();
+
+            for (List<Integer> subset : result) {
+                List<Integer> newSubset = new ArrayList<Integer>(subset);
+                newSubset.add(nums[i]);
+                subResult.add(newSubset);
+            }
+
+            result.addAll(subResult);
+
+        }
+
+        return result;
+    }
+}
