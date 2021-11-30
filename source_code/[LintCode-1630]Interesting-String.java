@@ -82,3 +82,52 @@ public class Solution {
         }
     }
 }
+
+//version-2: BFS
+public class Solution {
+    // constants
+    private final String YES = "yes";
+    private final String NO = "no";
+    
+    /**
+     * @param s: the string s
+     * @return: check if the string is interesting
+     */
+    public String check(String s) {
+        // check corner cases
+        if (s == null || s.length() <= 1) {
+            return NO;
+        }
+        
+        // regular case
+        Queue<Integer> queue = new LinkedList<>();// store the position of the starting character where statisfied interesting string
+        queue.offer(0);// initialize
+        
+        while (!queue.isEmpty()) {
+            int currentPos = queue.poll();
+            int size = s.length();            
+            
+            int num = 0;
+            
+            // getting the next potential position of the new intersting string token
+            for (char ch = s.charAt(currentPos); currentPos < size && Character.isDigit(ch); currentPos += 1, ch = s.charAt(currentPos)) {
+                num = num * 10 + ch - '0';
+                
+                int nextPos = currentPos + num + 1;
+                
+                // check corner case
+                if (nextPos == size) {
+                    return YES;
+                }
+                
+                if (nextPos > size || !Character.isDigit(s.charAt(nextPos))) {
+                    continue;
+                }
+                
+                queue.offer(nextPos);
+            }
+        }
+        
+        return NO;
+    }
+}
