@@ -115,11 +115,12 @@ public class Solution {
                 
                 int nextPos = currentPos + num + 1;
                 
-                // check corner case
+                // check corner case-1
                 if (nextPos == size) {
                     return YES;
                 }
                 
+                // check corner case-2
                 if (nextPos > size || !Character.isDigit(s.charAt(nextPos))) {
                     continue;
                 }
