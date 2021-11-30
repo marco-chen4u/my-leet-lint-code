@@ -1,5 +1,5 @@
 /***
-* LintCode 1610. Interesting String
+* LintCode 1630. Interesting String
 There is now a string s consisting of only numbers and lowercase letters. 
 If the string s is interesting, then s must be split into several substrings, 
 each substring satisfies the beginning of the number, and the number represents the number of characters after it. 
