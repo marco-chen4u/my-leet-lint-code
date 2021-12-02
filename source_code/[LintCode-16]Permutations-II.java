@@ -22,35 +22,8 @@ Example 2:
 Challenge
     Using recursion to do it is acceptable. If you can do it without recursion, that would be great!
 ***/
-
+//version-1: DFS
 public class Solution {
-    
-    // helper method
-    private void findPermutationsUnique(List<List<Integer>> result, 
-                                            List<Integer> permutation, 
-                                            boolean[] visited, 
-                                            int[] nums) {
-        if (permutation.size() == nums.length) {
-            result.add(new ArrayList<Integer>(permutation));
-            return;
-        }
-        
-        for (int i = 0; i < nums.length; i++) {
-            if (visited[i]) {
-                continue;
-            }
-            
-            if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) {
-                continue;
-            }
-            
-            permutation.add(nums[i]);
-            visited[i] = true;
-            findPermutationsUnique(result, permutation, visited, nums);
-            visited[i] = false;
-            permutation.remove(permutation.size() - 1);
-        }
-    }
     
     /*
      * @param :  A list of integers
@@ -73,8 +46,94 @@ public class Solution {
         Arrays.sort(nums);
         
         boolean[] visited = new boolean[nums.length];
-        findPermutationsUnique(result, permutation, visited, nums);
+        findPermutationsUnique(nums, visited, permutation, result);
         
         return result;
     }
+
+    // helper method
+    private void findPermutationsUnique(int[] nums, 
+                                            boolean[] visited, 
+                                            List<Integer> permutation, 
+                                            List<List<Integer>> result) {
+        // check corner cases
+        if (permutation.size() == nums.length) {
+            result.add(new ArrayList<Integer>(permutation));
+            return;
+        }
+ 
+        // regular case
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i]) {
+                continue;
+            }
+            
+            if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) {
+                continue;
+            }
+            
+            permutation.add(nums[i]);
+            visited[i] = true;
+            findPermutationsUnique(nums, visited, permutation, result);
+            visited[i] = false;
+            permutation.remove(permutation.size() - 1);
+        }
+    }
 };
+
+//version-2: DFS
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: A list of unique permutations
+     */
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        // check corner cases
+        if (nums == null) {
+            return result;
+        }
+
+        List<Integer> permutation = new ArrayList<>();
+        if (nums.length == 0) {
+            result.add(permutation);
+            return result;
+        }
+
+        // normal case
+        boolean[] visited = new boolean[nums.length];
+        Arrays.fill(visited, false);
+        dfs(nums, visited, permutation, result);
+
+        return result;
+    }
+
+    // helper method
+    private void dfs(int[] nums, boolean[] visited, List<Integer> permutation, List<List<Integer>> result) {
+        int size = nums.length;
+        // check corner cases
+        if (permutation.size() == size) {
+            result.add(new ArrayList<Integer>(permutation));
+            return;
+        }
+
+        // normal case
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < size; i++) {
+            if (visited[i]) {
+                continue;
+            }
+
+            if (set.contains(nums[i])) {
+                continue;
+            }
+
+            permutation.add(nums[i]);
+            set.add(nums[i]);
+            visited[i] = true;
+            dfs(nums, visited, permutation, result);
+            visited[i] = false;
+            permutation.remove(permutation.size() - 1);
+        }
+    }
+}
