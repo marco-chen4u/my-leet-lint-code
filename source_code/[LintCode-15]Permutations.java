@@ -48,9 +48,6 @@ public class Solution {
         }
         
 	// normal case
-        // sort 
-        Arrays.sort(nums);
-        
         boolean[] visited = new boolean[nums.length];
         Arrays.fill(visited, false);
 		
