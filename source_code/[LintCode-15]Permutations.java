@@ -29,11 +29,41 @@ Notice
 ***/
 public class Solution {
     
+    /*
+     * @param nums: A list of integers.
+     * @return: A list of permutations.
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        
+        // check corner cases
+        if (nums == null) {
+            return result;
+        }
+        
+        List<Integer> permutation = new ArrayList<Integer>();
+        if (nums.length == 0) {
+            result.add(permutation);
+            return result;
+        }
+        
+	// normal case
+        // sort 
+        Arrays.sort(nums);
+        
+        boolean[] visited = new boolean[nums.length];
+        Arrays.fill(visited, false);
+		
+        findPermutations(nums, visited, permutation, result);
+        
+        return result;
+    }
+	
     // helper method
-    private void findPermutations(List<List<Integer>> result,
-                                    List<Integer> permutation,
-                                    boolean[] visited,
-                                    int[] nums) {
+    private void findPermutations(int[] nums, 
+				  boolean[] visited, 
+				  List<Integer> permutation,
+                                  List<List<Integer>> result) {
         if (permutation.size() == nums.length) {
             result.add(new ArrayList<Integer>(permutation));//deep copy
             return;
@@ -46,39 +76,9 @@ public class Solution {
             
             permutation.add(nums[i]);
             visited[i] = true;
-            findPermutations(result, permutation, visited, nums);
+            findPermutations(nums, visited, permutation, result);
             visited[i] = false;
             permutation.remove(permutation.size() - 1);
         }
-    }
-    /*
-     * @param nums: A list of integers.
-     * @return: A list of permutations.
-     */
-    public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        List<Integer> permutation = new ArrayList<Integer>();
-        
-        // check corner case
-        if (nums == null) {
-            return result;
-        }
-        
-        if (nums.length == 0) {
-            result.add(permutation);
-            return result;
-        }
-        
-        // sort 
-        Arrays.sort(nums);
-        
-        boolean[] visited = new boolean[nums.length];
-		for (boolean visitedItem: visited) {
-			visitedItem = false;//explicitly initialized
-		}
-		
-        findPermutations(result, permutation, visited, nums);
-        
-        return result;
     }
 }
