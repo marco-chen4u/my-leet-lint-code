@@ -188,3 +188,63 @@ public class Solution {
         return result;
     }
 }
+
+//version-4: DFS(best and fastest)
+public class Solution {
+    /**
+     * @param n: n
+     * @param k: the k th permutation
+     * @return: return the k-th permutation
+     */
+    public String getPermutation(int n, int k) {
+        String result = null;
+
+        // check corner case
+        if (n < 1 || k < 1) {
+            return result;
+        }
+
+        // regular case
+        // initialize
+        List<Character> nums = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            nums.add(Character.forDigit(i, 10));
+        }
+
+        int[] factorials = new int[n];
+        factorials[0] = 1;
+        for (int i = 1; i < n; i++) {
+            factorials[i] = i * factorials[i - 1];
+        }
+
+        k = k -1; // 0 base index
+
+        StringBuilder permutation = new StringBuilder();
+        
+        dfs(nums, n, k, factorials, permutation);
+
+        result = permutation.toString();
+
+        return result;
+    }
+
+    // helper methods
+    private void dfs(List<Character> nums, int n, int k, int[] factorials, StringBuilder permutation) {
+        // check corner case
+        if (permutation.length() == n) {
+            return;
+        }
+
+        // normal case
+        int size = nums.size();
+        int groupCount = factorials[size - 1];//getFactorial(size - 1);
+        int indexPos = k / groupCount;
+        char digit = nums.remove(indexPos);
+
+        permutation.append(digit);
+
+        k = k % groupCount;
+
+        dfs(nums, n, k, factorials, permutation);
+    }
+}
