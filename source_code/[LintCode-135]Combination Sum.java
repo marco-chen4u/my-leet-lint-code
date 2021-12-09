@@ -15,32 +15,6 @@ Notice
 ***/
 public class Solution {
     
-    // helper method
-    private void findCombinationSum(List<List<Integer>> result, 
-                                        List<Integer> combination,
-                                        int[] nums, 
-                                        int target, 
-                                        int startIndex) {
-        if (target == 0) {
-            result.add(new ArrayList<Integer>(combination));
-            return;
-        }
-        
-        for (int i = startIndex; i < nums.length; i++) {
-            if (target < nums[i]) {
-                return;
-            }
-            
-            if (i > 0 && nums[i] == nums[i - 1]) {
-                continue;
-            }
-            
-            combination.add(nums[i]);
-            findCombinationSum(result, combination, nums, target - nums[i], i);
-            combination.remove(combination.size() - 1);
-        }
-    }
-    
     /**
      * @param candidates: A list of integers
      * @param target: An integer
@@ -57,8 +31,34 @@ public class Solution {
         
         Arrays.sort(candidates);
         
-        findCombinationSum(result, combination, candidates, target, 0);
+        dfs(candidates, target, 0, combination, result);
         
         return result;
+    }
+    
+    // helper method
+    private void dfs(int[] nums, 
+                     int target, 
+                     int startIndex,
+                     List<Integer> combination,
+                     List<List<Integer>> result) {
+        if (target == 0) {
+            result.add(new ArrayList<Integer>(combination));
+            return;
+        }
+        
+        for (int i = startIndex; i < nums.length; i++) {
+            if (target < nums[i]) {
+                return;
+            }
+            
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            
+            combination.add(nums[i]);
+            dfs(nums, target - nums[i], i, combination, result);
+            combination.remove(combination.size() - 1);
+        }
     }
 }
