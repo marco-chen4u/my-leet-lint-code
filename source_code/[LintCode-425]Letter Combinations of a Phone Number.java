@@ -26,6 +26,7 @@ Example 2:
 Notice
 	Although the answer above is in lexicographical order, your answer could be in any order you want.
 ***/
+//version-1: DFS
 public class Solution {
     
     // helper methods
@@ -92,5 +93,68 @@ public class Solution {
         findLetterCombinations(result, combination, digits, map, 0);
         
         return result;
+    }
+}
+
+//version-2: DFS
+public class Solution {
+    private static Map<Character, char[]> keyMap = new HashMap<>();
+
+    static {
+        keyMap.put('2', new char[] {'a', 'b', 'c'});
+        keyMap.put('3', new char[] {'d', 'e', 'f'});
+        keyMap.put('4', new char[] {'g', 'h', 'i'});
+        keyMap.put('5', new char[] {'j', 'k', 'l'});
+        keyMap.put('6', new char[] {'m', 'n', 'o'});
+        keyMap.put('7', new char[] {'p', 'q', 'r', 's'});
+        keyMap.put('8', new char[] {'t', 'u', 'v'});
+        keyMap.put('9', new char[] {'w', 'x', 'y', 'z'});
+    }
+
+    /**
+     * @param digits: A digital string
+     * @return: all posible letter combinations
+     */
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+
+        // check corner cases
+        if (digits == null || digits.isEmpty()) {
+            return result;
+        }
+
+        // normal case
+        StringBuilder combination = new StringBuilder();
+        int size = digits.length();
+
+        dfs(digits, size, 0, combination, result);
+
+        // return
+        return result;
+    }
+
+    // helper method
+    private void dfs(String digits, int size, int rowIndex, StringBuilder combination, List<String> result) {
+        // check corner cases
+        if (combination.length() == size) {
+            result.add(combination.toString());
+            return;
+        }
+
+        // normal case
+        char[] chars = keyMap.get(digits.charAt(rowIndex));
+        Set<Character> set = new HashSet<>();
+        for (char ch : chars) {
+            // corner case-1
+            if (set.contains(ch)) {
+                continue;
+            }
+
+            // regular case
+            set.add(ch);
+            combination.append(ch);
+            dfs(digits, size, rowIndex + 1, combination, result);
+            combination.setLength(combination.length() - 1);
+        }
     }
 }
