@@ -6,7 +6,7 @@ A mapping of digit to letters (just like on the telephone buttons) is given belo
     1  	  2    3
          ABC  DEF
 	   
-	4     5    6
+    4     5    6
    GHI   JKL  MNO
    
     7     8    9
