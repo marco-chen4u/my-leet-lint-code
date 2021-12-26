@@ -17,6 +17,7 @@ Constraints:
 
 Link: https://leetcode.com/problems/subarray-sum-equals-k/submissions/
 ***/
+//version-1: two pointers
 class Solution {
     public int subarraySum(int[] nums, int k) {
         int result= 0;
@@ -52,5 +53,35 @@ class Solution {
         
         return result;
         
+    }
+}
+
+//version-2: two pointers
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int result = 0;
+        // check corner case
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
+        
+        // normal case
+        int size = nums.length;
+        int[] preSum = new int[size + 1];
+        for (int i = 0; i < size; i++) {
+            preSum[i + 1] = preSum[i] + nums[i];
+        }
+        
+                
+        for (int i = 1; i <= size; i++) {
+            int left = 0;
+            while (left < i) {
+                int sum = preSum[i] - preSum[left];
+                result += sum == k ? 1 : 0;
+                left++;
+            }
+        }
+        
+        return result;
     }
 }
