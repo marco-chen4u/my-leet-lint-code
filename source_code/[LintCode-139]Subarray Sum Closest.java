@@ -13,7 +13,61 @@ Example
 Challenge
     O(nlogn) time
 ***/
+// version-1: Time Limited Exceeded
+public class Solution {
+    /*
+     * @param nums: A list of integers
+     * @return: A list of integers includes the index of the first number and the index of the last number
+     */
+    public int[] subarraySumClosest(int[] nums) {
+        int[] result = new int[]{-1, -1};
+        // check corner cases
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
 
+        if (nums.length == 1) {
+            result = new int[]{0, 0};
+            return result;
+        }
+
+        // norla case
+        // initialization
+        int size = nums.length;
+        int[] prefixSum = new int[size + 1];
+        Arrays.fill(prefixSum, 0);
+
+        for (int i = 0; i < size; i++) {
+            prefixSum[i + 1] = prefixSum[i] + nums[i];
+        }
+
+        // calculate
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j <= size; j++) {
+                int sum = prefixSum[j] - prefixSum[i];
+                int diff = getDiff(sum);
+                if (diff < min) {
+                    min = diff;
+                    result[0] = i;
+                    result[1] = j - 1;
+                }
+            }
+        }
+
+        // return
+        return result;
+
+    }
+
+    // helper method
+    private int getDiff(int value) {
+        return Math.abs(value);
+    }
+
+}
+
+// version-2
 class SumElement {
     int sum;
     int index;
@@ -63,6 +117,7 @@ public class Solution {
     }
 }
 
+//verison-3
 public class Solution {
     /*
      * @param nums: A list of integers
