@@ -85,3 +85,28 @@ public class Solution {
         return result;
     }
 }
+
+//version-3: prefixSum calculation
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: A integer indicate the sum of max subarray
+     */
+    public int maxSubArray(int[] nums) {
+        int result = Integer.MIN_VALUE;
+
+        int prefixSum = 0;
+        for (int i = 0; i < nums.length; i++) {            
+            if (prefixSum < 0) {
+                prefixSum = 0;
+            }
+            prefixSum += nums[i];
+
+            if (prefixSum > result) {
+                result = prefixSum;
+            }
+        }
+
+        return result;
+    }
+}
