@@ -1,38 +1,37 @@
 /***
 * LintCode 944. Maximum Submatrix 
 Given an n x n matrix of positive and negative integers, find the submatrix with the largest possible sum.
-Example
-    Example1
+
+Example 1
     Input:  
-    matrix = [
-        [1,3,-1],
-        [2,3,-2],
-        [-1,-2,-3]
-    ]
+        matrix = [
+            [1,3,-1],
+            [2,3,-2],
+            [-1,-2,-3]
+        ]
     Output: 9
     Explanation:
-    the submatrix with the largest possible sum is:
-    [
-        [1,3],
-        [2,3]
-    ]
+        the submatrix with the largest possible sum is:
+        [
+            [1,3],
+            [2,3]
+        ]
 
-    Example2
-
+Example 2
     Input:  
-    matrix = [
-        [1,1,1],
-        [1,1,1],
-        [1,1,1]
-    ]
+        matrix = [
+            [1,1,1],
+            [1,1,1],
+            [1,1,1]
+        ]
     Output: 9
     Explanation:
-    the submatrix with the largest possible sum is:
-    [
-        [1,1,1],
-        [1,1,1],
-        [1,1,1]
-    ]
+        the submatrix with the largest possible sum is:
+        [
+            [1,1,1],
+            [1,1,1],
+            [1,1,1]
+        ]
 ***/
 public class Solution {
 	
