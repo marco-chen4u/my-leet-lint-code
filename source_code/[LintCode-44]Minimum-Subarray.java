@@ -42,3 +42,26 @@ public class Solution {
         return result;
     }
 }
+
+//version-2: prefix sum calculation
+public class Solution {
+    /*
+     * @param nums: a list of integers
+     * @return: A integer indicate the sum of minimum subarray
+     */
+    public int minSubArray(List<Integer> nums) {
+        int result = Integer.MAX_VALUE;
+
+        int prefixSum = 0;
+        int maxSum = 0;
+        for (int num: nums) {
+            prefixSum += num;
+
+            result = Math.min(result, prefixSum - maxSum);
+
+            maxSum = Math.max(maxSum, prefixSum);
+        }
+
+        return result;
+    }
+}
