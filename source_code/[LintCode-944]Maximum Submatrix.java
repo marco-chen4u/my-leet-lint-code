@@ -130,13 +130,13 @@ public class Solution {
         n = matrix.length; // row size
         m = matrix[0].length; // column size
 
-        int[][] prefixSumMaxtrix = getPrefixSumMaxtrix(matrix);
+        int[][] prefixSumMatrix = getPrefixSumMatrix(matrix);
 
         int result = Integer.MIN_VALUE;
 
         for (int up = 0; up < n; up++) {
             for (int down = up + 1; down <= n; down++) {
-                int[] nums = getCalculation(prefixSumMaxtrix, up, down);
+                int[] nums = getCalculation(prefixSumMatrix, up, down);
 
                 int value = getMaxSubArraySum(nums);
 
@@ -148,7 +148,7 @@ public class Solution {
     }
 
     // helper methods
-    private int[][] getPrefixSumMaxtrix(int[][] matrix) {
+    private int[][] getPrefixSumMatrix(int[][] matrix) {
         int[][] result = new int[n + 1][m];
 
         for (int i = 1; i <= n; i++) {
@@ -160,7 +160,7 @@ public class Solution {
         return result;
     }
 
-    private int[] getCalculation(int[][] prefixSumMaxtrix, int up, int down) {
+    private int[] getCalculation(int[][] prefixSumMatrix, int up, int down) {
         int[] nums = new int[m];
         Arrays.fill(nums, 0);
 
