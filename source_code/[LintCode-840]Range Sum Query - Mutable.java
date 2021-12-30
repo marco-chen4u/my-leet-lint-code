@@ -155,6 +155,42 @@ class NumArray {
         return getPrefixSum(right) - getPrefixSum(left - 1);
     }
 }
+
+//version-3:
+class NumArray {
+    // fields
+    private int size;
+    private int[] prefixSum;
+    private int[] nums;
+
+    // constructor
+    public NumArray(int[] nums) {
+        this.nums = nums;
+        this.size = nums.length;
+        this.prefixSum = new int[size + 1];
+
+        for (int i = 0; i < size; i++) {
+            prefixSum[i + 1] = prefixSum[i] + nums[i];
+        }    
+    }
+     
+    // public methods
+    public void update(int i, int val) {
+        
+        int diff = val - nums[i];
+        nums[i] = val;
+
+        for (int index = i + 1; index <= size; index++) {
+            prefixSum[index] += diff;
+        }
+
+        //System.out.println("prefixSum = " + Arrays.toString(prefixSum));
+    }
+    
+    public int sumRange(int i, int j) {
+        return prefixSum[j + 1] - prefixSum[i];
+    }
+}
 /**
  * Your NumArray object will be instantiated and called as such:
  * NumArray obj = new NumArray(nums);
