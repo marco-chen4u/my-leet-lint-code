@@ -105,8 +105,8 @@ public class Solution {
 
     // helper method
     private int getRange(int[] preSum, int i, int j) {
-        if (j >= preSum.length) {
-            return -1;
+        if (j > preSum.length) {
+            return 0;
         }
         return preSum[j] - preSum[i];
     }
