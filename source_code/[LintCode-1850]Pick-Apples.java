@@ -70,7 +70,7 @@ public class Solution {
         // scanning by [k-left, l-right] windows
         for (int i = 0; i < size - l; i++) {
             if (i + k > size) {
-                continue;
+                break;
             }
             int kLeftSum = getRange(preSum, i, i + k);
 
@@ -86,7 +86,7 @@ public class Solution {
         // scanning by [l-left, k-right] windows
         for (int i = 0; i < size - k; i++) {
             if (i + l > size) {
-                continue;
+                break;
             }
             int lLeftSum = getRange(preSum, i, i + l);
 
