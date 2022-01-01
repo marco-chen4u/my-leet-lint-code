@@ -24,11 +24,11 @@ Notice
 
 /***
 (1)算法思路
-用两个二维数组locallocal和globalglobal分别来记录局部最优解和全局最优解，局部最优解就是必须选取当前元素的最优解，全局最优解就是不一定选取当前元素的最优解。
-local[i][j]表示整数数组nums的前j个元素被分成i个不重叠子数组时的最大值（必须选取元素nums[i]）。
-global[i][j]表示整数数组nums的前j个元素被分成i个不重叠子数组时的最大值（不一定选取元素nums[i]）。
-当j<i时不可能存在可行解，且边界值为i==j时，每个元素各自为一组，答案就是nums的前j项之和。
-所以我们从边界值往回递推（j从k递推回1），状态转移方程为（此时j >= i）：
+用两个二维数组local和global分别来记录局部最优解和全局最优解，局部最优解就是必须选取当前元素的最优解，全局最优解就是不一定选取当前元素的最优解。
+local[i][j]表示整数数组nums的前i个元素被分成j个不重叠子数组时的最大值（必须选取元素nums[i]）。
+global[i][j]表示整数数组nums的前i个元素被分成j个不重叠子数组时的最大值（不一定选取元素nums[i]）。
+当i<j时不可能存在可行解，且边界值为i==j时，每个元素各自为一组，答案就是nums的前i项之和。
+所以我们从边界值往回递推（j从k递推回1），状态转移方程为（此时i >= j）：
 ---------------------------------------------------------------------
 if i == j:
     local[i][j] = local[i-1][j-1] + nums[i]
@@ -62,51 +62,47 @@ else:
 
 //version-1: DP
 public class Solution {
-    // field 
-    private int DEFAULT_MIN =  Integer.MIN_VALUE;
-    
+    // constant
+    private static final int DEFAULT_MIN =  Integer.MIN_VALUE;
+
     /**
      * @param nums: A list of integers
      * @param k: An integer denote to find k non-overlapping subarrays
      * @return: An integer denote the sum of max k non-overlapping subarrays
      */
     public int maxSubArray(int[] nums, int k) {
-        // check corner case
-        if (nums == null || nums.length < k) {
+        int n = nums.length;
+        if (n < k){
             return 0;
-        }
-        
-        int size = nums.length;
+        } 
         
         // state
-        int[][] localMax = new int[k + 1][size + 1];
-        int[][] globalMax = new int[k + 1][size + 1];
-        
+        int[][] local = new int[n + 1][k + 1];
+        int[][] global = new int[n + 1][k + 1];
+
         // initialize
-        for (int i = 0; i <= k; i++) {
-            for (int j = 0; j <= size; j++) {
-                localMax[i][j] = (i == 0) ? 0 : DEFAULT_MIN;
-                globalMax[i][j] = 0;
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= k; j++) {
+                local[i][j] = (i == 0) ? 0 : DEFAULT_MIN;
+                global[i][j] = 0;
             }
         }
-        
-        // function
-        for (int i = 1; i <= k; i++) {
-            // 小于 i 的数组不能够partition
-            for (int j = i; j <= size; j++) {
-                localMax[i][j] = Math.max(localMax[i][j - 1], globalMax[i - 1][j - 1]) + nums[j - 1];
-                
-                if (i == j) {
-                    globalMax[i][j] = localMax[i][j];
-                    continue;
+
+        for (int i = 1; i <= n; i++){
+            // 从边界值往前递推
+            for (int j = 1; j <= k; j++){
+                if(i == j){
+                    local[i][j] = local[i - 1][j - 1] + nums[i - 1];
+                    global[i][j] = global[i - 1][j - 1] + nums[i - 1];
                 }
-                
-                globalMax[i][j] = Math.max(globalMax[i][j - 1], localMax[i][j]);
+                else{
+                    // local[i-1][j]表示nums[i]加入上一个子数组成为一部分
+                    // global[i-1][j-1]表示nums[i]重新开始一个新的子数组
+                    local[i][j] = Math.max(local[i - 1][j], global[i - 1][j - 1]) + nums[i - 1];
+                    global[i][j] = Math.max(global[i - 1][j], local[i][j]);
+                }
             }
-            
         }
-        
-        // return
-        return globalMax[k][size];
+       return global[n][k];
     }
 }
