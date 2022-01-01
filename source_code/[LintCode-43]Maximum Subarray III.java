@@ -92,6 +92,7 @@ public class Solution {
         
         // function
         for (int i = 1; i <= k; i++) {
+            // 小于 i 的数组不能够partition
             for (int j = i; j <= size; j++) {
                 localMax[i][j] = Math.max(localMax[i][j - 1], globalMax[i - 1][j - 1]) + nums[j - 1];
                 
