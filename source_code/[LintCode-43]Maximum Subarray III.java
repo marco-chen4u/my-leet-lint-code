@@ -88,6 +88,7 @@ public class Solution {
             }
         }
 
+        // calculate
         for (int i = 1; i <= n; i++){
             // 从边界值往前递推
             for (int j = 1; j <= k; j++){
@@ -103,6 +104,8 @@ public class Solution {
                 }
             }
         }
+        
+        // return
        return global[n][k];
     }
 }
