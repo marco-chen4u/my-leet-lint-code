@@ -152,3 +152,79 @@ public class Solution {
         return result;
     }
 }
+
+//version-3: DP(backpack)
+public class Solution {
+    // constant
+    private static final int DEFAULT_MIN = Integer.MIN_VALUE;
+
+    /**
+     * @param k: An integer
+     * @param prices: An integer array
+     * @return: Maximum profit
+     */
+    public int maxProfit(int k, int[] prices) {
+        int result = 0;
+        // check corner cases -1
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+
+        // check corner case
+        int n = prices.length;
+        if (k > n / 2) {
+            int currentProfit = 0;
+            for (int i = 1; i < n; i++) {
+                currentProfit = prices[i] - prices[i - 1];// do as many as prossible transactions
+                
+                result += (currentProfit > 0) ? currentProfit : 0;
+            }
+            
+            return result;
+        }
+
+
+        // state 
+        k = Math.min(k, n);
+        int profits[] = new int[n];
+        for (int i = 1; i < n; i++) {
+            profits[i] = prices[i] - prices[i - 1];
+        }
+
+        int[][] local = new int[n + 1][k + 1];
+        int[][] global = new int[n + 1][k + 1];
+
+        // initialize
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= k; j++) {
+                local[i][j] = (i == 0) ? 0 : DEFAULT_MIN;
+                global[i][j] = 0;
+            }
+        }
+
+        // calculate
+        for(int i = 1; i <= n; i++) {
+
+            int currentProfit = profits[i - 1];
+
+            for (int j = 1; j <= k; j++) {
+                if (i == j) {
+                    local[i][j] = local[i - 1][j - 1] + currentProfit;
+                    global[i][j] = global[i - 1][j - 1] + currentProfit;
+                }
+                else {
+                    local[i][j] = Math.max(local[i -1][j], global[i - 1][j - 1]) + currentProfit;
+                    global[i][j] = Math.max(global[i - 1][j], local[i][j]);
+                }
+            }
+        }
+
+        // answer
+        result = 0; 
+        for (int value : global[n]) {
+            result = Math.max(result, value);
+        }
+
+        return result;
+    }
+}
