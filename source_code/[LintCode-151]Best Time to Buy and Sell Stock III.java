@@ -118,3 +118,56 @@ public class Solution {
         return result;
     }
 }
+
+//version-3: dp(backpack) traditional solution
+public class Solution {
+    
+    /**
+     * @param prices: Given an integer array
+     * @return: Maximum profit
+     */
+    public int maxProfit(int[] prices) {
+        // check corner case
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+
+        int n = prices.length;
+        int[] profits = new int[n];
+        for (int i = 1; i < n; i++) {
+            profits[i] = prices[i] - prices[i - 1];
+        }
+
+        // state
+        int k = 2;
+        int[][] local = new int[n + 1][k + 1];
+        int[][] global = new int[n + 1][k + 1];
+
+        // intialize
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j < k; j++) {
+                local[i][j] = 0;
+                global [i][j] = 0; 
+            }
+        }
+
+        // calculate
+        for (int i = 1; i <= n; i++) {
+            int currentProfit = profits[i - 1];
+            for (int j = 1; j <= k; j++) {
+                if (i == j) {
+                    local[i][j] = local[i - 1][j - 1] + currentProfit;
+                    global[i][j] = global[i - 1][j - 1] + currentProfit;
+                }
+                else {
+                    local[i][j] = Math.max(local[i - 1][j], global[i - 1][j - 1]) + currentProfit;
+                    global[i][j] = Math.max(global[i - 1][j], local[i][j]);
+                }
+            }
+        }
+
+        // return
+        return global[n][k] > 0 ? global[n][k] : 0;
+        
+    }
+}
