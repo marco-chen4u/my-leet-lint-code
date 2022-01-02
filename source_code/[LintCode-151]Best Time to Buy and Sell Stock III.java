@@ -166,8 +166,13 @@ public class Solution {
             }
         }
 
-        // return
-        return global[n][k] > 0 ? global[n][k] : 0;
+        // answer
+        int result = 0; 
+        for (int value : global[n]) {
+            result = Math.max(result, value);
+        }
+
+        return result;
         
     }
 }
