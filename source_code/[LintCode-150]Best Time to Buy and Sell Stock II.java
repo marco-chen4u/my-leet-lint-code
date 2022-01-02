@@ -74,7 +74,7 @@ public class Solution {
                    ，                     //或者
                   dp[n - 1] + profit[n])  //选择当天最后一天的利润所得，以计算全局作答的利润所得
                   
-                  而者取其1，这是背包问题的经典动归处理
+                  两者取其1（最大值的），这是背包问题的经典动归处理
 **/
 public class Solution {
     /**
