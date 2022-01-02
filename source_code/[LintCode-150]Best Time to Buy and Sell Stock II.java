@@ -44,7 +44,7 @@ public class Solution {
     }
 }
 
-//version2: Greedy
+//version-2: Greedy
 public class Solution {
     /**
      * @param prices: Given an integer array
@@ -63,5 +63,40 @@ public class Solution {
         }
 
         return result;
+    }
+}
+
+
+//version-3: DP
+/**
+* 当在最后一天时，所获得的利润最大值，取决于2个条件
+ dp[n] = Math.max(dp[n - 1]//没有选择当天最后一天的利润所得，以计算全局最大的利润所得
+                   ，//或者
+                  dp[n - 1] + profit[n])//选择当天最后一天的利润所得，以计算全局作答的利润所得
+                  
+                  而者取其1，这是背包问题的经典动归处理
+**/
+public class Solution {
+    /**
+     * @param prices: Given an integer array
+     * @return: Maximum profit
+     */
+    public int maxProfit(int[] prices) {
+        int size = prices.length;
+        int[] profits = new int[size];
+        for (int i = 1; i < size; i++) {
+            profits[i] = prices[i] - prices[i - 1];
+        }
+
+        int[] dp = new int[size + 1];
+        Arrays.fill(dp, 0);
+
+        for (int i = 1; i <= size; i++) {
+            // dp[i - 1]                   表示前一天的所有最大利润获得【dp[i - 1]】，没有选择第i天【profits[i - 1]】的利润所得
+            // dp[i - 1] + profits[i - 1]  表示前一天的所得利润并选择加上第i天的利润所得
+            dp[i] = Math.max(dp[i - 1], dp[i - 1] + profits[i - 1]);
+        }
+
+        return dp[size];
     }
 }
