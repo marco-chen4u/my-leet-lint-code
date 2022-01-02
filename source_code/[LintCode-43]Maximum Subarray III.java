@@ -90,16 +90,17 @@ public class Solution {
 
         // calculate
         for (int i = 1; i <= n; i++){
+            int currentNum = nums[i - 1];
             // 从边界值往前递推
             for (int j = 1; j <= k; j++){
                 if(i == j){
-                    local[i][j] = local[i - 1][j - 1] + nums[i - 1];
-                    global[i][j] = global[i - 1][j - 1] + nums[i - 1];
+                    local[i][j] = local[i - 1][j - 1] + currentNum;
+                    global[i][j] = global[i - 1][j - 1] + currentNum;
                 }
                 else{
                     // local[i-1][j]表示nums[i]加入上一个子数组成为一部分
                     // global[i-1][j-1]表示nums[i]重新开始一个新的子数组
-                    local[i][j] = Math.max(local[i - 1][j], global[i - 1][j - 1]) + nums[i - 1];
+                    local[i][j] = Math.max(local[i - 1][j], global[i - 1][j - 1]) + currentNum;
                     global[i][j] = Math.max(global[i - 1][j], local[i][j]);
                 }
             }
