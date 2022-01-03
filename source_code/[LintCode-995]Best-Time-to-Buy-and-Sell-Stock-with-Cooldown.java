@@ -72,3 +72,47 @@ public class Solution {
         return Math.max(rest[n], sold[n]);
     }
 }
+
+
+//version-2: DP
+/**
+* 解题思路：有2中状态【buy-买入状态, sell-买出状态(包含休息状态)】，在2种状态随着天数增加，而发生不同的状态转移。
+  buy[n + 1]
+  sell[n + 1]
+初始状态：
+  buy[0] = MIN_VALUE //方便打擂台（之前的状态只比较）
+  sell[0] = 0;
+  
+状态变换及演变：
+  buy[i] = Math.max(buy[i - 1], (i == 1? 0 : sell[i - 2]) - currentPrice) // buy[i - 1] 为前一天的买入（持有)状态，即保持前一天的状态
+                                                                          // sell[i - 2] 前2天(卖后需要cooldown 1天)交易完所得减计当天买入的股票支持成本
+                                                                          
+  sell[i] = Math.max(sell[i - 1], buy[i - 1] + currentPrice)              // sell[i - 1] 为前一天的卖出股票（持有)后的状态，即保持前一天的状态，属于休息状态
+                                                                          // 前一天的状态（注意：这里只能是买入状态题， 可能是：持有状态或卖出cooldown完毕后的状态），加上今天卖出股票的获得
+结果：
+ Math.max(buy[n], sell[n])
+**/
+public class Solution {
+    /**
+     * @param prices: a list of integers
+     * @return: return a integer
+     */
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        
+        int[] sell = new int[n + 1];
+        int[] buy = new int[n + 1];
+
+        sell[0] = 0;
+        buy[0] = Integer.MIN_VALUE;
+
+        for (int i = 1; i <= n; i++) {
+            int currentPrice = prices[i - 1];
+            
+            buy[i] = Math.max(buy[i - 1], (i == 1 ? 0: sell[i - 2]) - currentPrice);
+            sell[i] = Math.max(sell[i -1], buy[i - 1] + currentPrice);
+        }
+
+        return Math.max(buy[n], sell[n]);
+    }
+}
