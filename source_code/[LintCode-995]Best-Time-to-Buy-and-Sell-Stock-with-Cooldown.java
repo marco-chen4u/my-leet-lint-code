@@ -90,7 +90,7 @@ public class Solution {
   sell[i] = Math.max(sell[i - 1], buy[i - 1] + currentPrice)              // sell[i - 1] 为前一天的卖出股票（持有)后的状态，即保持前一天的状态，属于休息状态
                                                                           // 前一天的状态（注意：这里只能是买入状态题， 可能是：持有状态或卖出cooldown完毕后的状态），加上今天卖出股票的获得
 结果：
- Math.max(buy[n], sell[n])
+  Math.max(buy[n], sell[n])
 **/
 public class Solution {
     /**
