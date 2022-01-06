@@ -51,6 +51,23 @@ Example
 //version-1: DFS & memorized search
 public class Solution {
 
+    /**
+     * @param s: A string 
+     * @param p: A string includes "?" and "*"
+     * @return: is Match?
+     */
+    public boolean isMatch(String s, String p) {
+        // check corner case
+        if (s == null || s.length() == 0 || p == null || p.length() == 0) {
+            return false;
+        }
+
+        boolean[][] visited = new boolean[s.length()][p.length()];
+        boolean[][] memo = new boolean[s.length()][p.length()];
+
+        return isMatchHelper(s, 0, p, 0, visited, memo);
+    }
+
     // helper methods
     private boolean isAllStar(String p, int pIndex) {
         for (int i = pIndex; i < p.length(); i++) {
@@ -100,23 +117,6 @@ public class Solution {
         visited[sIndex][pIndex] = true;
 
         return match;		
-    }
-	
-    /**
-     * @param s: A string 
-     * @param p: A string includes "?" and "*"
-     * @return: is Match?
-     */
-    public boolean isMatch(String s, String p) {
-        // check corner case
-        if (s == null || s.length() == 0 || p == null || p.length() == 0) {
-            return false;
-        }
-
-        boolean[][] visited = new boolean[s.length()][p.length()];
-        boolean[][] memo = new boolean[s.length()][p.length()];
-
-        return isMatchHelper(s, 0, p, 0, visited, memo);
     }
 }
 
