@@ -13,7 +13,7 @@ Example 2:
     Output:"aba"
 
 Challenge:
-    O(n2) time is acceptable. Can you do it in O(n) time.
+    O(n^2) time is acceptable. Can you do it in O(n) time.
 
 ***/
 //version-1: DP, time complexity: O(n^2)
