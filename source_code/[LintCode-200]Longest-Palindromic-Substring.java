@@ -106,3 +106,46 @@ public class Solution {
         return true;
     }
 }
+
+// version-3: Two Pointers, Time Complexity: O(n^2)
+public class Solution {
+    /**
+     * @param s: input string
+     * @return: a string as the longest palindromic substring
+     */
+    public String longestPalindrome(String s) {
+        if (s == null || s.isEmpty()) {
+            return s;
+        }
+
+        String longest = "";
+        int size = s.length();
+        for (int i = 0; i < size; i++) {
+            String oddPalindrome = getPalindromeFrom(s, i, i);
+            if (longest.length() < oddPalindrome.length()) {
+                longest = oddPalindrome;
+            }
+
+            String evenPalindrome = getPalindromeFrom(s, i, i + 1);
+            if (longest.length() < evenPalindrome.length()) {
+                longest = evenPalindrome;
+            }
+        }
+
+        return longest;
+    }
+
+    // helper method
+    private String getPalindromeFrom(String s, int left, int right) {
+        while (left >= 0 && right < s.length()) {
+            if (s.charAt(left) != s.charAt(right)) {
+                break;
+            }
+
+            left--;
+            right++;
+        }
+
+        return s.substring(left + 1, right);
+    }
+}
