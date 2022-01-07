@@ -16,7 +16,7 @@ Challenge:
     O(n2) time is acceptable. Can you do it in O(n) time.
 
 ***/
-//version-1: DP
+//version-1: DP, time complexity: O(n^2)
 public class Solution {
     /**
      * @param s: input string
@@ -61,5 +61,48 @@ public class Solution {
     // helper methods
     private boolean isEmpty(String s) {
         return s == null || s.length() == 0;
+    }
+}
+
+//version-2: Two Pointer, time complexity: O(n^3)
+public class Solution {
+    /**
+     * @param s: input string
+     * @return: the longest palindromic substring
+     */
+    public String longestPalindrome(String s) {
+        // check corner case
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        
+        int longest = 0;
+        int start = 0;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i; j < s.length(); j++) {
+                if (isPalindrome(s, i, j)) {
+                    if (longest < j - i + 1) {
+                        longest = j - i + 1;
+                        start = i;
+                    }
+                }
+            }
+        }
+        
+        return s.substring(start, start + longest);
+    }
+    
+    // helper method
+    private boolean isPalindrome(String s, int left, int right) {
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            
+            left++;
+            right--;
+        }
+        
+        return true;
     }
 }
