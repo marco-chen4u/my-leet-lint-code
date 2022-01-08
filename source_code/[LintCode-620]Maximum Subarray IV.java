@@ -32,25 +32,22 @@ public class Solution {
      */
     public int maxSubarray4(int[] nums, int k) {
         int result = 0;
-        // check corner case
         if (nums == null || nums.length < k) {
             return result;
         }
 
-        int size = nums.length;
+        int n = nums.length;
+        int[] prefixSum = new int[n + 1];
 
-        int[] prefixSum = new int[size + 1];
-        for (int i = 1; i <= size; i++) {
-            prefixSum[i] = prefixSum[i - 1] + nums[i - 1];
+        for (int i = 0; i < n; i++) {
+            prefixSum[i + 1] = prefixSum[i] + nums[i];
         }
 
-        result = prefixSum[size];
-
         int min = 0;
-        for (int i = k; i <= size; i++) {
-            if (prefixSum[i] - min > result) {
-                result = prefixSum[i] - min;
-            }
+        result = Integer.MIN_VALUE;
+        for (int i = k; i <= n; i++) {
+            int sum = prefixSum[i];
+            result = Math.max(result, sum - min);
 
             min = Math.min(min, prefixSum[i - k + 1]);
         }
