@@ -2,26 +2,29 @@
 * LintCode 76. Longest Increasing Subsequence
 Given a sequence of integers, find the longest increasing subsequence (LIS).
 You code should return the length of the LIS.
-Example
-    Example 1:
-        Input:  [5,4,1,2,3]
-        Output:  3	
-        Explanation:
-            LIS is [1,2,3]
-    Example 2:
-        Input: [4,2,4,5,3,7]
-        Output:  4	
-        Explanation: 
-            LIS is [2,4,5,7]
+
+Example 1:
+    Input:  [5,4,1,2,3]
+    Output:  3	
+    Explanation:
+        LIS is [1,2,3]
+Example 2:
+    Input: [4,2,4,5,3,7]
+    Output:  4	
+    Explanation: 
+        LIS is [2,4,5,7]
 Challenge
     Time complexity O(n^2) or O(nlogn)
 
 Clarification
-    What's the definition of longest increasing subsequence?
-    The longest increasing subsequence problem is to find a subsequence of a given sequence in which the subsequence's elements are in sorted order, lowest to highest, and in which the subsequence is as long as possible. This subsequence is not necessarily contiguous, or unique.
-    https://en.wikipedia.org/wiki/Longest_increasing_subsequence
+    -What's the definition of longest increasing subsequence?
+    -The longest increasing subsequence problem is 
+     to find a subsequence of a given sequence in which the subsequence's elements are in sorted order, 
+     lowest to highest, and in which the subsequence is as long as possible. 
+    -This subsequence is not necessarily contiguous, or unique.
+    -https://en.wikipedia.org/wiki/Longest_increasing_subsequence
 ***/
-//version-1: DP
+//version-1: DP, time complexity: O(n^2)
 public class Solution {
     /**
      * @param nums: An integer array
@@ -57,7 +60,6 @@ public class Solution {
     }
 }
 
-/*** LintCode 76. Longest Increasing Subsequence ***/
 //version-2: O(nlogn) solution
 public class Solution {
     /**
@@ -76,7 +78,7 @@ public class Solution {
         Arrays.fill(minLast, Integer.MAX_VALUE);
         
         for (int num : nums) {
-			// find the first number in the array-minLast that >= nums[i];
+            // find the first number in the array-minLast that >= nums[i];
             int index = binarySearch(minLast, num);
             minLast[index] = num;
         }
@@ -94,9 +96,6 @@ public class Solution {
     }
     
     // helper method
-    /*
-     * Getting the first index where the item value >= target in this sorted array.
-     */
     private int binarySearch(int[] nums, int target) {
         int start = 0;
         int end = nums.length - 1;
