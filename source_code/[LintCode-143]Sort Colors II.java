@@ -70,8 +70,47 @@ public class Solution {
     }
 }
 
-//version-2
+//version-2: rainbow sort(= merge sort + quick sort), O(nlogk), the best algorithm based on comparing
 public class Solution {
+    
+    // helper methods
+    private void swap(int[] colors, int i, int j) {
+        int temp = colors[i];
+        colors[i] = colors[j];
+        colors[j] = temp;
+    }
+    
+    private void rainbowSort(int[] colors, int start, int end, int colorFrom, int colorTo) {
+        // check corner cases
+        if (start == end || colorFrom == colorTo) {
+            return;
+        }
+        
+        int left= start;
+        int right = end;
+        int colorPivot = colorFrom + (colorTo - colorFrom) / 2;
+        
+        while (left <= right) {
+            while (left <= right && colors[left] <= colorPivot) {
+                left++;
+            }
+            
+            while (left <= right && colors[right] > colorPivot) {
+                right--;
+            }
+            
+            if (left <= right) {
+                swap(colors, left, right);
+                
+                left++;
+                right--;
+            }
+        }
+        
+        rainbowSort(colors, start, right, colorFrom, colorPivot);
+        rainbowSort(colors, left, end, colorPivot + 1, colorTo);
+    }    
+    
     /**
      * @param colors: A list of integer
      * @param k: An integer
@@ -79,49 +118,10 @@ public class Solution {
      */
     public void sortColors2(int[] colors, int k) {
         // check corner case
-        if (colors == null || colors.length <= 1) {
+        if (colors == null || colors.length <= 1 || k <= 0) {
             return;
         }
         
-        int count = 0;
-        int left = 0;
-        int right = colors.length - 1;
-        
-        while (count < k) {
-            int min = Integer.MAX_VALUE;
-            int max = Integer.MIN_VALUE;
-            
-            // get the min and max values(color) from the remaining
-            for (int i = left; i <= right; i++) {
-                min = Math.min(min, colors[i]);
-                max = Math.max(max, colors[i]);
-            }
-            
-            // get the two boudaries[left, right]
-            //partition the colors in 3 categors by the 2(left and right) boundaries
-            int current = left;
-            while (current <= right) {
-                if (colors[current] == min) {
-                    swap(colors, left, current);
-                    current++;
-                    left++;
-                }
-                else if (colors[current] == max) {
-                    swap(colors, current, right);
-                    right--;
-                }
-                else {
-                    current++;
-                }
-            }
-            
-            count += 2;
-        }
-    }
-    
-    private void swap(int[] colors, int i, int j) {
-        int temp = colors[i];
-        colors[i] = colors[j];
-        colors[j] = temp;
+        rainbowSort(colors, 0, colors.length - 1, 1, k);
     }
 }
