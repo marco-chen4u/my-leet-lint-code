@@ -14,7 +14,63 @@ Notice
 	You are not suppose to use the library's sort function for this problem.
 	k <= n
 ***/
-//version 2: O(nk)
+//version-1: O(nk)
+public class Solution {
+    /**
+     * @param colors: A list of integer
+     * @param k: An integer
+     * @return: nothing
+     */
+    public void sortColors2(int[] colors, int k) {
+        // check corner case
+        if (colors == null || colors.length <= 1) {
+            return;
+        }
+        
+        int count = 0;
+        int left = 0;
+        int right = colors.length - 1;
+        
+        while (count < k) {
+            int min = Integer.MAX_VALUE;
+            int max = Integer.MIN_VALUE;
+            
+            // get the min and max values(color) from the remaining
+            for (int i = left; i <= right; i++) {
+                min = Math.min(min, colors[i]);
+                max = Math.max(max, colors[i]);
+            }
+            
+            // get the two boudaries[left, right]
+            //partition the colors in 3 categors by the 2(left and right) boundaries
+            int current = left;
+            while (current <= right) {
+                if (colors[current] == min) {
+                    swap(colors, left, current);
+                    current++;
+                    left++;
+                }
+                else if (colors[current] == max) {
+                    swap(colors, current, right);
+                    right--;
+                }
+                else {
+                    current++;
+                }
+            }
+            
+            count += 2;
+        }
+    }
+    
+    private void swap(int[] colors, int i, int j) {
+        int temp = colors[i];
+        colors[i] = colors[j];
+        colors[j] = temp;
+    }
+}
+
+//version-2
 public class Solution {
     /**
      * @param colors: A list of integer
