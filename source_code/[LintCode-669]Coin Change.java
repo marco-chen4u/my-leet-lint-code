@@ -5,18 +5,18 @@ Write a function to compute the fewest number of coins that you need to make up 
 
 If that amount of money cannot be made up by any combination of the coins, return -1.
 
-Example
-	Example 1
-		Input: 
-			[1, 2, 5]
-			11
-		Output: 3
-		Explanation: 11 = 5 + 5 + 1
-	Example 2
-		Input: 
-			[2]
-			3
-		Output: -1
+Example 1
+    Input: 
+        [1, 2, 5]
+        11
+    Output: 3
+    Explanation: 11 = 5 + 5 + 1
+
+Example 2
+    Input: 
+        [2]
+        3
+    Output: -1
 ***/
 // version-1: memorization search(Runtime Error, amount <= 2685, otherwise it will get runtime exception)
 public class Solution {
@@ -27,51 +27,51 @@ public class Solution {
      */
     public int coinChange(int[] coins, int amount) {
         // check corner case
-		if (coins == null || coins.length == 0) {
-			return -1;
-		}
-		
-		if (amount < 1) {
-			return 0;
-		}
-		
-		return findChange(coins, amount, new int[amount]);
+        if (coins == null || coins.length == 0) {
+            return -1;
+        }
+
+        if (amount < 1) {
+            return 0;
+        }
+
+        return findChange(coins, amount, new int[amount]);
     }
 	
-	// helper methods
-	private int findChange(int[] coins, int remain, int[] count) {
-		// check corner cases
-		if (remain < 0) {
-			return -1;
-		}
-		
-		if (remain == 0) {
-			return 0;
-		}
-		
-		if (count[remain - 1] != 0) {
-			return count[remain - 1];
-		}
-		
-		// normal case
-		int min = Integer.MAX_VALUE;
-		
-		for (int coin : coins) {
-			if (coin == 0) {
-				continue;
-			}
-			
-			int result = findChange(coins, remain - coin, count);
-			
-			if (result >= 0 && result < min) {
-				min = result + 1;
-			}
-		}
-		
-		count[remain - 1] = (count[remain - 1] == Integer.MAX_VALUE) ? -1 : min;
-		
-		return count[remain - 1];
-	}
+    // helper methods
+    private int findChange(int[] coins, int remain, int[] count) {
+        // check corner cases
+        if (remain < 0) {
+            return -1;
+        }
+
+        if (remain == 0) {
+            return 0;
+        }
+
+        if (count[remain - 1] != 0) {
+            return count[remain - 1];
+        }
+
+        // normal case
+        int min = Integer.MAX_VALUE;
+
+        for (int coin : coins) {
+            if (coin == 0) {
+                continue;
+            }
+
+            int result = findChange(coins, remain - coin, count);
+
+            if (result >= 0 && result < min) {
+                min = result + 1;
+            }
+        }
+
+        count[remain - 1] = (count[remain - 1] == Integer.MAX_VALUE) ? -1 : min;
+
+        return count[remain - 1];
+    }
 }
 //version-2 DP
 /*
