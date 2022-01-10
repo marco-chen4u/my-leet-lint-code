@@ -52,6 +52,21 @@ public class Solution {
     
     private ResultType max_result;
     
+    /**
+     * @param root: the root of binary tree
+     * @return: the root of the maximum average of subtree
+     */
+    public TreeNode findSubtree2(TreeNode root) {
+        // check corner case
+        if (root == null) {
+            return null;
+        }
+        
+        findSubtree2Helper(root);
+        
+        return (max_result != null) ? max_result.node : null;
+    }
+    
     // helper method
     private ResultType findSubtree2Helper(TreeNode node) {
         if (node == null) {
@@ -80,20 +95,5 @@ public class Solution {
         }
         
         return result;
-    }
-    
-    /**
-     * @param root: the root of binary tree
-     * @return: the root of the maximum average of subtree
-     */
-    public TreeNode findSubtree2(TreeNode root) {
-        // check corner case
-        if (root == null) {
-            return null;
-        }
-        
-        findSubtree2Helper(root);
-        
-        return (max_result != null) ? max_result.node : null;
     }
 }
