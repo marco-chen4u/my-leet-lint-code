@@ -5,14 +5,14 @@ find k points which are nearest to the origin.
 Return these points sorted by distance, if they are same in distance, 
 sorted by the x-axis, and if they are same in the x-axis, sorted by y-axis.
 
-Example
-	Example 1:
-		Input: points = [[4,6],[4,7],[4,4],[2,5],[1,1]], origin = [0, 0], k = 3 
-		Output: [[1,1],[2,5],[4,4]]
+
+Example 1:
+    Input: points = [[4,6],[4,7],[4,4],[2,5],[1,1]], origin = [0, 0], k = 3 
+    Output: [[1,1],[2,5],[4,4]]
 		
-	Example 2:
-		Input: points = [[0,0],[0,9]], origin = [3, 1], k = 1
-		Output: [[0,0]]
+Example 2:
+    Input: points = [[0,0],[0,9]], origin = [3, 1], k = 1
+    Output: [[0,0]]
 ***/
 /**
  * Definition for a point.
@@ -25,21 +25,9 @@ Example
  */
 
 public class Solution {
-        // fields
-        private Point ORIGINAL_POINT = null;
-    
-            
-        // helper method
-        private int getDistance(Point a, Point b) {
-            int result = 0;
-            
-            int xDistance = Math.abs(a.x - b.x);
-            int yDistiance = Math.abs(a.y - b.y);
-            
-            result = xDistance*xDistance + yDistiance*yDistiance;
-            
-            return result;
-        }
+
+    // fields
+    private Point ORIGINAL_POINT = null;
     
     /**
      * @param points: a list of points
@@ -48,7 +36,9 @@ public class Solution {
      * @return: the k closest points
      */
     public Point[] kClosest(Point[] points, Point origin, int k) {
-        Point[] default_value = new Point[0]; //default value
+
+	Point[] default_value = new Point[0]; //default value
+
         // check corner cases
         if (points == null || points.length == 0) {
             return points;
@@ -86,6 +76,18 @@ public class Solution {
             result[i] = points[i]; 
         }
         
+        return result;
+    }
+	
+    // helper method
+    private int getDistance(Point a, Point b) {
+        int result = 0;
+
+        int xDistance = Math.abs(a.x - b.x);
+        int yDistiance = Math.abs(a.y - b.y);
+
+        result = xDistance*xDistance + yDistiance*yDistiance;
+
         return result;
     }
 }
