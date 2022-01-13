@@ -14,10 +14,15 @@ Challenge
 
 Clarification
 What is heap? What is heapify? What if there is a lot of solutions?
-    -Heap is a data structure, which usually have three methods: push, pop and top. where "push" add a new element the heap, "pop" delete the minimum/maximum element in the heap, "top" return the minimum/maximum element.
-    -Convert an unordered integer array into a heap array. If it is min-heap, for each element A[i], we will get A[i * 2 + 1] >= A[i] and A[i * 2 + 2] >= A[i].
+    -Heap is a data structure, which usually have three methods: push, pop and top. 
+        where "push" add a new element the heap, 
+        "pop" delete the minimum/maximum element in the heap, 
+        "top" return the minimum/maximum element.
+    -Convert an unordered integer array into a heap array. If it is min-heap, 
+        for each element A[i], we will get A[i * 2 + 1] >= A[i] and A[i * 2 + 2] >= A[i].
     -Return any of them.
 ***/
+
 // version-1: sift-down
 public class Solution {	
     /*
