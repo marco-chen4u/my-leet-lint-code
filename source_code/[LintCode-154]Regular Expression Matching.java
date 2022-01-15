@@ -57,20 +57,6 @@ public class Solution {
     }
     
     // helper methods
-    private boolean isEmpty(String p, int pIndex) {
-        for (int i = pIndex; i < p.length(); i += 2) {
-            if (i + 1 >= p.length() || p.charAt(i + 1) != '*') {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private boolean isCharMatch(char sChar, char pChar) {
-        return (sChar == pChar || pChar == '.');
-    }
-
     private boolean isMatchHelper(String s, int sIndex, 
                                     String p, int pIndex, 
                                     boolean[][] visited, 
@@ -104,6 +90,20 @@ public class Solution {
         visited[sIndex][pIndex] = true;
 
         return match;		
+    }
+    
+    private boolean isEmpty(String p, int pIndex) {
+        for (int i = pIndex; i < p.length(); i += 2) {
+            if (i + 1 >= p.length() || p.charAt(i + 1) != '*') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isCharMatch(char sChar, char pChar) {
+        return (sChar == pChar || pChar == '.');
     }
 }
 
