@@ -22,6 +22,7 @@ Example
 Challenge
     O(n) time and O(1) extra space.
 ***/
+//version-1: scanning line
 public class Solution {
     /**
      * @param num: An array of Integer
@@ -34,9 +35,9 @@ public class Solution {
             return result;
         }        
         
+	    result = 1;
         if (nums.length == 1) {
-            result++;
-            return result;// return 1
+            return result;
         }
         
         int size = nums.length;
@@ -79,39 +80,39 @@ public class Solution {
      * @return: an integer
      */
     public int longestIncreasingContinuousSubsequence(int[] nums) {
-		int result = 0;
-		// check corner cases
+        int result = 0;
+        // check corner cases
         if (nums == null || nums.length == 0) {
             return result;
         }        
-        
+
         if (nums.length == 1) {
             result++;
             return result;// return 1
         }
-        
+
         int size = nums.length;
-		// state
-		int[] dpInc = new int[size];
-		int[] dpDec = new int[size];
-		
-		// initialize
-		Arrays.fill(dpInc, 1);
-		Arrays.fill(dpDec, 1);
-		
-		// function
-		for (int i = 1; i < size; i++) {
-			
-			if (nums[i - 1] < nums[i]) {
-				dpInc[i] = Math.max(dpInc[i], dpInc[i - 1] + 1);
-			}
-			else if (nums[i - 1] > nums[i]){
-				dpDec[i] = Math.max(dpDec[i], dpDec[i - 1] + 1);
-			}
-			
-			result = Math.max(result, Math.max(dpInc[i], dpDec[i]));
-		}
-		
-		return result;
-	}
+        // state
+        int[] dpInc = new int[size];
+        int[] dpDec = new int[size];
+
+        // initialize
+        Arrays.fill(dpInc, 1);
+        Arrays.fill(dpDec, 1);
+
+        // function
+        for (int i = 1; i < size; i++) {
+
+            if (nums[i - 1] < nums[i]) {
+                dpInc[i] = Math.max(dpInc[i], dpInc[i - 1] + 1);
+            }
+            else if (nums[i - 1] > nums[i]){
+                dpDec[i] = Math.max(dpDec[i], dpDec[i - 1] + 1);
+            }
+
+            result = Math.max(result, Math.max(dpInc[i], dpDec[i]));
+        }
+
+        return result;
+    }
 }
