@@ -167,7 +167,7 @@ public class Solution {
                 （2）如要不要交换左右儿子
                 因此：
                     （a）不交换左右儿子
-                        f[i][j][k] = OR{f[i][j][w] AND f[i+w][j+w][k - 2]},其中长度w的取值范围1<=w<=k-1
+                        f[i][j][k] = OR{f[i][j][w] AND f[i+w][j+w][k - w]},其中长度w的取值范围1<=w<=k-1
                     （b）交换左右儿子
                         f[i][j][k] = OR{f[i][j + k - w][w] AND f[i + w][j][k - w]}
         初始化： 
