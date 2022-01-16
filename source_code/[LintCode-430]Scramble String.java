@@ -200,9 +200,12 @@ public class Solution {
             return false;
         }
 
+	// regular case
+	// state
         boolean[][][] dp = new boolean[n][n][n + 1]; // the last demension '[n + 1]' is the length for string process
         int i, j , w, len;
-
+	
+	// initialize
         // len = 1
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
@@ -210,6 +213,7 @@ public class Solution {
             }
         }
 
+	// function
         for (len = 2; len <= n; len ++) {
             for (i = 0; i <= n - len; i++) {
                 for (j = 0; j <= n - len; j++) {
@@ -234,6 +238,7 @@ public class Solution {
             }// for i
         }// for len
 
+	// return answer
         return dp[0][0][n];
     }
 }
