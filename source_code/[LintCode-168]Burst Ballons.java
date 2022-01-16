@@ -35,12 +35,15 @@ Notice
 /*
 * 反向思维，从最后一个被扎破的气球分析起，观察最后一个被扎破的球球，分为左右2个空间
   设dp[i][j]为扎破i+1~j-1号气球，最多获得的金币数。
-  dp[i][j] = Max{dp[i][k] + dp[k][j] + nums[i]*nums[k]*nums[j]}, i<k<j
+  for (int k = i + 1; k < j; k++) {
+  	dp[i][j] = Max{dp[i][j], dp[i][k] + dp[k][j] + nums[i]*nums[k]*nums[j]}; // i<k<j
+  }
+  
 */
 
 //version-1 memorized search
 public class Solution {
-    /**
+    /**//
      * @param nums: A list of integer
      * @return: An integer, maximum coins
      */
