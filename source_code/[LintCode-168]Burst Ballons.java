@@ -107,14 +107,18 @@ public class Solution {
 
         int n = nums.length;
 
+	// state
         int[] values = new int[n + 2];
-        values[0] = values[n + 1] = 1;
+        // initialize
+	values[0] = values[n + 1] = 1;
+	
         for (int i = 1; i <= n; i++) {
             values[i] = nums[i - 1];
         }
 
         int[][] dp = new int[n + 2][n + 2];
 
+	// function
         for (int length = 3; length <= n + 2; length++) {
             for (int i = 0; i <= n + 2 - length; i++) {
                 int j = i + length - 1;
@@ -129,6 +133,7 @@ public class Solution {
             } // for i
         } // for length
 
-    return dp[0][n + 1];
+	// answer
+        return dp[0][n + 1];
     }
 }
