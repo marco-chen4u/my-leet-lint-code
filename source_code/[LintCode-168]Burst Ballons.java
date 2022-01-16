@@ -44,7 +44,7 @@ Notice
 				 nums[i]*nums[k]*nums[j]}; // i<k<j
   }
   
-   其中，
+   其中，dp[i][j]，dp[i][k], dp[k][k]这个3个区间都至少有3个气球。
   
 */
 
