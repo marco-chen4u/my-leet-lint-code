@@ -39,10 +39,13 @@ public class Solution {
             return 0;
         }
 
+        // regular case
+        // state
         int n = obstacleGrid.length;
         int m = obstacleGrid[0].length;
         int[][] dp = new int[n][m];
 
+        // initialize
         dp[0][0] = 1;
         for (int i = 1; i < n; i++) {
             if (obstacleGrid[i][0] !=OBSTACLE) {
@@ -55,6 +58,7 @@ public class Solution {
             }
         }
 
+        // function
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < m; j++) {
                 if (obstacleGrid[i][j] != OBSTACLE) {
@@ -63,6 +67,7 @@ public class Solution {
             }
         }
 
+        // answer
         return dp[n - 1][m - 1];
     }
 }
