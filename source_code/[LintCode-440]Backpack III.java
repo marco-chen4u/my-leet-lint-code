@@ -62,13 +62,16 @@ public class Solution {
         // function
         for (int i = 1; i <= n; i++) {// number of item kinds to choose(every kind of item is available to take by infinite count) 
             for (int w = 0; w <= m; w++) {// size availibility of the bag
-                if (w - A[i - 1] < 0) {// when current bag size is not suitable for the current item's 
+		int currentValue = V[i - 1];
+		int curentWeight = A[i - 1];
+		    
+                if (w - curentWeight < 0) {// when current bag size is not suitable for the current item's 
                     dp[i][w] = dp[i - 1][w];// don't take, no choose
                     continue;
                 }
 
                 dp[i][w] = Math.max(dp[i - 1][w], // not choose option
-                                    dp[i][w - A[i - 1]] + V[i - 1]);// choose option
+                                    dp[i][w - curentWeight] + currentValue);// choose option
                                     /*[current item]     [current value]*/
             } // for w
         }// for i
