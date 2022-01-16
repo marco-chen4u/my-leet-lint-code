@@ -20,7 +20,38 @@ Example 2:
 Notice
     You can only go right or down in the path.
 ***/
-//version-1
+//version-1: DP
+class Solution {
+    public int minPathSum(int[][] grid) {
+        // check corner case
+        if (grid == null || grid.length == 0) {
+            return 0;
+        }
+        
+        // normal case
+        int n = grid.length;// row size
+        int m = grid[0].length;// column size
+        
+        // initialize
+        for (int j = 1; j < m; j++) { // 1st row
+            grid[0][j] += grid[0][j - 1];
+        }
+        
+        for (int i = 1; i < n; i++) {// 1st column
+            grid[i][0] += grid[i - 1][0];
+        }
+        
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+            }
+        }
+        
+        return grid[n - 1][m - 1];
+    }
+}
+
+//version-2: DP
 public class Solution {
     /**
      * @param grid: a list of lists of integers
@@ -65,7 +96,7 @@ public class Solution {
     }
 }
 
-//version-2
+//version-2: DP + rotation array
 public class Solution {
     /**
      * @param grid: a list of lists of integers
@@ -107,33 +138,4 @@ public class Solution {
     }
 }
 
-//version-3
-class Solution {
-    public int minPathSum(int[][] grid) {
-        // check corner case
-        if (grid == null || grid.length == 0) {
-            return 0;
-        }
-        
-        // normal case
-        int n = grid.length;// row size
-        int m = grid[0].length;// column size
-        
-        // initialize
-        for (int j = 1; j < m; j++) { // 1st row
-            grid[0][j] += grid[0][j - 1];
-        }
-        
-        for (int i = 1; i < n; i++) {// 1st column
-            grid[i][0] += grid[i - 1][0];
-        }
-        
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
-            }
-        }
-        
-        return grid[n - 1][m - 1];
-    }
-}
+
