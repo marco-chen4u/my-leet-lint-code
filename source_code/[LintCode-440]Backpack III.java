@@ -109,8 +109,8 @@ public class Solution {
 
                 if (w >= A[i - 1]) {
                     dp[i % 2][w] = Math.max(dp[(i - 1) % 2][w], // not choose option
-    									dp[i % 2][w - A[i - 1]] + V[i - 1]);// choose option
-    									/*[current item]     [current value]*/
+                                            dp[i % 2][w - A[i - 1]] + V[i - 1]);// choose option
+                                            /*[current item]         [current value]*/
 				}
 			} // for w
 		}// for i
