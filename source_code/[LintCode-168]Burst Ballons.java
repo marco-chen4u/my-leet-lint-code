@@ -125,7 +125,7 @@ public class Solution {
 
         int[][] dp = new int[n + 2][n + 2];
 
-	// function
+	// function   [note: *based on values array rather than the input nums]
         for (int length = 3; length <= n + 2; length++) {
             for (int i = 0; i <= n + 2 - length; i++) {
                 int j = i + length - 1;
