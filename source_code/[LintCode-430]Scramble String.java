@@ -214,6 +214,7 @@ public class Solution {
         }
 
 	// function
+	// starting from len >= 2 
         for (len = 2; len <= n; len ++) {
             for (i = 0; i <= n - len; i++) {
                 for (j = 0; j <= n - len; j++) {
