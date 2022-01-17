@@ -26,7 +26,9 @@ Example 3
         B = ["cc","aaa","dd"]
         S = "cdab"
     Output: "ccdd"
-    Explanation: From left to right, you can find the "cd" can be replaced at first, so after the replacement becomes "ccab", then you can find "ab" can be replaced, so the string after the replacement is "ccdd".
+    Explanation: From left to right, you can find the "cd" can be replaced at first, so after the replacement becomes "ccab", 
+                 then you can find "ab" can be replaced, 
+		 so the string after the replacement is "ccdd".
 Notice
     -The size of each string array does not exceed 100, the total string length does not exceed 50000.
     -The lengths of A [i] and B [i] are equal.
