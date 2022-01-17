@@ -10,7 +10,8 @@ Example 1
         B = ["cc","ccc"]
         S = "ababa"
     Output: "cccba"
-    Explanation: In accordance with the rules, the substring that can be replaced is "ab" or "aba". Since "aba" is longer, we replace "aba" with "ccc". 
+    Explanation: In accordance with the rules, the substring that can be replaced is "ab" or "aba". 
+                 Since "aba" is longer, we replace "aba" with "ccc". 
 
 Example 2
     Input:
