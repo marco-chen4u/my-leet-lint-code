@@ -1,8 +1,11 @@
 /***
 * LintCode 841. String Replace
 Given two identical-sized string array A, B and a string S. 
-All substrings A appearing in S are replaced by B.(Notice: From left to right, it must be replaced if it can be replaced. 
-If there are multiple alternatives, replace longer priorities. After the replacement of the characters can't be replaced again.)
+All substrings A appearing in S are replaced by B.
+
+(Notice: From left to right, it must be replaced if it can be replaced. 
+         If there are multiple alternatives, replace longer priorities. 
+         After the replacement of the characters can't be replaced again.)
 
 Example 1
     Input:
