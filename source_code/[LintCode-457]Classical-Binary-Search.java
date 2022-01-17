@@ -126,7 +126,7 @@ public class Solution {
             return binarySearch(nums, mid + 1, end, target);
         }
         
-        return binarySearch(nums, start, mid, target);
+        return binarySearch(nums, start, mid - 1, target);
         
     }
 }
