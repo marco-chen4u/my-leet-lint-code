@@ -78,11 +78,13 @@ public class Solution {
             for (int j = 1; j <= k; j++) {
                 for (int t = 1; t <= target; t++) {
                     dp[i][j][t] = 0;
-                    if (t >= A[i - 1]) {
+
+		    dp[i][j][t] += dp[i - 1][j][t];
+
+		    if (t >= A[i - 1]) {
                         dp[i][j][t] += dp[i - 1][j -1][t - A[i - 1]];
                     }
-
-                    dp[i][j][t] += dp[i - 1][j][t];
+                    
                 }// for t
             }// for j
 
