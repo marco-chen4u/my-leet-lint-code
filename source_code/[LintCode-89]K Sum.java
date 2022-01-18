@@ -3,22 +3,24 @@
 Given n distinct positive integers, integer k (k <= n) and a number target.
 Find k numbers where sum is target. Calculate how many solutions there are?
 
-Example
-    Example 1
-        Input:
-            List = [1,2,3,4]
-            k = 2
-            target = 5
-        Output: 2
-        Explanation: 1 + 4 = 2 + 3 = 5
-    Example 2
-        Input:
-            List = [1,2,3,4,5]
-            k = 3
-            target = 6
-        Output: 1
-        Explanation: There is only one method. 1 + 2 + 3 = 6
+
+Example 1
+    Input:
+        List = [1,2,3,4]
+        k = 2
+        target = 5
+    Output: 2
+    Explanation: 1 + 4 = 2 + 3 = 5
+
+Example 2
+    Input:
+        List = [1,2,3,4,5]
+        k = 3
+        target = 6
+    Output: 1
+    Explanation: There is only one method. 1 + 2 + 3 = 6
 ***/
+
 /*
 * 最后一步： 最后一个数A[n -1],是否选入这k个数
 * 情况1： A[n - 1]不选入， 需要在前n-1个数中，选出k个，使得它们的和等于target
@@ -48,6 +50,7 @@ Example
 *        dp[n][k][target]
 * 实践复杂度： O(n * k * target) ,空间复杂度 O(n * k * target), 空间复杂度可以优化为O(k * target)
 */
+
 //version-1:DP-backpack
 public class Solution {
     /**
