@@ -3,7 +3,6 @@
 Given n distinct positive integers, integer k (k <= n) and a number target.
 Find k numbers where sum is target. Calculate how many solutions there are?
 
-
 Example 1
     Input:
         List = [1,2,3,4]
