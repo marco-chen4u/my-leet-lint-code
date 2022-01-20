@@ -135,3 +135,43 @@ public class Solution {
         }
     }
 }
+
+//version-4: partitions
+public class Solution {
+    /**
+     * @param nums: A list of integer which is 0, 1 or 2 
+     * @return: nothing
+     */
+    public void sortColors(int[] nums) {
+        partition(nums, 1);
+        partition(nums, 2);
+    }
+
+    // helper method
+    private void partition(int[] nums, int pivot) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            while (left <= right && nums[left] < pivot) {
+                left++;
+            }
+
+            while (left <= right && nums[right] >= pivot) {
+                right--;
+            }
+
+            if (left <= right) {
+                swap(nums, left, right);
+                left++;
+                right--;
+            }
+        }
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
