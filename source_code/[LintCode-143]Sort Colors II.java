@@ -70,7 +70,7 @@ public class Solution {
     }
 }
 
-//version-2: rainbow sort(= merge sort + quick sort), O(nlogk), the best algorithm based on comparing
+//version-2: qickSort, O(nlogk), the best algorithm based on partition
 public class Solution {
     
     /**
@@ -88,7 +88,7 @@ public class Solution {
     }
     
     // helper methods
-    private void rainbowSort(int[] colors, int start, int end, int colorFrom, int colorTo) {
+    private void qickSort(int[] colors, int start, int end, int colorFrom, int colorTo) {
         // check corner cases
         if (start == end || colorFrom == colorTo) {
             return;
@@ -98,6 +98,7 @@ public class Solution {
         int right = end;
         int colorPivot = colorFrom + (colorTo - colorFrom) / 2;
         
+        // do 3 parts partion
         while (left <= right) {
             while (left <= right && colors[left] <= colorPivot) {
                 left++;
@@ -115,8 +116,9 @@ public class Solution {
             }
         }
         
-        rainbowSort(colors, start, right, colorFrom, colorPivot);
-        rainbowSort(colors, left, end, colorPivot + 1, colorTo);
+        //after above 3 parts partion, then do the following 2 parts recursion to sort them out
+        qickSort(colors, start, right, colorFrom, colorPivot);
+        qickSort(colors, left, end, colorPivot + 1, colorTo);
     }
 
     private void swap(int[] colors, int i, int j) {
