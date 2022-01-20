@@ -73,6 +73,20 @@ public class Solution {
 //version-2: rainbow sort(= merge sort + quick sort), O(nlogk), the best algorithm based on comparing
 public class Solution {
     
+    /**
+     * @param colors: A list of integer
+     * @param k: An integer
+     * @return: nothing
+     */
+    public void sortColors2(int[] colors, int k) {
+        // check corner case
+        if (colors == null || colors.length <= 1 || k <= 0) {
+            return;
+        }
+        
+        rainbowSort(colors, 0, colors.length - 1, 1, k);
+    }
+    
     // helper methods
     private void swap(int[] colors, int i, int j) {
         int temp = colors[i];
@@ -109,19 +123,5 @@ public class Solution {
         
         rainbowSort(colors, start, right, colorFrom, colorPivot);
         rainbowSort(colors, left, end, colorPivot + 1, colorTo);
-    }    
-    
-    /**
-     * @param colors: A list of integer
-     * @param k: An integer
-     * @return: nothing
-     */
-    public void sortColors2(int[] colors, int k) {
-        // check corner case
-        if (colors == null || colors.length <= 1 || k <= 0) {
-            return;
-        }
-        
-        rainbowSort(colors, 0, colors.length - 1, 1, k);
     }
 }
