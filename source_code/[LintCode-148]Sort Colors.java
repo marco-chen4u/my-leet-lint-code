@@ -233,8 +233,6 @@ public class Solution {
 
     // helper method
     private int partition(int[] nums, int start, int end, int pivot) {
-        int left = start;
-        int right = end;
 
         int smallestPointer = start - 1;
         for (int i = start; i <= end; i++) {
