@@ -198,7 +198,7 @@ public class Solution {
                 left++;
             }
 
-            while (left <= right && nums[right] >= pivot) {
+            while (left <= right && nums[right] >= pivot) {//note here, we just need to partiton 2 parts, so we use ">=" predicate rather than ">" for 3 parts-partioning
                 right--;
             }
 
@@ -209,7 +209,7 @@ public class Solution {
             }
         }
 
-        return left;// note here this left value 
+        return left;// note here this left value, left&right has overlapped, left has entered into orginally right part zone
     }
 
     private void swap(int[] nums, int i, int j) {
