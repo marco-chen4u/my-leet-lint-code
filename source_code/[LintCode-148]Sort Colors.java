@@ -242,7 +242,7 @@ public class Solution {
             }
         }
 
-        return smallestPointer;
+        return smallestPointer + 1;
     }
 
     private void swap(int[] nums, int i, int j) {
