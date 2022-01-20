@@ -48,6 +48,7 @@ public class Solution {
             }
             else {
                 swap(nums, i, right);
+                //这里为什么不i++，因为缓过来后nums[i]的值可能是0或1或2，如果是是2则需要继续交换
                 right--;
             }
         }
