@@ -31,10 +31,12 @@ public class Solution {
             return;
         }
         
-        int left = 0;
-        int i = 0;
+        int left = 0;        
         int right = nums.length - 1;
+        
         int pivot = 1;//the midle value of the color value[0, 1, 2]
+        
+        int i = 0;
         while (i <= right) {
             if (nums[i] < pivot) {
                 swap(nums, left, i);
