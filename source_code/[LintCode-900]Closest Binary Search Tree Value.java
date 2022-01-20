@@ -26,74 +26,108 @@ Notice
  *     }
  * }
  */
+//version-1: iteration:
 public class Solution {
-
     /**
      * @param root: the given BST
      * @param target: the given target
      * @return: the value in the BST that is closest to the target
      */
     public int closestValue(TreeNode root, double target) {
-        // check corner case
+        TreeNode lower = null;
+        TreeNode upper = null;
+
+        TreeNode current = root;
+        while (current != null) {
+            if (current.val < target) {
+                lower = current;
+                current = current.right;
+                continue;
+            }
+
+            if (current.val > target) {
+                upper = current;
+                current = current.left;
+                continue;
+            }
+
+            if (current.val == target) {
+                return current.val;
+            }
+        }
+
+        double lowerDiff = lower != null ? Math.abs(target - lower.val) : Integer.MAX_VALUE;
+        double upperDiff = upper != null ? Math.abs(upper.val - target) : Integer.MAX_VALUE;
+
+        return lowerDiff < upperDiff ? lower.val : upper.val;
+    }
+}
+
+//version-recursion
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param root: the given BST
+     * @param target: the given target
+     * @return: the value in the BST that is closest to the target
+     */
+    public int closestValue(TreeNode root, double target) {
         if (root == null) {
             return 0;
         }
 
-        TreeNode lowerClosest = findLowerClosest(root, target);
-        TreeNode upperClosest = findUpperClosest(root, target);
+        TreeNode lowerNode = lowerBound(root, target);
+        TreeNode upperNode = upperBound(root, target);
 
-        if (lowerClosest == null) {
-            return upperClosest.val;
-        }
+        double lowerDiff = lowerNode != null ? Math.abs(target - lowerNode.val) : Integer.MAX_VALUE;
+        double upperDiff = upperNode != null ? Math.abs(upperNode.val - target) : Integer.MAX_VALUE;
 
-        if (upperClosest == null) {
-            return lowerClosest.val;
-        }
-
-        if (Math.abs(target - lowerClosest.val) < Math.abs(upperClosest.val - target)) {
-            return lowerClosest.val;
-        }
-        else {
-            return upperClosest.val;
-        }		
+        return lowerDiff < upperDiff ? lowerNode.val : upperNode.val;
     }
-	
+
     // helper methods
-    private TreeNode findLowerClosest(TreeNode node, double target) {
+    private TreeNode lowerBound(TreeNode node, double target) {
         if (node == null) {
             return null;
         }
 
-        TreeNode result = null;
-        if (node.val < target) {
-            result =  findLowerClosest(node.right, target);
-        }
-        else {
-            return findLowerClosest(node.left, target);
+        if (node.val >= target) {
+            return lowerBound(node.left, target);
         }
 
-        if (result != null) {
-            return result;
+        // node.val > target
+        TreeNode lowerNode = lowerBound(node.right, target);
+        if (lowerNode != null) {
+            return lowerNode;
         }
-	    
+
         return node;
     }
-	
-    private TreeNode findUpperClosest(TreeNode node, double target) {
+
+    private TreeNode upperBound(TreeNode node, double target) {
         if (node == null) {
             return null;
         }
 
-        TreeNode result = null; 
-        if (node.val >= target) {
-            result = findUpperClosest(node.left, target);
-        }
-        else {
-            return findUpperClosest(node.right, target);
+        if (node.val < target) {
+            return upperBound(node.right, target);
         }
 
-        if (result != null) {
-            return result;
+        // node.val >= target
+        TreeNode upperNode = upperBound(node.left, target);
+        if (upperNode != null) {
+            return upperNode;
         }
 
         return node;
