@@ -136,7 +136,7 @@ public class Solution {
     }
 }
 
-//version-4: partitions
+//version-4: partitions + 双向双指针
 public class Solution {
     /**
      * @param nums: A list of integer which is 0, 1 or 2 
@@ -176,7 +176,7 @@ public class Solution {
     }
 }
 
-//version-5: partions
+//version-5: partions + 相向双指针
 public class Solution {
     /**
      * @param nums: A list of integer which is 0, 1 or 2 
@@ -210,6 +210,41 @@ public class Solution {
         }
 
         return left;// note here this left value, left&right has overlapped, left has entered into orginally right part zone
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
+
+//version-6: partition + 同向双指针
+public class Solution {
+    /**
+     * @param nums: A list of integer which is 0, 1 or 2 
+     * @return: nothing
+     */
+    public void sortColors(int[] nums) {
+        int start = 0, end = nums.length - 1;
+        int newStart = partition(nums, start, end, 1);
+        partition(nums, newStart, end, 2);
+    }
+
+    // helper method
+    private int partition(int[] nums, int start, int end, int pivot) {
+        int left = start;
+        int right = end;
+
+        int smallestPointer = start - 1;
+        for (int i = start; i <= end; i++) {
+            if (nums[i] < pivot) {
+                smallestPointer++;
+                swap(nums, smallestPointer, i);
+            }
+        }
+
+        return smallestPointer;
     }
 
     private void swap(int[] nums, int i, int j) {
