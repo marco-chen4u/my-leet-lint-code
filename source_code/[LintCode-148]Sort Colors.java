@@ -60,3 +60,48 @@ public class Solution {
         nums[j] = temp;
     }
 }
+
+//version-2: 3 pointers
+public class Solution {
+    /**
+     * @param nums: A list of integer which is 0, 1 or 2 
+     * @return: nothing
+     */
+    public void sortColors(int[] nums) {
+        // check corner cases
+        if (nums == null || nums.length == 0) {
+            return;
+        }
+        
+        int size = nums.length;
+
+        // normal case
+        int zeroPointer = -1;
+        int twoPointer = size;
+        // i < twoPointer 是个很重要的条件
+        // 一旦 i指针跟twoPointer指针重叠，就退出循环
+        for (int i = 0; i < size && i < twoPointer; i++) {
+            if (nums[i] == 0) {
+                swap(nums, ++zeroPointer, i);
+                // 为什么这里没有i--
+                // 因为换过来的只可能是1， 不需要交换了
+                // 当前指针的左边不可能有2
+                // 所有的0也都小于zeroPointer增1的位置
+            }
+            else if (nums[i] == 2) {
+                swap(nums, --twoPointer, i);
+                i--;
+                //为什么这里有i--
+                // 因为换过来的可能是0或1或2，如果是0或2，需要继续交换
+            }
+        }
+
+    }
+
+    // helper method
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
