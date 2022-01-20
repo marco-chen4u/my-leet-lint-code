@@ -28,6 +28,36 @@ Notice
  */
 public class Solution {
 
+    /**
+     * @param root: the given BST
+     * @param target: the given target
+     * @return: the value in the BST that is closest to the target
+     */
+    public int closestValue(TreeNode root, double target) {
+        // check corner case
+        if (root == null) {
+            return 0;
+        }
+
+        TreeNode lowerClosest = findLowerClosest(root, target);
+        TreeNode upperClosest = findUpperClosest(root, target);
+
+        if (lowerClosest == null) {
+            return upperClosest.val;
+        }
+
+        if (upperClosest == null) {
+            return lowerClosest.val;
+        }
+
+        if (Math.abs(target - lowerClosest.val) < Math.abs(upperClosest.val - target)) {
+            return lowerClosest.val;
+        }
+        else {
+            return upperClosest.val;
+        }		
+    }
+	
     // helper methods
     private TreeNode findLowerClosest(TreeNode node, double target) {
         if (node == null) {
@@ -67,35 +97,5 @@ public class Solution {
         }
 
         return node;
-    }
-	
-    /**
-     * @param root: the given BST
-     * @param target: the given target
-     * @return: the value in the BST that is closest to the target
-     */
-    public int closestValue(TreeNode root, double target) {
-        // check corner case
-        if (root == null) {
-            return 0;
-        }
-
-        TreeNode lowerClosest = findLowerClosest(root, target);
-        TreeNode upperClosest = findUpperClosest(root, target);
-
-        if (lowerClosest == null) {
-            return upperClosest.val;
-        }
-
-        if (upperClosest == null) {
-            return lowerClosest.val;
-        }
-
-        if (Math.abs(target - lowerClosest.val) < Math.abs(upperClosest.val - target)) {
-            return lowerClosest.val;
-        }
-        else {
-            return upperClosest.val;
-        }		
     }
 }
