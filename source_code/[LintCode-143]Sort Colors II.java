@@ -98,7 +98,7 @@ public class Solution {
         int right = end;
         int colorPivot = colorFrom + (colorTo - colorFrom) / 2;
         
-        // do 3 parts partion
+        // do 3 parts partition
         while (left <= right) {
             while (left <= right && colors[left] <= colorPivot) {
                 left++;
@@ -116,7 +116,7 @@ public class Solution {
             }
         }
         
-        //after above 3 parts partion, then do the following 2 parts recursion to sort them out
+        //after above 3 parts partition, then do the following 2 parts recursion to sort them out
         qickSort(colors, start, right, colorFrom, colorPivot);
         qickSort(colors, left, end, colorPivot + 1, colorTo);
     }
