@@ -102,3 +102,42 @@ public class Solution {
         }
     }
 }
+
+//version-4:two pointers 同向双指针
+public class Solution {
+    /**
+     * @param nums: an integer array
+     * @return: nothing
+     */
+    public void moveZeroes(int[] nums) {
+        // fillPointer代表被填充的指针，指向将被非0数填充的位置
+        int fillPointer = 0;
+        // movePointer代表将被前移的指针，指向被前移的非0位置
+        int movePointer = 0;
+        int size = nums.length;
+
+        // 如果前移指针没有越界，一直循环
+        while (movePointer < size) {
+
+            if (nums[movePointer] != 0) {
+                // 只有填充指针 ！= 前移指针，两指针交换
+                // 如果两指针相同，同时移动
+                if (fillPointer != movePointer) {
+                    swap(nums, fillPointer, movePointer);
+                }
+
+                fillPointer ++;
+            }
+
+            // 每次循环都要移动前移指针
+            movePointer++;
+        }
+    }
+
+    // helper methods
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
