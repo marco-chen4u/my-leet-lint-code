@@ -106,7 +106,7 @@ public class Solution {
     }
 }
 
-//version3: accounting
+//version3: accounting即计数排序
 public class Solution {
     /**
      * @param nums: A list of integer which is 0, 1 or 2 
