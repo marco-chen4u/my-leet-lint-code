@@ -105,3 +105,33 @@ public class Solution {
         nums[j] = tmp;
     }
 }
+
+//version3: accounting
+public class Solution {
+    /**
+     * @param nums: A list of integer which is 0, 1 or 2 
+     * @return: nothing
+     */
+    public void sortColors(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return;
+        }
+
+        int[] colorCounts = new int[3];// for red[0], white[1], blue[2]
+        for (int num : nums) {
+            colorCounts[num]++;
+        }
+
+        int index = 0;
+        int currentColor = 0;// start from red, then white, then blue
+        for (int colorCount : colorCounts) {
+            while (colorCount > 0) {
+                nums[index++] = currentColor;
+                
+                colorCount--;
+            }
+
+            currentColor++;
+        }
+    }
+}
