@@ -88,12 +88,6 @@ public class Solution {
     }
     
     // helper methods
-    private void swap(int[] colors, int i, int j) {
-        int temp = colors[i];
-        colors[i] = colors[j];
-        colors[j] = temp;
-    }
-    
     private void rainbowSort(int[] colors, int start, int end, int colorFrom, int colorTo) {
         // check corner cases
         if (start == end || colorFrom == colorTo) {
@@ -123,5 +117,11 @@ public class Solution {
         
         rainbowSort(colors, start, right, colorFrom, colorPivot);
         rainbowSort(colors, left, end, colorPivot + 1, colorTo);
+    }
+
+    private void swap(int[] colors, int i, int j) {
+        int temp = colors[i];
+        colors[i] = colors[j];
+        colors[j] = temp;
     }
 }
