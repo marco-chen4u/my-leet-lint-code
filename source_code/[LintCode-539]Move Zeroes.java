@@ -15,6 +15,13 @@ Notice
     You must do this in-place without making a copy of the array.
     Minimize the total number of operations.
 ***/
+
+/**
+* 给定一个数组，写一个方法将0移动到数组的最后面，非零元素保持原数组的顺序。
+* 1. 必须在原数组操作
+* 2. 最少写操作（写做少次）
+**/
+
 //version-1
 public class Solution {
     /**
