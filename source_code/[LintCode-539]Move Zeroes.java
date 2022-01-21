@@ -141,3 +141,52 @@ public class Solution {
         nums[j] = tmp;
     }
 }
+
+//version-5:同向双指针， 边界清0，这是最少的写操作，最佳答案
+public class Solution {
+    /**
+     * @param nums: an integer array
+     * @return: nothing
+     */
+    public void moveZeroes(int[] nums) {
+        // fillPointer代表被填充的指针，指向将被非0数填充的位置
+        int fillPointer = 0;
+        // movePointer代表将被前移的指针，指向被前移的非0位置
+        int movePointer = 0;
+        int size = nums.length;
+
+        // 如果前移指针没有越界，一直循环
+        while (movePointer < size) {
+
+            if (nums[movePointer] != 0) {
+                // 只有填充指针 ！= 前移指针，两指针交换
+                // 如果两指针相同，同时移动
+                if (fillPointer != movePointer) {
+                    nums[fillPointer] = nums[movePointer];//不需要交换，只需把有效数据填充(移动)到这个fillPointer位置的元素即可，减少了写操作，因为交换需要2个位置都要写，不划算
+                }
+
+                fillPointer ++;
+            }
+
+            // 每次循环都要移动前移指针
+            movePointer++;
+        }
+
+        //这个时候fillPointer前的都是有效数据，后面的都是dirty data都得清零
+        //把后续所有数据全部清空
+        while (fillPointer < size) {
+            if (nums[fillPointer] != 0) {
+                nums[fillPointer] = 0;
+            }
+            
+            fillPointer++;
+        }
+    }
+
+    // helper methods
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
