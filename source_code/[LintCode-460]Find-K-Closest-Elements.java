@@ -141,7 +141,7 @@ public class Solution {
     }
 }
 
-//solution-3: MinHeap, time complexity: O(nlogk)
+//solution-3: MinHeap, time complexity: O(n*logk), for heap, the worse case of time complexity on insertion is O(logn), logn is heap tree height, we use O(logk) for this code.
 public class Solution {
 
     // inner class
