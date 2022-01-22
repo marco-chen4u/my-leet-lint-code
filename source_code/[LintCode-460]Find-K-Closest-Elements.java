@@ -141,7 +141,7 @@ public class Solution {
     }
 }
 
-//solution-3: MinHeap, time complexity: O(n) + O(klogk)
+//solution-3: MinHeap, time complexity: O(nlogk)
 public class Solution {
 
     // inner class
