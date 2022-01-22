@@ -17,7 +17,7 @@ Example 2:
     Input: A = [1, 4, 6, 8], target = 3, k = 3
     Output: [4, 1, 6]
 **/
-//solution-1
+//solution-1: binary search + merge sort process
 public class Solution {
     /**
      * @param A: an integer array
@@ -75,7 +75,73 @@ public class Solution {
     }
 }
 
-//solution-2: MinHeap
+//version: binary search(first position) + merge sort process
+public class Solution {
+    /**
+     * @param nums: an integer array
+     * @param target: An integer
+     * @param k: An integer
+     * @return: an integer array
+     */
+    public int[] kClosestNumbers(int[] nums, int target, int k) {
+        int right = findUpperClosest(nums, target);
+        int left = right -1;
+
+        int[] result = new int[k];
+        for (int index = 0; index < k; index++) {
+            if (isLeftCloser(nums, target, left, right)) {
+                result[index] = nums[left--];
+            }
+            else {
+                result[index] = nums[right++];
+            }
+        }
+
+        return result;
+    }
+
+    // helper method
+    private int findUpperClosest(int[] nums, int target) {
+        int start = 0; 
+        int end = nums.length - 1;
+        int lastPos = end;
+
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+
+            if (nums[mid] < target) {
+                start = mid;
+            }
+            else {
+                end = mid;
+            }
+        }
+
+        if (nums[start] >= target) {
+            return start;
+        }
+
+        if (nums[end] >= target) {
+            return end;
+        }
+
+        return lastPos;
+    }
+
+    private boolean isLeftCloser(int[] nums, int target, int left, int right) {
+        if (left < 0) {
+            return false;
+        }
+
+        if (right >= nums.length) {
+            return true;
+        }
+
+        return Math.abs(target - nums[left]) <= Math.abs(nums[right] - target);
+    }
+}
+
+//solution-3: MinHeap
 public class Solution {
 
     // inner class
