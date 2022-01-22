@@ -141,7 +141,73 @@ public class Solution {
     }
 }
 
-//solution-3: MinHeap, time complexity: O(n*logk), for heap, the worse case of time complexity on insertion is O(logn), logn is heap tree height, we use O(logk) for this code.
+//version-3: binary search(last position) + merge sort process, time complexity: O(logN) + O(k)
+public class Solution {
+    /**
+     * @param nums: an integer array
+     * @param target: An integer
+     * @param k: An integer
+     * @return: an integer array
+     */
+    public int[] kClosestNumbers(int[] nums, int target, int k) {
+        int left = findLowerClosest(nums, target);
+        int right = left +1;
+
+        int[] result = new int[k];
+        for (int index = 0; index < k; index++) {
+            if (isLeftCloser(nums, target, left, right)) {
+                result[index] = nums[left--];
+            }
+            else {
+                result[index] = nums[right++];
+            }
+        }
+
+        return result;
+    }
+
+    // helper method
+    // 找到比target小的最左边的一个数
+    private int findLowerClosest(int[] nums, int target) {
+        int start = 0; 
+        int end = nums.length - 1;
+
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+
+            if (nums[mid] < target) {
+                start = mid;
+            }
+            else {
+                end = mid;
+            }
+        }
+
+        if (nums[end] < target) {
+            return end;
+        }
+
+        if (nums[start] < target) {
+            return start;
+        }
+
+        return -1;
+    }
+
+    private boolean isLeftCloser(int[] nums, int target, int left, int right) {
+        if (left < 0) {
+            return false;
+        }
+
+        if (right >= nums.length) {
+            return true;
+        }
+
+        return Math.abs(target - nums[left]) <= Math.abs(nums[right] - target);
+    }
+}
+
+//solution-4: MinHeap, time complexity: O(n*logk), for heap, the worse case of time complexity on insertion is O(logn), logn is heap tree height, we use O(logk) for this code.
 public class Solution {
 
     // inner class
