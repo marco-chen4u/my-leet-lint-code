@@ -60,8 +60,8 @@ public class Solution {
         
         // normal case
         int result = Integer.MAX_VALUE;
-        int n = costs.length;
-        int m = costs[0].length;
+        int n = costs.length;// house number
+        int m = costs[0].length;// color number
         
         // state
         int[][] dp = new int[n + 1][m];
