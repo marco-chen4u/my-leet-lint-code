@@ -7,16 +7,16 @@ We define a position P is a peak if:
     A[P] > A[P-1] && A[P] > A[P+1]
 Find a peak element in this array. Return the index of the peak.
 
-Example
-	Example 1:
-		Input:  [1, 2, 1, 3, 4, 5, 7, 6]
-		Output:  1 or 6		
-		Explanation:
-			return the index of peek.
 
-	Example 2:
-		Input: [1,2,3,4,1]
-		Output:  3
+Example 1:
+    Input:  [1, 2, 1, 3, 4, 5, 7, 6]
+    Output:  1 or 6		
+    Explanation:
+        return the index of peek.
+
+Example 2:
+    Input: [1,2,3,4,1]
+    Output:  3
 ***/
 public class Solution {
     /**
