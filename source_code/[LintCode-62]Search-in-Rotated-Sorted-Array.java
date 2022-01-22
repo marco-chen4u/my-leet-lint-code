@@ -29,7 +29,7 @@ Example 2:
 Challenge
     O(logN) time
 ***/
-//version-1: Binary Search
+//version-1: Binary Search, time complexity: O(logn)
 public class Solution {
     /**
      * @param A: an integer rotated sorted array
@@ -76,5 +76,64 @@ public class Solution {
         }
         
         return -1;
+    }
+}
+
+//version-2: Binary Search, time complexity: O(logn)
+public class Solution {
+    /**
+     * @param nums: an integer rotated sorted array
+     * @param target: an integer to be searched
+     * @return: an integer
+     */
+    public int search(int[] nums, int target) {
+        if (nums == null || nums.length <= 0) {
+            return -1;
+        }
+
+        int start = 0;
+        int end = nums.length - 1;
+
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+
+            int pivot = nums[mid];
+
+            if (isInAscendingPart(nums, start, pivot)) {
+                if (isInTheMiddle(nums, start, mid, target)) {
+                    end = mid;                    
+                }
+                else {
+                    start = mid;
+                }
+            }
+            else {
+                if (isInTheMiddle(nums, mid, end, target)) {
+                    start = mid;
+                }
+                else {
+                    end = mid;
+                }
+            }
+        }
+
+        if (nums[start] == target) {
+            return start;
+        }
+
+        if (nums[end] == target) {
+            return end;
+        }
+
+        return -1;
+    }
+
+    // helper methods
+    private boolean isInAscendingPart(int[] nums, int start, int pivot) {
+        return pivot > nums[start];
+    }
+
+    private boolean isInTheMiddle(int[] nums, int left, int right, int pivot) {
+        return nums[left] <= pivot && pivot <= nums[right];
     }
 }
