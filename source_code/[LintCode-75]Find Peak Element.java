@@ -18,6 +18,7 @@ Example 2:
     Input: [1,2,3,4,1]
     Output:  3
 ***/
+//version-1: Binary Search
 public class Solution {
     /**
      * @param A: An integers array.
@@ -52,5 +53,38 @@ public class Solution {
         else {
             return end;
         }
+    }
+}
+
+//version-2: Binary Search
+public class Solution {
+    /**
+     * @param A: An integers array.
+     * @return: return any of peek positions.
+     */
+    public int findPeak(int[] nums) {
+        // check corner case
+        if (nums == null || nums.length < 3) {
+            return -1;
+        }
+        
+        int start = 1;
+        int end = nums.length - 2;
+        
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            
+            if (nums[mid] < nums[mid - 1]) {
+                end = mid;
+            }
+            else if (nums[mid] < nums[mid + 1]) {
+                start = mid;
+            }
+            else {
+                return mid;
+            }
+        }
+        
+        return nums[start] > nums[end] ? start : end;
     }
 }
