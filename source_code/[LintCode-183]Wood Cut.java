@@ -147,3 +147,82 @@ public class Solution {
         return count;
     }
 }
+
+//version-3: Binary Search
+public class Solution {
+    /**
+     * @param L: Given n pieces of wood with length L[i]
+     * @param k: An integer
+     * @return: The maximum length of the small pieces
+     */
+    public int woodCut(int[] L, int k) {
+        // check corner cases
+        if (L == null || L.length == 0) {
+            return 0;
+        }
+
+        // regular case
+        int start = 0;
+        int end = Math.min(getAvg(L), findMax(L);
+
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            int count = getCount(L, mid);
+
+            if (count < k) {
+                end = mid;
+            }
+            else {
+                start = mid;
+            }
+        }
+
+        if (getCount(L, end) >= k) {
+            return end;
+        }
+
+        if (getCount(L, start) >= k) {
+            return start;
+        }
+
+        return 0;
+    }
+
+    // helper methods
+    private int findMax(int[] nums) {
+        int result = nums[0];
+
+        for (int num : nums) {
+            result = Math.max(num, result);
+        }
+
+        return result;
+    }
+    
+    private int getAvg(int[] nums) {
+        int size = nums.length;
+        int sum = 0;
+        
+        for (int num : nums) {
+            sum += num
+        }
+        
+        return sum / size;
+    }
+
+    private int getCount(int[] nums, int value) {
+        // check corner case
+        if (value == 0) {
+            return 0;
+        }
+
+        // regular case
+        int count = 0;
+
+        for (int num : nums) {
+            count += num / value;
+        }
+
+        return count;
+    }
+}
