@@ -76,12 +76,13 @@ public class Solution {
         // function
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j < m; j++) {
+		int currentCost = costs[i - 1][j];
                 for (int k = 0; k < m; k++) {
                     if (k == j) {
                         continue;
                     }
                     
-                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][k] + costs[i - 1][j]);
+                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][k] + currentCost);
                 }
             }
         }
