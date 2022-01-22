@@ -24,15 +24,15 @@ public class Solution {
 
     private Comparator<int[]> comparator = new Comparator<int[]>(){
         @Override
-        public int compare(int[] left, int[] right) {
-            if (left[0] != right[0]) {
-                return left[0] - right[0];
+        public int compare(int[] current, int[] other) {
+            if (current[0] != other[0]) {// width comparision
+                return current[0] - other[0];// height comparison
             }
 
             // be awared at here for the LIS, also, 
             // when either width or length is the same,
             // the smaller one could not fit in the other
-            return right[1] - left[1];
+            return other[1] - current[1];
         }
     };
 	
