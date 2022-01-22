@@ -48,6 +48,7 @@ public class Solution {
             return 0;
         }
         
+	/* if there's only 1 house to pant*/
         if (costs.length == 1) {
             int value = Integer.MAX_VALUE;
             for (int cost : costs[0]) {
