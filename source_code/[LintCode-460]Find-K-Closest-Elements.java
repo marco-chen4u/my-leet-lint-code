@@ -17,7 +17,7 @@ Example 2:
     Input: A = [1, 4, 6, 8], target = 3, k = 3
     Output: [4, 1, 6]
 **/
-//solution-1: binary search + merge sort process
+//solution-1: binary search + merge sort process, time complexity: O(logN) + O(k)
 public class Solution {
     /**
      * @param A: an integer array
@@ -75,7 +75,7 @@ public class Solution {
     }
 }
 
-//version: binary search(first position) + merge sort process
+//version: binary search(first position) + merge sort process, time complexity: O(logN) + O(k)
 public class Solution {
     /**
      * @param nums: an integer array
@@ -141,7 +141,7 @@ public class Solution {
     }
 }
 
-//solution-3: MinHeap
+//solution-3: MinHeap, time complexity: O(n) + O(klogk)
 public class Solution {
 
     // inner class
