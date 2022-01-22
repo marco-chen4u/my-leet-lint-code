@@ -69,14 +69,6 @@ class Solution {
             }
         }
         
-        if (nums[start] <= pivot) {
-            return nums[start];
-        }
-        
-        if (nums[end] <= pivot) {
-            return nums[end];
-        }
-        
-        return -1;
+        return Math.min(nums[start], nums[end]);
     }
 }
