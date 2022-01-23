@@ -131,3 +131,63 @@ public class Solution {
         return list;
     }
 }
+
+//version-3: BFS with dummy node
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param root: A Tree
+     * @return: Level order a list of lists of integer
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(null);
+
+        List<Integer> levelList = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            if (current == null) {
+
+                if (levelList.isEmpty()) {
+                    break;
+                }
+
+                result.add(levelList);
+                levelList = new ArrayList<>();
+
+                queue.offer(null);
+
+                continue;
+            }
+
+            levelList.add(current.val);
+            if (current.left != null) {
+                queue.offer(current.left);
+            }
+
+            if (current.right != null) {
+                queue.offer(current.right);
+            }
+        }
+
+        return result;
+    }
+}
