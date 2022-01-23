@@ -34,6 +34,7 @@ Notice
 ***/
 /***
 * dp[n][m] : n 个房子，每一个房子都在m中颜色当中选一种并且，这种颜色的费用是最低的，且跟相邻隔壁两个房子的颜色是不一样的。
+* dp[n][m] = {every elements = MAX_VALUE}
 * dp[i][m] = Min(dp[i][m] + for color-cost)//note: in colors-of-k-elemetns without the color with last house did select.
         for (int i = 1; i <= n; i++) {
 	    for (int j = 0; j < m; j++) {
@@ -43,7 +44,7 @@ Notice
 		        continue;
 		    }
 		    
-		    dp[i][j] = dp[i - 1][k] + currentCost;
+		    dp[i][j] = Math.min(dp[i][j], dp[i - 1][k] + currentCost);
 		}
 	    }
 	}
