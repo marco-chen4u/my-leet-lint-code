@@ -31,13 +31,13 @@ public class Solution {
         }
         
         List<Integer> combination = new ArrayList<Integer>();
-        helper(result, combination, n, 2);
+        dfs(result, combination, n, 2);
         
         return result;
     }
     
     // helper method
-    private void helper(List<List<Integer>> result, List<Integer> combination, int n, int index) {
+    private void dfs(List<List<Integer>> result, List<Integer> combination, int n, int index) {
         // check corner case
         if (n == 1) {
             if (combination.size() > 1) {
@@ -54,7 +54,7 @@ public class Solution {
             
             if (n % i == 0) {
                 combination.add(i);
-                helper(result, combination, n / i, i);
+                dfs(result, combination, n / i, i);
                 combination.remove(combination.size() - 1);
             }
         }
@@ -62,7 +62,7 @@ public class Solution {
         // corner case check if it is a prime number
         if (n >= index) {
             combination.add(n);
-            helper(result, combination, 1, n);
+            dfs(result, combination, 1, n);
             combination.remove(combination.size() - 1);
         }
     }
