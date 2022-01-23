@@ -32,6 +32,22 @@ Challenge
 Notice
     All costs are positive integers.
 ***/
+/***
+* dp[n][m] : n 个房子，每一个房子都在m中颜色当中选一种并且，这种颜色的费用是最低的，且跟相邻隔壁两个房子的颜色是不一样的。
+* dp[i][m] = Min(dp[i][m] + for color-cost)//note: in colors-of-k-elemetns without the color with last house did select.
+        for (int i = 1; i <= n; i++) {
+	    for (int j = 0; j < m; j++) {
+	    	int currentCost = costs[i -1][j];
+		for (int k = 0; k < j; k++) {
+		    if ( j == k) {
+		        continue;
+		    }
+		    
+		    dp[i][j] = dp[i - 1][k] + currentCost;
+		}
+	    }
+	}
+***/
 //version-1: traditional DP, time complexity: O(nk^2)
 public class Solution {
     /**
