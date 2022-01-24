@@ -7,6 +7,7 @@ Return -1 if destination cannot be reached.
 Notice
     Source and destination must be empty.
     Knight can not enter the barrier.
+
 Clarification
     If the knight is at (x, y), he can get to the following positions in one step:
         (x + 1, y + 2)
