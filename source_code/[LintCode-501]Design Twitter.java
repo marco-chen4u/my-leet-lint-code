@@ -150,7 +150,7 @@ public class MiniTwitter {
                     continue;
                 }
                 
-                list.addAll(getLastTen(userTweets.get(currentFriend)));
+                list.addAll(values);
             }
         }
 
@@ -175,7 +175,7 @@ public class MiniTwitter {
         if (userTweets.containsKey(user_id)) {
             List<Node> values = getLastTen(userTweets.get(user_id));
             if (values != null && !values.isEmpty()) {
-                list.addAll(getLastTen(userTweets.get(user_id)));
+                list.addAll(values);
             }
         }
         
