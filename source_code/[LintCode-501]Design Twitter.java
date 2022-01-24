@@ -76,6 +76,10 @@ class Node implements Comparable<Node> {
     public int compareTo(Node other) {
         return other.order - this.order;//reverse order, the most recently
     }
+
+    public String toString() {
+        return "[order= " + order + " | tweet( id= " + tweet.id + " | user_id = " + tweet.text + " | text = " + tweet.text + ")]\n";
+    }
 }
 
 public class MiniTwitter {    
@@ -113,6 +117,14 @@ public class MiniTwitter {
         int size = list.size();
         
         return list.subList(0, last);
+    }
+
+    private String getString(List<Node> values) {
+        StringBuilder sb = new StringBuilder();
+        for (Node node : values) {
+            sb.append(node.toString());
+        }
+        return sb.toString();
     }
 
     /*
@@ -155,7 +167,6 @@ public class MiniTwitter {
         }
 
         Collections.sort(list);
-        
         list = getFirstTen(list);
         for (Node node : list) {
             result.add(node.tweet);
@@ -180,7 +191,7 @@ public class MiniTwitter {
         }
         
         Collections.sort(list);
-        list = getFirstTen(list);
+        //System.out.println("getLastTen = " + getString(list));
         for (Node node : list) {
             result.add(node.tweet);
         }
