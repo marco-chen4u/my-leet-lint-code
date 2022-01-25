@@ -46,6 +46,7 @@ Challenge
  *    do something for node
  * } 
  */
+//version-1
 public class BSTIterator {
     // fields
     private Stack<TreeNode> stack;
@@ -102,5 +103,69 @@ public class BSTIterator {
 
     public TreeNode pre() {
         return (current == null) ? null : treeSet.lower(current)
+    }
+}
+
+//version-2:
+public class BSTIterator {
+    // fields
+    private Stack<TreeNode> stack;
+    private Stack<TreeNode> backUpStack;
+    private TreeNode current;
+
+    /*
+    * @param root: The root of binary tree.
+    */public BSTIterator(TreeNode root) {
+        this.stack = new Stack<TreeNode>();
+        this.backUpStack = new Stack<TreeNode>();
+
+        this.current = root;
+    }
+
+    /*
+     * @return: True if there has next node, or false
+     */
+    public boolean hasNext() {
+        return (current != null) ? true : !stack.isEmpty();
+    }
+
+    /*
+     * @return: return next node
+     */
+    public TreeNode next() {
+        TreeNode result = null;	
+        
+        while (current != null) {
+            stack.push(current);
+            current = current.left;
+        }
+
+        current = stack.pop();
+        
+        result = current;
+        backUpStack.push(result);
+        
+        current = current.right;
+        
+        return result;
+    }
+
+    public TreeNode pre() {
+        return (current == null) ? null : lowerTop();
+    }
+    
+    // helper method for pre() method
+    private TreeNode lowerTop() {
+        if (backUpStack.isEmpty) {
+            return null;
+        }
+        
+        TreeNode top = backUpStack.pop();
+        
+        TreeNode result = backUpStack.isEmpty() ? null : backUpStack.peek();
+        
+        backUpStack.push(top);
+        
+        return result;
     }
 }
