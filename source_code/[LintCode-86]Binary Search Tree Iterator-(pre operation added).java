@@ -169,3 +169,69 @@ public class BSTIterator {
         return result;
     }
 }
+
+//version-3
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ * Example of iterate a tree:
+ * BSTIterator iterator = new BSTIterator(root);
+ * while (iterator.hasNext()) {
+ *    TreeNode node = iterator.next();
+ *    do something for node
+ * } 
+ */
+public class BSTIterator {
+    // fields
+    private Stack<TreeNode> stack;
+    private Stack<TreeNode> backUpStack;
+    private TreeNode current;
+
+    /*
+    * @param root: The root of binary tree.
+    */public BSTIterator(TreeNode root) {
+        this.stack = new Stack<TreeNode>();
+        this.backUpStack = new Stack<TreeNode>();
+
+        this.current = root;
+    }
+
+    /*
+     * @return: True if there has next node, or false
+     */
+    public boolean hasNext() {
+        return (current != null) ? true : !stack.isEmpty();
+    }
+
+    /*
+     * @return: return next node
+     */
+    public TreeNode next() {
+        TreeNode result = null;	
+        
+        while (current != null) {
+            stack.push(current);
+            current = current.left;
+        }
+
+        current = stack.pop();
+        
+        result = current;
+        backUpStack.push(result);
+        
+        current = current.right;
+        
+        return result;
+    }
+
+    public TreeNode pre() {
+        return (current == null) ? null : backUpStack.peek();
+    }
+}
