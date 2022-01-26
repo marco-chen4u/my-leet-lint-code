@@ -27,6 +27,8 @@ Challenge
 Notice
     You cannot pass through wall and house, but can pass through empty.
     You only build post office on an empty.
+    
+Link: https://www.lintcode.com/problem/573/
 ***/
 public class Solution {
     // inner class
