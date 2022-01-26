@@ -26,16 +26,6 @@ Notice
  */
 public class Solution {
 	
-    // helper method
-    private void inOrderTraverse(TreeNode node, List<Integer> values) {
-        if (node == null) {
-            return;
-        }
-
-        inOrderTraverse(node.left, values);
-        values.add(node.val);
-        inOrderTraverse(node.right, values);
-    }	
     /**
      * @param root: the given BST
      * @param target: the given target
@@ -80,4 +70,15 @@ public class Solution {
 
         return result;
     }
+
+    // helper method
+    private void inOrderTraverse(TreeNode node, List<Integer> values) {
+        if (node == null) {
+            return;
+        }
+
+        inOrderTraverse(node.left, values);
+        values.add(node.val);
+        inOrderTraverse(node.right, values);
+    }	
 }
