@@ -45,20 +45,62 @@ public class Solution {
     }
 
     // fields
-    private final int EMPTY_SPACE = 0;
-    private final int HOUSE = 1;
-    private final int WALL = 2;
+    private static final int EMPTY_SPACE = 0;
+    private static final int HOUSE = 1;
+    private static final int WALL = 2;
 
-    private final int DEFAULT_VALUE = -1;
-    private final int MAX_VALUE = Integer.MAX_VALUE;
+    private static final int DEFAULT_VALUE = -1;
+    private static final int MAX_VALUE = Integer.MAX_VALUE;
 
     private int n; // matrix's row size
     private int m; // matrix's column size
 
-    private int[] directionX = new int[] {0, 1, -1, 0};
-    private int[] directionY = new int[] {1, 0, 0, -1};
+    private static final int[] directionX = new int[] {0, 1, -1, 0};
+    private static final int[] directionY = new int[] {1, 0, 0, -1};
 
-    // methods
+    /**
+     * @param grid: a 2D grid
+     * @return: An integer
+     */
+    public int shortestDistance(int[][] grid) {
+        int result = DEFAULT_VALUE;
+        // check corner case
+        if (grid == null || grid.length == 0) {
+            return 0;
+        }
+
+        n = grid.length; // row size
+        m = grid[0].length; // column size
+
+        int minDistance = MAX_VALUE;
+
+        int houseCount = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == HOUSE) {
+                    houseCount++;
+                }
+            }
+        }
+
+        if (houseCount == 0) {
+            return 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] != EMPTY_SPACE) {
+                    continue;
+                }
+
+                minDistance = Math.min(minDistance, getDistance(grid, houseCount, i, j));
+            }
+        }
+
+        return result = (minDistance == MAX_VALUE) ? result : minDistance;
+    }
+	
+    //helper methods
     private int getDistance(int[][] grid, int houseCount,int x, int y) {
         Queue<Point> queue = new LinkedList<Point>();
         boolean[][] visited = new boolean[n][m];
@@ -105,47 +147,5 @@ public class Solution {
         }
 
         return totalDistance;
-    }
-
-    /**
-     * @param grid: a 2D grid
-     * @return: An integer
-     */
-    public int shortestDistance(int[][] grid) {
-        int result = DEFAULT_VALUE;
-        // check corner case
-        if (grid == null || grid.length == 0) {
-            return 0;
-        }
-
-        n = grid.length; // row size
-        m = grid[0].length; // column size
-
-        int minDistance = MAX_VALUE;
-
-        int houseCount = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == HOUSE) {
-                    houseCount++;
-                }
-            }
-        }
-
-        if (houseCount == 0) {
-            return 0;
-        }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] != EMPTY_SPACE) {
-                    continue;
-                }
-
-                minDistance = Math.min(minDistance, getDistance(grid, houseCount, i, j));
-            }
-        }
-
-        return result = (minDistance == MAX_VALUE) ? result : minDistance;
     }
 }
