@@ -17,20 +17,6 @@ Notice
 ***/
 public class Solution {
 	
-    // helper method
-    private void combineHelper(List<List<Integer>> result, List<Integer> combination, int n, int k, int startIndex) {
-        if (combination.size() == k) {
-            result.add(new ArrayList<Integer>(combination));
-            return;
-        }
-		
-        for (int i = startIndex; i <= n; i++) {
-            combination.add(i);
-            combineHelper(result, combination, n, k, i + 1);
-            combination.remove(combination.size() - 1);
-        }
-    }
-	
     /**
      * @param n: Given the range of numbers
      * @param k: Given the numbers of combinations
@@ -45,8 +31,22 @@ public class Solution {
             return result;
         }
 
-        combineHelper(result, combination, n, k, 1);
+        dfs(result, combination, n, k, 1);
 
         return result;
+    }
+	
+    // helper method
+    private void dfs(List<List<Integer>> result, List<Integer> combination, int n, int k, int startIndex) {
+        if (combination.size() == k) {
+            result.add(new ArrayList<Integer>(combination));
+            return;
+        }
+		
+        for (int i = startIndex; i <= n; i++) {
+            combination.add(i);
+            dfs(result, combination, n, k, i + 1);
+            combination.remove(combination.size() - 1);
+        }
     }
 }
