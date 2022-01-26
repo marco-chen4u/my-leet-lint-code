@@ -1,5 +1,5 @@
 /*** 
-* LintCode 573. Build Post Office
+* LintCode 573. Build Post Office II
 * Given a 2D grid, each cell is either a wall 2, 
 an house 1 or empty 0 (the number zero, one, two), 
 find a place to build a post office 
