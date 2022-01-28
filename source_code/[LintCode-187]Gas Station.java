@@ -1,5 +1,5 @@
 /***
-* LintCode 134. Gas Station
+* LintCode 187. Gas Station
 There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
 
 You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). 
@@ -38,6 +38,8 @@ Example 2:
         Travel to station 1. Your tank = 3 - 3 + 3 = 3
         You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.
         Therefore, you can't travel around the circuit once no matter where you start.
+        
+Link: https://www.lintcode.com/problem/187/
 ***/
 
 public class Solution {
