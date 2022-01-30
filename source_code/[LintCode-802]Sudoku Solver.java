@@ -38,6 +38,11 @@ Link: https://www.lintcode.com/problem/802/
 
 /**
 * to get more understanding, please watch this vedio: https://bit.ly/34jGGse
+* 这是一个固定的9*9的矩阵，
+* 其中，每一行9个格子包含有唯一的1～9的数字，
+*      每一列9个格子也包好有唯一的1～9的数字，
+*      这个9*9的矩阵中，包含了3*3的正方形，
+*         每一个正方形包含有唯一的1～9的数字。
 **/
 public class Solution {
     // field
