@@ -170,15 +170,15 @@ class UnionFind {
             }
         }
 
-        findConnectedComponentSet(result, set, unionFind);
+        findConnectedComponentSet(set, unionFind, result);
 
         return result;
     }
 
     // helper methods
-    private void findConnectedComponentSet(List<List<Integer>> result, 
-                                            Set<Integer> set, 
-                                            UnionFind unionFind) {
+    private void findConnectedComponentSet(Set<Integer> set, 
+                                            UnionFind unionFind,
+					    List<List<Integer>> result) {
         Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
 
         for (Integer i : set) {
