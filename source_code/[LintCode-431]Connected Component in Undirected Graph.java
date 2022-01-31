@@ -60,7 +60,7 @@ public class Solution {
         
         for (UndirectedGraphNode node : nodes) {
             if (!visited.contains(node)) {
-                findConnectedSet(result, visited, nodes, node);
+                findConnectedSet(nodes, node，visited， result);
             }
         }
         
@@ -68,10 +68,10 @@ public class Solution {
     }
     
     // helper method
-    private void findConnectedSet(List<List<Integer>> result, 
-                                    Set<UndirectedGraphNode> visited, 
-                                    List<UndirectedGraphNode> nodes, 
-                                    UndirectedGraphNode node) {
+    private void findConnectedSet(List<UndirectedGraphNode> nodes, 
+                                    UndirectedGraphNode node，
+				    Set<UndirectedGraphNode> visited,
+				    List<List<Integer>> result) {
         List<Integer> connectedComponentSet = new ArrayList<Integer>();
         Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
         
