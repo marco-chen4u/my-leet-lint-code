@@ -43,6 +43,61 @@ Notice
 *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
 * };
 */
+//version-1 : BFS
+public class Solution {
+    /*
+     * @param nodes: a array of Undirected graph node
+     * @return: a connected set of a Undirected graph
+     */
+    public List<List<Integer>> connectedSet(List<UndirectedGraphNode> nodes) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        // check corner cases
+        if (nodes == null || nodes.size() == 0) {
+            return result;
+        }
+        
+        Set<UndirectedGraphNode> visited = new HashSet<UndirectedGraphNode>();
+        
+        for (UndirectedGraphNode node : nodes) {
+            if (!visited.contains(node)) {
+                findConnectedSet(result, visited, nodes, node);
+            }
+        }
+        
+        return result;
+    }
+    
+    // helper method
+    private void findConnectedSet(List<List<Integer>> result, 
+                                    Set<UndirectedGraphNode> visited, 
+                                    List<UndirectedGraphNode> nodes, 
+                                    UndirectedGraphNode node) {
+        List<Integer> connectedComponentSet = new ArrayList<Integer>();
+        Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
+        
+        queue.offer(node);
+        visited.add(node);
+        connectedComponentSet.add(node.label);
+        
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode current = queue.poll();
+            
+            for (UndirectedGraphNode neighbor : current.neighbors) {
+                if (visited.contains(neighbor)) {
+                    continue;
+                }
+                
+                visited.add(neighbor);
+                connectedComponentSet.add(neighbor.label);
+                queue.offer(neighbor);
+            }
+        }
+        
+        Collections.sort(connectedComponentSet);
+        
+        result.add(connectedComponentSet);
+    }
+}
 
 // version-2: Union Find Algorithm
 // helper class
