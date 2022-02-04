@@ -50,6 +50,79 @@ Notice
  *     }
  * }
  */
+
+// version-1: non-recursion
+public class Solution {
+
+    /*
+     * @param root: The root of the binary tree.
+     * @param A: A TreeNode
+     * @param B: A TreeNode
+     * @return: Return the LCA of the two nodes.
+     */
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode A, TreeNode B) {
+        TreeNode result = null; // default value
+        // check corner case
+        if (root == null) {
+            return result;
+        }
+
+        Map<TreeNode, TreeNode> parentMap = new HashMap<TreeNode, TreeNode>();
+        Set<TreeNode> ancestorSet = new HashSet<TreeNode>();
+
+        // (1) get all the node into the parent map 
+        preOrderTraverse(root, null, parentMap);
+
+        // if one of [A,B] dose not belong to this binary tree
+        if (!parentMap.containsKey(A) || !parentMap.containsKey(B)) {
+            return result;
+        }
+
+        // (2)get A's all ancestors
+        while (A != null) {
+            ancestorSet.add(A);
+            A = parentMap.get(A);// get A's direct parent
+        }
+
+        // (3) find the first common ancestor of A and B
+        while (!ancestorSet.contains(B)) {
+            ancestorSet.add(B);
+            B = parentMap.get(B);// get B's direct parent
+        }
+
+        if (B != null) {
+            result = B;
+        }
+
+        return result;
+    }
+
+    // helper method
+    private void preOrderTraverse(TreeNode node, TreeNode parent, Map<TreeNode, TreeNode> map) {
+        if (node == null) {
+            return;
+        }
+
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(node);
+        map.put(node, parent);
+
+        while (!stack.isEmpty()) {
+            TreeNode current = stack.pop();
+
+            if (current.right != null) {
+                map.put(current.right, current);
+                stack.push(current.right);
+            }
+
+            if (current.left != null) {
+                map.put(current.left, current);
+                stack.push(current.left);
+            }
+        }
+    }
+}
+
  // version-2: recursion
 public class Solution {
 
