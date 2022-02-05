@@ -26,6 +26,13 @@ Example 2:
             3             3   6
 
 Link: https://www.lintcode.com/problem/85/
+
+related:
+    (1)build: LintCode 1359. Covert Sorted Array into a Binary Search Tree
+    (2)insert: LintCode 85. Insert Node in a Binary Search Tree
+    (3)search: LintCode 1524. Search in a Binary Search Tree
+    (4)delete: LintCode 701. Trim a Binary Search Tree
+    (5)iterate:LintCode 86. Binary Search Tree Iterator
 ***/
 /**
  * Definition of TreeNode:
