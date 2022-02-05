@@ -62,25 +62,31 @@ public class Solution {
             return null;
         }
 
+        // 如果root为A或者B，立即返回，无需继续向下寻找
         if (A == root || B == root) {//这是本题的关键
             return root;
         }
 
+        // 分别去左右子树查找A和B
         TreeNode left = lowestCommonAncestor(root.left, A, B);
         TreeNode right = lowestCommonAncestor(root.right, A, B);
 
+        // 如果A，B分别存在于两颗子树，root为LCA，返回root
         if (left != null && right != null) {
             return root;
         }
 
+        // 左子树有一个点或者左子树有LCA
         if (left != null) {
             return left;
         }
 
+        // 右子树有一个点或者右子树有LCA
         if (right !== null) {
             return right;
         }
 
+        // 左右子树都没有
         return null;
     }
 }
