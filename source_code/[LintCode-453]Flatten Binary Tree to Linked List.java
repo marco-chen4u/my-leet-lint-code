@@ -85,6 +85,10 @@ public class Solution {
     }
 
     // helper methods
+    /**
+    * 注意： 为什么要返回最后一个点？
+    *       答：主要是为了方便于（根结点，被摊平的左子树， 被摊平的右子树之间）拼接操作。
+    **/
     private TreeNode flattenTree(TreeNode node) {
         if (node == null) {
             return null;
