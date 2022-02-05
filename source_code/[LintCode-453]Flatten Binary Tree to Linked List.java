@@ -145,6 +145,10 @@ public class Solution {
 }
 
 //version-3 none-recursion
+/**
+* DFS或者分递归前序遍历这棵树，然后把结果一路向右串联起来
+* 小结： 遇到二叉树的问题，就想想整棵树在该问题上的结果和左右子树在该问题结果之间有什么联系
+**/
 public class Solution {
     /**
      * @param root: a TreeNode, the root of the binary tree
