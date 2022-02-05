@@ -39,6 +39,7 @@ Example2
 Notice
     node A or node B may not exist in tree.
 ***/
+
 /**
  * Definition of TreeNode:
  * public class TreeNode {
@@ -50,6 +51,12 @@ Notice
  *     }
  * }
  */
+
+/**
+* 这道题的理解重点是A和B两个节点，不一定存在于Root的二叉树中。
+* 这是本题与LintCode.88这道相对简单点的LCA题的区别，88号题，是A和B两节点，必定存在于Root的二叉树中。
+* 所以本题不能用88号题的解法来处理，毕竟A和B这2个节点不一定都存在。
+**/
 
 // version-1: non-recursion
 public class Solution {
