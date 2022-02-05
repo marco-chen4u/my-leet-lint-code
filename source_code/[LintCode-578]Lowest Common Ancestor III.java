@@ -187,3 +187,89 @@ public class Solution {
         preOrderTraverse(node.right, node, map);
     }
 }
+
+//version-3: real recursion
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    // inner class
+    class ResultType{
+        // fields
+        public boolean existA;
+        public boolean existB;
+        public TreeNode node;// common ancestor
+
+        // constructor
+        public ResultType(boolean existA, boolean existB, TreeNode node) {
+            this.existA = existA;
+            this.existB = existB;
+            this.node = node;
+        }
+    }
+    
+    /*
+     * @param root: The root of the binary tree.
+     * @param A: A TreeNode
+     * @param B: A TreeNode
+     * @return: Return the LCA of the two nodes.
+     */
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode A, TreeNode B) {
+        // check corner cases
+        if (root == null || A == null || B == null) {
+            return null;
+        }
+        
+        ResultType result = helper(root, A, B);
+        //如果A和B节点都同时存在，才返回
+        return result.existA && result.existB ? result.node : null;
+    }
+
+    // helper method
+    private ResultType helper(TreeNode root, TreeNode a, TreeNode b) {
+        if (root == null) {
+            return new ResultType(false, false, null);
+        }
+
+        // 分别在左右子树查找LCA
+        ResultType left = helper(root.left, a, b);
+        ResultType right = helper(root.right, a, b);
+
+        // 如果左边有A，或者右边有A，或者root本身就是A，那么root这棵树有A
+        boolean existA = left.existA || right.existA || root == a;
+        // 如果左边有B，或者右边有B，或者root本身就是B，那么root这棵树有B
+        boolean existB = left.existB || right.existB || root == b;
+
+        // 如果root为A或B，返回root（当前root有可能为LCA）
+        if (root == a || root == b) {
+            return new ResultType(existA, existB, root);
+        }
+
+        // 如果A，B分别存在于存在于两颗子树，root为LCA，返回root
+        if (left.node != null && right.node != null) {
+            return new ResultType(existA, existB, root);
+        }
+
+        // 左子树有一个点或者左子树有LCA
+        if (left.node != null) {
+            return new ResultType(existA, existB, left.node);
+        }
+
+        // 右子树有一个点或者右子树有LCA
+        if (right.node != null) {
+            return new ResultType(existA, existB, right.node);
+        }
+
+        // 左右子树都没有
+        return new ResultType(existA, existB, null);
+    }
+}
