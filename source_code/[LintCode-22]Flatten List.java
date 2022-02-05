@@ -71,6 +71,9 @@ public class Solution {
 } 
  
 //version-2: none-recursion
+/**
+* this data structure is similar to in-order traversal BST process
+**/
 public class Solution {
 
     // @param nestedList a list of NestedInteger
