@@ -3,36 +3,35 @@
 Flatten a binary tree to a fake "linked list" in pre-order traversal.
 Here we use the right pointer in TreeNode as the next pointer in ListNode.
 
-Example
-    Example 1:
-        Input:
-            {1,2,5,3,4,#,6}
-                 1
-                / \
-               2   5
-              / \   \
-             3   4   6
-        Output:
-            {1,#,2,#,3,#,4,#,5,#,6}
-                   1
+Example 1:
+    Input:
+        {1,2,5,3,4,#,6}
+             1
+            / \
+           2   5
+          / \   \
+         3   4   6
+    Output:
+        {1,#,2,#,3,#,4,#,5,#,6}
+               1
+                \
+                 2
+                  \
+                   3
                     \
-                     2
+                     4
                       \
-                       3
+                       5
                         \
-                         4
-                          \
-                           5
-                            \
-                             6
+                         6
 			 
-    Example 2:
-        Input:
-            {1}
-            1
-        Output:
-            {1}
-            1
+Example 2:
+    Input:
+        {1}
+        1
+    Output:
+        {1}
+        1
 
 Challenge
     Do it in-place without any extra memory.
@@ -57,6 +56,19 @@ URL
  */
  
 //version-1: devide and conquar
+/**
+*（1)首先要理解这个方法flattenAndReturnLastNode(TreeNode node)的返回时这个树被flatten的最右边的节点；
+*（2）用最简单的数据（比如3个节点，即父节点带左右两个叶子节点）带进去，进行调试运行并打印验证你的想法。
+* 
+* 小结：（不管是前、中、后序遍历的二叉树做flatten处理的scenarios，可以总结如下）
+*    正如非recursion的处理一样，其本质按照某个遍历（前序，中序，后序）顺序的就是要存好这个树，在把结果一路向（右）串联起来。
+*    这个顺序进行flattenTree()处理【即从这一顺序遍历所有的节点中，无脑地pre.right = current&pre.left = null即可】。
+*    在递归处理的中，先做分治存好node的处理好left分支和处理好right分支（每个flatternTree()处理好的分支，就是已经变成一个linkedList，并存好这个分支的最后一个tail node）。
+*    然后根据具体的遍历顺序做相应的connection处理，
+*    比如：（1）前序：leftTail.right = node.right(注：node.right这是原来node的right分支节点)。
+*         （2）中序：把经过flattenTree()处理的node节点left分支的最后一个节点,做（leftTail.right = node）链接处理。
+*         （3）后序：把经过flattenTree()处理的node节点left分支的最后一个节点，做(leftTai.right = node.right[node.right是原来node的right节点]并且rightTail.right = node)链接处理。
+**/
 public class Solution {
     /**
      * @param root: a TreeNode, the root of the binary tree
