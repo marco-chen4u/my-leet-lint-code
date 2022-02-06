@@ -102,11 +102,11 @@ public class Solution {
             return null;
         }
 
-        if (node.val >= target) {
+        if (target < node.val) {
             return lowerBound(node.left, target);
         }
 
-        // node.val < target
+        // target >= node.val
         TreeNode lowerNode = lowerBound(node.right, target);
         if (lowerNode != null) {
             return lowerNode;
@@ -120,11 +120,11 @@ public class Solution {
             return null;
         }
 
-        if (node.val < target) {
+        if (target >= node.val) {
             return upperBound(node.right, target);
         }
 
-        // node.val >= target
+        // target < node.val
         TreeNode upperNode = upperBound(node.left, target);
         if (upperNode != null) {
             return upperNode;
