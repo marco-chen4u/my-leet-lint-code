@@ -31,6 +31,8 @@ Challenge
 Notice
     Elements in a subset must be in non-descending order.
     The solution set must not contain duplicate subsets.
+    
+Related: LintCode 18. Subsets II
 ***/
 
 /**
