@@ -32,6 +32,7 @@ Notice
     The ordering between two subsets is free.
     The solution set must not contain duplicate subsets. 
 ***/
+//version-1: dfs
 public class Solution {
 	
     /**
@@ -83,4 +84,65 @@ public class Solution {
             subset.remove(subset.size() - 1);
         }//end for i
     }
+}
+
+//version-2: dfs, remove duplicates with hash function
+public class Solution {
+    private static final String SEPARATOR = "->";
+    
+    private StringBuilder sb = new StringBuilder();
+
+    /**
+     * @param nums: A set of numbers.
+     * @return: A list of lists. All valid subsets.
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        
+        Map<String, Boolean> visited = new HashMap<String, Boolean>();
+        Arrays.sort(nums);
+        List<Integer> subset = new ArrayList<>();
+
+        dfs(nums, visited, 0, subset, results);
+        
+        return results;
+    }
+    
+    // helper methods
+    private void dfs(int[] nums, 
+             Map<String, Boolean> visited,
+             int startIndex, 
+             List<Integer> subset,
+             List<List<Integer>> results) {
+	// check corner cases
+        String hashString = getHash(subset);
+        
+        if (visited.containsKey(hashString)) {
+            return ;
+        }
+        
+        visited.put(hashString, true);
+        results.add(new ArrayList<Integer>(subset));
+	    
+	if (startIndex == nums.length) {
+            return;
+        }
+
+        for (int i = startIndex;i < nums.length; i++) {
+            subset.add(nums[i]);
+            dfs(nums, visited, i + 1, subset, results);
+            subset.remove(subset.size() - 1);
+        }
+        
+    }
+
+    private String getHash(List<Integer> subset) {
+        sb.setLength(0);
+        for (int num : subset) {
+            sb.append(num).append(SEPARATOR);
+        }
+        
+        return sb.toString();
+    }
+    
 }
