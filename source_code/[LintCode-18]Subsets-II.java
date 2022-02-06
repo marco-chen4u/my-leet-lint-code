@@ -34,25 +34,6 @@ Notice
 ***/
 public class Solution {
 	
-    // helper method
-    private void findSubsetsWithDup(List<List<Integer>> result, 
-					List<Integer> subset, 
-					int[] nums, 
-					int startIndex) {
-        result.add(new ArrayList<Integer>(subset));// deep copy
-	
-        for (int i = startIndex; i < nums.length; i++) {
-			
-            if (i > startIndex && nums[i] == nums[i - 1]) {
-                continue;
-            } //end of if
-	
-            subset.add(nums[i]);
-            findSubsetsWithDup(result, subset, nums, i + 1);
-            subset.remove(subset.size() - 1);
-        }//end for i
-    }
-	
     /**
      * @param nums: A set of numbers
      * @return: A list of lists
@@ -74,8 +55,27 @@ public class Solution {
 	
         Arrays.sort(nums);
 		
-        findSubsetsWithDup(result, subset, nums, 0);
+        findSubsetsWithDup(nums, 0, subset, result);
 	
         return result;
+    }
+	
+    // helper method
+    private void findSubsetsWithDup(int[] nums, 
+					int startIndex,
+				        List<Integer> subset,
+				        List<List<Integer>> result) {
+        result.add(new ArrayList<Integer>(subset));// deep copy
+	
+        for (int i = startIndex; i < nums.length; i++) {
+			
+            if (i > startIndex && nums[i] == nums[i - 1]) {
+                continue;
+            } //end of if
+	
+            subset.add(nums[i]);
+            findSubsetsWithDup(nums, i + 1, subset, result);
+            subset.remove(subset.size() - 1);
+        }//end for i
     }
 }
