@@ -39,13 +39,13 @@ public class Solution {
 
         TreeNode current = root;
         while (current != null) {
-            if (current.val < target) {
+            if (target > current.val) {
                 lower = current;
                 current = current.right;
                 continue;
             }
 
-            if (current.val > target) {
+            if (target < current.val) {
                 upper = current;
                 current = current.left;
                 continue;
