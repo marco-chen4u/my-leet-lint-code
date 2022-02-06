@@ -106,7 +106,7 @@ public class Solution {
             return lowerBound(node.left, target);
         }
 
-        // node.val > target
+        // node.val < target
         TreeNode lowerNode = lowerBound(node.right, target);
         if (lowerNode != null) {
             return lowerNode;
