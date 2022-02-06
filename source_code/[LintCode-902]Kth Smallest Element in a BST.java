@@ -118,3 +118,79 @@ public class Solution {
         return result;
     }
 }
+
+//version-3: recursion with tuple
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+
+    // inner class
+    class ResultType{
+        // fields
+        int count;
+        int value;
+        boolean found;
+
+        // constructor
+        public ResultType(int count, int value, boolean found) {
+            this.count = count;
+            this.value = value;
+            this.found = found;
+        }
+    }
+
+    /**
+     * @param root: the given BST
+     * @param k: the given k
+     * @return: the kth smallest element in BST
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        ResultType result = dfs(root, k);
+
+        return (result.found) ? result.value : 0;
+    }
+
+    // helper method
+    private ResultType dfs(TreeNode node, int k) {
+        ResultType result = new ResultType(0, 0, false);// default
+        if (node == null) {
+            return result;
+        }
+
+        ResultType left = dfs(node.left, k);        
+
+        if (left.found) {
+            result.value = left.value;
+            result.found = true;
+            return result;
+        }
+
+        if (k - left.count == 1) {
+            result.value = node.val;
+            result.found = true;
+            return result;
+        }
+
+        ResultType right = dfs(node.right, k - left.count - 1);
+        if (right.found) {
+            result.value = right.value;
+            result.found = true;
+            return result;
+        }
+
+        int count = left.count + right.count + 1;
+        result.count = count;
+        return result;
+
+    }
+}
