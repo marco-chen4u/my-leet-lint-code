@@ -50,10 +50,56 @@ Notice
 *          [1, 2]  [1]   [2]   [ ]      <-----------每一个节点，都是一个决策过程，就是考虑了每个元素是到底要还是不要，每一个不同的决策过程都导向了最终（最下面一层）不同的叶子节点（结果）。
 *         3?/  \   ...................  
 *      [1,2,3] [1,2] [1,3] [1] [2,3] [2] [3] [] <----------注意这一层，所有的叶子节点，事实上就是所搜索得到的结果。
-* 注意：上述这棵搜索树的高度，刚好就是等于集合元素的个数。
+* 注意：上述这棵搜索树的高度，刚好就是等于集合元素的个数。下面version-1就是上述分析的解决代码。
 **/
 
 //version-1: DFS
+public class Solution {
+    /**
+     * @param nums: A set of numbers
+     * @return: A list of lists
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new LinkedList<>();
+        // check corner case
+        if (nums == null) {
+            return result;
+        }
+
+        if (nums.length == 0) {
+            result.add(new ArrayList<>());
+            return result;
+        }
+
+        // regular case
+        List<Integer> subset = new LinkedList<>();
+
+        Arrays.sort(nums);
+
+        dfs(nums, 0, subset, result);
+
+        return result;
+    }
+
+    // helper method
+    private void dfs(int[] nums, int index, List<Integer> subset, List<List<Integer>> result) {
+                
+        // corner case
+        if (index == nums.length) {
+            result.add(new ArrayList<>(subset));
+            return;
+        }
+
+        // regularcase
+        subset.add(nums[index]);
+        dfs(nums, index + 1, subset, result);
+        
+        subset.remove(subset.size() - 1);
+        dfs(nums, index, subset, result);
+    }
+}
+
+//version-2: DFS + backtracking *[best]*
 public class Solution {
     /**
      * @param nums: A set of numbers
@@ -83,10 +129,10 @@ public class Solution {
 
     // helper method
     private void search(int[] nums, int startIndex, List<Integer> subset, List<List<Integer>> result) {
-                
+         result.add(new ArrayList<>(subset));
+        
         // corner case
         if (startIndex == nums.length) {
-            result.add(new ArrayList<>(subset));
             return;
         }
 
@@ -94,12 +140,12 @@ public class Solution {
         for (int i = startIndex; i < nums.length; i++) {
             subset.add(nums[i]);
             search(nums, i + 1, subset, result);
-            subset.remove(subset.size() - 1);
+            subset.remove(subset.size() - 1);//backtracking
         }
     }
 }
 
-//version-2: enumeration
+//version-3: enumeration
 public class Solution {
     /**
      * @param nums: A set of numbers
