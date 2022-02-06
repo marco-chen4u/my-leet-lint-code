@@ -66,6 +66,11 @@ public class Solution {
 				        List<Integer> subset,
 				        List<List<Integer>> result) {
         result.add(new ArrayList<Integer>(subset));// deep copy
+	    
+	// check corner case
+        if (startIndex >= nums.length) {
+            return;
+        }
 	
         for (int i = startIndex; i < nums.length; i++) {
 			
