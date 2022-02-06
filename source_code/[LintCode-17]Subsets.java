@@ -145,7 +145,43 @@ public class Solution {
     }
 }
 
-//version-3: enumeration
+//version-3: BFS
+public class Solution {
+    /**
+     * @param nums: A set of numbers
+     * @return: A list of lists
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        // check corner cases
+        if (nums == null) {
+            return result;
+        }
+
+        Arrays.sort(nums);
+        
+        // normal case
+        Queue<List<Integer>> queue = new ArrayDeque<>();
+        queue.offer(new ArrayList<>());
+
+        while (!queue.isEmpty()) {
+            List<Integer> subset = queue.poll();
+            result.add(subset);
+
+            for (int i = 0; i < nums.length; i++) {
+                if (subset.isEmpty() || subset.get(subset.size() - 1) < nums[i]) {
+                    List<Integer> newSubset = new ArrayList<>(subset);
+                    newSubset.add(nums[i]);
+                    queue.offer(newSubset);
+                }
+            }
+        }
+
+        return result;
+    }
+}
+
+//version-4: enumeration
 public class Solution {
     /**
      * @param nums: A set of numbers
