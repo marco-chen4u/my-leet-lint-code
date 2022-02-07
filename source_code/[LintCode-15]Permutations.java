@@ -34,16 +34,16 @@ public class Solution {
      * @return: A list of permutations.
      */
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
         
         // check corner cases
         if (nums == null) {
-            return result;
+            return results;
         }
         
         List<Integer> permutation = new ArrayList<Integer>();
         if (nums.length == 0) {
-            result.add(permutation);
+            results.add(permutation);
             return result;
         }
         
@@ -51,7 +51,7 @@ public class Solution {
         boolean[] visited = new boolean[nums.length];
         Arrays.fill(visited, false);
 		
-        findPermutations(nums, visited, permutation, result);
+        findPermutations(nums, visited, permutation, results);
         
         return result;
     }
@@ -60,9 +60,9 @@ public class Solution {
     private void findPermutations(int[] nums, 
 				  boolean[] visited, 
 				  List<Integer> permutation,
-                                  List<List<Integer>> result) {
+                                  List<List<Integer>> results) {
         if (permutation.size() == nums.length) {
-            result.add(new ArrayList<Integer>(permutation));//deep copy
+            results.add(new ArrayList<Integer>(permutation));//deep copy
             return;
         }
         
@@ -73,7 +73,7 @@ public class Solution {
             
             permutation.add(nums[i]);
             visited[i] = true;
-            findPermutations(nums, visited, permutation, result);
+            findPermutations(nums, visited, permutation, results);
             visited[i] = false;
             permutation.remove(permutation.size() - 1);
         }
