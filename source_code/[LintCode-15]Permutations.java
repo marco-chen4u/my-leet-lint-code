@@ -27,6 +27,13 @@ Challenge
 Notice
     You can assume that there is no duplicate numbers in the list.
 ***/
+
+/**
+* 排列组合的歌总数：n！
+* 排列DFS时间复杂度通用公式： O（方案总数*构造每个方案的时间）即O（n！*n）
+**/
+
+//version-1: dfs
 public class Solution {
     
     /*
