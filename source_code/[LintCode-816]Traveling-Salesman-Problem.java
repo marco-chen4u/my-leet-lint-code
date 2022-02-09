@@ -118,3 +118,114 @@ public class Solution {
         return graph;
     }
 }
+
+//version: dfs+剪支优化处理
+public class Solution {
+    // constants
+    private static final int DEFAULT_MAX_VALUE = Integer.MAX_VALUE>>4;
+    private static final int MAX = Integer.MAX_VALUE;
+
+    // inner class
+    class Result{
+        // field
+        int minCost;
+        // constructor
+        public Result(int minCost) {
+            this.minCost = minCost;
+        }
+
+        public Result() {
+            this.minCost = MAX;
+        }
+    }
+
+    /**
+     * @param n: an integer,denote the number of cities
+     * @param roads: a list of three-tuples,denote the road between cities
+     * @return: return the minimum cost to travel all cities
+     */
+    public int minCost(int n, int[][] roads) {
+        int[][] graph = buildGraph(n, roads);
+
+        Result result = new Result();
+
+        Set<Integer> visited = new HashSet<>();
+        List<Integer> path = new ArrayList<>();
+
+        visited.add(1);
+        path.add(1);
+        dfs(n, graph, 1, 0, visited, path, result);
+
+        return result.minCost;
+    }
+
+    // helper methods
+    private void dfs(int n, 
+                    int[][] graph, 
+                    int currentCity, 
+                    int cost, 
+                    Set<Integer> visited,
+                    List<Integer> path,
+                    Result result) {
+        if (visited.size() == n) {
+            result.minCost = Math.min(result.minCost, cost);
+            return;
+        }
+
+        for(int i = 1; i < graph[currentCity].length; i++) {
+            if (visited.contains(i)) {
+                continue;
+            }
+
+            if (hasBetterPath(graph, path, i)) {
+                continue;
+            }
+
+            int newCost = cost + graph[currentCity][i];
+
+            visited.add(i);
+            path.add(i);
+            dfs(n, graph, i, newCost, visited, path, result);
+            path.remove(path.size() - 1);
+            visited.remove(i);
+        }
+
+    }
+
+    private boolean hasBetterPath(int[][] graph, List<Integer> path, int nextCity) {
+
+        for (int i = 1; i < path.size(); i++) {
+            int a = path.get(i - 1);
+            int b = path.get(i);
+            int last = path.get(path.size() - 1);
+
+            if (graph[a][b] + graph[last][nextCity]
+                > graph[a][last] + graph[b][nextCity]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int[][] buildGraph(int n, int[][] roads) {
+        int[][] graph = new int[n + 1][n + 1];
+        
+        // initializing
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(graph[i], DEFAULT_MAX_VALUE);
+        }
+
+        // calculation
+        for (int[] road : roads) {
+            int from = road[0];
+            int to = road[1];
+            int edgeValue = road[2];//cost
+
+            graph[from][to] = Math.min(graph[from][to], edgeValue);
+            graph[to][from] = Math.min(graph[to][from], edgeValue);
+        }
+
+        return graph;
+    }
+}
