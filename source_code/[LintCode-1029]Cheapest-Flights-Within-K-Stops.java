@@ -120,13 +120,13 @@ public class Solution {
             return 0;
         }
 
-        Map<Integer, List<int[]>> map = new HashMap<>();
+        Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] flight : flights) {
             int from = flight[0];
             int to = flight[1];
             int cost = flight[2];
-            map.putIfAbsent(from, new ArrayList<int[]>());
-            map.get(from).add(new int[]{to, cost});
+            graph.putIfAbsent(from, new ArrayList<int[]>());
+            graph.get(from).add(new int[]{to, cost});
         }
 
         Queue<Pair> queue = new PriorityQueue<>();
@@ -143,11 +143,11 @@ public class Solution {
                 return currentCost;
             }
 
-            if (!map.containsKey(currentCity) || stops < 0) {
+            if (!graph.containsKey(currentCity) || stops < 0) {
                 continue;
             }
 
-            for (int[] next : map.get(currentCity)) {
+            for (int[] next : graph.get(currentCity)) {
                 int nextStop = next[0];
                 int newCost = currentCost + next[1];
                 queue.offer(new Pair(nextStop, newCost, stops - 1));
@@ -155,5 +155,97 @@ public class Solution {
         }
 
         return -1;
+    }
+}
+
+//version-3: BFS
+public class Solution {
+
+    // inner class
+    class Pair {
+        // fields
+        int city;
+        int cost;
+        // constructor
+        public Pair(int city, int cost) {
+            this.city = city;
+            this.cost = cost;
+        }
+    }
+
+    /**
+     * @param n: a integer
+     * @param flights: a 2D array
+     * @param src: a integer
+     * @param dst: a integer
+     * @param K: a integer
+     * @return: return a integer
+     */
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+        if (src == dst) {
+            return 0;
+        }
+
+        // Build graph based on flights
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+        for (int[] flight : flights) {
+            int from = flight[0];
+            int to = flight[1];
+            int cost = flight[2];
+
+            graph.putIfAbsent(from, new ArrayList<int[]>());
+            graph.get(from).add(new int[] {to, cost});
+        }
+
+        Map<Integer, Integer> visited = new HashMap<>();
+        visited.put(src, 0);
+
+        Queue<Pair> queue = new LinkedList<>();
+        queue.offer(new Pair(src, 0));
+
+        int stops = -1;
+        int result = Integer.MAX_VALUE;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            if (stops> K) {
+                break;
+            }
+
+            for (int i = 0; i < size; i++) {
+                Pair current = queue.poll();
+                int currentCity = current.city;
+                int currentCost = current.cost;
+                
+                if (currentCity == dst) {
+                    result = Math.min(result, currentCost);
+                    continue;
+                }
+
+                if (!graph.containsKey(currentCity)) {
+                    continue;
+                }
+
+                for (int[] next : graph.get(currentCity)) {
+                    int nextCity = next[0];
+                    int nextPrice = next[1];
+                    int newCost = currentCost + nextPrice;
+                    
+                    if (visited.containsKey(nextCity) && 
+                        visited.get(nextCity) < newCost) {
+                        continue;
+                    }
+
+                    visited.put(nextCity, newCost);
+                    queue.offer(new Pair(nextCity, newCost));
+                } // for next
+            }// end for i
+
+            stops++;
+
+        }// end while
+
+        return result == Integer.MAX_VALUE ? -1 : result;
     }
 }
