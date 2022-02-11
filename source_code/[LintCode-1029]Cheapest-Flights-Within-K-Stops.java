@@ -81,3 +81,79 @@ public class Solution {
 
     }
 }
+
+//version-2:PriorityQueue + BFS
+public class Solution {
+
+    // inner class
+    class Pair implements Comparable<Pair> {
+        int city; // current stop city
+        int cost;// current cost
+        int stops;// stop count
+
+        // constructor
+        public Pair(int city, int cost, int stops) {
+            this.city = city;
+            this.cost = cost;
+            this.stops = stops;
+        }
+
+        public int compareTo(Pair other) {
+            if (this.cost != other.cost) {
+                return this.cost - other.cost;
+            }
+
+            return other.stops - this.stops;
+        }
+    }
+
+    /**
+     * @param n: a integer
+     * @param flights: a 2D array
+     * @param src: a integer
+     * @param dst: a integer
+     * @param K: a integer
+     * @return: return a integer
+     */
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+        if (src == dst) {
+            return 0;
+        }
+
+        Map<Integer, List<int[]>> map = new HashMap<>();
+        for (int[] flight : flights) {
+            int from = flight[0];
+            int to = flight[1];
+            int cost = flight[2];
+            map.putIfAbsent(from, new ArrayList<int[]>());
+            map.get(from).add(new int[]{to, cost});
+        }
+
+        Queue<Pair> queue = new PriorityQueue<>();
+        queue.offer(new Pair(src, 0, K));
+
+        while (!queue.isEmpty()) {
+            Pair current = queue.poll();
+
+            int currentCity = current.city;
+            int currentCost = current.cost;
+            int stops = current.stops;
+
+            if (currentCity == dst) {
+                return currentCost;
+            }
+
+            if (!map.containsKey(currentCity) || stops < 0) {
+                continue;
+            }
+
+            for (int[] next : map.get(currentCity)) {
+                int nextStop = next[0];
+                int newCost = currentCost + next[1];
+                queue.offer(new Pair(nextStop, newCost, stops - 1));
+            }
+        }
+
+        return -1;
+    }
+}
