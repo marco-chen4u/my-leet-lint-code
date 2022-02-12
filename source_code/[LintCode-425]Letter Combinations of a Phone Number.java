@@ -27,10 +27,8 @@ Example 2:
 Notice
     Although the answer above is in lexicographical order, your answer could be in any order you want.
 ***/
-//version-1: DFS
+//version-1: DFS， time complexity (3~4)^n, 其中n位digits字符串长度。每个字符串有3～4种可能的状态。
 public class Solution {
-    
-    
     
     /**
      * @param digits: A digital string
@@ -119,25 +117,25 @@ public class Solution {
      * @return: all posible letter combinations
      */
     public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
+        List<String> results = new ArrayList<>();
 
         // check corner cases
         if (digits == null || digits.isEmpty()) {
-            return result;
+            return results;
         }
 
         // normal case
         StringBuilder combination = new StringBuilder();
         int size = digits.length();
 
-        dfs(digits, size, 0, combination, result);
+        dfs(digits, size, 0, combination, results);
 
         // return
-        return result;
+        return results;
     }
 
     // helper method
-    private void dfs(String digits, int size, int rowIndex, StringBuilder combination, List<String> result) {
+    private void dfs(String digits, int size, int rowIndex, StringBuilder combination, List<String> results) {
         // check corner cases
         if (combination.length() == size) {
             result.add(combination.toString());
@@ -156,7 +154,7 @@ public class Solution {
             // regular case
             set.add(ch);
             combination.append(ch);
-            dfs(digits, size, rowIndex + 1, combination, result);
+            dfs(digits, size, rowIndex + 1, combination, results);
             combination.setLength(combination.length() - 1);
         }
     }
