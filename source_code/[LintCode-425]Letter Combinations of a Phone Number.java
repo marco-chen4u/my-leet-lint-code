@@ -30,6 +30,30 @@ Notice
 //version-1: DFS
 public class Solution {
     
+    
+    
+    /**
+     * @param digits: A digital string
+     * @return: all posible letter combinations
+     */
+    public List<String> letterCombinations(String digits) {
+        List<String> results = new ArrayList<String>();
+        
+        // check corner case
+        if (digits == null || digits.length() == 0 || !isValidDigits(digits)) {
+            return result;
+        }
+        
+        // initialize digit map
+        Map<Character, char[]> map = getDigitMap();
+        StringBuilder combination = new StringBuilder();
+        
+        
+        findLetterCombinations(digits, map, 0, combination, results);
+        
+        return results;
+    }
+	
     // helper methods
     private boolean isValidDigits(String digits) {
         for (char ch: digits.toCharArray()) {
@@ -55,45 +79,23 @@ public class Solution {
         return map;
     }
     
-    private void findLetterCombinations(List<String> result, 
-                                        StringBuilder combination, 
-                                        String digits, 
+    private void findLetterCombinations(String digits, 
                                         Map<Character, char[]> map,
-                                        int digitIndex) {
+                                        int digitIndex,
+				        StringBuilder combination,
+					List<String> results) {
         if (combination.length() == digits.length()) {
-            result.add(new String(combination).toLowerCase());
+            results.add(new String(combination).toLowerCase());
             return;
         }
         
         Character digit = digits.charAt(digitIndex);
         for(char ch : map.get(digit)) {
             combination.append(ch);
-            findLetterCombinations(result, combination, digits, map, digitIndex + 1);
+            findLetterCombinations(digits, map, digitIndex + 1, combination, results);
             combination.deleteCharAt(combination.length() - 1);
         }
         
-    }
-    
-    /**
-     * @param digits: A digital string
-     * @return: all posible letter combinations
-     */
-    public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<String>();
-        
-        // check corner case
-        if (digits == null || digits.length() == 0 || !isValidDigits(digits)) {
-            return result;
-        }
-        
-        // initialize digit map
-        Map<Character, char[]> map = getDigitMap();
-        StringBuilder combination = new StringBuilder();
-        
-        
-        findLetterCombinations(result, combination, digits, map, 0);
-        
-        return result;
     }
 }
 
