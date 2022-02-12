@@ -2,16 +2,16 @@
 * LintCode 502. Mini Cassandra
 Cassandra is a NoSQL database (a.k.a key-value storage). 
 One individual data entry in cassandra constructed by 3 parts:
-	-row_key. (a.k.a hash_key, partition key or sharding_key.)
-	-column_key.
-	-value
+    -row_key. (a.k.a hash_key, partition key or sharding_key.)
+    -column_key.
+    -value
 row_key is used to hash and can not support range query. Let's simplify this to a string.
 column_key is sorted and support range query. Let's simplify this to integer.
 value is a string. You can serialize any data into a string and store it in value.
 
 Implement the following methods:
-	-insert(row_key, column_key, value)
-	-query(row_key, column_start, column_end) return a list of entries
+    -insert(row_key, column_key, value)
+    -query(row_key, column_start, column_end) return a list of entries
 
 Example 1:
     Input:
