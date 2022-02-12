@@ -1,30 +1,30 @@
 /***
 * LintCode 556. Standard Bloom Filter
 Implement a standard bloom filter. Support the following method:
-	1.StandardBloomFilter(k) The constructor and you need to create k hash functions.
-	2.add(string) Add a string into bloom filter.
-	3.contains(string) Check a string whether exists in bloom filter.
-Example
-	Example1
-		Input:
-			StandardBloomFilter(3)
-			add("lint")
-			add("code")
-			contains("lint")
-			contains("world")
-		Output: [true,false]
+    1.StandardBloomFilter(k) The constructor and you need to create k hash functions.
+    2.add(string) Add a string into bloom filter.
+    3.contains(string) Check a string whether exists in bloom filter.
 
-	Example2
-		Input:
-			StandardBloomFilter(10)
-			add("hello")
-			contains("hell")
-			contains("helloa")
-			contains("hello")
-			contains("hell")
-			contains("helloa")
-			contains("hello")
-		Output: [false,false,true,false,false,true]
+Example1
+    Input:
+        StandardBloomFilter(3)
+        add("lint")
+        add("code")
+        contains("lint")
+        contains("world")
+    Output: [true,false]
+
+Example2
+    Input:
+        StandardBloomFilter(10)
+        add("hello")
+        contains("hell")
+        contains("helloa")
+        contains("hello")
+        contains("hell")
+        contains("helloa")
+        contains("hello")
+    Output: [false,false,true,false,false,true]
 ***/
 
 // helper class
