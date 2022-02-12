@@ -1,30 +1,31 @@
 /***
 * LintCode 555. Counting Bloom Filter
 Implement a counting bloom filter. Support the following method:
-	1.add(string). Add a string into bloom filter.
-	2.contains(string). Check a string whether exists in bloom filter.
-	3.remove(string). Remove a string from bloom filter.
-Example
-	Example1
-		Input:
-			CountingBloomFilter(3)
-			add("lint")
-			add("code")
-			contains("lint") 
-			remove("lint")
-			contains("lint") 
-		Output: 
-			[true,false]
-	Example2
-		Input:
-			CountingBloomFilter(3)
-			add("lint")
-			add("lint")
-			contains("lint")
-			remove("lint")
-			contains("lint")
-		Output: 
-			[true,true]
+    1.add(string). Add a string into bloom filter.
+    2.contains(string). Check a string whether exists in bloom filter.
+    3.remove(string). Remove a string from bloom filter.
+
+Example1
+    Input:
+        CountingBloomFilter(3)
+        add("lint")
+        add("code")
+        contains("lint") 
+        remove("lint")
+        contains("lint") 
+    Output: 
+        [true,false]
+
+Example2
+    Input:
+        CountingBloomFilter(3)
+        add("lint")
+        add("lint")
+        contains("lint")
+        remove("lint")
+        contains("lint")
+    Output: 
+        [true,true]
 ***/
 public class CountingBloomFilter {
     /*
