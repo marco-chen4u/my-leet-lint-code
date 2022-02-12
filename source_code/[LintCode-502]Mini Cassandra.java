@@ -13,26 +13,26 @@ Implement the following methods:
 	-insert(row_key, column_key, value)
 	-query(row_key, column_start, column_end) return a list of entries
 
-Example
-	Example 1:
-		Input:
-		  insert("google", 1, "haha")
-		  query("google", 0, 1)
-		Output: [(1, "haha")]
-	Example 2:
-		Input:
-		  insert("google", 1, "haha")
-		  insert("lintcode", 1, "Good")
-		  insert("google", 2, "hehe")
-		  query("google", 0, 1)
-		  query("google", 0, 2)
-		  query("go", 0, 1)
-		  query("lintcode", 0, 10)
-		Output:
-		  [(1, "haha")]
-		  [(1, "haha"),(2, "hehe")]
-		  []
-		  [(1, "Good")]
+Example 1:
+    Input:
+        insert("google", 1, "haha")
+        query("google", 0, 1)
+    Output: [(1, "haha")]
+    
+Example 2:
+    Input:
+        insert("google", 1, "haha")
+        insert("lintcode", 1, "Good")
+        insert("google", 2, "hehe")
+        query("google", 0, 1)
+        query("google", 0, 2)
+        query("go", 0, 1)
+        query("lintcode", 0, 10)
+    Output:
+        [(1, "haha")]
+        [(1, "haha"),(2, "hehe")]
+        []
+        [(1, "Good")]
 ***/
 /**
  * Definition of Column:
