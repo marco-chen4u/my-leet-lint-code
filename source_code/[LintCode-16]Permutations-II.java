@@ -2,7 +2,7 @@
  * LintCode 16. Permutations II
  Given a list of numbers with duplicate number in it. Find all unique permutations.
 
-Example
+
 Example 1:
     Input: [1,1]
     Output:
