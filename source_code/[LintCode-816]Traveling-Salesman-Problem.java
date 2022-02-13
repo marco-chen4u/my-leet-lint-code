@@ -304,3 +304,119 @@ public class Solution {
         return graph;
     }
 }
+
+// version-4: randomized  refinement
+public class Solution {
+    // constants
+    private static final int DEFAULT_MAX_VALUE = Integer.MAX_VALUE>>4;
+    private static final int MAX = Integer.MAX_VALUE;
+    private static final int RANDOM_TIMES = 1000;
+
+    // field
+    private Random random = new Random(RANDOM_TIMES);
+
+    /**
+     * @param n: an integer,denote the number of cities
+     * @param roads: a list of three-tuples,denote the road between cities
+     * @return: return the minimum cost to travel all cities
+     */
+    public int minCost(int n, int[][] roads) {
+        int[][] graph = buildGraph(n, roads);
+        int result = MAX;
+
+        for (int i = 0; i < RANDOM_TIMES; i++) {
+            int[] path = getRandomPath(n);
+            int cost = adjustPath(n, graph, path);
+            result = Math.min(result, cost);
+        }
+
+        return result == MAX ? 0 : result;
+        
+    }
+
+    // helper methods
+    private int[][] buildGraph(int n, int[][] roads) {
+        int[][] graph = new int[n + 1][n + 1];
+        
+        // initializing
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(graph[i], DEFAULT_MAX_VALUE);
+        }
+
+        // calculation
+        for (int[] road : roads) {
+            int from = road[0];
+            int to = road[1];
+            int edgeValue = road[2];//cost
+
+            graph[from][to] = Math.min(graph[from][to], edgeValue);
+            graph[to][from] = Math.min(graph[to][from], edgeValue);
+        }
+
+        return graph;
+    }
+
+    private int[] getRandomPath(int n) {
+        int[] path = new int[n];
+        for (int i = 0; i < n; i++) {
+            path[i] = i + 1;
+        }
+
+        for (int i = 2; i < n; i++) {
+            int j = (random.nextInt(RANDOM_TIMES) % i) + 1;
+            int tmp = path[i];
+            path[i] = path[j];
+            path[j] = tmp;
+        }
+
+        return path;
+    }
+
+    private int adjustPath(int n, int[][] graph, int[] path) {
+        boolean adjusted = true;
+        while (adjusted) {
+            adjusted = false;
+            for (int i = 1; i < n; i++) {
+                for (int j = 1; j < n; j++) {
+                    if (!canSwap(graph, path, i, j)) {
+                        continue;
+                    }
+
+                    int tmp = path[i];
+                    path[i] = path[j];
+                    path[j] = tmp;
+
+                    adjusted = true;
+                } // for j
+            } // for i
+        }// while
+
+        int cost = 0;
+        for (int i = 1; i < n; i++) {
+            cost += graph[path[i - 1]][path[i]];
+        }
+
+        return cost;
+    }
+
+    private boolean canSwap(int[][] graph, int[] path, int i, int j) {
+        int before = adjacentCost(graph, path, i, path[i]);
+        before += adjacentCost(graph, path, j, path[j]);
+
+        int after = adjacentCost(graph, path, i, path[j]);
+        after += adjacentCost(graph, path, j, path[i]);
+
+        return before > after;
+    }
+
+    private int adjacentCost(int[][] graph, int[] path, int i, int currentCity) {
+        int size = path.length;
+
+        int cost = graph[path[i - 1]][currentCity];
+        if (i + 1 < size) {
+            cost += graph[currentCity][path[i + 1]];
+        }
+
+        return cost;
+    }
+}
