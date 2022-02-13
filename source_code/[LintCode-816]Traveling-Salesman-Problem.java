@@ -229,3 +229,78 @@ public class Solution {
         return graph;
     }
 }
+
+//version-3: dp
+public class Solution {
+    // constants
+    private static final int DEFAULT_MAX_VALUE = Integer.MAX_VALUE>>4;
+    private static final int MAX = Integer.MAX_VALUE;
+
+    /**
+     * @param n: an integer,denote the number of cities
+     * @param roads: a list of three-tuples,denote the road between cities
+     * @return: return the minimum cost to travel all cities
+     */
+    public int minCost(int n, int[][] roads) {
+        int[][] graph = buildGraph(n, roads);
+        int stateSize = 1 << n;
+
+        // state
+        int[][] dp = new int[stateSize][n + 1];
+
+        // initializing
+        for (int i = 0; i < stateSize; i++) {
+            Arrays.fill(dp[i], DEFAULT_MAX_VALUE);
+        }
+
+        dp[1][1] = 0;
+        for (int state = 0; state < stateSize; state++) {
+            for (int i = 2; i < n + 1; i++) {
+
+                if ((state & (1 <<(i -1))) == 0) {
+                    continue;
+                }
+
+                int preState = state ^ (1 << (i - 1));
+
+                for (int j = 1; j < n + 1; j++) {
+                    if ((preState & (1 << (j - 1))) == 0) {
+                        continue;
+                    }
+
+                    dp[state][i] = Math.min(dp[state][i],
+                                            dp[preState][j] + graph[i][j]);
+                }// j
+            }// i
+        }//state
+        
+        int result = Integer.MAX_VALUE;
+        for (int i = 0; i < n + 1; i++) {
+            result = Math.min(result, dp[stateSize - 1][i]);
+        }
+
+        return result;
+    }
+
+    // helper methods
+    private int[][] buildGraph(int n, int[][] roads) {
+        int[][] graph = new int[n + 1][n + 1];
+        
+        // initializing
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(graph[i], DEFAULT_MAX_VALUE);
+        }
+
+        // calculation
+        for (int[] road : roads) {
+            int from = road[0];
+            int to = road[1];
+            int edgeValue = road[2];//cost
+
+            graph[from][to] = Math.min(graph[from][to], edgeValue);
+            graph[to][from] = Math.min(graph[to][from], edgeValue);
+        }
+
+        return graph;
+    }
+}
