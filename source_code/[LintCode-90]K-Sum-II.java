@@ -1,6 +1,6 @@
 /***
 * LintCode 90. K Sum II
-Given n unique postive integers, number k (1<=k<=n1<=k<=n) and target.
+Given n unique postive integers, number k (1<=k<=n) and target.
 Find all possible k integers where their sum is target.
 
 Example 1:
