@@ -73,15 +73,18 @@ public class Solution {
 
         for (int i = 1; i <= n; i++) {
             dp[i][0][0] = 1;//initialize
+		
+            int currentValue = A[i - 1];
 
             for (int j = 1; j <= k; j++) {
                 for (int t = 1; t <= target; t++) {
-                    dp[i][j][t] = 0;
+		    
+                    dp[i][j][t] = 0;// initialized
 
-		    dp[i][j][t] += dp[i - 1][j][t];
+		    dp[i][j][t] += dp[i - 1][j][t]; // take non-selecting current value
 
 		    if (t >= A[i - 1]) {
-                        dp[i][j][t] += dp[i - 1][j -1][t - A[i - 1]];
+                        dp[i][j][t] += dp[i - 1][j -1][t - currentValue]; // take selecting current value
                     }
                     
                 }// for t
