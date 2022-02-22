@@ -133,7 +133,6 @@ public class Solution {
 
 //version-2: BFS(building out a graph&indegree map) + DFS(search out all paths)
 public class Solution {
-    
     /*
      * @param start: a string
      * @param end: a string
@@ -142,110 +141,110 @@ public class Solution {
      */
     public List<List<String>> findLadders(String start, String end, Set<String> dict) {
         List<List<String>> results = new ArrayList<List<String>>();
-        // check corner case
-        if (dict == null || dict.size() == 0) {
+        if (dict == null || dict.isEmpty()) {
             return results;
         }
-        
-        // initialize
-        Map<String, List<String>> edgeMap = new HashMap<String, List<String>>();
-        Map<String, Integer> distanceMap = new HashMap<String, Integer>();
-        
+
         dict.add(start);
         dict.add(end);
-        
-        // traverse by BFS to get all a graph
-        traverse(start, dict, edgeMap, distanceMap);
-        
-        List<String> path = new ArrayList<String>();
-        // use DFS to get all paths from end node back to start node
-        findAllLadderPaths(start, end, path, edgeMap, distanceMap, results);
-        
+        Map<String, List<String>> graph = getBuiltGraph(dict);
+        Map<String, Integer> distance = getIndegreeMap(graph, start);
+
+        findPaths(graph, distance, start, end, new ArrayList<String>(), results);
+
         return results;
     }
 
     // helper methods
-    private boolean isOneCharDiff(String word, String keyWord) {
-        char[] wordChars = word.toCharArray();
-        char[] keyWordChars = keyWord.toCharArray();
-        if (wordChars.length != keyWordChars.length) {
+    private Map<String, List<String>> getBuiltGraph(Set<String> dict) {
+        Map<String, List<String>> graph = new HashMap<>();
+        
+        for (String keyWord: dict) {
+            graph.put(keyWord, getNeighbors(keyWord, dict));
+        }
+
+        return graph;
+    }
+
+    private List<String> getNeighbors(String current, Set<String> dict) {
+        List<String> neighbors = new ArrayList<String>();
+        
+        for (String next : dict) {
+            if (!isOneCharDiff(current, next)) {
+                continue;
+            }
+            neighbors.add(next);
+        }
+
+        return neighbors;
+    }
+
+    private boolean isOneCharDiff(String current, String next) {
+        if (current == null || current.isEmpty() ||
+            next == null || next.isEmpty()) {
             return false;
         }
 
-        int size = wordChars.length;
+        if (current.length() != next.length()) {
+            return false;
+        }
+
+        char[] currentChars = current.toCharArray();
+        char[] nextChars = next.toCharArray();
+        int size = currentChars.length;
+
         int diffCount = 0;
         for (int i = 0; i < size; i++) {
-            diffCount += (wordChars[i] == keyWordChars[i]) ? 0 : 1; 
+            diffCount += (currentChars[i] == nextChars[i]) ? 0 : 1;
         }
 
         return diffCount == 1;
     }
-    
-    private List<String> getNextWords(String word, Set<String> wordDict) {
-        List<String> result = new ArrayList<String>();
-        
-        for (String keyWord : wordDict) {
-            if (isOneCharDiff(keyWord, word)) {
-                result.add(keyWord);
-            }
-        }
-        
-        return result;
-    }
-    
-    private void traverse(String start, 
-                            Set<String> wordDict,
-                            Map<String, List<String>> edgeMap,
-                            Map<String, Integer> distanceMap) {
-        for (String keyWord : wordDict) {
-            edgeMap.put(keyWord, new ArrayList<String>());
-        }
-        
-        distanceMap.put(start, 0);
-        
-        Queue<String> queue = new LinkedList<String>();
+
+    private Map<String, Integer> getIndegreeMap(Map<String, List<String>> graph, String start) {
+        Map<String, Integer> indegreeMap = new HashMap<>();
+
+        indegreeMap.put(start, 0);
+        Queue<String> queue = new ArrayDeque();
         queue.offer(start);
-        
+
         while (!queue.isEmpty()) {
             String current = queue.poll();
-            
-            List<String> nextWords = getNextWords(current, wordDict);
-            for (String next : nextWords) {
-                
-                edgeMap.get(current).add(next);
-                
-                if (!distanceMap.containsKey(next)) {
-                    int newDistance = distanceMap.get(current) + 1;
-                    distanceMap.put(next, newDistance);
-                    
-                    queue.offer(next);
+
+            for (String next : graph.get(current)) {
+                if (indegreeMap.containsKey(next)) {
+                    continue;
                 }
+                int newDistance = indegreeMap.get(current) + 1;
+                indegreeMap.put(next, newDistance);
+
+                queue.offer(next);
             }
         }
-    }
-    
-    private void findAllLadderPaths(String current, 
-                                    String destination,
-                                    List<String> path,
-                                    Map<String, List<String>> edgeMap,
-                                    Map<String, Integer> distanceMap,
-                                    List<List<String>> results) {
-        path.add(current);
-        
-        if (current.equals(destination)) {
-            results.add(new ArrayList<String>(path));// deep copy
-        }
-        else {
-            List<String> neighbors = edgeMap.get(current);
-            for (String next : neighbors) {
-                if (distanceMap.containsKey(next) &&
-                    (distanceMap.get(current) + 1 == distanceMap.get(next))) {
-                    findAllLadderPaths(next, destination, path, edgeMap, distanceMap, results);
-                }
-            }
-        }
-        
-        path.remove(path.size() - 1);
+
+        return indegreeMap;       
     }
 
+    private void findPaths(Map<String, List<String>> graph, 
+                            Map<String, Integer> distance, 
+                            String current, 
+                            String destination, 
+                            List<String> path, 
+                            List<List<String>> results) {
+        path.add(current);
+        if (destination.equals(current)) {
+            results.add(new ArrayList<String>(path));
+        }
+        else {
+            for (String next : graph.get(current)) {
+                if (!distance.containsKey(next) ||
+                    distance.get(next) != distance.get(current) + 1) {
+                    continue;
+                }
+
+                findPaths(graph, distance, next, destination, path, results);
+            }
+        }
+        path.remove(path.size() - 1);
+    }
 }
