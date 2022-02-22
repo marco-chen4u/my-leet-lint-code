@@ -108,21 +108,21 @@ public class Solution {
     * use DFS to get all path of ladders from start to end
     */
     private void getLadderPaths(String current,
-                                String start,
+                                String destination,
                                 Map<String, List<String>>map,
                                 Map<String, Integer>distance,
                                 List<String>path,
                                 List<List<String>>ladders) {
         path.add(current);
         
-        if (current.equals(start)) {
+        if (current.equals(destination)) {
             ladders.add(new ArrayList<String>(path));//deep copy
         }
         else {
             for (String next : map.get(current)) {
                 if (distance.containsKey(next) &&
                         distance.get(current) + 1 == distance.get(next))
-                    getLadderPaths(next, end, map, distance, path, ladders);
+                    getLadderPaths(next, destination, map, distance, path, ladders);
             }
         }
         
