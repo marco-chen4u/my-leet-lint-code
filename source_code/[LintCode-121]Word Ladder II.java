@@ -19,6 +19,7 @@ Notice
     All words have the same length.
     All words contain only lowercase alphabetic characters.
 ***/
+//version-1:BFS(buiding graph) + DFS(find out all paths)
 public class Solution {
     /*
      * @param start: a string
@@ -128,4 +129,123 @@ public class Solution {
         
         path.remove(path.size() - 1);
     }
+}
+
+//version-2: BFS(building out a graph&indegree map) + DFS(search out all paths)
+public class Solution {
+    
+    /*
+     * @param start: a string
+     * @param end: a string
+     * @param dict: a set of string
+     * @return: a list of lists of string
+     */
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+        List<List<String>> results = new ArrayList<List<String>>();
+        // check corner case
+        if (dict == null || dict.size() == 0) {
+            return results;
+        }
+        
+        // initialize
+        Map<String, List<String>> edgeMap = new HashMap<String, List<String>>();
+        Map<String, Integer> distanceMap = new HashMap<String, Integer>();
+        
+        dict.add(start);
+        dict.add(end);
+        
+        // traverse by BFS to get all a graph
+        traverse(start, dict, edgeMap, distanceMap);
+        
+        List<String> path = new ArrayList<String>();
+        // use DFS to get all paths from end node back to start node
+        findAllLadderPaths(start, end, path, edgeMap, distanceMap, results);
+        
+        return results;
+    }
+
+    // helper methods
+    private boolean isOneCharDiff(String word, String keyWord) {
+        char[] wordChars = word.toCharArray();
+        char[] keyWordChars = keyWord.toCharArray();
+        if (wordChars.length != keyWordChars.length) {
+            return false;
+        }
+
+        int size = wordChars.length;
+        int diffCount = 0;
+        for (int i = 0; i < size; i++) {
+            diffCount += (wordChars[i] == keyWordChars[i]) ? 0 : 1; 
+        }
+
+        return diffCount == 1;
+    }
+    
+    private List<String> getNextWords(String word, Set<String> wordDict) {
+        List<String> result = new ArrayList<String>();
+        
+        for (String keyWord : wordDict) {
+            if (isOneCharDiff(keyWord, word)) {
+                result.add(keyWord);
+            }
+        }
+        
+        return result;
+    }
+    
+    private void traverse(String start, 
+                            Set<String> wordDict,
+                            Map<String, List<String>> edgeMap,
+                            Map<String, Integer> distanceMap) {
+        for (String keyWord : wordDict) {
+            edgeMap.put(keyWord, new ArrayList<String>());
+        }
+        
+        distanceMap.put(start, 0);
+        
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(start);
+        
+        while (!queue.isEmpty()) {
+            String current = queue.poll();
+            
+            List<String> nextWords = getNextWords(current, wordDict);
+            for (String next : nextWords) {
+                
+                edgeMap.get(current).add(next);
+                
+                if (!distanceMap.containsKey(next)) {
+                    int newDistance = distanceMap.get(current) + 1;
+                    distanceMap.put(next, newDistance);
+                    
+                    queue.offer(next);
+                }
+            }
+        }
+    }
+    
+    private void findAllLadderPaths(String current, 
+                                    String destination,
+                                    List<String> path,
+                                    Map<String, List<String>> edgeMap,
+                                    Map<String, Integer> distanceMap,
+                                    List<List<String>> results) {
+        path.add(current);
+        
+        if (current.equals(destination)) {
+            results.add(new ArrayList<String>(path));// deep copy
+        }
+        else {
+            List<String> neighbors = edgeMap.get(current);
+            for (String next : neighbors) {
+                if (distanceMap.containsKey(next) &&
+                    (distanceMap.get(current) + 1 == distanceMap.get(next))) {
+                    findAllLadderPaths(next, destination, path, edgeMap, distanceMap, results);
+                }
+            }
+        }
+        
+        path.remove(path.size() - 1);
+    }
+
 }
