@@ -34,10 +34,12 @@ Example 2:
         cache cap is 1，set(2,1)，get(2) and return 1，set(3,2) and delete (2,1)，get(2) and return -1，get(3) and return 2.
 ***/
 
+//version-1: Doubly Linked List + HashMap to support O(1) operation
 public class LRUCache {
+
     // inner class
     class CacheNode {
-        // fields
+        // feilds
         int key;
         int value;
         CacheNode pre;
@@ -46,16 +48,34 @@ public class LRUCache {
         public CacheNode(int key, int value) {
             this.key = key;
             this.value = value;
+            this.pre = null;
+            this.next = null;
         }
     }
-    
+
     // fields
-    private int capacity;
-    private Map<Integer, CacheNode> map;
     private CacheNode header;
     private CacheNode tail;
-    
-    // helper methods
+    private Map<Integer, CacheNode> map;
+    private int capacity;
+
+    /*
+    * @param capacity: An integer
+    */public LRUCache(int capacity) {
+        // do intialization if necessary
+        this.capacity = capacity;
+        header = new CacheNode(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        tail = new CacheNode(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        header.next = tail;
+        tail.pre = header;
+        map = new HashMap<Integer, CacheNode>();
+    }
+
+    /*helper methods start*/
+    private void doUpdateCaching(CacheNode node) {
+        moveToLast(node);
+    }
+
     private void moveToLast(CacheNode node) {
         if (node == null) {
             return;
@@ -71,11 +91,7 @@ public class LRUCache {
         node.next = tail;
         node.pre = tail.pre;
         tail.pre.next = node;
-        tail.pre = node;		
-    }
-
-    private void doUpdateCaching(CacheNode node) {
-        moveToLast(node);
+        tail.pre = node;
     }
 
     private void doEviction() {
@@ -86,32 +102,23 @@ public class LRUCache {
         }
 
         header.next = node.next;
-        node.next.pre = header;		
+        node.next.pre = header;
+
         map.remove(node.key);
     }
-
-    /*
-    * @param capacity: An integer
-    */public LRUCache(int capacity) {
-        // do intialization if necessary
-        this.capacity = capacity;
-        map = new HashMap<Integer, CacheNode>();        
-        header = new CacheNode(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        tail = new CacheNode(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        header.next = tail;
-        tail.pre = header;
-    }
+    /*helper methods end*/
 
     /*
      * @param key: An integer
      * @return: An integer
      */
     public int get(int key) {
-        int result = -1;// default;
-
+        int result = -1;
+        // write your code here
         if (map.containsKey(key)) {
             CacheNode node = map.get(key);
-            result = node.value;            
+            result = node.value;
+
             doUpdateCaching(node);
         }
 
@@ -124,15 +131,15 @@ public class LRUCache {
      * @return: nothing
      */
     public void set(int key, int value) {
+        // write your code here
         if (map.containsKey(key)) {
             CacheNode node = map.get(key);
             node.value = value;
-
             doUpdateCaching(node);
             return;
         }
-        
-        if (map.size() >= capacity) {
+
+        if (map.size() == this.capacity) {
             doEviction();
         }
 
