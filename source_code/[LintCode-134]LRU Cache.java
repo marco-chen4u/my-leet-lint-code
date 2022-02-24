@@ -44,7 +44,7 @@ public class LRUCache {
         CacheNode next;
         // constructor
         public CacheNode(int key, int value) {
-            his.key = key;
+            this.key = key;
             this.value = value;
         }
     }
