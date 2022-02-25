@@ -95,16 +95,6 @@ public class Solution {
 }
 
 //version-2: maxHeap(PriorityHeap with reverse oder comparater) , time complexity: O(n*logk), space complexity: O(k)
-/**
- * Definition for a point.
- * class Point {
- *     int x;
- *     int y;
- *     Point() { x = 0; y = 0; }
- *     Point(int a, int b) { x = a; y = b; }
- * }
- */
-
 public class Solution {
     // fields
     private Point origin;
