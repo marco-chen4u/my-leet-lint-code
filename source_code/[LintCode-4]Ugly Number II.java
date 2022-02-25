@@ -19,6 +19,7 @@ Challenge
 Notice
     Note that 1 is typically treated as an ugly number.
 ***/
+//version-1: itration with MinHeap + HashSet(avoid duplicates)
 public class Solution {
     /**
      * @param n: An integer
@@ -52,5 +53,46 @@ public class Solution {
         }
         
         return result.intValue();
+    }
+}
+
+//version-2: dp with 3 pointers
+public class Solution {
+    /**
+     * @param n: An integer
+     * @return: return a  integer as description.
+     */
+    public int nthUglyNumber(int n) {
+        // write your code here
+        if (n <= 0) {
+            return -1;
+        }
+
+        // state
+        int[] dp = new int[n];
+        
+        // initialized
+        dp[0] = 1;
+        // three pointers, pointing to the next candicate number which produce by the multiplying with primes[2, 3, or 5]
+        int l2 = 0, l3 = 0, l5 = 0;
+
+        for (int i = 1; i < n; i++) {
+            dp[i] = Math.min(Math.min(dp[l2] * 2, dp[l3] * 3), dp[l5] * 5);
+
+            if (dp[i] == dp[l2] * 2) {
+                l2++;
+            }
+
+            if (dp[i] == dp[l3] * 3) {
+                l3++;
+            }
+
+            if (dp[i] == dp[l5] * 5) {
+                l5++;
+            }
+        }// for i
+
+        // return the n-th ugly number
+        return dp[n - 1];
     }
 }
