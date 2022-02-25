@@ -152,7 +152,7 @@ public class Solution {
 }
 
 
-//version-3 heapify
+//version-3 heapify, time complexity: O(n), space complexity: O(k)
 public class Solution {
     private Point origin;
     private int size;
