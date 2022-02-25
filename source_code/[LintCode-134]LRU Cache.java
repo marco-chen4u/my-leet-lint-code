@@ -35,6 +35,10 @@ Example 2:
 ***/
 
 //version-1: Doubly Linked List + HashMap to support O(1) operation
+/**
+* LinkedHashMap supports not only the key-value pair storage, 
+* but also the key order of insertion as linked list do as well.
+**/
 public class LRUCache {
 
     // inner class
