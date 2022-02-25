@@ -56,7 +56,7 @@ public class Solution {
     }
 }
 
-//version-2: dp with 3 pointers
+//version-2: dp with 3 pointers, time complexity: O(n), space complexity: O(n)
 public class Solution {
     /**
      * @param n: An integer
