@@ -19,7 +19,7 @@ Challenge
 Notice
     Note that 1 is typically treated as an ugly number.
 ***/
-//version-1: itration with MinHeap + HashSet(avoid duplicates)
+//version-1: itration with MinHeap + HashSet(avoid duplicates), time complexity: O(nlogn) [3n*log3n], space complexity: O(n)
 public class Solution {
     /**
      * @param n: An integer
