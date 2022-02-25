@@ -94,7 +94,75 @@ public class Solution {
     }
 }
 
-//version-2 heapify
+//version-2: maxHeap(PriorityHeap with reverse oder comparater) 
+/**
+ * Definition for a point.
+ * class Point {
+ *     int x;
+ *     int y;
+ *     Point() { x = 0; y = 0; }
+ *     Point(int a, int b) { x = a; y = b; }
+ * }
+ */
+
+public class Solution {
+    // fields
+    private Point origin;
+
+    // reversed order comparator definition
+    private Comparator<Point> comparator = new Comparator<Point>() {
+        @Override
+        public int compare(Point a, Point b) {
+            int diff = getDistance(b, origin) - getDistance(a, origin);
+            
+            if (diff == 0) {
+                diff = b.x - a.x;
+            }
+
+            if (diff == 0) {
+                diff = b.y - a.y;
+            }
+
+            return diff;
+        }
+    };
+
+    /**
+     * @param points: a list of points
+     * @param origin: a point
+     * @param k: An integer
+     * @return: the k closest points
+     */
+    public Point[] kClosest(Point[] points, Point origin, int k) {
+        this.origin = origin;
+
+        Queue<Point> maxHeap = new PriorityQueue<>(k, comparator);
+
+        // iterate all points, and insert into the maxHeap
+        for (Point point : points) {
+            maxHeap.offer(point);
+            if (maxHeap.size() > k) {
+                maxHeap.poll();
+            }
+        }
+
+        Point[] result = new Point[k];
+        int index = maxHeap.size() - 1; // k - 1, last position
+        while (!maxHeap.isEmpty()) {
+            result[index--] = maxHeap.poll();
+        }
+
+        return result;
+    }
+
+    // helper method
+    private int getDistance(Point a, Point b) {
+        return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+    }
+}
+
+
+//version-3 heapify
 public class Solution {
     private Point origin;
     private int size;
