@@ -79,6 +79,7 @@ public class Solution {
         for (int i = 1; i < n; i++) {
             dp[i] = Math.min(Math.min(dp[l2] * 2, dp[l3] * 3), dp[l5] * 5);
 
+            /* note: the 3 blow if conditions also appy to remove the duplicates */
             if (dp[i] == dp[l2] * 2) {
                 l2++;
             }
