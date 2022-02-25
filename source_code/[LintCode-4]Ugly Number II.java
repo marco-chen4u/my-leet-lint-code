@@ -5,19 +5,19 @@ Design an algorithm to find the nth ugly number.
 The first 10 ugly numbers are 1, 2, 3, 4, 5, 6, 8, 9, 10, 12...
 
 Example
-	Example 1:
-		Input: 9
-		Output: 10
+    Example 1:
+        Input: 9
+        Output: 10
 
-	Example 2:
-		Input: 1
-		Output: 1
+    Example 2:
+        Input: 1
+        Output: 1
 
 Challenge
-O(n log n) or O(n) time.
+    O(n log n) or O(n) time.
 
 Notice
-	Note that 1 is typically treated as an ugly number.
+    Note that 1 is typically treated as an ugly number.
 ***/
 public class Solution {
     /**
