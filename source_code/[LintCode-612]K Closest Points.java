@@ -24,7 +24,7 @@ Example 2:
  *     Point(int a, int b) { x = a; y = b; }
  * }
  */
-//version-1: sorting
+//version-1: sorting, time complexity: O(n*logn), space complexity: O(k)
 public class Solution {
 
     // fields
@@ -94,7 +94,7 @@ public class Solution {
     }
 }
 
-//version-2: maxHeap(PriorityHeap with reverse oder comparater) 
+//version-2: maxHeap(PriorityHeap with reverse oder comparater) , time complexity: O(n*logk), space complexity: O(k)
 /**
  * Definition for a point.
  * class Point {
