@@ -149,3 +149,54 @@ public class LRUCache {
         doUpdateCaching(node);
     }
 }
+
+//version-2: LinkedHashMap(not recommended)
+public class LRUCache {
+    
+    // fields
+    private Map<Integer, Integer> map;
+    private int capacity;
+    /*
+    * @param capacity: An integer
+    */public LRUCache(int capacity) {
+        // do intialization if necessary
+        map = new LinkedHashMap<>();
+        this.capacity = capacity;
+    }
+
+    /*
+     * @param key: An integer
+     * @return: An integer
+     */
+    public int get(int key) {
+        // write your code here
+        if (!map.containsKey(key)) {
+            return -1;
+        }
+
+        int value = map.get(key);
+        map.remove(key);
+        map.put(key, value);
+
+        return value;
+    }
+
+    /*
+     * @param key: An integer
+     * @param value: An integer
+     * @return: nothing
+     */
+    public void set(int key, int value) {
+        // write your code here
+        if (map.containsKey(key)) {
+            map.remove(key);
+        }
+
+        map.put(key, value);
+
+        if (map.size() > capacity) {
+            int keyToEvict = map.keySet().iterator().next();
+            map.remove(keyToEvict);
+        }
+    }
+}
