@@ -17,6 +17,9 @@ Example 2:
     Output：4
     Explanation：
         the maximum number of envelopes you can Russian doll is 4 ([1,1] => [2,3] => [4,5] / [4,6] => [6,7]).
+	
+Related question:
+    LintCode. 1858 Set of boxes https://www.lintcode.com/problem/1858
 ***/
 public class Solution {
     // fields
