@@ -6,7 +6,6 @@ strStr return the first index of the target string in a source string.
 The length of the target string is m and the length of the source string is n.
 If target does not exist in source, just return -1.
 
-
 Example 1:
     Input：source = "abcdef"， target = "bcd"
     Output：1
