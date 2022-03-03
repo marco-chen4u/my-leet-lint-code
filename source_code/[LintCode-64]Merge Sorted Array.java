@@ -2,7 +2,6 @@
 * LintCode 64. Merge Sorted Array
 Given two sorted integer arrays A and B, merge B into A as one sorted array.
 
-
 Example 1:
     Input：[1, 2, 3] 3  [4,5]  2
     Output：[1,2,3,4,5]
