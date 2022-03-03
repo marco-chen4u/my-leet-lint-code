@@ -81,19 +81,7 @@ public class Solution {
     }
 }
 
-//version-2: recursion
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- */
-
+//version-2: recursion（Divide and Conquer）
 public class Solution {
     /**
      * @param root: A Tree
