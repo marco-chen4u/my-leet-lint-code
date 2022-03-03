@@ -1,7 +1,7 @@
 /***
 * LintCode 464. Sort Integers II
-Given an integer array, sort it in ascending order. Use quick sort, merge sort, heap sort or any O(nlogn) algorithm.
-
+Given an integer array, sort it in ascending order. 
+Use quick sort, merge sort, heap sort or any O(nlogn) algorithm.
 
 Example1:
     Input: [3, 2, 1, 4, 5], 
