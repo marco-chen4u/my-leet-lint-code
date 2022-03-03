@@ -1,9 +1,11 @@
 /***
 * LintCode 66. Binary Tree Preorder Traversal
 Given a binary tree, return the preorder traversal of its nodes' values
+
 Note:
-    The first data is the root node, followed by the value of the left and right son nodes, and "#" indicates that there is no child node.
-    The number of nodes does not exceed 20.
+    -The first data is the root node, followed by the value of the left and right son nodes, 
+     and "#" indicates that there is no child node.
+    -The number of nodes does not exceed 20.
 
 Example 1:
     Input:
