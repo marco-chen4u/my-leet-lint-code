@@ -43,7 +43,15 @@ public class Solution {
     }
 }
 
-// version-2: quick sort
+// version-2: quick sort, time complexity: O(n)
+/*
+* The time complexity for the average case for quick select is O(n) (reduced from O(nlogn) — quick sort). 
+*The worst case time complexity is still O(n²) but by using a random pivot, 
+*the worst case can be avoided in most cases.
+* T(n) = T(n/2) + T(n/4) + T(n/8) + ....
+*      = n(1 + 1/2 + 1/4 + 1/8 + ...)
+*      = 2n
+*/
 public class Solution {
     /**
      * @param nums: an integer array
