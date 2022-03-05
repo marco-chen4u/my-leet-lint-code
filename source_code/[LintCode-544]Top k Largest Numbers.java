@@ -11,7 +11,7 @@ Input: [8, 7, 6, 5, 4, 3, 2, 1] and k = 5
 Output: [8, 7, 6, 5, 4]
 ***/
 
-//version-1: Heap
+//version-1: Heap, time complexity: O(nlogk)
 public class Solution {
     /**
      * @param nums: an integer array
