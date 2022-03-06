@@ -78,13 +78,13 @@ public class Solution {
     private int getCountAfter(List<Integer> eventsList, int startTimeStamp) {
         int count = 0;
         if (eventsList == null || eventsList.isEmpty()) {
-            return count;
+            return 0;
         }
 
         int size = eventsList.size();
         int lastPos = size - 1;
         if (eventsList.get(lastPos) < startTimeStamp) {
-	    return count;
+	    return 0;
         }
 
         int start = 0;
