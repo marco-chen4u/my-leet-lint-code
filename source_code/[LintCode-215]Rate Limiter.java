@@ -75,6 +75,10 @@ public class Solution {
     }
 	
     // helper method
+    /**
+    * find the the first element (index)that is >= startTimeStamp
+    * then get the count = lastPosIndex - index, return this count back
+    **/
     private int getCountAfter(List<Integer> eventsList, int startTimeStamp) {
         int count = 0;
         if (eventsList == null || eventsList.isEmpty()) {
