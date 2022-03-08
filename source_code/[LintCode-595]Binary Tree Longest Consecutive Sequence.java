@@ -6,32 +6,32 @@ The path refers to any sequence of nodes from some starting node to any node in 
 parent-child connections. 
 The longest consecutive path need to be from parent to child (cannot be the reverse).
 
-Example
-    Example 1:
-        Input:
-           1
+
+Example 1:
+    Input:
+       1
+        \
+         3
+        / \
+       2   4
             \
-             3
-            / \
-           2   4
-                \
-                 5
-        Output:3
-        Explanation:
-            Longest consecutive sequence path is 3-4-5, so return 3.
+             5
+    Output:3
+    Explanation:
+        Longest consecutive sequence path is 3-4-5, so return 3.
     
-    Example 2:
-        Input:
-           2
-            \
-             3
-            / 
-           2    
-          / 
-         1
-        Output:2
-        Explanation:
-            Longest consecutive sequence path is 2-3,not 3-2-1, so return 2.
+Example 2:
+    Input:
+       2
+        \
+         3
+        / 
+       2    
+      / 
+     1
+    Output:2
+    Explanation:
+        Longest consecutive sequence path is 2-3,not 3-2-1, so return 2.
 ***/
 /**
  * Definition of TreeNode:
@@ -46,7 +46,7 @@ Example
  */
 
 //version-1: recursion, divide and conquer, without global variable
- public class Solution {
+public class Solution {
     /**
      * @param root: the root of binary tree
      * @return: the length of the longest consecutive sequence path
@@ -56,17 +56,17 @@ Example
     }
 	
     // helper method
-    private int find(TreeNode node, TreeNode parent, int orginalLength) {
-        if (nood == null) {
+    private int find(TreeNode node, TreeNode parrent, int orginalLength) {
+        if (node == null) {
             return 0;
         }
 
-        int length = (parrent != null && parent.val + 1 == node.val) ? orginalLength + 1: 1;
+        int length = (parrent != null && parrent.val + 1 == node.val) ? orginalLength + 1: 1;
 
-        int left = helper(node.left, node, length);
-        int right = helper(node.right, node, length);
+        int left = find(node.left, node, length);
+        int right = find(node.right, node, length);
 
-        return Math.max(length, Math.max(lef, right));
+        return Math.max(length, Math.max(left, right));
     }
 }
 
@@ -111,5 +111,5 @@ public class Solution {
 
         return length;
     }
-}
+
 }
