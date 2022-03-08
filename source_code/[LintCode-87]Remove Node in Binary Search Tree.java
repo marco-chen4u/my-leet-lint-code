@@ -7,7 +7,6 @@ If there is no such a node with given value in the binary search tree, do nothin
 
 You should keep the tree still a binary search tree after removal.
 
-
 Example 1
     Input: 
         Tree = {5,3,6,2,4}
