@@ -82,3 +82,60 @@ public class Solution {
         return Math.max(i, Math.max(j, k));
     }
 }
+
+//version-2:
+public class Solution {
+    /**
+     * @param P: an integer array P
+     * @param Q: an integer array Q
+     * @param K: the number of allowed changes
+     * @return: return LCS with at most k changes allowed.
+     */
+    public int longestCommonSubsequence2(int[] P, int[] Q, int K) {
+        
+        // state
+        int n = P.length;
+        int m = Q.length;
+        int[][][] dp = new int[n + 1][m + 1][K + 1];
+
+        // initialize
+        for (int i = 1; i <=n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (P[i - 1] == Q[j - 1]) {
+                    dp[i][j][0] = dp[i - 1][j - 1][0] + 1;
+                    continue;
+                }
+
+                dp[i][j][0] = max(dp[i - 1][j][0], dp[i][j - 1][0]);
+            }
+        }
+
+        // calculation
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                for (int k = 1; k<= K; k++) {
+                    if (P[i - 1] == Q[j - 1]) {
+                        dp[i][j][k] = dp[i - 1][j - 1][k] + 1;
+                        continue;
+                    }
+
+                    dp[i][j][k] = max(dp[i - 1][j][k],
+                                      dp[i][j - 1][k],
+                                      dp[i - 1][j - 1][k - 1] + 1);
+
+                }
+            }
+        }
+
+        return dp[n][m][K];
+    }
+
+    // helper method
+    private int max(int i, int j) {
+        return Math.max(i, j);
+    }
+
+    private int max(int i, int j, int k) {
+        return Math.max(i, Math.max(j, k));
+    }
+}
