@@ -16,7 +16,7 @@ Notice
     -Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
     -The solution set must not contain duplicate combination.
 ***/
-
+//version-1: dfs
 public class Solution {
     /**
      * @param n: An integer
@@ -62,6 +62,66 @@ public class Solution {
         if (n >= index) {
             combination.add(n);
             dfs(result, combination, 1, n);
+            combination.remove(combination.size() - 1);
+        }
+    }
+}
+
+//version-2: dfs
+public class Solution {
+    /**
+     * @param n: An integer
+     * @return: a list of combination
+     */
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> results = new ArrayList<>();
+        // check corner case
+        if (n <= 2) {
+            return results;
+        }
+
+        List<Integer> combination = new ArrayList<>();
+        int startIndex = 2;
+        
+        dfs(n, startIndex, combination, results);
+
+        return results;
+    }
+
+    // helper method
+    private void dfs(int currentValue, 
+                    int startIndex, 
+                    List<Integer> combination,
+                    List<List<Integer>> results) {
+        if (currentValue == 1) {
+
+            if (combination.size() > 1) {
+                results.add(new ArrayList<>(combination));
+            }
+
+            return;
+        }
+
+        for (int i = startIndex; i <= currentValue; i++) {
+            if (i > currentValue / i) {
+                break;
+            }
+
+            // check if it's divided
+            if (currentValue % i != 0) {
+                continue;
+            }
+
+            combination.add(i);
+            dfs(currentValue / i, i, combination, results);
+            combination.remove(combination.size() - 1);
+        }
+
+        // if all i is not divided, that means it's a prime
+        if (currentValue >= startIndex) {
+            combination.add(currentValue);
+            startIndex = currentValue;
+            dfs(1, startIndex, combination, results);
             combination.remove(combination.size() - 1);
         }
     }
