@@ -2,13 +2,14 @@
 * LintCode 35. Reverse Linked List
 Reverse a linked list.
 
-Example
-    Example 1:
-        Input: 1->2->3->null
-        Output: 3->2->1->null
-    Example 2:
-        Input: 1->2->3->4->null
-        Output: 4->3->2->1->null
+
+Example 1:
+    Input: 1->2->3->null
+    Output: 3->2->1->null
+
+Example 2:
+    Input: 1->2->3->4->null
+    Output: 4->3->2->1->null
 
 Challenge
     Reverse it in-place and in one-pass
