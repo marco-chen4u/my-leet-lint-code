@@ -3,28 +3,28 @@
 Find the kth smallest number in a row and column sorted matrix.
 Each row and each column of the matrix is incremental.
 
-Example
+
 Example 1:
-	Input:
-		[
-		  [1 ,5 ,7],
-		  [3 ,7 ,8],
-		  [4 ,8 ,9],
-		]
-	k = 4
-	Output: 5
+    Input:
+        [
+          [1 ,5 ,7],
+          [3 ,7 ,8],
+          [4 ,8 ,9],
+        ]
+        k = 4
+    Output: 5
 
 Example 2:
-	Input:
-		[
-		  [1, 2],
-		  [3, 4]
-		]
-	k = 3
-	Output: 3
+    Input:
+        [
+          [1, 2],
+          [3, 4]
+        ]
+        k = 3
+    Output: 3
 
 Challenge
-	O*(klogn*) time, n is the maximum of the width and height of the matrix.
+    O*(klogn*) time, n is the maximum of the width and height of the matrix.
 ***/
 public class Solution {
     // inner class
