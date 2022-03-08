@@ -192,3 +192,53 @@ public class Solution {
                 left == '{' && right == '}';
     }
 }
+
+//version-4:
+public class Solution {
+    /**
+     * @param s: A string
+     * @return: whether the string is a valid parentheses
+     */
+    public boolean isValidParentheses(String s) {
+        if (s == null || s.isEmpty()) {
+            return true;
+        }
+
+        Stack<Character> stack = new Stack<>();
+        for (char ch : s.toCharArray()) {
+            if (isLeftBracket(ch)) {
+                stack.push(ch);
+                continue;
+            }
+
+            if (isRightBracket(ch) && 
+                (stack.isEmpty() ||
+                !isPair(stack.peek(), ch))) {
+                return false;
+            }
+
+            stack.pop();
+        }
+
+        return stack.isEmpty();
+    }
+
+    // helper method
+    private boolean isPair(char left, char right) {
+        return left == '(' && right == ')' ||
+            left == '[' && right == ']' ||
+            left == '{' && right == '}';
+    }
+
+    private boolean isLeftBracket(char ch) {
+        return ch == '(' || 
+            ch == '[' ||
+            ch == '{';
+    }
+
+    private boolean isRightBracket(char ch) {
+        return ch == ')' ||
+            ch == ']' ||
+            ch == '}';
+    }
+}
