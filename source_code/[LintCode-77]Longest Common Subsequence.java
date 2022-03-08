@@ -19,6 +19,7 @@ Clarification
         https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
         http://baike.baidu.com/view/2020307.htm
 ***/
+//version-1: dp(sequence dp)
 public class Solution {
     /**
      * @param A: A string
