@@ -46,27 +46,38 @@ Example 2:
  */
 
 //version-1: recursion, divide and conquer, without global variable
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
 public class Solution {
     /**
      * @param root: the root of binary tree
      * @return: the length of the longest consecutive sequence path
      */
     public int longestConsecutive(TreeNode root) {
-        return find(root, null, 0);
+        return dfs(null, root, 0);
     }
-	
-    // helper method
-    private int find(TreeNode node, TreeNode parrent, int orginalLength) {
+
+    // helper mehtod
+    private int dfs(TreeNode parent, TreeNode node, int length) {
         if (node == null) {
-            return 0;
+            return length;
         }
 
-        int length = (parrent != null && parrent.val + 1 == node.val) ? orginalLength + 1: 1;
+        int currentLength = (parent != null && parent.val + 1 == node.val) ? length + 1 : 1;
+        int left = dfs(node, node.left, currentLength);
+        int right = dfs(node, node.right, currentLength);
 
-        int left = find(node.left, node, length);
-        int right = find(node.right, node, length);
-
-        return Math.max(length, Math.max(left, right));
+        return Math.max(currentLength, Math.max(left, right));
     }
 }
 
