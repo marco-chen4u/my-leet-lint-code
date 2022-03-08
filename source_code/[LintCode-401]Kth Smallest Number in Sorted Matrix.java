@@ -3,7 +3,6 @@
 Find the kth smallest number in a row and column sorted matrix.
 Each row and each column of the matrix is incremental.
 
-
 Example 1:
     Input:
         [
