@@ -99,3 +99,66 @@ public class Solution {
         return diff;
     }
 }
+
+//vesion-2: prefix subarray(better solution), time complexity: O(n), space complexity: O(n)
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: An integer indicate the value of maximum difference between two substrings
+     */
+    public int maxDiffSubArrays(int[] nums) {
+        // corner case
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        return Math.max(getMaxDiffSubArray(nums), getMaxDiffSubArray(reverse(nums)));
+    }
+
+    // helper methods
+    private int getMaxDiffSubArray(int[] nums) {
+        int size = nums.length;
+        
+        int[] preLeftMax = new int[size];
+        int sum = 0;
+        int minSum = 0;
+        for (int i = 0; i < size; i++) {
+            sum += nums[i];
+            preLeftMax[i] = sum - minSum;
+            minSum = Math.min(minSum, sum);
+        }
+
+        int[] preRightMin = new int[size];
+        sum = 0;
+        int maxSum = 0;
+        for (int i = size - 1; i >= 0; i--) {
+            sum += nums[i];
+            preRightMin[i] = sum - maxSum;
+            maxSum = Math.max(maxSum, sum);
+        }
+
+        int maxDiff = Integer.MIN_VALUE;
+        for (int i = 0; i < size - 1; i++) {
+            maxDiff = Math.max(maxDiff, preLeftMax[i] - preRightMin[i + 1]);
+        }
+
+        return maxDiff;
+    }
+
+    private int[] reverse(int[] nums) {
+        int size = nums.length;
+        int left = 0;
+        int right = size - 1;
+        
+        while (left < right) {
+            int tmp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = tmp;
+
+            left++;
+            right--;
+        }
+
+        return nums;
+    }
+}
