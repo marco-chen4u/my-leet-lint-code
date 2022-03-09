@@ -45,7 +45,7 @@ Link: https://www.lintcode.com/problem/93/
  * }
  */
 
-//solution: recursion
+//vesion-1:solution: recursion
 public class Solution {
     /**
      * @param root: The root of binary tree.
@@ -84,5 +84,52 @@ public class Solution {
 
         //return
         return Math.max(leftDepth, rightDepth) + 1;
+    }
+}
+
+//version-2: recursion
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: True if this Binary tree is Balanced, or false.
+     */
+    public boolean isBalanced(TreeNode root) {
+        // corner case
+        if (root == null) {
+            return true;
+        }
+
+        boolean isLeftBalanced = isBalanced(root.left);
+        boolean isRightBalanced = isBalanced(root.right);
+
+        int leftHeight = getHeight(root.left);
+        int rightHeight = getHeight(root.right);
+        int diff = Math.abs(leftHeight - rightHeight);
+
+        return isLeftBalanced && isRightBalanced && diff <= 1;
+    }
+
+    // helper method
+    private int getHeight(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int left = getHeight(node.left);
+        int right= getHeight(node.right);
+
+        return Math.max(left, right) + 1;
     }
 }
