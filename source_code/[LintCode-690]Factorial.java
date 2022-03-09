@@ -54,3 +54,48 @@ public class Solution {
         return sb.toString();
     }
 }
+
+//version-2: iteration
+public class Solution {
+    /**
+     * @param n: an integer
+     * @return:  the factorial of n
+     */
+    public String factorial(int n) {
+        List<Integer> values = new ArrayList<>();
+        
+        values.add(1);
+
+        for (int value = 2; value <= n; value++) {
+            for (int i = 0; i < values.size(); i++) {
+                values.set(i, values.get(i) * value);
+            }
+
+            for (int i = 0; i < values.size() - 1; i++) {
+                int current = values.get(i);
+                int newDigit = current / 10;
+                int remain = current % 10;
+                values.set(i + 1, values.get(i + 1) + newDigit);
+                values.set(i, remain);
+            }
+
+            // process the last value of value list
+            while (values.get(values.size() - 1) > 9) {
+                int lastPos = values.size() -1;
+                int newDigit = values.get(lastPos) / 10;
+                int remain = values.get(lastPos) % 10;
+                values.add(newDigit);
+                int preLastPos = lastPos;
+                values.set(preLastPos, remain);
+            }
+        }
+
+        Collections.reverse(values);
+        StringBuilder sb = new StringBuilder();
+        for (int value : values) {
+            sb.append(value);
+        }
+
+        return sb.toString();
+    }
+}
