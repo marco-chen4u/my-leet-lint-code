@@ -9,6 +9,7 @@ Example
 Clarification
     Your algorithm should run in O(n) complexity.
 ***/
+//version-1: iteration + HashSet
 public class Solution {
     /**
      * @param num: A list of integers
@@ -53,5 +54,79 @@ public class Solution {
         }
         
         return result;
+    }
+}
+
+//version-2: iteration + HashSet
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: An integer
+     */
+    public int longestConsecutive(int[] nums) {
+        // corner case
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        int max = 1;
+        for (int num : nums) {
+            if (!set.contains(num -1)) {
+                continue;
+            }
+
+            int start = num - 1;
+            int current = num;
+            int length = 1;
+            while (set.contains(current)) {
+                current++;
+                length++;
+            }
+
+            max = Math.max(max, current - start);
+        }
+
+        return max;
+    }
+}
+
+//version-3: sort, then iteration with calculate. time complexity: O(nlogn)
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: An integer
+     */
+    public int longestConsecutive(int[] nums) {
+        // corner case
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        Arrays.sort(nums);
+        int size = nums.length;
+
+        int max = 1;
+        int currentLength = 1;
+        for (int i = 0; i < size; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            if (i > 0 && nums[i] == nums[i - 1] + 1) {
+                currentLength++;
+                max = Math.max(max, currentLength);
+            }
+            else {
+                currentLength = 1;// reset for the next calculation
+            }
+
+        }
+
+        return max;
     }
 }
