@@ -1,0 +1,56 @@
+/**
+* LintCode 690. Factorial
+Given a number n, return the factorial of the number as a string.
+
+Link: https://www.lintcode.com/problem/690
+
+Example 1
+    Input: 0
+    Output: "1"
+
+Example 2
+    Input: 20
+    Output: "2432902008176640000"
+    
+related problem:
+    LintCode 771. Double Factorial https://www.lintcode.com/problem/771
+    LintCode 729. Last Digit By Factorial Divide https://www.lintcode.com/problem/729
+    LintCode 728. Three Distinct Factors https://www.lintcode.com/problem/728
+    LintCode 655. Add Strings https://www.lintcode.com/problem/655
+    LintCode 656. Multiply Strings https://www.lintcode.com/problem/656
+**/
+// version-1: iteration
+public class Solution {
+    /**
+     * @param n: an integer
+     * @return:  the factorial of n
+     */
+    public String factorial(int n) {
+        List<Integer> result = new ArrayList<>();
+        result.add(1);
+
+        for (int i = 2; i <= n; i++) {
+            for (int j = 0; j < result.size(); j++) {
+                result.set(j, result.get(j) * i);
+            }
+
+            for (int j = 0; j < result.size() - 1; j++) {
+                result.set(j + 1, result.get(j + 1) + result.get(j) / 10);
+                result.set(j, result.get(j) % 10);
+            }
+
+            while (result.get(result.size() - 1) > 9) {
+                result.add(result.get(result.size() - 1) / 10);
+                result.set(result.size() - 2, result.get(result.size() -2) % 10);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        Collections.reverse(result);
+        for (int value : result){
+            sb.append(value);
+        }
+
+        return sb.toString();
+    }
+}
