@@ -130,3 +130,50 @@ public class Solution {
         return max;
     }
 }
+
+//version-4: iteraion with minHeap + HashSet to remove duplciates, time complexity: O(nlogn), space complexity: O(logn)
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: An integer
+     */
+    public int longestConsecutive(int[] nums) {
+        // corner case
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        Queue<Integer> minHeap = new PriorityQueue<>();
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(num)) {
+                continue;
+            }
+
+            set.add(num);
+            minHeap.offer(num);
+        }
+
+        int size = nums.length;
+
+        int max = 1;
+        int currentLength = 1;
+        int pre = minHeap.poll();
+        
+        while (!minHeap.isEmpty()) {
+            int current = minHeap.poll();
+
+            if (current == pre + 1) {
+                currentLength ++;
+                max = Math.max(max, currentLength);
+            }
+            else {
+                currentLength = 1; //reset it for the next calculation
+            }
+
+            pre = current;
+        }
+
+        return max;
+    }
+}
