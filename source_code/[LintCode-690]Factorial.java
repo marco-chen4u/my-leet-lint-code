@@ -71,6 +71,7 @@ public class Solution {
                 values.set(i, values.get(i) * value);
             }
 
+            // moving all new digits forward to the last, to make the rest except the last one, which of digits is [0..9]
             for (int i = 0; i < values.size() - 1; i++) {
                 int current = values.get(i);
                 int newDigit = current / 10;
@@ -79,7 +80,7 @@ public class Solution {
                 values.set(i, remain);
             }
 
-            // process the last value of value list
+            // process the last value of value list to make more reasonable
             while (values.get(values.size() - 1) > 9) {
                 int lastPos = values.size() -1;
                 int newDigit = values.get(lastPos) / 10;
