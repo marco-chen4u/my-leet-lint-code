@@ -199,7 +199,7 @@ public class LRUCache {
         map.put(key, value);
 
         if (map.size() > capacity) {
-            int keyToEvict = map.keySet().iterator().next();
+            int keyToEvict = map.keySet().iterator().next();// find the first one to remove
             map.remove(keyToEvict);
         }
     }
