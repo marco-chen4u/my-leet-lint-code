@@ -28,8 +28,18 @@ Example
  * }
  */
 public class Solution {
+    
+    /**
+     * @param intervals: the given k sorted interval lists
+     * @return:  the new sorted interval list
+     */
+    public List<Interval> mergeKSortedIntervalLists(List<List<Interval>> intervals) {
+        return mergeIntervalLists(intervals, 0, intervals.size() - 1);
+    }
+
     // helper methods
     private Interval mergeTwoIntervals(List<Interval> result, Interval pre, Interval current) {
+	// corner case
         if (pre == null) {
             return current;
         }
@@ -97,6 +107,7 @@ public class Solution {
     }
     
     private List<Interval> mergeIntervalLists(List<List<Interval>> intervals, int start, int end) {
+	// corner case
         if (start == end) {
             return intervals.get(start);
         }
@@ -106,15 +117,7 @@ public class Solution {
         List<Interval> left = mergeIntervalLists(intervals, 0, mid);
         List<Interval> right = mergeIntervalLists(intervals, mid + 1, end);
         
-		// conquer
+	// conquer
         return mergeTwoIntervalList(left, right);
-    }
-    
-    /**
-     * @param intervals: the given k sorted interval lists
-     * @return:  the new sorted interval list
-     */
-    public List<Interval> mergeKSortedIntervalLists(List<List<Interval>> intervals) {
-        return mergeIntervalLists(intervals, 0, intervals.size() - 1);
     }
 }
