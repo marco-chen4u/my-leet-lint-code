@@ -24,7 +24,7 @@ Challenge
  *     }
  * }
  */
-//version-1
+//version-1: iteration
 public class Solution {
     /**
      * @param intervals: interval list.
@@ -65,7 +65,7 @@ public class Solution {
     }
 }
 
-//version-2
+//version-2: iteration
 public class Solution {
     /**
      * @param intervals: interval list.
@@ -91,6 +91,69 @@ public class Solution {
             }
         }
         
+        return result;
+    }
+}
+
+//version-3:iteration
+public class Solution {
+    /**
+     * @param intervals: interval list.
+     * @return: A new interval list.
+     */
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> result = new ArrayList<>();
+        if (intervals == null || intervals.isEmpty()) {
+            return result;
+        }
+
+        Collections.sort(intervals, (a, b)-> a.start - b.start);
+
+        Interval pre = null;
+        for (Interval current : intervals) {
+            if (pre == null) {
+                pre = current;
+                continue;
+            }
+
+            if (isOverlapping(pre, current)) {
+                pre = merge(pre, current);
+                continue;
+            }
+
+            result.add(pre);
+            pre = current;
+        }
+
+        if (pre != null) {
+            result.add(pre);
+        }
+
+        return result;
+    }
+
+    // helper methods
+    private boolean isOverlapping(Interval pre, Interval current) {
+        if (pre == null || current == null) {
+            return false;
+        }
+
+        return pre.end >= current.start;
+    }
+
+    private Interval merge(Interval pre, Interval current) {
+        if (pre == null) {
+            return current;
+        }
+
+        if (current == null) {
+            return pre;
+        }
+
+        int start = Math.min(pre.start, current.start);
+        int end = Math.max(pre.end, current.end);
+
+        Interval result = new Interval(start, end);
         return result;
     }
 }
