@@ -2,7 +2,6 @@
 * LintCode 486. Merge K Sorted Arrays
 Given k sorted integer arrays, merge them into one sorted array.
 
-
 Example 1:
     Input: 
       [
