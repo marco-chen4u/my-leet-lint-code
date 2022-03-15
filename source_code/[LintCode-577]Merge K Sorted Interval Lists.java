@@ -27,6 +27,7 @@ Example
  *     }
  * }
  */
+//version-1: devide&conquer
 public class Solution {
     
     /**
@@ -38,23 +39,21 @@ public class Solution {
     }
 
     // helper methods
-    private Interval mergeTwoIntervals(List<Interval> result, Interval pre, Interval current) {
+    private List<Interval> mergeIntervalLists(List<List<Interval>> intervals, int start, int end) {
 	// corner case
-        if (pre == null) {
-            return current;
+        if (start == end) {
+            return intervals.get(start);
         }
         
-        if (pre.end < current.start) {
-            result.add(pre);
-            return current;
-        }
+        // divide
+        int mid = start + (end - start) / 2;
+        List<Interval> left = mergeIntervalLists(intervals, 0, mid);
+        List<Interval> right = mergeIntervalLists(intervals, mid + 1, end);
         
-        // merge
-        pre.end = Math.max(pre.end, current.end);
-        
-        return pre;
-    }    
-    
+	// conquer
+        return mergeTwoIntervalList(left, right);
+    }
+
     private List<Interval> mergeTwoIntervalList(List<Interval> left, List<Interval> right) {
         List<Interval> result = new ArrayList<Interval>();
         // check corner case
@@ -105,19 +104,22 @@ public class Solution {
         
         return result;
     }
-    
-    private List<Interval> mergeIntervalLists(List<List<Interval>> intervals, int start, int end) {
+
+    private Interval mergeTwoIntervals(List<Interval> result, Interval pre, Interval current) {
 	// corner case
-        if (start == end) {
-            return intervals.get(start);
+        if (pre == null) {
+            return current;
         }
         
-        // divide
-        int mid = start + (end - start) / 2;
-        List<Interval> left = mergeIntervalLists(intervals, 0, mid);
-        List<Interval> right = mergeIntervalLists(intervals, mid + 1, end);
+        if (pre.end < current.start) {
+            result.add(pre);
+            return current;
+        }
         
-	// conquer
-        return mergeTwoIntervalList(left, right);
-    }
+        // merge
+        pre.end = Math.max(pre.end, current.end);
+        
+        return pre;
+    }    
+
 }
