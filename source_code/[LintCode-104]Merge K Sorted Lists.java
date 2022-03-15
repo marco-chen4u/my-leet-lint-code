@@ -4,7 +4,6 @@ Merge k sorted linked lists and return it as one sorted list.
 
 Analyze and describe its complexity.
 
-Example
 Example 1:
 	Input:   [2->4->null,null,-1->null]
 	Output:  -1->2->4->null
@@ -23,12 +22,27 @@ Example 2:
  *         this.next = null;
  *     }
  * }
- */ 
+ */
+
+//version-1: Divide&Conquer, time complexity: O(n)
 public class Solution {
     
+    /**
+     * @param lists: a list of ListNode
+     * @return: The head of one sorted list.
+     */
+    public ListNode mergeKLists(List<ListNode> lists) {  
+        // corner cases
+        if (lists == null || lists.size() == 0) {
+            return null;
+        }
+        
+        return mergeKListsHelper(lists, 0, lists.size() - 1);
+    }
+
     // helper methods
     private ListNode mergeKListsHelper(List<ListNode> lists, int start, int end) {
-        // check corner case
+        // corner case
         if (start >= end) {
             return lists.get(start);
         }
@@ -72,21 +86,9 @@ public class Solution {
         
         return dummy.next;
     }
-    
-    /**
-     * @param lists: a list of ListNode
-     * @return: The head of one sorted list.
-     */
-    public ListNode mergeKLists(List<ListNode> lists) {  
-        // check corner cases
-        if (lists == null || lists.size() == 0) {
-            return null;
-        }
-        
-        return mergeKListsHelper(lists, 0, lists.size() - 1);
-    }
 }
-	
+
+//version-2: minHeap, time complexity: O(n*logk), space complexity: O(logk)
 public class Solution {
     /**
      * @param lists: a list of ListNode
