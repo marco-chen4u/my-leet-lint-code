@@ -2,16 +2,16 @@
 * LintCode 156. Merge Intervals
 Given a collection of intervals, merge all overlapping intervals.
 
-Example
-	Example 1:
-		Input: [(1,3)]
-		Output: [(1,3)]
-	Example 2:
-		Input:  [(1,3),(2,6),(8,10),(15,18)]
-		Output: [(1,6),(8,10),(15,18)]
+Example 1:
+    Input: [(1,3)]
+    Output: [(1,3)]
+
+Example 2:
+    Input:  [(1,3),(2,6),(8,10),(15,18)]
+    Output: [(1,6),(8,10),(15,18)]
 
 Challenge
-	O(n log n) time and O(1) extra space.
+    O(n log n) time and O(1) extra space.
 ***/
 
 /**
@@ -31,37 +31,37 @@ public class Solution {
      * @return: A new interval list.
      */
     public List<Interval> merge(List<Interval> intervals) {
-		List<Interval> result = new ArrayList<Interval>();
+        List<Interval> result = new ArrayList<Interval>();
         // check corner case
-		if (intervals == null || intervals.isEmpty()) {
-			return result;
-		}
-		
-		Comparator<Interval> comparator = new Comparator<Interval>() {
-			@Override
-			public int compare(Interval a, Interval b) {
-				return a.start - b.start;
-			}
-		};
-		
-		Collections.sort(intervals, comparator);
-		
-		Interval pre = null;
-		Iterator<Interval> it = intervals.iterator();
-		while (it.hasNext()) {
-			Interval current = it.next();
-			if (pre == null || pre.end < current.start) {
-				pre = current;
-			}
-			else {
-				pre.end = Math.max(pre.end, current.end);
-				it.remove();
-			}
-		}
-		
-		result = intervals;
-		
-		return result;
+	if (intervals == null || intervals.isEmpty()) {
+            return result;
+	}
+
+	Comparator<Interval> comparator = new Comparator<Interval>() {
+            @Override
+            public int compare(Interval a, Interval b) {
+                return a.start - b.start;
+            }
+        };
+
+        Collections.sort(intervals, comparator);
+
+        Interval pre = null;
+        Iterator<Interval> it = intervals.iterator();
+        while (it.hasNext()) {
+            Interval current = it.next();
+            if (pre == null || pre.end < current.start) {
+                pre = current;
+            }
+            else {
+                pre.end = Math.max(pre.end, current.end);
+                it.remove();
+            }
+        }
+
+        result = intervals;
+
+        return result;
     }
 }
 
