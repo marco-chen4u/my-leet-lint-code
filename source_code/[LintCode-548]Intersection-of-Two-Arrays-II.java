@@ -21,6 +21,9 @@ Challenge
     -What if nums1's size is small compared to num2's size? Which algorithm is better?
     -What if elements of nums2 are stored on disk, 
     and the memory is limited such that you cannot load all elements into the memory at once?
+    
+Link: https://www.lintcode.com/problem/548/
+
 **/
 //version-1: HashMap
 public class Solution {
