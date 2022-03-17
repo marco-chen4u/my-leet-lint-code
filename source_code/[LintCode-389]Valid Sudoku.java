@@ -4,28 +4,31 @@ Determine whether a Sudoku is valid.
 The Sudoku board could be partially filled, where empty cells are filled with the character .
 
 Example
-	The following partially filed sudoku is valid.
-	Valid Sudoku (Image can display here: http://www.lintcode.com/en/problem/valid-sudoku/#)
+    The following partially filed sudoku is valid.
+    Valid Sudoku (Image can display here: http://www.lintcode.com/en/problem/valid-sudoku/#)
 
 Note
-	A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
+    A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
 
 Clarification
-	What is Sudoku?
-	http://sudoku.com.au/TheRules.aspx
-	https://zh.wikipedia.org/wiki/%E6%95%B8%E7%8D%A8
-	https://en.wikipedia.org/wiki/Sudoku
-	http://baike.baidu.com/subview/961/10842669.htm
+    What is Sudoku?
+    http://sudoku.com.au/TheRules.aspx
+    https://zh.wikipedia.org/wiki/%E6%95%B8%E7%8D%A8
+    https://en.wikipedia.org/wiki/Sudoku
+    http://baike.baidu.com/subview/961/10842669.htm
+
 Tags
-	Matrix
+    Matrix
 ***/
+
 /*
-	Thoughts:
-	Each row/col/block can only 1 ~ 9, no duplicates
-	Use HashSet, reinitiate 3 times.
-	traverse row, col, block
-	O(n^2)
+    Thoughts:
+    Each row/col/block can only 1 ~ 9, no duplicates
+    Use HashSet, reinitiate 3 times.
+    traverse row, col, block
+    O(n^2)
 */
+
 public class Solution {
     // field
     private final char EMPTY = '.';
