@@ -156,15 +156,13 @@ public class Solution {
     private boolean dfs(int[][] board, int x, int y) {
         
         //[1]move the current position[x, y] to the one with empty value to fill
-        while (x < 9 && y < 9) {
-            if (board[x][y] == EMPTY) {
-                break;
-            }
-
+        while (x < 9 && y < 9 && 
+	       board[x][y] != EMPTY) {
             x = x + (y / 8);
             y = (y + 1) % 9;
         }
 
+	// check corner case
         if (x >= 9) {
             return true;
         }
@@ -184,6 +182,7 @@ public class Solution {
             board[x][y] = EMPTY;//backtracking
         }
 
+	// default
         return false;
     }
 
@@ -195,6 +194,7 @@ public class Solution {
                 return false;
             }
         }
+
         // check the small box(3*3) to see if there's duplcate with value
         int rowOffset = (x / 3) * 3;
         int columnOffset = (y / 3) * 3;
@@ -207,6 +207,7 @@ public class Solution {
             }
         }
 
+	// default
         return true;
     }
 }
