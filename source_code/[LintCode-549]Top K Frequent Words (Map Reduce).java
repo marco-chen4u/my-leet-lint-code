@@ -8,26 +8,25 @@ The judge will take care about how to merge different reducers' results to get t
 The k is given in the constructor of TopK class.
 For the words with same frequency, rank them with alphabet.
 
-Example
-	Example1
-		Input:
-			document A = "lintcode is the best online judge
-			I love lintcode" and 
-			document B = "lintcode is an online judge for coding interview
-			you can test your code online at lintcode"
-		Output: 
-			"lintcode", 4
-			"online", 3
+Example1
+    Input:
+        document A = "lintcode is the best online judge
+        I love lintcode" and 
+        document B = "lintcode is an online judge for coding interview
+        you can test your code online at lintcode"
+    Output: 
+        "lintcode", 4
+        "online", 3
 
-	Example2
-		Input:
-			document A = "a a a b b b" and
-			document B = "a a a b b b"
-		Output: 
-			"a", 6
-			"b", 6
+Example2
+    Input:
+        document A = "a a a b b b" and
+        document B = "a a a b b b"
+    Output: 
+        "a", 6
+        "b", 6
 Notice
-	For the words with same frequency, rank them with alphabet.
+    For the words with same frequency, rank them with alphabet.
 ***/
  
 /**
@@ -44,29 +43,29 @@ Notice
  */
 // helper class 
 class Element implements Comparable<Element> {
-	// fileds
-	String word;
-	int count;
+    // fileds
+    String word;
+    int count;
+
+    // constructor
+    public Element(String word, int count) {
+        this.word = word;
+        this.count = count;
+    }
 	
-	// constructor
-	public Element(String word, int count) {
-		this.word = word;
-		this.count = count;
-	}
-	
-	// methods
-	@Override
-	public int compareTo(Element other) {
-	    if (this.count != other.count) {
-	        return this.count - other.count;
-	    }
-	    
-	    return other.word.compareTo(this.word);
-	}
+    // methods
+    @Override
+    public int compareTo(Element other) {
+        if (this.count != other.count) {
+            return this.count - other.count;
+        }
+
+        return other.word.compareTo(this.word);
+    }
 }
 public class TopKFrequentWords {
-	// field
-	private final static String SEPERATOR = " ";
+    // field
+    private final static String SEPERATOR = " ";
 
     public static class Map {
         // helper method
@@ -79,67 +78,67 @@ public class TopKFrequentWords {
             // Write your code here
             // Output the results into output buffer.
             // Ps. output.collect(String key, int value);
-			String[] tokens = value.content.split(SEPERATOR);
-			for (String word : tokens) {
-			    // check corner case
-			    if (isEmptyStr(word)) {
-			        continue;
-			    }
-			    
-				output.collect(word, 1);
-			}
+            String[] tokens = value.content.split(SEPERATOR);
+            for (String word : tokens) {
+                // check corner case
+                if (isEmptyStr(word)) {
+                    continue;
+                }
+
+                output.collect(word, 1);
+            }
         }
     }
 
     public static class Reduce {
-		// fields
-		private int k;
-		private Queue<Element> minHeap;		
+        // fields
+        private int k;
+        private Queue<Element> minHeap;		
 
         public void setup(int k) {
             // initialize your data structure here
-			this.k = k;
-			//Comparator<Element> comparator = new Comparator<Element>() {
-			//	@Override
-			//	public int compare(Element a, Element b) {
-			//		if (a.count != b.count) {
-			//			return a.count - b.count;
-			//		}
-			//		
-			//		return b.word.compareTo(a.word);
-			//	}
-			//};
-			//minHeap = new PriorityQueue<Element>(comparator);
-			
-			minHeap = new PriorityQueue<Element>(k);
+            this.k = k;
+            //Comparator<Element> comparator = new Comparator<Element>() {
+            //	@Override
+            //	public int compare(Element a, Element b) {
+            //		if (a.count != b.count) {
+            //			return a.count - b.count;
+            //		}
+            //		
+            //		return b.word.compareTo(a.word);
+            //	}
+            //};
+            //minHeap = new PriorityQueue<Element>(comparator);
+
+            minHeap = new PriorityQueue<Element>(k);
         }   
 
         public void reduce(String key, Iterator<Integer> values) {
-			int count = 0;
-			
-			while (values.hasNext()) {
-				count += values.next();
-			}
-			
-			Element current = new Element(key, count);
-			
-			minHeap.offer(current);
-			if (minHeap.size() > k) {
-				minHeap.poll();
-			}
+            int count = 0;
+
+            while (values.hasNext()) {
+                count += values.next();
+            }
+
+            Element current = new Element(key, count);
+
+            minHeap.offer(current);
+            if (minHeap.size() > k) {
+                minHeap.poll();
+            }
         }
 
         public void cleanup(OutputCollector<String, Integer> output) {
             // Output the top k pairs <word, times> into output buffer.
             // Ps. output.collect(String key, Integer value);
-			List<Element> result = new ArrayList<Element>();
-			while (!minHeap.isEmpty()) {
-				result.add(0, minHeap.poll());
-			}
-			
-			for (Element current : result) {
-				output.collect(current.word, current.count);
-			}
+            List<Element> result = new ArrayList<Element>();
+            while (!minHeap.isEmpty()) {
+                result.add(0, minHeap.poll());
+            }
+
+            for (Element current : result) {
+                output.collect(current.word, current.count);
+            }
         }
     }
 }
