@@ -6,9 +6,18 @@ Example
     Look at the program.
 
     Input
-        [{"id":1,"content":"This is  the content of document1"}, {"id":2,"content":"This is the       content of document3"}]
+        [{"id":1,"content":"This is  the content of document1"}, 
+         {"id":2,"content":"This is the       content of document3"}
+        ]
     Output
-        {"This":[1,2],"content":[1,2],"document1":[1],"document3":[2],"is":[1,2],"of":[1,2],"the":[1,2]}
+        {"This":[1,2],
+         "content":[1,2],
+         "document1":[1],
+         "document3":[2],
+         "is":[1,2],
+         "of":[1,2],
+         "the":[1,2]
+        }
 ***/
 /**
  * Definition of OutputCollector:
