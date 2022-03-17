@@ -110,9 +110,9 @@ class Node implements Comparable<Node> {
 }
 
 public class MiniYelp {
-    private final String END_OF_BASE_32_CODE = "}";
-    private final String SEPERATOR = ".";
-    private double[] GEO_HASH_PRECISIONS = new double[] {2500, 630, 78, 20, 2.4, 0.61, 0.076, 0.019};// 8 precision radius
+    private static final String END_OF_BASE_32_CODE = "}";
+    private static final String SEPERATOR = ".";
+    private static final double[] GEO_HASH_PRECISIONS = new double[] {2500, 630, 78, 20, 2.4, 0.61, 0.076, 0.019};// 8 precision radius
     private NavigableMap<String, Restaurant> restaurantMap;// <geohash-code, restaurant>
     private Map<Integer, String> idToHashCodeMap;// <restaurant_id, geohash-code>
 	
