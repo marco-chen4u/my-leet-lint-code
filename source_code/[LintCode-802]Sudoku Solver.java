@@ -47,6 +47,7 @@ Link: https://www.lintcode.com/problem/802/
 *
 * 我们要在空出来的格子，看怎么填满数字，符合上述要求，看是否存在这么一个唯一的solution。
 **/
+//version-1: iteration & dfs
 public class Solution {
     // field
     private final int EMPTY = 0;
@@ -128,6 +129,79 @@ public class Solution {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[rowOffset + i][colOffset + j] == value) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+}
+
+//version-2: dfs + iteration
+public class Solution {
+
+    // constants
+    private static final int EMPTY = 0;
+
+    /**
+     * @param board: the sudoku puzzle
+     * @return: nothing
+     */
+    public void solveSudoku(int[][] board) {
+        dfs(board, 0, 0);
+    }
+
+    // helper methods
+    private boolean dfs(int[][] board, int x, int y) {
+        
+        //[1]move the current position[x, y] to the one with empty value to fill
+        while (x < 9 && y < 9) {
+            if (board[x][y] == EMPTY) {
+                break;
+            }
+
+            x = x + (y / 8);
+            y = (y + 1) % 9;
+        }
+
+        if (x >= 9) {
+            return true;
+        }
+
+        // [2] fill the potential value to check if it's valid the sudoku rule, then move forward
+        for (int value = 1; value <= 9; value++) {
+            if (!isSudoku(board, x, y, value)) {
+                continue;
+            }
+
+            board[x][y] = value;
+            int nextX = x + (y / 8);
+            int nextY = (y + 1) % 9;
+            if (dfs(board, nextX, nextY)) {
+                return true;
+            }
+            board[x][y] = EMPTY;//backtracking
+        }
+
+        return false;
+    }
+
+    private boolean isSudoku(int[][] board, int x, int y, int value) {
+        // check the cross lines[row-wise, column-wise] to see if there's duplicate with value
+        for (int i = 0; i < 9; i++) {
+            if (board[x][i] == value ||
+                board[i][y] == value) {
+                return false;
+            }
+        }
+        // check the small box(3*3) to see if there's duplcate with value
+        int rowOffset = (x / 3) * 3;
+        int columnOffset = (y / 3) * 3;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[rowOffset + i][columnOffset + j] == value) {
                     return false;
                 }
             }
