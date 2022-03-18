@@ -15,7 +15,7 @@ Example 2:
 Challenge
     time complexity O(n)
 ***/
-// version-1
+// version-1: two pointers (sliding window)
 public class Solution {
     /**
      * @param s: a string
@@ -49,7 +49,7 @@ public class Solution {
     }
 }
 
-//version-2
+//version-2: two pointers(sliding window)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         int maxLength = 0;
