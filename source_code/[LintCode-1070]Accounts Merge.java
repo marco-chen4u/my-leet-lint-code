@@ -50,120 +50,140 @@ Notice
     The length of accounts[i][j] will be in the range [1, 30].
 ***/
 
+//version-1: union find
 public class Solution {
     /**
      * @param accounts: List[List[str]]
      * @return: return a List[List[str]]
      */
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        List<List<String>> result = new ArrayList<List<String>>();
-        // check corner case
+        List<List<String>> results = new ArrayList<>();
+        // corner case
         if (accounts == null || accounts.isEmpty()) {
-            return result;
+            return results;
         }
-        
-        //build an UnionFind to accept the account infomation
-        UnionFind uf = new UnionFind(accounts);
-        // connect the different node(email) relationship
-        for (List<String> accountInfo : accounts) {
-            int size = accountInfo.size();
-            for (int i = 1; i < size - 1; i++) {
-                uf.union(accountInfo.get(i), accountInfo.get(i + 1));
-            }// for i
-        }// for accounts
-        
-        Map<String, List<String>> emailComponents = uf.getEmailComponents();
-        for (Map.Entry<String, List<String>> emailEntry : emailComponents.entrySet()) {
-            List<String> accountInfo = new ArrayList<String>();
-            List<String> emailList = emailEntry.getValue();
-            String accountName = uf.getAccountName(emailEntry.getKey());
-            //Collections.sort(emailList);
-            accountInfo.addAll(emailList);//loading all email list in desired order
-            accountInfo.add(0, accountName);// make sure account is in the first
-            
-            result.add(accountInfo);
-        }
-        
-        return result;
-    }
-}
 
-// helper class
-class UnionFind {
-    // fields
-    Map<String, String> fathers;
-    Map<String, String> accountMap;
-    
-    Map<String, List<String>> components;
-	
-    // constructor
-    public UnionFind(List<List<String>> accounts) {
-        fathers = new TreeMap<String, String>();
-        accountMap = new HashMap<String, String>();  
-		
-        for (List<String> accountInfo : accounts) {
-            String accountName = accountInfo.get(0);
-            int size = accountInfo.size();
-            for (int i = 1; i < size; i++) {
-                String email = accountInfo.get(i);
-                fathers.put(email, email);
-                accountMap.put(email, accountName);
-            }// for i
-        }// for accounts
-    }
-    
-    // methods
-    public String find(String x) {
-        String superParent = fathers.get(x);        
-        while (!superParent.equals(fathers.get(superParent))) {
-            superParent = fathers.get(superParent);
+        UnionFind unionFind = new UnionFind(accounts);
+
+        for (List<String> accountInfoList : accounts) {
+            String accountName = accountInfoList.get(0);
+            int size = accountInfoList.size();
+            for (int i = 1; i < size - 1; i++) {
+                String email1 = accountInfoList.get(i);
+                String email2 = accountInfoList.size() > (i + 1) ? accountInfoList.get(i + 1) : null;
+                if (isEmpty(email1) || isEmpty(email2)) {
+                    continue;
+                }
+                unionFind.union(email1, email2);
+            }
         }
-        
-        String tmp = null;
-        String parent = x;
-        while (!parent.equals(fathers.get(parent))) {
-            tmp = fathers.get(parent);
-            fathers.put(parent, superParent);
-            accountMap.put(parent, accountMap.get(superParent));
-            parent = tmp;
+
+        Map<String, List<String>> emailComponents = unionFind.getComponents();
+        for (Map.Entry<String, List<String>> entry : emailComponents.entrySet()) {
+            String accountName = unionFind.getAccountName(entry.getKey());
+            List<String> emails = entry.getValue();
+            
+            List<String> accountInfo = new ArrayList<>(emails);
+            accountInfo.add(0, accountName);
+            
+            results.add(accountInfo);
         }
-        
-        return superParent;
+
+        return results;
     }
-    
-    public void union(String x, String y) {
-        String parentX = find(x);
-        String parentY = find(y);        
-        if (!parentX.equals(parentY)) {
+
+    // helper method
+    private boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+    // inner class
+    class UnionFind {
+        // fields
+        private Map<String, String> fathers;
+        private Map<String, String> emailToAccountMap;
+
+        private Map<String, List<String>> components;
+
+        // constructor
+        public UnionFind(List<List<String>> accounts) {
+            fathers = new TreeMap<>();
+            emailToAccountMap = new HashMap<>();
+
+            for (List<String> accountInfoList : accounts) {
+                int size = accountInfoList.size();
+                String accountName = accountInfoList.get(0);
+                for (int i = 1; i < size; i++) {
+                    String email = accountInfoList.get(i);
+                    fathers.put(email, email);
+                    emailToAccountMap.put(email, accountName);
+                }
+            }
+
+            components = new HashMap<>();
+        }
+
+        // methods
+        public String find(String x) {
+            String superParent = fathers.get(x);
+            while (!superParent.equals(fathers.get(superParent))) {
+                superParent = fathers.get(superParent);
+            }
+
+            String next = null;
+            String parent = x;
+            while (!parent.equals(fathers.get(parent))) {
+                next = fathers.get(parent);
+
+                // flattern the relationship
+                fathers.put(parent, superParent);
+                emailToAccountMap.put(parent, emailToAccountMap.get(superParent));
+
+                // update for the next one
+                parent = next;
+            }
+
+            return superParent;
+        }
+
+        public void union(String x, String y) {
+            String parentX = find(x);
+            String parentY = find(y);
+
+            if (parentX.equals(parentY)) {
+                return;
+            }
+
             fathers.put(parentX, parentY);
-            accountMap.put(parentX, accountMap.get(parentY));
+            String accountName = emailToAccountMap.get(parentY);
+            emailToAccountMap.put(parentX, accountName);
         }
-    }
-    
-    public Map<String, List<String>> getEmailComponents() {
-        if (components != null && !components.isEmpty()) {
+
+        public Map<String, List<String>> getComponents() {
+            if (!components.isEmpty()) {
+                return components;
+            }
+
+            for (Map.Entry<String, String> entry : fathers.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+
+                String parent = find(value);
+                
+                components.putIfAbsent(parent, new ArrayList<>());
+
+                components.get(parent).add(key);
+            }
+
             return components;
         }
-        
-        if (components == null) {
-            components = new HashMap<String, List<String>>();
-        }        
-        if (!components.isEmpty()) {
-            components.clear();
+
+        public String getAccountName(String email) {
+            return emailToAccountMap.get(email);
         }
-        
-        for (String email : fathers.keySet()) {
-            String parent = find(email);
-            components.putIfAbsent(parent, new ArrayList<String>());
-            
-            List<String> emailList = components.get(parent);
-            emailList.add(email);
+
+        private void updateEmailAndAccount(String email, String accountName) {
+            emailToAccountMap.put(email, accountName);
         }
-        
-        return components;
-    }
-    
-    public String getAccountName(String email) {
-        return accountMap.get(email);
     }
 }
