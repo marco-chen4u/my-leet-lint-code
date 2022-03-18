@@ -60,7 +60,44 @@ public class Solution {
     }
 }
 
-// version-2: recursion(divide&conquer) with HashMap(keep record of children count by current node)
+//version-2: iteration with stack
+public class Solution {
+    /**
+     * @param root: the given BST
+     * @param k: the given k
+     * @return: the kth smallest element in BST
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        int result = -1;
+        
+        if (root == null || k <= 0) {
+            return result;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
+        getAllLeftNodes(current, stack);
+
+        for (int i = 1; i <= k; i++) {
+            current = stack.pop();
+            result = current.val;
+
+            getAllLeftNodes(current.right, stack);
+        }
+
+        return result;
+    }
+
+     // helper method
+     private void getAllLeftNodes(TreeNode current, Stack<TreeNode> stack) {
+         while (current != null) {
+             stack.push(current);
+             current = current.left;
+         }
+     }
+}
+
+// version-3: recursion(divide&conquer) with HashMap(keep record of children count by current node)
 public class Solution {
 
     /**
@@ -119,19 +156,7 @@ public class Solution {
     }
 }
 
-//version-3: recursion with tuple
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- */
-
+//version-4: recursion with tuple
 public class Solution {
 
     // inner class
