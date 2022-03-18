@@ -208,3 +208,101 @@ public class Trie {
         return (node != null);
     }
 }
+
+//version-3: Array
+public class Trie {
+
+    class TrieNode {
+        // fields
+        TrieNode[] children;
+        boolean isEndOfWord;
+
+        // constructor
+        public TrieNode() {
+            children = new TrieNode[26];
+            isEndOfWord = false;
+        }
+    }
+
+    // field
+    private TrieNode root;
+
+    public Trie() {
+        // do intialization if necessary
+        this.root = new TrieNode();
+    }
+
+    /*
+     * @param word: a word
+     * @return: nothing
+     */
+    public void insert(String word) {
+        // corner case
+        if (isEmpty(word)) {
+            return;
+        }
+
+        TrieNode node = root;
+        for (char ch : word.toCharArray()) {
+            if (node.children[ch - 'a'] == null) {
+                node.children[ch - 'a'] = new TrieNode();
+            }
+
+            node = node.children[ch - 'a'];
+        }
+
+        node.isEndOfWord = true;
+    }
+
+    /*
+     * @param word: A string
+     * @return: if the word is in the trie.
+     */
+    public boolean search(String word) {
+        // corner case
+        if (isEmpty(word)) {
+            return false;
+        }
+
+        TrieNode node = lookUp(root, word.toCharArray());
+
+        return node != null && node.isEndOfWord;
+    }
+
+    /*
+     * @param prefix: A string
+     * @return: if there is any word in the trie that starts with the given prefix.
+     */
+    public boolean startsWith(String prefix) {
+        // corner case
+        if (isEmpty(prefix)) {
+            return false;
+        }
+
+        TrieNode node = lookUp(root, prefix.toCharArray());
+
+        return node != null;
+    }
+
+    // helper methods
+    private boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+    private TrieNode lookUp(TrieNode root, char[] chars) {
+        if (root == null || chars == null || chars.length == 0) {
+            return null;
+        }
+
+        TrieNode node = root;
+        for (char ch : chars) {
+            if (node == null || node.children[ch - 'a'] == null) {
+                return null;
+            }
+
+            node = node.children[ch - 'a'];
+        }
+
+        return node;
+    }
+}
