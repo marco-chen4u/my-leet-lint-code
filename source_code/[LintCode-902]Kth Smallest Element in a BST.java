@@ -99,60 +99,63 @@ public class Solution {
 
 // version-3: recursion(divide&conquer) with HashMap(keep record of children count by current node)
 public class Solution {
-
     /**
      * @param root: the given BST
      * @param k: the given k
      * @return: the kth smallest element in BST
      */
     public int kthSmallest(TreeNode root, int k) {
-        // check corner case
-        if (root == null || k < 1) {
-            return 0;
+        int result = -1;
+        
+        if (root == null || k <= 0) {
+            return result;
         }
 
-        Map<TreeNode, Integer> numberOfNodesMap = new HashMap<TreeNode, Integer>();
-        countNodes(root, numberOfNodesMap);
+        Map<TreeNode, Integer> map = new HashMap<>();
+        dfs(root, map);
 
-        return getKthElementValue(root, k, numberOfNodesMap);
-    }
-    
-    // helper methods
-    private int countNodes(TreeNode node, Map<TreeNode, Integer> numberOfNodesMap) {
-        if (node == null) {
-            return 0;
-        }
-
-        // divide
-        int countOfLeftChildren = countNodes(node.left, numberOfNodesMap);
-        int countOfRightChidren = countNodes(node.right, numberOfNodesMap);
-
-        // conquer
-        int countOfNodes = 1 + countOfLeftChildren + countOfRightChidren;
-        numberOfNodesMap.put(node, countOfNodes);
-
-        return countOfNodes;
-    }
-
-    private int getKthElementValue(TreeNode node, int k, numberOfNodesMap) {
-        int result = 0;//default value
-        if (node == null) {
-            return 0;
-        }
-
-        int countOfLeftChildren = (node.left == null) ? 0 : numberOfNodesMap.get(node.left);
-
-        if (countOfLeftChildren + 1 == k) {
-            return node.val;
-        }
-        else if (countOfLeftChildren >= k) {
-            return getKthElementValue(node.left, k, numberOfNodesMap);
-        }
-        else if (countOfLeftChildren < k) {
-            return getKthElementValue(node.right, k - (countOfLeftChildren + 1), numberOfNodesMap);
-        }		
+        result = find(root, k, map);
 
         return result;
+    }
+
+     // helper method
+    private int dfs(TreeNode node, Map<TreeNode, Integer> map) {
+        
+        if (node == null) {
+            return 0;
+        }
+
+        int leftCount = dfs(node.left, map);
+        int rightCount = dfs(node.right, map);
+
+        int count = 1 + leftCount + rightCount;
+
+        map.put(node, count);
+
+        return count;
+    }
+
+    private int find(TreeNode node, int k, Map<TreeNode, Integer> map) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftCount = map.getOrDefault(node.left, 0);
+        if (k <= leftCount) {
+            return find(node.left, k, map);
+        }
+
+        if (k == leftCount + 1) {
+            return node.val;
+        }
+
+        if (k > leftCount + 1) {
+            k = k - (leftCount + 1);
+            return find(node.right, k, map);
+        }
+
+        return 0;
     }
 }
 
