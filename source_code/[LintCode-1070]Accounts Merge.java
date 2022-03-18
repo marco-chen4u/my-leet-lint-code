@@ -94,8 +94,7 @@ class UnionFind {
     Map<String, String> fathers;
     Map<String, String> accountMap;
     
-    Map<String, List<String>> components;    
-    Map<String, List<String>> accountEmailListMap;    
+    Map<String, List<String>> components;
 	
     // constructor
     public UnionFind(List<List<String>> accounts) {
