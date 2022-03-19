@@ -33,42 +33,42 @@ public class Solution {
      * @return: an integer array
      */
     public int[] intersection(int[] nums1, int[] nums2) {
-        // check conrer cases
-        if (nums1 == null || nums1.length == 0) {
+        if (isEmpty(nums1)) {
             return nums1;
         }
-        
-        if (nums2 == null || nums2.length == 0) {
+
+        if (isEmpty(nums2)) {
             return nums2;
         }
-        
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (int num : nums1) {
-            if (map.containsKey(num)) {
-                map.put(num, map.get(num) + 1);
-            }
-            else {
-                map.put(num, 1);
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int value : nums1) {
+            map.put(value, map.getOrDefault(value, 0) + 1);
+        }
+
+        List<Integer> values = new ArrayList<>();
+
+        for (int value : nums2) {
+            if (map.containsKey(value) && map.get(value) > 0) {
+        	map.put(value, map.get(value) - 1);
+        	values.add(value);
             }
         }
-        
-        List<Integer> resultList = new ArrayList<Integer>();
-        for (int num : nums2) {
-            if (map.containsKey(num) && map.get(num) > 0) {
-                resultList.add(num);
-                map.put(num, map.get(num) - 1);
-            }
-        }
-        
-        int size = resultList.size();
+
+        int[] result = new int[values.size()];
         int index = 0;
-        int[] result = new int[size];
-        for (int num : resultList) {
-            result[index++] = num;
+        for (int value : values) {
+            result[index++] = value;
         }
-        
+
         return result;
     }
+
+    // helper method
+    private boolean isEmpty(int[] nums) {
+	    return nums == null || nums.length == 0;
+    }	
+    
 }
 
 //version-2: sort and merge with two pointers
