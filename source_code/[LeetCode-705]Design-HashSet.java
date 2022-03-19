@@ -27,6 +27,8 @@ Example 1:
 Constraints:
     0 <= key <= 10^6
     At most 10^4 calls will be made to add, remove, and contains.
+    
+Link: https://leetcode.com/problems/design-hashset/
 **/
 //version-1: linked list implementation with bucket, time complexity: O(n)
 class MyHashSet {
