@@ -156,3 +156,43 @@ public class Solution {
         dfs(node.right, set);
     }
 }
+
+//version-4: binary tree traverse + stack
+public class Solution {
+    /**
+     * @param root: the given BST
+     * @param target: the given target
+     * @return: the value in the BST that is closest to the target
+     */
+    public int closestValue(TreeNode root, double target) {
+        
+        double diff = (double)Integer.MAX_VALUE;
+        int result = -1;
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
+        
+        while (!stack.isEmpty() || current != null) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+            int curentVal = current.val;
+            if (getDiff(curentVal, target) < diff) {
+                result = curentVal;
+                diff = getDiff(curentVal, target);
+            }
+
+            current = current.right;
+        }
+
+        return result;
+    }
+
+    // helper method
+    private double getDiff(int value, double target) {
+        return Math.abs(target - value);
+    }
+}
