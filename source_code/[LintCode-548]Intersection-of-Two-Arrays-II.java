@@ -24,6 +24,8 @@ Challenge
     
 Link: https://www.lintcode.com/problem/548/
 
+Tags:
+    Hash Table, Two Pointers, Same Direction of Two Pointers
 **/
 //version-1: HashMap
 public class Solution {
