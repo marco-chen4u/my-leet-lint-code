@@ -1,120 +1,147 @@
 /**
-* LeetCode 706. Design HashMap 
-* Design a HashMap without using any built-in hash table libraries.
+* LeetCode 706. Design HashMap
+Design a HashMap without using any built-in hash table libraries.
 
 Implement the MyHashMap class:
-
-MyHashMap() initializes the object with an empty map.
+    -MyHashMap() initializes the object with an empty map.
     -void put(int key, int value) inserts a (key, value) pair into the HashMap. 
-    -If the key already exists in the map, update the corresponding value.
-    -int get(int key) returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key.
+          If the key already exists in the map, update the corresponding value.
+    -int get(int key) returns the value to which the specified key is mapped, 
+          or -1 if this map contains no mapping for the key.
     -void remove(key) removes the key and its corresponding value if the map contains the mapping for the key.
- 
-
+    
 Example 1:
     Input
-    ["MyHashMap", "put", "put", "get", "get", "put", "get", "remove", "get"]
-    [[], [1, 1], [2, 2], [1], [3], [2, 1], [2], [2], [2]]
+        ["MyHashMap", "put", "put", "get", "get", "put", "get", "remove", "get"]
+        [[], [1, 1], [2, 2], [1], [3], [2, 1], [2], [2], [2]]
     Output
-    [null, null, null, 1, -1, null, 1, null, -1]
-
-Explanation
-    MyHashMap myHashMap = new MyHashMap();
-    myHashMap.put(1, 1); // The map is now [[1,1]]
-    myHashMap.put(2, 2); // The map is now [[1,1], [2,2]]
-    myHashMap.get(1);    // return 1, The map is now [[1,1], [2,2]]
-    myHashMap.get(3);    // return -1 (i.e., not found), The map is now [[1,1], [2,2]]
-    myHashMap.put(2, 1); // The map is now [[1,1], [2,1]] (i.e., update the existing value)
-    myHashMap.get(2);    // return 1, The map is now [[1,1], [2,1]]
-    myHashMap.remove(2); // remove the mapping for 2, The map is now [[1,1]]
-    myHashMap.get(2);    // return -1 (i.e., not found), The map is now [[1,1]]
- 
-
+        [null, null, null, 1, -1, null, 1, null, -1]
+    Explanation
+        MyHashMap myHashMap = new MyHashMap();
+        myHashMap.put(1, 1); // The map is now [[1,1]]
+        myHashMap.put(2, 2); // The map is now [[1,1], [2,2]]
+        myHashMap.get(1);    // return 1, The map is now [[1,1], [2,2]]
+        myHashMap.get(3);    // return -1 (i.e., not found), The map is now [[1,1], [2,2]]
+        myHashMap.put(2, 1); // The map is now [[1,1], [2,1]] (i.e., update the existing value)
+        myHashMap.get(2);    // return 1, The map is now [[1,1], [2,1]]
+        myHashMap.remove(2); // remove the mapping for 2, The map is now [[1,1]]
+        myHashMap.get(2);    // return -1 (i.e., not found), The map is now [[1,1]]
+        
 Constraints:
     0 <= key, value <= 10^6
     At most 10^4 calls will be made to put, get, and remove.
+    
+Link: https://leetcode.com/problems/design-hashmap/
+
+Tages: Array, Hash Table, Hash Function, Design, 
 **/
-class Pair<U, V> {
-  public U first;
-  public V second;
-
-  public Pair(U first, V second) {
-    this.first = first;
-    this.second = second;
-  }
-}
-
-
-class Bucket {
-  private List<Pair<Integer, Integer>> bucket;
-
-  public Bucket() {
-    this.bucket = new LinkedList<Pair<Integer, Integer>>();
-  }
-
-  public Integer get(Integer key) {
-    for (Pair<Integer, Integer> pair : this.bucket) {
-      if (pair.first.equals(key))
-        return pair.second;
-    }
-    return -1;
-  }
-
-  public void update(Integer key, Integer value) {
-    boolean found = false;
-    for (Pair<Integer, Integer> pair : this.bucket) {
-      if (pair.first.equals(key)) {
-        pair.second = value;
-        found = true;
-      }
-    }
-    if (!found)
-      this.bucket.add(new Pair<Integer, Integer>(key, value));
-  }
-
-  public void remove(Integer key) {
-    for (Pair<Integer, Integer> pair : this.bucket) {
-      if (pair.first.equals(key)) {
-        this.bucket.remove(pair);
-        break;
-      }
-    }
-  }
-}
 
 class MyHashMap {
-  private int key_space;
-  private List<Bucket> hash_table;
+    // constants
+    private static final int DEFAULT_VALUE = -1;
+    private static final int SEED = 33;
+    private static final int DEFAULT_KEY_SAPCE_SIZE = 2075;
+    
+    // fields
+    private int keySpace;
+    private int size;
+    private Bucket[] hashTable;
 
-  /** Initialize your data structure here. */
-  public MyHashMap() {
-    this.key_space = 2069;
-    this.hash_table = new ArrayList<Bucket>();
-    for (int i = 0; i < this.key_space; ++i) {
-      this.hash_table.add(new Bucket());
+    // inner classes
+    class Pair {
+        // fields
+        int key;
+        int value;
+        
+        // constructor
+        public Pair(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
     }
-  }
-
-  /** value will always be non-negative. */
-  public void put(int key, int value) {
-    int hash_key = key % this.key_space;
-    this.hash_table.get(hash_key).update(key, value);
-  }
-
-  /**
-   * Returns the value to which the specified key is mapped, or -1 if this map contains no mapping
-   * for the key
-   */
-  public int get(int key) {
-    int hash_key = key % this.key_space;
-    return this.hash_table.get(hash_key).get(key);
-  }
-
-  /** Removes the mapping of the specified value key if this map contains a mapping for the key */
-  public void remove(int key) {
-    int hash_key = key % this.key_space;
-    this.hash_table.get(hash_key).remove(key);
-  }
+    
+    class Bucket{
+        // fields
+        private List<Pair> bucketList;
+        
+        // constructor
+        public Bucket() {
+            this.bucketList = new LinkedList<>();
+        }
+        
+        // method
+        public Integer get(Integer key) {
+            Pair pair = search(key);
+            return pair == null ? DEFAULT_VALUE : pair.value;
+        }
+        
+        public void update(Integer key, Integer value) {
+            Pair pair = search(key);
+            if (pair != null) {
+                pair.value = value;
+                return;
+            }
+            
+            bucketList.add(new Pair(key, value));
+        }
+        
+        public void remove(Integer key) {
+            Pair value = search(key);
+            
+            if (value != null) {
+                bucketList.remove(value);
+            }
+        }
+        
+        // helper method
+        private Pair search(Integer key) {
+            Pair result = null;
+            
+            for (Pair pair : bucketList) {
+                if (key != pair.key) {
+                    continue;
+                }
+                
+                result = pair;
+                break;
+            }
+            
+            return result;
+        }
+    }
+    
+    // constructor
+    public MyHashMap() {
+        this.keySpace = DEFAULT_KEY_SAPCE_SIZE;
+        this.size = DEFAULT_KEY_SAPCE_SIZE;
+        
+        this.hashTable = new Bucket[size];
+        for (int i = 0; i < size; i++) {
+            this.hashTable[i] = new Bucket();
+        }
+        
+    }
+    
+    // methods
+    public void put(int key, int value) {
+        int hashKey = hash(key);
+        this.hashTable[hashKey].update(key, value);
+    }
+    
+    public int get(int key) {
+        int hashKey = hash(key);
+        return this.hashTable[hashKey].get(key);
+    }
+    
+    public void remove(int key) {
+        int hashKey = hash(key);
+        this.hashTable[hashKey].remove(key);
+    }
+    
+    // helper methods
+    private int hash(int key) {
+        return key * SEED % keySpace;
+    }
 }
 
 /**
