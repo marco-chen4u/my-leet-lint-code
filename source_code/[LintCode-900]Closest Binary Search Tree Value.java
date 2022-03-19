@@ -132,7 +132,6 @@ public class Solution {
         TreeSet<Integer> set = new TreeSet<>();
         dfs(root, set);
 
-        // corner case
         int value = (int)target;
         int lower =set.floor(value);
 
@@ -143,7 +142,7 @@ public class Solution {
         double lowDiff = Math.abs(target - lower);
         double upperDiff = Math.abs(upper - target);
 
-        int result = lowDiff < upperDiff ? lower : upper;
+        int result = (lowDiff < upperDiff) ? lower : upper;
         return result;
     }
 
