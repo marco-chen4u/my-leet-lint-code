@@ -26,7 +26,21 @@ Notice
  * }
  */
 //version-1: iteration + looping
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
 public class Solution {
+    private static final int MAX = Integer.MAX_VALUE;
+
     /**
      * @param root: the given BST
      * @param target: the given target
@@ -38,27 +52,34 @@ public class Solution {
 
         TreeNode current = root;
         while (current != null) {
-            if (target > current.val) {
-                lower = current;
-                current = current.right;
-                continue;
-            }
-
             if (target < current.val) {
                 upper = current;
                 current = current.left;
                 continue;
             }
 
-            if (current.val == target) {
+            if (target > current.val) {
+                lower = current;
+                current = current.right;
+                continue;
+            }
+
+            if (target == current.val) {
                 return current.val;
             }
         }
 
-        double lowerDiff = lower != null ? Math.abs(target - lower.val) : Integer.MAX_VALUE;
-        double upperDiff = upper != null ? Math.abs(upper.val - target) : Integer.MAX_VALUE;
+        double lowerDiff = lower != null ? getDiff(lower.val, target) : MAX;
+        double upperDiff = upper != null ? getDiff(upper.val, target) : MAX;
 
-        return lowerDiff < upperDiff ? lower.val : upper.val;
+        int result= lowerDiff < upperDiff ? lower.val : upper.val;
+
+        return result;
+    }
+
+    // helper method
+    private double getDiff(int val, double target) {
+        return Math.abs(target - val);
     }
 }
 
