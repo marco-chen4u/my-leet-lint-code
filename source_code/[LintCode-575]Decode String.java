@@ -125,45 +125,40 @@ public class Solution {
 
 //solution-3: no stack but with recursion
 public class Solution {
-    private final String EMPTY = "";
-    private final int DEFAULT_VALUE = -1;
-
     /**
      * @param s: an expression includes numbers, letters and brackets
      * @return: a string
      */
     public String expressionExpand(String s) {
-        // check corner case
+        // corner case
         if (s == null || s.isEmpty()) {
             return s;
         }
 
-        char[] charArray = s.toCharArray();
-        int size = charArray.length;
-        int index = 0;
-        int currentValue = 0;
-
         StringBuilder sb = new StringBuilder();
-
-        for (;index < size; index++) {
-            char ch = charArray[index];
-
-            if (isLetter(ch)) {
+        
+        int num = 0;
+        char[] chars = s.toCharArray();
+        int size = chars.length;
+        for (int index = 0; index < size; index++) {
+            char ch = chars[index];
+            if(Character.isLetter(ch)) {
                 sb.append(ch);
                 continue;
             }
 
-            if (isDigit(ch)) {
-                currentValue = currentValue * 10 + (ch - '0');
+            if (Character.isDigit(ch)) {
+                num = num * 10 + ch - '0';
                 continue;
             }
 
             if (isLeftBracket(ch)) {
-                int rightBracketPos = findPair(index, charArray);
+                int rightBracketPos = findPair(index, chars);
                 String str = s.substring(index + 1, rightBracketPos);
                 String stringValue = expressionExpand(str);
-                sb.append(getRepeat(currentValue, stringValue));
-                currentValue = 0;
+                sb.append(repeat(stringValue, num));
+
+                num = 0;//reset
                 index = rightBracketPos;
             }
         }
@@ -172,16 +167,46 @@ public class Solution {
     }
 
     // helper methods
-    private boolean isLetter(char ch) {
-        return Character.isLetter(ch);
+    private int findPair(int currentPos, char[] chars) {
+        if (currentPos < 0 || currentPos > chars.length) {
+            return -1; //default
+        }
+
+        int index = currentPos;
+        if (!isBracket(chars[index])) {
+            return index;
+        }
+
+        int bracketCount = 0;
+        for (;index < chars.length; index++) {
+            char ch = chars[index];
+            if (isLeftBracket(ch)) {
+                bracketCount += 1;
+                continue;
+            }
+
+            if (isRightBracket(ch)) {
+                bracketCount -= 1;
+
+                if (bracketCount == 0) {
+                    // found the pair
+                    break;
+                }
+                continue;
+            }
+        }
+
+        return index;
     }
 
-    private boolean isDigit(char ch) {
-        return Character.isDigit(ch);
-    }
+    private String repeat(String str, int count) {
+        StringBuilder sb = new StringBuilder();
 
-    private boolean isBracket(char ch) {
-        return isLeftBracket(ch) || isRightBracket(ch);
+        for (int i = 1; i <= count; i++) {
+            sb.append(str);
+        }
+
+        return sb.toString();
     }
 
     private boolean isLeftBracket(char ch) {
@@ -192,57 +217,7 @@ public class Solution {
         return ']' == ch;
     }
 
-    private String getRepeat(int num, String str) {
-        if (str == null) {
-            return str;
-        }
-
-        if (num == 0 || str.isEmpty()) {
-            return EMPTY;
-        }
-
-        if (num == 1) {
-            return str;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < num; i++) {
-            sb.append(str);
-        }
-
-        return sb.toString();
-    }
-
-    private int findPair(int currentPos, char[] charArray) {
-        if (currentPos < 0 || currentPos >= charArray.length) {
-            return DEFAULT_VALUE;
-        }
-
-        int index = currentPos;
-
-        if (!isBracket(charArray[index])) {
-            return index;
-        }
-
-        int bracketCount = 0;
-        for (; index < charArray.length; index++) {
-            char ch = charArray[index];
-
-            if (isLeftBracket(ch)) {
-                bracketCount ++;
-                continue;
-            }
-
-            if (isRightBracket(ch)) {
-                bracketCount --;
-
-                if (bracketCount == 0) {
-                    break;
-                }
-                
-            }
-        }
-
-        return index;
+    private boolean isBracket(char ch) {
+        return isLeftBracket(ch) || isRightBracket(ch);
     }
 }
