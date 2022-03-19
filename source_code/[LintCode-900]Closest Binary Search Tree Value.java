@@ -26,7 +26,7 @@ Notice
  *     }
  * }
  */
-//version-1: iteration:
+//version-1: iteration + looping
 public class Solution {
     /**
      * @param root: the given BST
@@ -63,19 +63,7 @@ public class Solution {
     }
 }
 
-//version-recursion
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- */
-
+//version-2: recursion
 public class Solution {
     /**
      * @param root: the given BST
@@ -131,5 +119,54 @@ public class Solution {
         }
 
         return node;
+    }
+}
+//version-3: TreeSet
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param root: the given BST
+     * @param target: the given target
+     * @return: the value in the BST that is closest to the target
+     */
+    public int closestValue(TreeNode root, double target) {
+        TreeSet<Integer> set = new TreeSet<>();
+        dfs(root, set);
+
+        // corner case
+        int value = (int)target;
+        int lower =set.floor(value);
+
+        int biggest = set.last();
+
+        int upper = (value == Integer.MAX_VALUE || value == biggest) ? biggest: set.ceiling(value + 1);
+
+        double lowDiff = Math.abs(target - lower);
+        double upperDiff = Math.abs(upper - target);
+
+        int result = lowDiff < upperDiff ? lower : upper;
+        return result;
+    }
+
+    // helper methods
+    private void dfs(TreeNode node, TreeSet<Integer> set) {
+        if (node == null) {
+            return;
+        }
+
+        dfs(node.left, set);
+        set.add(node.val);
+        dfs(node.right, set);
     }
 }
