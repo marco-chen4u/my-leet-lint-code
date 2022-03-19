@@ -80,20 +80,20 @@ public class Solution {
      */
     public int[] intersection(int[] nums1, int[] nums2) {
         if (isEmpty(nums1)) {
-	       return nums1;
-	    }
+           return nums1;
+        }
 
-	    if (isEmpty(nums2)) {
+        if (isEmpty(nums2)) {
             return nums2;
-	    }
+        }
 
-	    quickSort(nums1, 0, nums1.length - 1);
-	    quickSort(nums2, 0, nums2.length - 1);
+        quickSort(nums1, 0, nums1.length - 1);
+        quickSort(nums2, 0, nums2.length - 1);
 
         int i = 0;
-	    int j = 0;
+        int j = 0;
 
-	    List<Integer> values = new ArrayList<>();
+        List<Integer> values = new ArrayList<>();
 
         while (i < nums1.length && j < nums2.length) {
             if (nums1[i] < nums2[j]) {
@@ -120,24 +120,25 @@ public class Solution {
         return result;
     }
 
-    // helper method
+    // helper methods
     private boolean isEmpty(int[] nums) {
-	    return nums == null || nums.length == 0;
-    }	
+        return nums == null || nums.length == 0;
+    }
+
     private void quickSort(int[] nums, int start, int end) {
-	    if (start >= end) {
-		    return;
-	    }
+	if (start >= end) {
+	    return;
+	}
 
-	    int left = start;
-	    int right = end;
+        int left = start;
+        int right = end;
 
-	    int mid = left + (right - left) / 2;
-	    int pivot = nums[mid];
+        int mid = left + (right - left) / 2;
+        int pivot = nums[mid];
 
-	    while (left <= right) {
-		    while (left <= right && nums[left] < pivot) {
-        	    left++;
+        while (left <= right) {
+	    while (left <= right && nums[left] < pivot) {
+       	        left++;
             }
 
             while (left <= right && nums[right] > pivot) {
