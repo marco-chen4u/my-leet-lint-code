@@ -78,7 +78,7 @@ public class Solution {
     
     private void quickSort(int[] nums, int start, int end, int k) {
         // check corner case
-        if (start >= end) {
+        if (start >= end || start >= k) {
             return;
         }
         
