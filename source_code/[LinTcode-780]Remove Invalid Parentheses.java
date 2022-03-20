@@ -1,26 +1,28 @@
 /***
 * LinTcode 780. Remove Invalid Parentheses
-Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+Remove the minimum number of invalid parentheses in order to make the input string valid. 
+Return all possible results.
 
-Example
-	Example 1:
-		Input:
-			"()())()"
-		Ouput:
-			["(())()","()()()"]
-	Example 2:
-		Input:
-			"(a)())()"
-		Output:
-			["(a)()()", "(a())()"]
-	Example 3:
-		Input:
-			")(" 
-		Output:
-			[""]
+Example 1:
+    Input:
+        "()())()"
+    Ouput:
+        ["(())()","()()()"]
+
+Example 2:
+    Input:
+        "(a)())()"
+    Output:
+        ["(a)()()", "(a())()"]
+
+Example 3:
+    Input:
+        ")(" 
+    Output:
+        [""]
  
 Notice
-	The input string may contain letters other than the parentheses ( and ).
+    The input string may contain letters other than the parentheses ( and ).
 ***/
 public class Solution {
     // field
@@ -63,16 +65,16 @@ public class Solution {
         return result;
     }
     
-    // helper method
+    // helper methods
     private boolean isLeftBracket(char ch) {
         return '(' == ch;
     }
-    
+
     private boolean isRightBracket(char ch) {
         return ')' == ch;
     }
-	
-	private boolean isValidParenthese(String str) {
+
+    private boolean isValidParenthese(String str) {
         int count = 0;
         for (char ch : str.toCharArray()) {
             if (isLeftBracket(ch)) {
@@ -103,7 +105,7 @@ public class Solution {
             return;
         }
         
-		// normal case
+        // normal case
         for (int i = startIndex; i < str.length(); i++) {
             char currentChar = str.charAt(i);
             char preChar = (i > 0) ? str.charAt(i - 1) : DEFAULT_VALUE;
