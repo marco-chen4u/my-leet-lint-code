@@ -105,32 +105,28 @@ public class Solution {
         visited[x][y] = true;
 
         while (!queueX.isEmpty()) {
-            int size = queueX.size();
-            
-            for (int i = 0; i < size; i++) {
-                int currentX = queueX.poll();
-                int currentY = queueY.poll();
+            int currentX = queueX.poll();
+            int currentY = queueY.poll();
 
-                int distanceX = currentX - originX;
-                int distanceY = currentY - originY;
-                sb.append(distanceX + SEPERATOR + distanceY);
+            int distanceX = currentX - originX;
+            int distanceY = currentY - originY;
+            sb.append(distanceX + SEPERATOR + distanceY);
 
-                for (int index = 0; index < 4; index++) {
-                    int nextX = currentX + directionX[index];
-                    int nextY = currentY + directionY[index];
+            for (int index = 0; index < 4; index++) {
+                int nextX = currentX + directionX[index];
+                int nextY = currentY + directionY[index];
 
-                    if (nextX < 0 || nextX >= n || nextY < 0 || nextY >= m) {
-                        continue;
-                    }
-
-                    if (visited[nextX][nextY] || grid[nextX][nextY] == SEA) {
-                        continue;
-                    }
-
-                    visited[nextX][nextY] = true;
-                    queueX.offer(nextX);
-                    queueY.offer(nextY);
+                if (nextX < 0 || nextX >= n || nextY < 0 || nextY >= m) {
+                    continue;
                 }
+
+                if (visited[nextX][nextY] || grid[nextX][nextY] == SEA) {
+                    continue;
+                }
+
+                visited[nextX][nextY] = true;
+                queueX.offer(nextX);
+                queueY.offer(nextY);
             }
         }
 
