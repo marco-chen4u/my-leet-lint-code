@@ -48,6 +48,8 @@ Example 5:
     Output: "MCMXCIV"
     Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 ***/
+
+//version-1: TreeMap(reverse-order) + calculation
 public class Solution {
     /**
      * @param n: The integer
@@ -94,46 +96,4 @@ public class Solution {
     }
 }
 
-public class Solution {
-    /**
-     * @param n: The integer
-     * @return: Roman representation
-     */
-    public String intToRoman(int n) {
-        String result = "";
-        
-        NavigableMap<Integer, String> intToRomanMap = initializeIntToRomanMap();
-        //intToRomanMap.entrySet().stream().forEach(System.out::println);
-        for (Map.Entry<Integer, String> entry : intToRomanMap.entrySet()) {
-            while (n - entry.getKey() >= 0) {
-                result += entry.getValue();
-                n -= entry.getKey();
-            }
-        }
-        
-        return result;
-    }
-    
-    // helper method
-    private NavigableMap<Integer, String> initializeIntToRomanMap() {
-        NavigableMap<Integer, String> map = new TreeMap<Integer, String>(Collections.reverseOrder());
-        
-        map.put(1000, "M");
-        map.put(900, "CM");
-        map.put(500, "D");
-        map.put(400, "CD");
-        map.put(100, "C");
-        map.put(90, "XC");
-        map.put(50, "L");
-        map.put(40, "XL");
-        map.put(10, "X");
-        map.put(9, "IX");
-        map.put(5, "V");
-        map.put(4, "IV");
-        map.put(1, "I");
-        
-        //map = map.descendingMap();
 
-        return map;
-    }
-}
