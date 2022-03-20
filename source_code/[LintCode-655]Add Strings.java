@@ -128,8 +128,7 @@ public class Solution {
             
             i++;
             j++;
-        }
-        
+        }        
         
         String result = String.valueOf(digits);
         result = (carry > 0) ? result + carry : result;
