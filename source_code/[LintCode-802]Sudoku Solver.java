@@ -211,3 +211,88 @@ public class Solution {
         return true;
     }
 }
+
+//vresion-3: dfs + memorized search
+public class Solution {
+    // constants
+    private static final int EMPTY = 0;
+    private static final int GOOD = 1;
+    private static final int BAD = 2;
+
+    // fields
+    private int n; // row size
+    private int m; // column size
+
+    /**
+     * @param board: the sudoku puzzle
+     * @return: nothing
+     */
+    public void solveSudoku(int[][] board) {
+        n = board.length;
+        m = board[0].length;
+        int[][] visited = new int[n + 1][m + 1];
+        boolean result = dfs(board, visited, 0, 0);
+    }
+
+    // helper methods
+    private boolean dfs(int[][] board, int[][] visited, int x, int y) {
+        if (GOOD == visited[x][y]) {
+            return true;
+        }
+        
+        int currentX = x;
+        int currentY = y;
+
+        while (currentX < 9 && currentY < 9 && 
+                board[currentX][currentY] != EMPTY) {
+            currentX = currentX + currentY / 8;
+            currentY = (currentY + 1) % 9;
+        }
+
+        // corner case
+        if (currentX == 9) {
+            visited[x][y] = GOOD;
+            return true;
+        }
+
+        for (int value = 1; value <= 9; value ++) {
+            if (!isSudoku(board, currentX, currentY, value)) {
+                continue;
+            }
+
+            board[currentX][currentY] = value;
+            int nextX = currentX + (currentY / 8);
+            int nextY = (currentY + 1) % 9;
+            if (dfs(board, visited, nextX, nextY)) {
+                visited[x][y] = GOOD;
+                return true;
+            }
+            board[currentX][currentY] = EMPTY;//back tracking
+        }
+
+        visited[x][y] = BAD;
+        return false;
+    }
+
+    private boolean isSudoku(int[][] board, int x, int y, int value) {
+        // check cross position with row-wise & column-wise if there's a duplicate with value
+        for (int i = 0; i < 9; i++) {
+            if (board[x][i] == value || board[i][y] == value) {
+                return false;
+            }
+        }
+
+        int rowOffset = (x / 3) * 3;
+        int columnOffset = (y / 3) * 3;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[rowOffset + i][columnOffset + j] == value) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+}
