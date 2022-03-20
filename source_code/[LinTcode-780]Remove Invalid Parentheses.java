@@ -19,8 +19,7 @@ Example 3:
     Input:
         ")(" 
     Output:
-        [""]
- 
+        [""] 
 Notice
     The input string may contain letters other than the parentheses ( and ).
 ***/
