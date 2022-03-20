@@ -20,6 +20,7 @@ Notice
 * (3)完成二路归并求和操作后，查看进位值carry是否 > 0,则说明存在进位值，得把进位值进行添加到数组末端。
 * （4）把二路归并和处理完进位值添加操作后，把整个结果字符串进行取反操作，并范围String 类型结果
 */
+//version-1: reverse characters + merge to arrays
 public class Solution {
     /**
      * @param num1: a non-negative integers
@@ -68,6 +69,67 @@ public class Solution {
             
             j++;
         }
+        
+        String result = String.valueOf(digits);
+        result = (carry > 0) ? result + carry : result;
+        
+        //System.out.println(result);
+        result = reverse(result);
+        
+        return result;
+    }
+    
+    private String reverse(String str) {
+        char[] charArray = str.toCharArray();
+        int size = charArray.length;
+        int left = 0; 
+        int right = size - 1;
+        
+        while (left < right) {
+            char tmp = charArray[left];
+            charArray[left] = charArray[right];
+            charArray[right] = tmp;
+            
+            left++;
+            right--;
+        }
+        
+        return String.valueOf(charArray);
+    }
+}
+
+//version: reverse + merge
+public class Solution {
+    /**
+     * @param num1: a non-negative integers
+     * @param num2: a non-negative integers
+     * @return: return sum of num1 and num2
+     */
+    public String addStrings(String num1, String num2) {
+        char[] numArray1 = reverse(num1).toCharArray();
+        char[] numArray2 = reverse(num2).toCharArray();
+        
+        int size1 = numArray1.length;
+        int size2 = numArray2.length;
+        int size = Math.max(size1, size2);
+        char[] digits = new char[size];
+        
+        int i = 0;
+        int j = 0;
+        
+        int carry = 0;
+        int index = 0;
+        while (i < size1 || j < size2) {
+            int value1 = i < size1 ? numArray1[i] - '0' : 0;
+            int value2 = j < size2 ? numArray2[j] - '0' : 0;
+            int sum = value1 + value2 + carry;
+            digits[index++] = (char)((sum % 10) + '0');
+            carry = sum / 10;
+            
+            i++;
+            j++;
+        }
+        
         
         String result = String.valueOf(digits);
         result = (carry > 0) ? result + carry : result;
