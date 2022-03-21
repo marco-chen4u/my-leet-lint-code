@@ -49,7 +49,7 @@ Example 2:
 // BFS
 public class Solution {
     // constants
-    private static final int[] directionX = new int[] {1,1,-1,-1,2,2,-2,2};
+    private static final int[] directionX = new int[] {1,1,-1,-1,2,2,-2,-2};
     private static final int[] directionY = new int[] {2,-2,2,-2,1,-1,1,-1};
 
     /**
