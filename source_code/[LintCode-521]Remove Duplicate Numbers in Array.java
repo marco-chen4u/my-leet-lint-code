@@ -68,7 +68,6 @@ public class Solution {
      * @return: the number of unique integers
      */
     public int deduplication(int[] nums) {
-        // check corner case
         if (nums == null || nums.length == 0) {
             return 0;
         }
@@ -77,22 +76,15 @@ public class Solution {
             return 1;
         }
 
-        int size = nums.length;
-
         Arrays.sort(nums);
-        
-        int left = 0;
-        for (int i = 0; i < size; i++) {
-            while (i < size && nums[i] == nums[left]) {
-                i++;
-            }
 
-            if (i < size && nums[i] != nums[left]) {
-                left++;
-                nums[left] = nums[i];                
+        int left = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[left]) {
+                nums[++left] = nums[i];
             }
         }
 
-        return left + 1;
+        return left + 1;// it's 0 based index, so we need to add 1 for the actual size
     }
 }
