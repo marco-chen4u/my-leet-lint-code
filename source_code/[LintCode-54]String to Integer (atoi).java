@@ -23,44 +23,49 @@ Example 4
     Output: 1
     Explanation: We just need to change the first vaild number
 ***/
+
+//version-1: String, enumeration, calculation by number postion
 public class Solution {
-    public int atoi(String str) {
-        double result = 0;
-        int maxValue = Integer.MAX_VALUE;
-        int minValue = Integer.MIN_VALUE;
-        // check corner case
-        str = str.trim();
-        if (str == null || str.length() == 0) {
+    private static final int MAX = Integer.MAX_VALUE;
+    private static final int MIN = Integer.MIN_VALUE;
+
+    /**
+     * @param s: A string
+     * @return: An integer
+     */
+    public int atoi(String s) {
+        // corner case
+        if (s == null || s.isEmpty()) {
             return 0;
         }
-        
-        int startIndex = 0;
-        int i = 0;
-        boolean isNegative = false;
-        if (str.charAt(i) == '-' || str.charAt(i) == '+') {
-            startIndex++;
-            isNegative = (str.charAt(i) == '-') ? true : false;
-        }
-        
-        for (i = startIndex; i < str.length(); i++) {
-            if (!Character.isDigit(str.charAt(i))) {
+
+        s = s.trim();
+        char[] chars = s.toCharArray();
+        int size = chars.length;
+
+        int startIndex = (chars[0] == '+' || chars[0] == '-') ? 1 : 0;
+        boolean isNegative = chars[0] == '-';
+
+        double value = 0;
+        int result = 0;
+
+        for (int i = startIndex; i < size; i++) {
+            char ch = chars[i];
+
+            if (!Character.isDigit(ch)) {
                 break;
             }
-            
-            result = result * 10 + (str.charAt(i) - '0');
+
+            value = value * 10 + (ch - '0');
         }
-        
-        if (result > maxValue && isNegative) {
-            return minValue;
-        }        
-        if (result > maxValue) {
-            return maxValue;
+
+        if (value > MAX) {
+            result = isNegative ? MIN : MAX;
+            return result;
         }
-        
-        if (isNegative) {
-            result = result * -1;
-        }
-        
-        return (int) result;
+
+        result = isNegative ? -(int)value : (int)value;
+
+        return result;
     }
 }
