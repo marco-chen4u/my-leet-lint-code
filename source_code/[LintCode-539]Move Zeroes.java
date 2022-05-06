@@ -197,3 +197,43 @@ public class Solution {
         nums[j] = tmp;
     }
 }
+
+//version-6: two pointers, same-direciton, more elegant.
+public class Solution {
+    /**
+     * @param nums: an integer array
+     * @return: nothing
+     */
+    public void moveZeroes(int[] nums) {
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
+
+        int index = 0;
+        int left = 0;
+
+        for (; index < nums.length; index++) {
+            int current = nums[index];
+            if (current == 0){
+                continue;
+            }
+
+            swap(nums, left, index);
+            left++;
+        }
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        if (i == j) {
+            return;
+        }
+
+        if (nums[i] == nums[j]) {
+            return;
+        }
+
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
