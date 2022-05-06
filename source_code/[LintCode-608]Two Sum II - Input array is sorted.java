@@ -7,16 +7,16 @@ The function twoSum should return indices of the two numbers such that they add 
 where index1 must be less than index2. 
 Please note that your returned answers (both index1 and index2) are not zero-based.
 
-Example
-	Example 1:
-		Input: nums = [2, 7, 11, 15], target = 9 
-		Output: [1, 2]
-	Example 2:
-		Input: nums = [2,3], target = 5
-		Output: [1, 2]
+Example 1:
+    Input: nums = [2, 7, 11, 15], target = 9 
+    Output: [1, 2]
+
+Example 2:
+    Input: nums = [2,3], target = 5
+    Output: [1, 2]
 
 Notice
-	You may assume that each input would have exactly one solution.
+    You may assume that each input would have exactly one solution.
 ***/
 public class Solution {
     /**
@@ -25,7 +25,7 @@ public class Solution {
      * @return: [index1 + 1, index2 + 1] (index1 < index2)
      */
     public int[] twoSum(int[] nums, int target) {
-        int[] result = new int[2];
+        int[] result = new int[0];
         // check corner cases
         if (nums == null || nums.length == 0 || target < nums[0]) {
             return result;
@@ -43,8 +43,7 @@ public class Solution {
                 left++;
             }
             else {
-                result[0] = left + 1;
-                result[1] = right + 1;
+                result = new int[] {left + 1, right + 1};
                 break;
             }
         }
