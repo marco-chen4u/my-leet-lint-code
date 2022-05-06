@@ -38,11 +38,15 @@ public class Solution {
             int twoSum = nums[left] + nums[right];
             if (twoSum > target) {
                 right--;
+                continue;
             }
-            else if (twoSum < target) {
+            
+            if (twoSum < target) {
                 left++;
+                continue;
             }
-            else {
+            
+            if (twoSum == target){
                 result = new int[] {left + 1, right + 1};
                 break;
             }
