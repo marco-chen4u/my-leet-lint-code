@@ -21,36 +21,40 @@ Example
 // solution-1
 public class Solution {
     /**
-     * @param S: A list of integers
+     * @param nums: A list of integers
      * @return: An integer
      */
-    public int triangleCount(int[] S) {
-        // check corner case
-        if (S == null || S.length <= 3) {
+    public int triangleCount(int[] nums) {
+        if (nums == null || nums.length < 3) {
             return 0;
         }
-        
-        Arrays.sort(S);
-        
-        int result = 0;
-        for (int i = 2; i < S.length; i++) {
+
+        Arrays.sort(nums);
+        int size = nums.length;
+
+        int count = 0;
+        for (int i = 2; i < size; i++) {
+            int target = nums[i];
+
             int left = 0;
             int right = i - 1;
-            
+
             while (left < right) {
-                int twoSum = S[left] + S[right];
-                if (twoSum > S[i]) {
-                    result += right - left;
-                    
-                    right --;
+                int sum = nums[left] + nums[right];
+
+                if (sum <= target) {
+                    left++;
+                    continue;
                 }
-                else {
-                    left ++;
+
+                if (sum > target) {
+                    count += right - left;
+                    right--;
                 }
             }
         }
-        
-        return result;
+
+        return count;
     }
 }
 
