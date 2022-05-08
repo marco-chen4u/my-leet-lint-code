@@ -42,7 +42,7 @@ public class Solution {
         return result;
     }
 	
-	// helper method
+    // helper method
     private int partition(int[] nums, int start, int end, int k) {
         if (start == end) {
             return nums[start];
