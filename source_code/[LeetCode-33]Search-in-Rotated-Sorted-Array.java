@@ -123,6 +123,7 @@ class Solution {
         return -1;
     }
 }
+
 //version-2
 class Solution {
     public int search(int[] nums, int target) {
@@ -163,6 +164,41 @@ class Solution {
             return end;
         }
         
+        return -1;
+    }
+}
+
+//version-3: binary search + pivot with hte last element
+public class Solution {
+    /**
+     * @param nums: a rotated sorted array
+     * @return: the minimum number in the array
+     */
+    public int findMin(int[] nums) {
+        int size = nums.length;
+        int left = 0;
+        int right = size - 1;
+        int pivot = nums[right];
+
+        while (left + 1 < right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] >= pivot) {
+                left = mid;
+            }
+            else {
+                right = mid;
+            }
+        }
+
+        if (nums[left] <= pivot) {
+            return nums[left];
+        }
+
+        if (nums[right] <= pivot) {
+            return nums[right];
+        }
+
         return -1;
     }
 }
