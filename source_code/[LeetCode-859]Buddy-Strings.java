@@ -81,16 +81,6 @@ class Solution {
         return false;
     }
 
-    private boolean isSameCharacter(String str) {
-        Set<Character> set = new HashSet<>();
-        
-        for (char ch : str.toCharArray()) {
-            set.add(ch);
-        }
-
-        return set.size() == 1;
-    }
-
     private int[] getDiffPos(char[] a, char[] b) {
         int[] result = new int[0];
         int sizeA = a.length;
