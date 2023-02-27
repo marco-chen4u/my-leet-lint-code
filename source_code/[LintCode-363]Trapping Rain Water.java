@@ -24,37 +24,49 @@ public class Solution {
      */
     public int trapRainWater(int[] heights) {
         int result = 0;
-        // check corner case
-        if (heights == null || heights.length == 0) {
+        // corner case
+        if (heights == null || heights.length <= 1) {
             return result;
         }
-        
-        int left = 0, right = heights.length - 1;
-        int leftHeight = heights[left], rightHeight = heights[right];
-        
-        while (1 + left < right) {
-            if (leftHeight < rightHeight) {
-                left++;
+
+        // regular case
+        int size = heights.length;
+        int left = 0;
+        int leftHeight = heights[left];
+        int right = size - 1;
+        int rightHeight = heights[right];
+
+        while (left + 1 < right) {
+            if (leftHeight < rightHeight) {//moving the left part
                 
-                if (leftHeight < heights[left]) {
-                    leftHeight = heights[left];
-                }
-                else {
+                left++;
+
+                if (leftHeight > heights[left]) {
                     result += leftHeight - heights[left];
                 }
-            }
-            else {
-                right--;
-                
-                if (rightHeight < heights[right]) {
-                    rightHeight = heights[right];
-                }
                 else {
+                    leftHeight = heights[left];
+                }
+
+                continue;
+            }
+
+            if (leftHeight >= rightHeight) {// moving the right part
+
+                right--;
+
+                if (rightHeight > heights[right]) {
                     result += rightHeight - heights[right];
                 }
+                else {
+                    rightHeight = heights[right];
+                }
+
+
+                continue;
             }
         }
-        
+
         return result;
     }
 }
