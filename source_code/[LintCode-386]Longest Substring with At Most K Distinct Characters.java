@@ -14,51 +14,44 @@ Example
 Challenge
     O(n) time
 ***/
+//version-1: time-complexity[O(n)]
 public class Solution {
     /**
      * @param s: A string
      * @param k: An integer
      * @return: An integer
      */
-    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+public int lengthOfLongestSubstringKDistinct(String s, int k) {
         int result = 0;
         // check corner cases
         if (s == null || s.length() == 0 || k < 1) {
             return result;
         }		
-        
+
         int size = s.length();
         if (k > size) {
             return size;
         }
 
         Map<Character, Integer> map = new HashMap<Character, Integer>();
-        int i, j = 0;
-        for (i = 0; i < size; i++) {
-            while (j < size) {
-                char current = s.charAt(j);
-                if (map.containsKey(current)) {
-                    map.put(current, map.get(current) + 1);
-                }
-                else {
-                    if (map.size() == k) {
-                        break;
-                    }
+        int left = 0;
+        int right = 0;
+        for (; left < size; left++) {
+            while (right < size && (map.containsKey(s.charAt(right)) || map.size() < k)) {
+                char current = s.charAt(right);
 
-                    map.put(current, 1);
-                }
+                map.put(current, map.getOrDefault(current, 0) + 1);
 
-                j++;
+                right++;
             }
 
-            result = Math.max(result, j - i);
+            result = Math.max(result, right - left);
 
-            char key = s.charAt(i);
+            char key = s.charAt(left);
             int count = map.get(key);
-            if (count > 1) {
-                map.put(key, count - 1);
-            }
-            else {
+            count -=1;
+            map.put(key, count);
+            if (count == 0) {
                 map.remove(key);
             }
         }
