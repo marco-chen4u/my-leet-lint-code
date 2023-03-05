@@ -2,86 +2,86 @@
 * LintCode 32. Minimum Window Substring
 Given two strings source and target. Return the minimum substring of source which contains each char of target.
 Example
-	Example 1:
-		Input: source = "abc", target = "ac"
-		Output: "abc"
+    Example 1:
+        Input: source = "abc", target = "ac"
+        Output: "abc"
 
-	Example 2:
-		Input: source = "adobecodebanc", target = "abc"
-		Output: "banc"
-		Explanation: "banc" is the minimum substring of source string which contains each char of target "abc".
+    Example 2:
+        Input: source = "adobecodebanc", target = "abc"
+        Output: "banc"
+        Explanation: "banc" is the minimum substring of source string which contains each char of target "abc".
 
-	Example 3:
-		Input: source = "abc", target = "aa"
-		Output: ""
-		Explanation: No substring contains two 'a'.
+    Example 3:
+        Input: source = "abc", target = "aa"
+        Output: ""
+        Explanation: No substring contains two 'a'.
 Challenge
-	O(n) time
+    O(n) time
 Notice
-	1.If there is no answer, return "".
-	2.You are guaranteed that the answer is unique.
-	3.target may contain duplicate char, while the answer need to contain at least the same number of that char.
+    1.If there is no answer, return "".
+    2.You are guaranteed that the answer is unique.
+    3.target may contain duplicate char, while the answer need to contain at least the same number of that char.
 ***/
 //version-1 (O(n + 255)
 public class Solution {
-	private final int MAX_SIZE = 256;
+    private final int MAX_SIZE = 256;
 	
     /**Main Method**/
     public String minWindow(String source , String target) {
-		String result = "";
-		int min = Integer.MAX_VALUE;
-		// check corner cases
-		if (source == null || source.length() == 0) {
-			return result;
-		}		
-		if (target == null || target.length() == 0) {
-			return source;
-		}
+        String result = "";
+        int min = Integer.MAX_VALUE;
+        // check corner cases
+        if (source == null || source.length() == 0) {
+            return result;
+        }		
+        if (target == null || target.length() == 0) {
+            return source;
+        }
 		
-		int[] targetHash = initializeHash(target);
-		int[] sourceHash = new int[MAX_SIZE];
-		int size = source.length();
-		
-		int i = 0, j = 0;//two pointers
-		for (i = 0; i < size; i++) {
-			while (j < size && !isIncluded(sourceHash, targetHash)) {
-				sourceHash[source.charAt(j)] ++;				
-				j++;
-			}
-			
-			if (isIncluded(sourceHash, targetHash)) {
-				int currentWindowSize = j - i;
-				if (currentWindowSize < min) {
-					min = currentWindowSize;
-					result = source.substring(i, j);
-				}
-			}
-			
-			sourceHash[source.charAt(i)] --;
-		}
-		
-		return result;
-	}
+        int[] targetHash = initializeHash(target);
+        int[] sourceHash = new int[MAX_SIZE];
+        int size = source.length();
+
+        int i = 0, j = 0;//two pointers
+        for (i = 0; i < size; i++) {
+            while (j < size && !isIncluded(sourceHash, targetHash)) {
+                sourceHash[source.charAt(j)] ++;				
+                j++;
+            }
+
+            if (isIncluded(sourceHash, targetHash)) {
+                int currentWindowSize = j - i;
+                if (currentWindowSize < min) {
+                    min = currentWindowSize;
+                    result = source.substring(i, j);
+                }
+            }
+
+            sourceHash[source.charAt(i)] --;
+        }
+
+        return result;
+    }
 	
-	// helper methods
-	private int[] initializeHash(String value) {
-		int[] hash = new int[MAX_SIZE];
-		for (char ch : value.toCharArray()) {
-			hash[ch]++;
-		}
-		
-		return hash;
-	}
+    // helper methods
+    private int[] initializeHash(String value) {
+        int[] hash = new int[MAX_SIZE];
+        for (char ch : value.toCharArray()) {
+            hash[ch]++;
+        }
+
+        return hash;
+    }
 	
-	private boolean isIncluded(int[] sourceHash, int[] targetHash) {
-		for (int i = 0; i < MAX_SIZE; i++) {
-			if (sourceHash[i] < targetHash[i]) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
+    private boolean isIncluded(int[] sourceHash, int[] targetHash) {
+        for (int i = 0; i < MAX_SIZE; i++) {
+            if (sourceHash[i] < targetHash[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
 //version-2 (O(n))
