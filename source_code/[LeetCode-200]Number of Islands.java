@@ -34,38 +34,6 @@ class Solution {
         }
     }
     
-    // helper method
-    private void findIsland(char[][] grid, int x, int y) {        
-        int n = grid.length; // row size
-        int m = grid[0].length; // column size
-        
-        int[] directionX = new int[] {1, 0, 0, -1};
-        int[] directionY = new int[] {0, 1, -1, 0};
-        
-        grid[x][y] = '0';
-        Stack<Point> stack = new Stack<Point>();
-        Point point = new Point(x, y);
-        stack.push(point);
-        
-        while (!stack.isEmpty()) {
-            Point current = stack.pop();
-            
-            for (int i = 0; i < 4; i++) {
-                int nextX = current.x + directionX[i];
-                int nextY = current.y + directionY[i];
-                
-                if (nextX >= 0 && nextX < n &&
-                    nextY >= 0 && nextY < m &&
-                    grid[nextX][nextY] == '1') {
-                    grid[nextX][nextY] = '0'; // marked as visited
-                    Point next = new Point(nextX, nextY);
-                    stack.push(next);
-                }
-            }
-        }
-        
-    }
-    
     // main method
     public int numIslands(char[][] grid) {
         int count = 0;
@@ -88,6 +56,38 @@ class Solution {
         }
         
         return count;
+    }
+	
+    // helper method
+    private void findIsland(char[][] grid, int x, int y) {        
+        int n = grid.length; // row size
+        int m = grid[0].length; // column size
+        
+        int[] directionX = new int[] {1, 0, 0, -1};
+        int[] directionY = new int[] {0, 1, -1, 0};
+        
+        grid[x][y] = '0';
+        Queue<Point> queue = new LinkedList<Point>();
+        Point point = new Point(x, y);
+        queue.offer(point);
+        
+        while (!queue.isEmpty()) {
+            Point current = queue.poll();
+            
+            for (int i = 0; i < 4; i++) {
+                int nextX = current.x + directionX[i];
+                int nextY = current.y + directionY[i];
+                
+                if (nextX >= 0 && nextX < n &&
+                    nextY >= 0 && nextY < m &&
+                    grid[nextX][nextY] == '1') {
+                    grid[nextX][nextY] = '0'; // marked as visited
+                    Point next = new Point(nextX, nextY);
+                    queue.offer(next);
+                }
+            }
+        }
+        
     }
 }
 
