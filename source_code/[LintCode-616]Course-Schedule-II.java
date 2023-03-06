@@ -17,63 +17,69 @@ Example
 	Output: [0,1,2,3] or [0,2,1,3]
 ***/
 public class Solution {
-    /*
+    /**
      * @param numCourses: a total of n courses
      * @param prerequisites: a list of prerequisite pairs
      * @return: the course order
      */
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] result = new int[0];//default value
-        
-        // check corner case
-        if (numCourses == 0) {
-            return result;
-        }
-        
-        // initialize
-        List[] edges = new ArrayList[numCourses];
+	// cornrer case
+	if (numCourses == 0) {
+            return new int[0];// default value
+	}
+
+        // build up a graph with indegree and it's edge relationships
         int[] indegree = new int[numCourses];
-        
+        List<Integer>[] edges = new List[numCourses];
+
         for (int i = 0; i < numCourses; i++) {
             edges[i] = new ArrayList<Integer>();
-            indegree[i] = 0;
         }
-        
-        // building a graph
+
         for (int[] prerequisite : prerequisites) {
-            edges[prerequisite[1]].add(prerequisite[0]);
-            indegree[prerequisite[0]]++;
+            int from = prerequisite[1];
+            int to = prerequisite[0];
+
+            indegree[to]++;
+            edges[from].add(to);
         }
-        
-        Queue<Integer> queue = new LinkedList<Integer>();
-        // looking for 0-indegree to in-queue
-        for (int i = 0; i < indegree.length; i++) {
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
             if (indegree[i] == 0) {
                 queue.offer(i);
             }
         }
-        
-        int[] courseOrder = new int[numCourses];
+
+        int count = 0;
+
         int index = 0;
-        // traverse the graph by BFS
+        int[] result = new int[numCourses];
+
+	// BFS
         while (!queue.isEmpty()) {
             int current = queue.poll();
-            courseOrder[index++] = current;
-            int size = edges[current].size();
-            for (int i = 0; i < size; i++) {
-                int next = (int)edges[current].get(i);
+
+            count += 1;
+
+            result[index++] = current;
+
+            for (int next : edges[current]) {
+
                 indegree[next]--;
-                
+
                 if (indegree[next] == 0) {
                     queue.offer(next);
                 }
+
             }
         }
         
-        if (index == numCourses) {
-            return courseOrder;
+        if (count == numCourses) {
+            return result;
         }
-        
-        return result;
+
+        return new int[]{0};// default value
     }
 }
+
