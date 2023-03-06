@@ -48,9 +48,8 @@ Example 2:
  */
 // BFS
 public class Solution {
-    // constants
-    private static final int[] directionX = new int[] {1,1,-1,-1,2,2,-2,-2};
-    private static final int[] directionY = new int[] {2,-2,2,-2,1,-1,1,-1};
+    private static final int[] directionX = {1, 1, -1, -1, 2, 2, -2, -2};
+    private static final int[] directionY = {2, -2, 2, -2, 1, -1, 1, -1};
 
     /**
      * @param grid: a chessboard included 0 (false) and 1 (true)
@@ -59,69 +58,48 @@ public class Solution {
      * @return: the shortest path 
      */
     public int shortestPath(boolean[][] grid, Point source, Point destination) {
-        int result = -1; // default value
+        
+        int m = grid.length; // row size
+        int n = grid[0].length; // col size
 
-        // check corner cases
-        if (grid == null || grid.length == 0 || grid[0] == null || grid[0].length == 0) {
-            return result;
-        }
+        boolean[][] visited = new boolean[m][n];
 
-        if (source == null || destination == null) {
-            return result;
-        }
+        Queue<Point> queue = new LinkedList<>();
+        queue.offer(source);
+        visited[source.x][source.y] = true;
 
-        if (source.x == destination.x && source.y == destination.y) {
-            return 0;
-        }
+        int step = 0;
 
-        // normal case
-        Queue<Point> queue = new LinkedList<Point>();
-        Point current = source;
-
-        queue.offer(current);
-
-        int steps = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
+
             for (int i = 0; i < size; i++) {
-                current = queue.poll();
-                
+                Point current = queue.poll();
+
                 if (current.x == destination.x && current.y == destination.y) {
-                    result = steps;
-                    return result;
+                    return step;
                 }
 
                 for (int index = 0; index < 8; index++) {
-                    int x = current.x + directionX[index];
-                    int y = current.y + directionY[index];
-                    
-                    if (!isInBound(grid, x, y)) {
-                        continue;
-                    }
-                    
-                    if (grid[x][y]) {// if it is a barrier or visited
-                        continue;
-                    }
-                    
-                    grid[x][y] = true;
-                    Point next = new Point(x, y);
-                    queue.offer(next);
-                }
+                    int nextX = current.x + directionX[index];
+                    int nextY = current.y + directionY[index];
 
+                    if (nextX < 0 || nextX >= m || 
+                        nextY < 0 || nextY >= n || 
+                        grid[nextX][nextY] || // barrier
+                        visited[nextX][nextY]) {
+                        continue;
+                    }
+
+                    visited[nextX][nextY] = true;
+                    queue.offer(new Point(nextX, nextY));
+                }
             }
 
-            steps++;
+            step++;
         }
 
-        return result;
-    }
-    
-    // helper methods
-    private boolean isInBound(boolean[][] grid, int x, int y) {
-        int n = grid.length; // row size
-        int m = grid[0].length; // column size
+        return -1;
 
-        return x >= 0 && x < n &&   // row size boundary check
-                y >= 0 && y < m;    // column size boundary check
     }
 }
