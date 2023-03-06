@@ -16,70 +16,71 @@ Example
 	Input: n = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]] 
 	Output: [0,1,2,3] or [0,2,1,3]
 ***/
+/**
+ * Definition for a point.
+ * class Point {
+ *     int x;
+ *     int y;
+ *     Point() { x = 0; y = 0; }
+ *     Point(int a, int b) { x = a; y = b; }
+ * }
+ */
+//version-1: BFS
 public class Solution {
+
+    private static int[] directionX = {1, 1, -1, -1, 2, 2, -2, -2};
+    private static int[] directionY = {2, -2, 2, -2, 1, -1, 1, -1};
+
     /**
-     * @param numCourses: a total of n courses
-     * @param prerequisites: a list of prerequisite pairs
-     * @return: the course order
+     * @param grid: a chessboard included 0 (false) and 1 (true)
+     * @param source: a point
+     * @param destination: a point
+     * @return: the shortest path 
      */
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-	// cornrer case
-	if (numCourses == 0) {
-            return new int[0];// default value
-	}
+    public int shortestPath(boolean[][] grid, Point source, Point destination) {
+        
+        int step = 0;
+        Queue<Point> queue = new LinkedList<>();
 
-        // build up a graph with indegree and it's edge relationships
-        int[] indegree = new int[numCourses];
-        List<Integer>[] edges = new List[numCourses];
+        int m = grid.length; // row size
+        int n = grid[0].length; // col size
+        boolean[][] visited = new boolean[m][n];
 
-        for (int i = 0; i < numCourses; i++) {
-            edges[i] = new ArrayList<Integer>();
-        }
+        queue.offer(source);
+        visited[source.x][source.y] = true;
 
-        for (int[] prerequisite : prerequisites) {
-            int from = prerequisite[1];
-            int to = prerequisite[0];
-
-            indegree[to]++;
-            edges[from].add(to);
-        }
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0) {
-                queue.offer(i);
-            }
-        }
-
-        int count = 0;
-
-        int index = 0;
-        int[] result = new int[numCourses];
-
-	// BFS
         while (!queue.isEmpty()) {
-            int current = queue.poll();
+            int size = queue.size();
 
-            count += 1;
+            for (int i = 0; i < size; i++) {
+                Point current = queue.poll();
 
-            result[index++] = current;
-
-            for (int next : edges[current]) {
-
-                indegree[next]--;
-
-                if (indegree[next] == 0) {
-                    queue.offer(next);
+                if (current.x == destination.x && current.y == destination.y) {
+                    return step;
                 }
 
+                for (int index = 0; index < 8; index++) {
+                    int nextX = current.x + directionX[index];
+                    int nextY = current.y + directionY[index];
+
+                    if (nextX < 0 || nextX >= m || 
+                        nextY < 0 || nextY >= n || 
+                        grid[nextX][nextY] || // barrier 
+                        visited[nextX][nextY]) {
+                        continue;
+                    }
+
+                    visited[nextX][nextY] = true;
+                    queue.offer(new Point(nextX, nextY));
+                }
             }
-        }
-        
-        if (count == numCourses) {
-            return result;
+
+            step += 1;
+
         }
 
-        return new int[]{0};// default value
+        return -1;
+
     }
 }
 
