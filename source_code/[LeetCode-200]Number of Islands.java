@@ -94,28 +94,6 @@ class Solution {
 // version-2: DFS
 class Solution {
     
-    // helper method
-    private void findIsland(char[][] grid, int x, int y) {
-        int n = grid.length;
-        int m = grid[0].length;
-        int[] directionX = new int[] {0, 1, -1, 0};
-        int[] directionY = new int[] {1, 0, 0, -1};
-        
-        grid[x][y] = '0';// marked as vistited
-        
-        for (int i = 0; i < 4; i++) {
-            int nextX = x + directionX[i];
-            int nextY = y + directionY[i];
-            
-            if (nextX >= 0 && nextX < n &&
-                nextY >= 0 && nextY < m &&
-                grid[nextX][nextY] == '1') {
-                findIsland(grid, nextX, nextY); // recursion
-            }
-        }
-        
-    }
-    
     // main method
     public int numIslands(char[][] grid) {
         int count = 0;
@@ -137,6 +115,28 @@ class Solution {
         }
         
         return count;
+    }
+	
+    // helper method
+    private void findIsland(char[][] grid, int x, int y) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int[] directionX = new int[] {0, 1, -1, 0};
+        int[] directionY = new int[] {1, 0, 0, -1};
+        
+        grid[x][y] = '0';// marked as vistited
+        
+        for (int i = 0; i < 4; i++) {
+            int nextX = x + directionX[i];
+            int nextY = y + directionY[i];
+            
+            if (nextX >= 0 && nextX < n &&
+                nextY >= 0 && nextY < m &&
+                grid[nextX][nextY] == '1') {
+                findIsland(grid, nextX, nextY); // recursion
+            }
+        }
+        
     }
 }
 
