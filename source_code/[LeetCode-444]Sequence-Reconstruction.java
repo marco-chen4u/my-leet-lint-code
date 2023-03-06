@@ -98,9 +98,12 @@ class Solution {
         int index = 0;
         while(!queue.isEmpty()){
             if(queue.size()>1) return false;
-            int current = queue.poll();
+         
+         int current = queue.poll();
             if(nums[index++] != current) return false;
+         
             boolean isCycle = true;
+         
             for(int child : graph[current]){
                 indegree[child]--;
                 if(indegree[child] == 0){
@@ -109,6 +112,7 @@ class Solution {
                     queue.offer(child);
                 }
             }
+            
             if(graph[current].size() != 0 && isCycle) return false;
         }
 
