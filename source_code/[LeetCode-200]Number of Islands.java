@@ -22,72 +22,82 @@ Example
 
 // version-1: BFS
 class Solution {
-    // inner class 
-    class Point {
+    // fields
+    private static int m; // row size
+    private static int n; // col size
+
+    private final static int[] directionX = {1, 0, 0, -1};
+    private final static int[] directionY = {0, 1, -1, 0};
+
+    private final static char SEA = '0';
+    private final static char ISLAND = '1';
+
+    // inner class
+    class Element {
         // fields
-        public int x;
-        public int y;
+        int x;
+        int y;
+
         // constructor
-        public Point(int x, int y) {
+        public Element(int x, int y) {
             this.x = x;
             this.y = y;
         }
     }
-    
-    // main method
+
     public int numIslands(char[][] grid) {
+    
+        // corner case
+        if (grid == null || grid.length <= 0) {
+            return 0;
+        }
+
         int count = 0;
-        // check corner case
-        if (grid == null || grid.length == 0 ||
-            grid[0] == null || grid[0].length == 0) {
-            return count;
-        }
-        
-        int n = grid.length; // row size
-        int m = grid[0].length; // column size
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == '1') {
-                    findIsland(grid, i, j);
-                    count++;
-                }                
-            }
-        }
-        
-        return count;
-    }
-	
-    // helper method
-    private void findIsland(char[][] grid, int x, int y) {        
-        int n = grid.length; // row size
-        int m = grid[0].length; // column size
-        
-        int[] directionX = new int[] {1, 0, 0, -1};
-        int[] directionY = new int[] {0, 1, -1, 0};
-        
-        grid[x][y] = '0';
-        Queue<Point> queue = new LinkedList<Point>();
-        Point point = new Point(x, y);
-        queue.offer(point);
-        
-        while (!queue.isEmpty()) {
-            Point current = queue.poll();
-            
-            for (int i = 0; i < 4; i++) {
-                int nextX = current.x + directionX[i];
-                int nextY = current.y + directionY[i];
-                
-                if (nextX >= 0 && nextX < n &&
-                    nextY >= 0 && nextY < m &&
-                    grid[nextX][nextY] == '1') {
-                    grid[nextX][nextY] = '0'; // marked as visited
-                    Point next = new Point(nextX, nextY);
-                    queue.offer(next);
+
+        m = grid.length;// row size
+        n = grid[0].length; // col size
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] != ISLAND) {
+                    continue;
                 }
+
+                bfs(grid, i, j);
+                count++;
             }
         }
+
+        return count;
         
+    }
+
+    // helper method
+    private void bfs(char[][] grid, int x, int y) {
+
+        Element current = new Element(x, y);
+        Queue<Element> queue = new LinkedList<>();
+        queue.offer(current);
+        grid[x][y] = SEA;
+
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+
+            for (int index = 0; index < 4; index++) {
+                int nextX = current.x + directionX[index];
+                int nextY = current.y + directionY[index];
+
+                if (nextX < 0 || nextX >= m || 
+                    nextY < 0 || nextY >= n || 
+                    grid[nextX][nextY] == SEA) {
+                    continue;
+                }
+
+                grid[nextX][nextY] = SEA;// marked as visited
+                queue.offer(new Element(nextX, nextY));
+            }
+        }
+
     }
 }
 
