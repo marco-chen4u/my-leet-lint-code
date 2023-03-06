@@ -59,14 +59,14 @@ class Solution {
         if(sequences.size() != 0 && nums.length == 0)return false;
         
         // regular case
-        int nodes = nums.length;
-        System.out.println(nodes);
-        int[] indegree = new int[nodes+1];
-        boolean[] visited = new boolean[nodes+1];
+        int size = nums.length;
+
+        int[] indegree = new int[size + 1];
+        boolean[] visited = new boolean[size + 1];
         visited[0] = true;
-        LinkedList<Integer>[] graph = new LinkedList[nodes+1];
+        LinkedList<Integer>[] graph = new LinkedList[size + 1];
         
-        for(int i = 1; i <= nodes; i++){
+        for(int i = 1; i <= size; i++){
             graph[i] = new LinkedList<>();
         }
 
@@ -74,11 +74,11 @@ class Solution {
         
         for(List<Integer> seq : sequences){
             count += seq.size();
-            if (seq.size() >= 1 && (seq.get(0) <= 0 || seq.get(0) > nodes)) {
+            if (seq.size() >= 1 && (seq.get(0) <= 0 || seq.get(0) > size)) {
                 return false;
             }
             for(int i = 1; i < seq.size(); i++){
-                if (seq.get(i) <= 0 || seq.get(i) > nodes) {
+                if (seq.get(i) <= 0 || seq.get(i) > size) {
                     return false;
                 }
                 graph[seq.get(i-1)].add(seq.get(i));
@@ -86,7 +86,7 @@ class Solution {
             }
         }
         
-        if(count < nodes) return false;
+        if(count < size) return false;
         Queue<Integer> queue = new LinkedList<>();
         for(int i = 1; i < indegree.length; i++){
             if(indegree[i] == 0){
@@ -116,11 +116,11 @@ class Solution {
             if(graph[current].size() != 0 && isCycle) return false;
         }
 
-        for(int i = 1; i <= nodes; i++){
+        for(int i = 1; i <= size; i++){
             if(!visited[i]) return false;
         }
 
-        return index == nodes;
+        return index == size;
 
     }
 }
