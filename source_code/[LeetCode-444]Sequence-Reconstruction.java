@@ -16,28 +16,28 @@ A subsequence is a sequence that can be derived from another sequence by deletin
  
 
 Example 1:
-Input: nums = [1,2,3], sequences = [[1,2],[1,3]]
-Output: false
-Explanation: There are two possible supersequences: [1,2,3] and [1,3,2].
-The sequence [1,2] is a subsequence of both: [1,2,3] and [1,3,2].
-The sequence [1,3] is a subsequence of both: [1,2,3] and [1,3,2].
-Since nums is not the only shortest supersequence, we return false.
+    Input: nums = [1,2,3], sequences = [[1,2],[1,3]]
+    Output: false
+    Explanation: There are two possible supersequences: [1,2,3] and [1,3,2].
+        The sequence [1,2] is a subsequence of both: [1,2,3] and [1,3,2].
+        The sequence [1,3] is a subsequence of both: [1,2,3] and [1,3,2].
+        Since nums is not the only shortest supersequence, we return false.
 
 Example 2:
-Input: nums = [1,2,3], sequences = [[1,2]]
-Output: false
-Explanation: The shortest possible supersequence is [1,2].
-The sequence [1,2] is a subsequence of it: [1,2].
-Since nums is not the shortest supersequence, we return false.
+    Input: nums = [1,2,3], sequences = [[1,2]]
+    Output: false
+    Explanation: The shortest possible supersequence is [1,2].
+        The sequence [1,2] is a subsequence of it: [1,2].
+        Since nums is not the shortest supersequence, we return false.
 
 Example 3:
-Input: nums = [1,2,3], sequences = [[1,2],[1,3],[2,3]]
-Output: true
-Explanation: The shortest possible supersequence is [1,2,3].
-The sequence [1,2] is a subsequence of it: [1,2,3].
-The sequence [1,3] is a subsequence of it: [1,2,3].
-The sequence [2,3] is a subsequence of it: [1,2,3].
-Since nums is the only shortest supersequence, we return true.
+    Input: nums = [1,2,3], sequences = [[1,2],[1,3],[2,3]]
+    Output: true
+    Explanation: The shortest possible supersequence is [1,2,3].
+        The sequence [1,2] is a subsequence of it: [1,2,3].
+        The sequence [1,3] is a subsequence of it: [1,2,3].
+        The sequence [2,3] is a subsequence of it: [1,2,3].
+        Since nums is the only shortest supersequence, we return true.
  
 
 Constraints:
