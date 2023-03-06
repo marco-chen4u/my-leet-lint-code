@@ -99,7 +99,7 @@ class Solution {
         while(!queue.isEmpty()){
             if(queue.size()>1) return false;
          
-         int current = queue.poll();
+            int current = queue.poll();
             if(nums[index++] != current) return false;
          
             boolean isCycle = true;
