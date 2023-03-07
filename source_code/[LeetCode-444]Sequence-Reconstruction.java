@@ -55,9 +55,11 @@ Constraints:
 class Solution {
     public boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
         // corenr cases
-        if(nums.length != 0 && sequences.size() == 0) return false;
-        if(sequences.size() != 0 && nums.length == 0)return false;
-        
+        if(nums.length != 0 && sequences.size() == 0 || 
+            sequences.size() != 0 && nums.length == 0) {
+            return false;
+        }
+
         // regular case
         int size = nums.length;
 
@@ -74,19 +76,23 @@ class Solution {
         
         for(List<Integer> seq : sequences){
             count += seq.size();
+
             if (seq.size() >= 1 && (seq.get(0) <= 0 || seq.get(0) > size)) {
                 return false;
             }
+
             for(int i = 1; i < seq.size(); i++){
                 if (seq.get(i) <= 0 || seq.get(i) > size) {
                     return false;
                 }
+                
                 graph[seq.get(i-1)].add(seq.get(i));
                 indegree[seq.get(i)]++;
             }
         }
         
         if(count < size) return false;
+        
         Queue<Integer> queue = new LinkedList<>();
         for(int i = 1; i < indegree.length; i++){
             if(indegree[i] == 0){
@@ -113,7 +119,9 @@ class Solution {
                 }
             }
             
-            if(graph[current].size() != 0 && isCycle) return false;
+            if(graph[current].size() != 0 && isCycle) {
+                return false;
+            }
         }
 
         for(int i = 1; i <= size; i++){
@@ -124,3 +132,4 @@ class Solution {
 
     }
 }
+
