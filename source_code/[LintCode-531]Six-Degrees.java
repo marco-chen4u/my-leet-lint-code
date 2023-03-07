@@ -93,50 +93,46 @@ public class Solution {
 public class Solution {
     /*
      * @param graph: a list of Undirected graph node
-     * @param s: Undirected graph node
-     * @param t: Undirected graph nodes
+     * @param source: Undirected graph node
+     * @param target: Undirected graph nodes
      * @return: an integer
      */
-    public int sixDegrees(List<UndirectedGraphNode> graph, UndirectedGraphNode s, UndirectedGraphNode t) {
-        // check corner cases
+    public int sixDegrees(List<UndirectedGraphNode> graph, UndirectedGraphNode source, UndirectedGraphNode target) {
+        
+        // corner case
         if (graph == null || graph.isEmpty()) {
             return -1;
         }
 
-        if (s == null || t == null) {
-            return -1;
-        }
-
-        if (s == t) {
-            return 0;
-        }
-
-        // normal case
-        int step = 0;
         Queue<UndirectedGraphNode> queue1 = new LinkedList<>();
-        queue1.offer(s);
         Set<UndirectedGraphNode> visited1 = new HashSet<>();
-        visited1.add(s);
+        queue1.offer(source);
+        visited1.add(source);
 
         Queue<UndirectedGraphNode> queue2 = new LinkedList<>();
-        queue2.offer(t);
         Set<UndirectedGraphNode> visited2 = new HashSet<>();
-        visited2.add(t);
+        queue2.offer(target);
+        visited2.add(target);
 
+        int step = 0;
         while (!queue1.isEmpty() && !queue2.isEmpty()) {
-            boolean flip = queue1.size() <= queue1.size();
+            
+            boolean flip = queue1.size() >= queue2.size();
             Queue<UndirectedGraphNode> queue = flip ? queue1 : queue2;
             Set<UndirectedGraphNode> visited = flip ? visited1 : visited2;
-            Set<UndirectedGraphNode> visitedOther = !flip ? visited1 : visited2;
+            Set<UndirectedGraphNode> visitedOther = flip ? visited2 : visited1;
 
             int size = queue.size();
-            step++;
+
             for (int i = 0; i < size; i++) {
+                
                 UndirectedGraphNode current = queue.poll();
+
+                if (visitedOther.contains(current)) {
+                    return step;
+                }
+
                 for (UndirectedGraphNode next : current.neighbors) {
-                    if (visitedOther.contains(next)) {
-                        return step;
-                    }
 
                     if (visited.contains(next)) {
                         continue;
@@ -148,8 +144,10 @@ public class Solution {
                 }
             }
 
+            step++;
         }
 
         return -1;
+
     }
 }
