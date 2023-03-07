@@ -39,50 +39,52 @@ Example 2:
 public class Solution {
     /*
      * @param graph: a list of Undirected graph node
-     * @param s: Undirected graph node
-     * @param t: Undirected graph nodes
+     * @param source: Undirected graph node
+     * @param target: Undirected graph nodes
      * @return: an integer
      */
-    public int sixDegrees(List<UndirectedGraphNode> graph, UndirectedGraphNode s, UndirectedGraphNode t) {
-        int result = -1;
-        // check corner cases
-        if (graph == null || graph.size() <= 1) {
-            return 0;
-        }
-
-        if (s == null || t == null || s == t) {
-            return 0;
+    public int sixDegrees(List<UndirectedGraphNode> graph, UndirectedGraphNode source, UndirectedGraphNode target) {
+        
+        // corner case
+        if (graph == null || graph.isEmpty()) {
+            return -1;
         }
 
         Queue<UndirectedGraphNode> queue = new LinkedList<>();
         Set<UndirectedGraphNode> visited = new HashSet<>();
 
-        queue.offer(s);
-        visited.add(s);
+        queue.offer(source);
+        visited.add(source);
 
-        int step = 1;
+        int step = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
+
             for (int i = 0; i < size; i++) {
+                
                 UndirectedGraphNode current = queue.poll();
-                List<UndirectedGraphNode> neighbors = current.neighbors;
-                for (UndirectedGraphNode next : neighbors) {
-                    if (next == t) {
-                        return step;
-                    }
+
+                if (current == target) {
+                    return step;
+                }
+
+                for (UndirectedGraphNode next : current.neighbors) {
 
                     if (visited.contains(next)) {
                         continue;
                     }
 
-                    visited.add(next);
                     queue.offer(next);
+                    visited.add(next);
+
                 }
             }
+
             step++;
         }
 
-        return result;
+        return -1;
+
     }
 }
 
