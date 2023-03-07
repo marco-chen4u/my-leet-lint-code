@@ -127,6 +127,7 @@ public class Solution {
         }
         
         UnionFind unionFind = new UnionFind(n);
+        int path = 1;
         for (int[] edge : edges) {
             int source = edge[0];
             int destination = edge[1];
@@ -135,12 +136,15 @@ public class Solution {
             int parentDestination = unionFind.find(destination);
             
             if (parentSource == parentDestination) {// already exists
-                return false;// cycle path
+                break; // cycle path ?
             }
             
             unionFind.union(parentSource, parentDestination);
+            path++;
         }
+
+        System.out.println("path = " + path);
         
-        return true;
+        return path == n;
     }
 }
