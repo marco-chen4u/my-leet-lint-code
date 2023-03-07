@@ -54,82 +54,103 @@ Constraints:
 //BFS
 class Solution {
     public boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
-        // corenr cases
-        if(nums.length != 0 && sequences.size() == 0 || 
-            sequences.size() != 0 && nums.length == 0) {
+        // corner cases
+        if ((nums == null || nums.length == 0) && (sequences == null || sequences.size() == 0)) {
+            return true;
+        }
+
+        if ((nums == null || nums.length == 0) || (sequences == null || sequences.size() == 0)) {
             return false;
         }
 
         // regular case
         int size = nums.length;
-
         int[] indegree = new int[size + 1];
-        boolean[] visited = new boolean[size + 1];
-        visited[0] = true;
-        LinkedList<Integer>[] graph = new LinkedList[size + 1];
-        
-        for(int i = 1; i <= size; i++){
-            graph[i] = new LinkedList<>();
+        List<Integer>[] edges = new List[size + 1];
+
+        for (int i = 1; i < size + 1; i++) {
+            edges[i] = new ArrayList<Integer>();
         }
 
         int count = 0;
-        
-        for(List<Integer> seq : sequences){
+        for (List<Integer> seq : sequences) {
             count += seq.size();
 
-            if (seq.size() >= 1 && (seq.get(0) <= 0 || seq.get(0) > size)) {
+            int firstVertex = seq.get(0);
+            int seqSize = seq.size();
+            if (seqSize >= 1 && (firstVertex <= 0 || firstVertex > size)) {
                 return false;
             }
 
-            for(int i = 1; i < seq.size(); i++){
-                if (seq.get(i) <= 0 || seq.get(i) > size) {
+            for (int i = 1; i < seq.size(); i++) {
+                int current = seq.get(i);
+
+                if (current <= 0 || current > size) {
                     return false;
                 }
-                
-                graph[seq.get(i-1)].add(seq.get(i));
-                indegree[seq.get(i)]++;
+
+                int from =seq.get(i - 1);
+
+                edges[from].add(current);
+                indegree[current]++;
             }
         }
-        
-        if(count < size) return false;
-        
+
+        if (count < size) {
+            return false;
+        }
+
+        boolean[] visited = new boolean[size + 1];
+        visited[0] = true;
         Queue<Integer> queue = new LinkedList<>();
-        for(int i = 1; i < indegree.length; i++){
-            if(indegree[i] == 0){
+
+        for (int i = 1; i < size + 1; i++) {
+            if (indegree[i] == 0) {
                 queue.offer(i);
                 visited[i] = true;
             }
         }
 
+        // BFS
         int index = 0;
-        while(!queue.isEmpty()){
-            if(queue.size()>1) return false;
-         
-            int current = queue.poll();
-            if(nums[index++] != current) return false;
-         
-            boolean isCycle = true;
-         
-            for(int child : graph[current]){
-                indegree[child]--;
-                if(indegree[child] == 0){
-                    visited[child] = true;
-                    isCycle = false;
-                    queue.offer(child);
-                }
-            }
+        int[] result = new int[size];
+        while (!queue.isEmpty()) {
             
-            if(graph[current].size() != 0 && isCycle) {
+            if (queue.size() != 1) {
                 return false;
             }
+
+            int current = queue.poll();
+            if (nums[index] != current) {
+                return false;
+            }
+            result[index++] = current;
+
+            boolean isCyclic = true;
+            for (int next : edges[current]) {
+                indegree[next]--;
+
+                if (indegree[next] == 0) {
+                    isCyclic = false;
+
+                    queue.offer(next);
+                    visited[next] = true;
+                }
+            }
+
+            if (!edges[current].isEmpty() && isCyclic) {
+                return false;
+            }
+
         }
 
-        for(int i = 1; i <= size; i++){
-            if(!visited[i]) return false;
+        for (int i = 1; i < size + 1; i++) {
+            if (!visited[i]) {
+                return false;
+            }
         }
 
         return index == size;
 
     }
-}
 
