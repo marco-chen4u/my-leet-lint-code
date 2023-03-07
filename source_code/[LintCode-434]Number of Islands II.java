@@ -49,7 +49,7 @@ Notice
  *     Point(int a, int b) { x = a; y = b; }
  * }
  */
-// version-1: UnionFind
+// version-1: UnionFind /w HashMap
 // helper class
 class UnionFind {
     // fields
@@ -259,5 +259,130 @@ public class Solution {
         }
 
         return result;
+    }
+}
+
+//version-2 UnionFind /w Array
+/**
+ * Definition for a point.
+ * class Point {
+ *     int x;
+ *     int y;
+ *     Point() { x = 0; y = 0; }
+ *     Point(int a, int b) { x = a; y = b; }
+ * }
+ */
+
+public class Solution {
+    // fields
+    private final int[] DIRECTION_X = new int[] {0, 1, -1, 0};
+    private final int[] DIRECTION_Y = new int[] {1, 0, 0, -1};
+    private final int ISLAND = 1;
+    
+    /**
+     * @param n: An integer
+     * @param m: An integer
+     * @param operators: an array of point
+     * @return: an integer array
+     */
+    public List<Integer> numIslands2(int n, int m, Point[] operators) {
+        List<Integer> result = new ArrayList<Integer>();
+        
+        // check corner cases
+        if ((n == 0 && m == 0) || 
+            operators == null || operators.length == 0) {
+            return result;
+        }
+        
+        int size = n * m;
+        int[][] matrix = new int[n][m];
+        UnionFind uf = new UnionFind(size);
+        
+        int count = 0;
+        for (Point current : operators) {
+            if (current.x < 0 || current.x >= n || 
+                current.y < 0 || current.y >= m) {
+                continue;
+            }
+            
+            if (matrix[current.x][current.y] == ISLAND) {
+                result.add(count);
+                continue;
+            }
+            
+            matrix[current.x][current.y] = ISLAND;//marked it as an island
+            count++;
+            
+            int currentPos = current.x * m + current.y;
+            for (int i = 0; i < 4; i++) {
+                int nextX = current.x + DIRECTION_X[i];
+                int nextY = current.y + DIRECTION_Y[i];
+                
+                int nextPos = nextX * m + nextY;
+                if (nextX < 0 || nextX >= n || 
+                    nextY < 0 || nextY >= m ||
+                    matrix[nextX][nextY] != ISLAND) {
+                    continue;
+                }
+                
+                if (!uf.isConnected(currentPos, nextPos)) {
+                    uf.union(currentPos, nextPos);
+                    count--;
+                }
+            }
+            
+            result.add(count);
+        }
+        
+        return result;
+    }
+}
+
+// helper class
+class UnionFind {
+    // field
+    int[] fathers;
+    
+    // constructor
+    public UnionFind(int size) {
+        fathers = new int[size];
+        for (int i = 0; i < size; i++) {
+            fathers[i] = i;
+        }
+    }
+    
+    // methods
+    public int find(int x) {
+        int superParent = fathers[x];
+
+        while (superParent != fathers[superParent]) {
+            superParent = fathers[superParent];
+        }
+
+        int parent = x;
+        while (parent != fathers[parent]) {
+            int tmp = fathers[parent];
+            fathers[parent] = superParent;
+            parent = tmp;
+        }
+
+        return superParent;
+    }
+    
+    public boolean isConnected(int x, int y) {
+        return (find(x) == find(y));
+    }
+    
+    public void union(int x, int y) {
+        if (isConnected(x, y)) {
+            return;
+        }
+        
+        int parentX = find(x);
+        int parentY = find(y);
+        
+        if (parentX != parentY) {
+            fathers[parentX] = parentY;
+        }
     }
 }
