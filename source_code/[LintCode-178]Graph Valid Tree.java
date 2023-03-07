@@ -26,59 +26,55 @@ Notice
 **/
 public class Solution {
     /**
-     * @param n an integer
-     * @param edges a list of undirected edges
-     * @return true if it's a valid tree, or false
+     * @param n: An integer
+     * @param edges: a list of undirected edges
+     * @return: true if it's a valid tree, or false
      */
     public boolean validTree(int n, int[][] edges) {
-        // check corner cases
-        if (n == 0 || edges == null) {
-            return false;
+        // corner cases
+        if (n == 0 && (edges == null || edges.length == 0)) {
+            return true;
         }
 
         if (edges.length != n - 1) {
             return false;
         }
 
-        Map<Integer, Set<Integer>> graph = initializeGraph(n, edges);
-
-        Queue<Integer> queue = new LinkedList<Integer>();
-        Set<Integer> visited = new HashSet<Integer>();
-
-        // traverse from the starting point
-        int startPoint = 0;
-        queue.offer(startPoint);
-        visited.add(startPoint);
-
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            for (int neighbor : graph.get(current)) {
-                if (!visited.contains(neighbor)) {
-                    queue.offer(neighbor);
-                    visited.add(neighbor);
-                }
-            }
-        }
-
-        return (visited.size() == n);
-    }
-
-    // helper method
-    private Map<Integer, Set<Integer>> initializeGraph(int n, int[][] edges) {
-        Map<Integer, Set<Integer>> graph = new HashMap<Integer, Set<Integer>>();
+        Set<Integer>[] graph = new Set[n];
         for (int i = 0; i < n; i++) {
-            graph.put(i, new HashSet<Integer>());
+            graph[i] = new HashSet<Integer>();
         }
 
         for (int[] edge : edges) {
-            int source = edge[0];
-            int destination = edge[1];
+            int from = edge[0];
+            int to = edge[1];
 
-            graph.get(source).add(destination);
-            graph.get(destination).add(source);
+            graph[from].add(to);
+            graph[to].add(from);
         }
 
-        return graph;
+        int source = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+
+        queue.offer(source);
+        visited.add(source);
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+
+            for (int next : graph[current]) {
+
+                if (visited.contains(next)) {
+                    continue;
+                }
+
+                queue.offer(next);
+                visited.add(next);
+            }
+        }
+
+        return n == visited.size();
     }
 }
 
