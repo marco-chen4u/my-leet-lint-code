@@ -45,57 +45,60 @@ Notice
 */
 //version-1 : BFS
 public class Solution {
-    /*
+    /**
      * @param nodes: a array of Undirected graph node
      * @return: a connected set of a Undirected graph
      */
     public List<List<Integer>> connectedSet(List<UndirectedGraphNode> nodes) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        // check corner cases
-        if (nodes == null || nodes.size() == 0) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        if (nodes == null || nodes.isEmpty()) {
             return result;
         }
-        
-        Set<UndirectedGraphNode> visited = new HashSet<UndirectedGraphNode>();
-        
-        for (UndirectedGraphNode node : nodes) {
-            if (!visited.contains(node)) {
-                findConnectedSet(nodes, node，visited， result);
+
+        Set<UndirectedGraphNode> visited = new HashSet<>();
+        for (UndirectedGraphNode current : nodes) {
+            
+            if (visited.contains(current)) {
+                continue;
             }
+
+            find(nodes, current, visited, result);
         }
-        
+
         return result;
     }
-    
+
     // helper method
-    private void findConnectedSet(List<UndirectedGraphNode> nodes, 
-                                    UndirectedGraphNode node，
-				    Set<UndirectedGraphNode> visited,
-				    List<List<Integer>> result) {
-        List<Integer> connectedComponentSet = new ArrayList<Integer>();
-        Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
-        
-        queue.offer(node);
-        visited.add(node);
-        connectedComponentSet.add(node.label);
-        
+    private void find(List<UndirectedGraphNode> nodes,
+                        UndirectedGraphNode current, 
+                        Set<UndirectedGraphNode> visited, 
+                        List<List<Integer>> result) {
+        List<Integer> component = new ArrayList<>();
+
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        queue.offer(current);
+        visited.add(current);
+
         while (!queue.isEmpty()) {
-            UndirectedGraphNode current = queue.poll();
-            
-            for (UndirectedGraphNode neighbor : current.neighbors) {
-                if (visited.contains(neighbor)) {
+            current = queue.poll();
+
+            component.add(current.label);
+
+            for (UndirectedGraphNode next : current.neighbors) {
+
+                if (visited.contains(next)) {
                     continue;
                 }
-                
-                visited.add(neighbor);
-                connectedComponentSet.add(neighbor.label);
-                queue.offer(neighbor);
+
+                queue.offer(next);
+                visited.add(next);
             }
         }
-        
-        Collections.sort(connectedComponentSet);
-        
-        result.add(connectedComponentSet);
+
+        Collections.sort(component);
+
+        result.add(component);
     }
 }
 
