@@ -118,8 +118,7 @@ class Solution {
         }
 
         // methods
-
-        public int find(int x) {
+        private int find(int x) {
             int superParent = fathers[x];
             while (superParent != fathers[superParent]) {
                 superParent = fathers[superParent];
