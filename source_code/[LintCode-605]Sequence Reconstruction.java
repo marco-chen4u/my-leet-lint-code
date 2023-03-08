@@ -30,6 +30,7 @@ Example
         Input:org = [4,1,5,2,6,3], seqs = [[5,2,6,3],[4,1,5,2]]
         Output:true
 ***/
+//version-1 BFS with HashMap
 public class Solution {	
 
     // helper method 
@@ -120,5 +121,105 @@ public class Solution {
 
         return index == boundary;
 
+    }
+}
+
+//version-2 BFS with Arrays
+public class Solution {
+    /**
+     * @param org: a permutation of the integers from 1 to n
+     * @param seqs: a list of sequences
+     * @return: true if it can be reconstructed only one or false
+     */
+    public boolean sequenceReconstruction(int[] org, int[][] seqs) {
+        if ((org == null || org.length == 0) && (seqs == null || seqs.length == 0 || seqs[0] == null || seqs[0].length == 0)) {
+            return true;
+        }
+
+        if ((org == null || org.length == 0) || (seqs == null || seqs.length == 0 || seqs[0] == null || seqs[0].length == 0)) {
+            return false;
+        }
+
+        int size = org.length;
+        List<Integer>[] graph = new List[size + 1];
+        int[] indegree = new int[size + 1];
+
+        for (int i = 1; i <= size; i++) {
+            graph[i] = new ArrayList<Integer>();
+        }
+
+        int count = 0;
+        for (int[] seq : seqs) {
+            count += seq.length;
+            int first = seq[0];
+
+            if (seq.length > 1 && (first < 0 || first >= size)) {
+                return false;
+            }
+
+            for (int i = 1; i < seq.length; i++) {
+                int from = seq[i - 1];
+                int current = seq[i];
+
+                graph[from].add(current);
+                indegree[current]++;
+            }
+
+        }
+
+        if (count < size) {
+            return false;
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[size + 1];
+        visited[0] = true;
+
+        for (int i = 1; i <= size; i++) {
+            if (indegree[i] == 0) {
+                queue.offer(i);
+                visited[i] = true;
+            }
+        }
+
+        int[] result = new int[size];
+        int index = 0;
+
+        while (queue.size() == 1) {
+
+
+            int current = queue.poll();
+            if (org[index] != current) {
+                return false;
+            }
+
+            result[index++] = current;
+            List<Integer> neighbors = graph[current];
+            boolean isCyclic = true;
+            for (int next : neighbors) {
+                indegree[next]--;
+
+                if (indegree[next] == 0) {
+                    queue.offer(next);
+                    visited[next] = true;
+                    isCyclic = false;
+                }
+            }
+            if (!neighbors.isEmpty() && isCyclic) {
+                return false;
+            }
+        }
+
+        for (int i = 1; i <= size; i++) {
+            if (!visited[i]) {
+                return false;
+            }
+        }
+
+        if (index == size) {
+            return true;
+        }
+
+        return false;
     }
 }
