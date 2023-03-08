@@ -29,6 +29,7 @@ Notice
     If the order is invalid, return an empty string.
     There may be multiple valid order of letters, return the smallest in normal lexicographical order
 ***/
+//version-1
 public class Solution {
     
     // fields
@@ -145,5 +146,96 @@ public class Solution {
         }
         
         return indegreeMap;
+    }
+}
+
+//version-2
+class Solution {
+    // fields
+    private static final String EMPTY_STR = "";
+    private static final Map<Character, Set<Character>> EMPTY_GRAPH = new HashMap<>();
+
+    public String alienOrder(String[] words) {
+        if (words == null || words.length == 0) {
+            return EMPTY_STR;
+        }
+
+        int size = words.length;
+        Map<Character, Set<Character>> graph = new HashMap<>();
+        for (String word : words) {
+            for (char ch : word.toCharArray()) {
+                graph.putIfAbsent(ch, new HashSet<>());
+            }
+        }
+
+        for (int i = 0; i < size - 1; i++) {
+            String currentWord = words[i];
+            String nextWord = words[i + 1];
+
+            // corner case
+            if (currentWord.length() > nextWord.length() && currentWord.startsWith(nextWord)) {
+                graph = EMPTY_GRAPH;
+                break; 
+            }
+
+            int index = 0;
+            while (index < currentWord.length() && index < nextWord.length()) {
+                if (currentWord.charAt(index) != nextWord.charAt(index)) {
+                    char currentChar = currentWord.charAt(index);
+                    char neighbor = nextWord.charAt(index);
+                    graph.get(currentChar).add(neighbor);
+
+                    break;
+                }                
+
+                index++;
+            }
+        }
+
+        Map<Character, Integer> indegree = new HashMap<>();
+        for (Map.Entry<Character, Set<Character>> entry : graph.entrySet()) {
+            char currentChar = entry.getKey();
+            Set<Character> neighbors = entry.getValue();
+
+            indegree.putIfAbsent(currentChar, 0);
+            for (char neighbor : neighbors) {
+                indegree.put(neighbor, indegree.getOrDefault(neighbor, 0) + 1);
+            }
+        }
+
+        Queue<Character> queue = new PriorityQueue<>();
+
+        for (Map.Entry<Character, Integer> entry : indegree.entrySet()) {
+            char currentChar = entry.getKey();
+            int degree = entry.getValue();
+
+            if (degree == 0) {
+                queue.offer(currentChar);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!queue.isEmpty()) {
+            char current = queue.poll();
+            sb.append(current);
+
+            Set<Character> neighbors = graph.get(current);
+            for (char neighbor : neighbors) {
+                int degree = indegree.get(neighbor);
+                degree -= 1;
+                indegree.put(neighbor, degree);
+
+                if (degree == 0) {
+                    queue.offer(neighbor);
+                }
+            }
+
+        }
+
+        if (graph.size() != sb.length()) {
+            return EMPTY_STR;
+        }
+
+        return sb.toString();
     }
 }
