@@ -22,6 +22,7 @@ Example 2:
     Explanation: 
         abcabd -> abcd -> "" (length = 0)
 ***/
+//version-1: BFS
 public class Solution {
 
     public int minLength(String s, Set<String> dict) {
@@ -59,6 +60,62 @@ public class Solution {
                     foundIndex = current.indexOf(keyWord, fromIndex);
                 }
             }
+        }
+
+        return result;
+    }
+}
+
+//versio-2: BFS
+public class Solution {
+    /**
+     * @param s: a string
+     * @param dict: a set of n substrings
+     * @return: the minimum length
+     */
+    public int minLength(String s, Set<String> dict) {
+        
+        int result = s.length();
+
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+
+        queue.offer(s);
+        visited.add(s);
+
+        while(!queue.isEmpty()) {
+            String current = queue.poll();
+            result = Math.min(result, current.length());
+
+            for (String next : getNext(current, dict)) {
+                if (visited.contains(next)) {
+                    continue;
+                }
+
+                queue.offer(next);
+                visited.add(next);
+            }
+        }
+
+        return result;
+    }
+
+    // helper method
+    private List<String> getNext(String current, Set<String> dict) {
+        List<String> result = new ArrayList<>();
+
+        for (String word: dict) {
+            int fromIndex = current.indexOf(word);
+
+            while (fromIndex != -1) {
+                String next = current.substring(0, fromIndex) + current.substring(fromIndex + word.length());
+
+                result.add(next);
+
+                int nextStart = fromIndex + word.length();
+                fromIndex = current.indexOf(word, nextStart);
+            }
+
         }
 
         return result;
