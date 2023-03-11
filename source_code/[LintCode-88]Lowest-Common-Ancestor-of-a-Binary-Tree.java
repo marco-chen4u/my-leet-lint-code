@@ -122,6 +122,7 @@ public class Solution {
 
         stack.push(current);
 
+        // PreOrder traversal to the parents of A and B
         while (!stack.isEmpty()) {
 
             current = stack.pop();
@@ -137,6 +138,7 @@ public class Solution {
             }
         }
 
+        // using UindFind find() method related logic to get the list of parents to TreeNode A
         List<TreeNode> parentListA = new ArrayList<>();
         TreeNode parentA = A;
         while (parentA != null) {
@@ -144,6 +146,7 @@ public class Solution {
             parentA = fathers.get(parentA);
         }
 
+        // using UindFind find() method related logic to get the list of parents to TreeNode B
         List<TreeNode> parentListB = new ArrayList<>();
         TreeNode parentB = B;
         while (parentB != null) {
@@ -151,7 +154,7 @@ public class Solution {
             parentB = fathers.get(parentB);
         }
 
-        // town pointers
+        // town pointers 
         int i = 0;
         int j = 0;
 
