@@ -49,7 +49,7 @@ Example 2:
  * }
  */
 
-
+//version-1: recursion
 public class Solution {
     /*
      * @param root: The root of the binary search tree.
@@ -88,5 +88,88 @@ public class Solution {
 
         // 左右子树都没有
         return null;
+    }
+}
+
+//version-2: non-recursion
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param root: The root of the binary tree.
+     * @param A: A TreeNode in a Binary.
+     * @param B: A TreeNode in a Binary.
+     * @return: Return the least common ancestor(LCA) of the two nodes.
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode A, TreeNode B) {
+        // write your code here
+        Map<TreeNode, TreeNode> fathers = new HashMap<>();
+        fathers.put(root, null);
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
+
+        stack.push(current);
+
+        while (!stack.isEmpty()) {
+
+            current = stack.pop();
+
+            if (current.right != null) {
+                stack.push(current.right);
+                fathers.put(current.right, current);
+            }
+
+            if (current.left != null) {
+                stack.push(current.left);
+                fathers.put(current.left, current);
+            }
+        }
+
+        List<TreeNode> parentListA = new ArrayList<>();
+        TreeNode parentA = A;
+        while (parentA != null) {
+            parentListA.add(0, parentA);
+            parentA = fathers.get(parentA);
+        }
+
+        List<TreeNode> parentListB = new ArrayList<>();
+        TreeNode parentB = B;
+        while (parentB != null) {
+            parentListB.add(0, parentB);
+            parentB = fathers.get(parentB);
+        }
+
+        // town pointers
+        int i = 0;
+        int j = 0;
+
+        TreeNode lowestCommonAncestor = null;
+        while (i < parentListA.size() && j < parentListB.size()) {
+
+            if (parentListA.get(i) != parentListB.get(j)) {
+                break;
+            }
+
+            // if both side have the same parent
+            lowestCommonAncestor = parentListA.get(i);
+
+            i++;
+            j++;
+        }
+
+        return lowestCommonAncestor;
+
     }
 }
