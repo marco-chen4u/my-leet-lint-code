@@ -24,43 +24,72 @@ Notice
  *     }
  * }
  */
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
 public class Solution {
-	
     /**
      * @param root: the given BST
      * @param target: the given target
      * @param k: the given k
      * @return: k values in the BST that are closest to the target
+     *          we will sort your return value in output
      */
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
-        List<Integer> result = new ArrayList<Integer>();
-        // check corner case
-        if (root == null || k < 1) {
-            return result;
+        // write your code here
+        List<Integer> defaultValue = new ArrayList<>();
+        // corner case
+        if (root == null) {
+            return defaultValue;
         }
 
-        List<Integer> values = new ArrayList<Integer>();
-        inOrderTraverse(root, values);
+        List<Integer> values = new ArrayList<>();
+        // InOrder Traversal to get all values
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
 
-        int index = 0; 
+        while (!stack.isEmpty() || current != null) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+            values.add(current.val);
+
+            current = current.right;
+        }
+
         int size = values.size();
 
-        for (; index < size; index++) {
+        int index = 0;
+        while (index < size) {
             if (values.get(index) >= target) {
                 break;
             }
+
+            index++;
         }
 
-        if (index > size) {
-            values.subList(size - k, size);
+        if (index == size) {
+            return values.subList(size - k, size);
         }
 
         int left = index - 1;
-        int righ = index;
+        int right = index;
+
+        List<Integer> result = new ArrayList<>();
         for (int i = 0; i < k; i++) {
-            if (left >= 0 && 
-                (right >= size || 
-                    Math.abs(target - values.get(left)) < Math.abs(values.get(right) - target))) {
+            if (isLeftCloseTarget(values, left, right, target)) {
                 result.add(values.get(left--));
             }
             else {
@@ -69,16 +98,22 @@ public class Solution {
         }
 
         return result;
+
     }
 
     // helper method
-    private void inOrderTraverse(TreeNode node, List<Integer> values) {
-        if (node == null) {
-            return;
+    private boolean isLeftCloseTarget(List<Integer> values, int left, int right, double target) {
+        
+        // corner cases
+        if (left < 0) {
+            return false;
         }
 
-        inOrderTraverse(node.left, values);
-        values.add(node.val);
-        inOrderTraverse(node.right, values);
-    }	
+        if (right >= values.size()) {
+            return true;
+        }
+
+        // normal case
+        return Math.abs(values.get(left) - target) <= Math.abs(values.get(right) - target);
+    }
 }
