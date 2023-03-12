@@ -64,7 +64,7 @@ Example 2
  * }
  */
 
-//version-1:recursion
+//version-1:recursion (divide & conquer)
 public class Solution {
     /*
      * @param root: The root of the binary search tree.
@@ -72,71 +72,22 @@ public class Solution {
      * @return: The root of the binary search tree after removal.
      */
     public TreeNode removeNode(TreeNode root, int value) {
-        // check corner case
+        // corner cases
         if (root == null) {
             return null;
         }
-        
+
         if (root.val > value) {
             root.left = removeNode(root.left, value);
-        }
-        else if (root.val < value) {
-            root.right = removeNode(root.right, value);
-        }
-        else {//equal
-            if (root.right == null) {
-                root = root.left;
-            }
-            else if (root.left == null) {
-                root = root.right;
-            }
-            else {
-                TreeNode node = root.right;
-                
-                TreeNode current = node;
-                while(current.left != null) {
-                    current = current.left;
-                }
-                
-                root.val = current.val;
-                root.right = removeNode(node, current.val);
-            }
-        }
-        
-        return root;
-    }
-    
-}
-
-//version-2: recursion
-public class Solution {
-    /*
-     * @param root: The root of the binary search tree.
-     * @param value: Remove the node with given value.
-     * @return: The root of the binary search tree after removal.
-     */
-    public TreeNode removeNode(TreeNode root, int value) {
-        // check corner cases
-        if (root == null) {
             return root;
         }
 
-        // normal case
-        if (value > root.val) {
+        if (root.val < value) {
             root.right = removeNode(root.right, value);
             return root;
         }
 
-        if (value < root.val) {
-            root.left = removeNode(root.left, value);
-            return root;
-        }
-
-        //value == root.val
-        if (root.left == null && root.right == null) {
-            return null;
-        }
-
+        // if root.val == value
         if (root.left == null) {
             return root.right;
         }
@@ -145,77 +96,13 @@ public class Solution {
             return root.left;
         }
 
-        TreeNode node = root.right;
-        TreeNode current = node;
-        TreeNode pre = null;
-        while (current.left != null) {
-            pre = current;
+        TreeNode current = root.right;
+        while (current != null && current.left != null) {
             current = current.left;
         }
 
         root.val = current.val;
-        if (pre == null) {
-            root.right = null;
-        }
-        else {
-            pre.left = null;
-        }
+        root.right = removeNode(root.right, current.val);
 
-        return root;
-    }
-}
-
-//version-3: recursion
-public class Solution {
-    /*
-     * @param root: The root of the binary search tree.
-     * @param value: Remove the node with given value.
-     * @return: The root of the binary search tree after removal.
-     */
-    public TreeNode removeNode(TreeNode root, int value) {
-        // check corner case
-        if (root == null) {
-            return null;
-        }
-
-        // normal case
-        if (value < root.val) {
-            root.left = removeNode(root.left, value);
-            return root;
-        }
-
-        if (value > root.val) {
-            root.right = removeNode(root.right, value);
-            return root;
-        }
-
-        if (root.left == null && root.right == null) {
-            return null;
-        }
-
-        if (root.left == null) {
-            return root.right;
-        }
-
-        if (root.right == null) {
-            return root.left;
-        }
-
-        TreeNode pre = null;
-        TreeNode node = root.right;
-        while (node.left != null) {
-            pre = node;
-            node = node.left;
-        }
-
-        root.val = node.val;
-        if (pre == null) {            
-            root.right = removeNode(node, node.val);
-        }
-        else {
-            pre.left = null;
-        }
-
-        return root;
-    }
+        return root;    
 }
