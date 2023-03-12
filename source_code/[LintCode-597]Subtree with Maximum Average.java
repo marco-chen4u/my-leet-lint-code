@@ -34,6 +34,7 @@ Notice
  *     }
  * }
  */
+//version-1: recursion with global variable
 public class Solution {
     // inner class
     class ResultType {
@@ -94,6 +95,64 @@ public class Solution {
             max_result.node = result.node;
         }
         
+        return result;
+    }
+}
+
+//version-2: recursion without global vairable
+public class Solution {
+
+    private static final long DEFAULT_VALUE = (long)(Integer.MIN_VALUE);
+
+    class ResultType {
+        // fields
+        int count;
+        int sum;
+        double maxAvg;
+        TreeNode node;
+
+        // constructor
+        public ResultType(int sum, int count, double maxAvg, TreeNode node) {
+            this.sum = sum;
+            this.count = count;
+            this.maxAvg = maxAvg;
+            this.node = node;
+        }
+    }
+
+    /**
+     * @param root: the root of binary tree
+     * @return: the root of the maximum average of subtree
+     */
+    public TreeNode findSubtree2(TreeNode root) {
+        ResultType result = find(root);
+        return result.node;
+    }
+
+    // helper method
+    private ResultType find(TreeNode node) {
+        if (node == null) {
+            return new ResultType(0, 0, DEFAULT_VALUE, null);
+        }
+
+        ResultType left = find(node.left);
+        ResultType right = find(node.right);
+
+        int sum = node.val + left.sum + right.sum;
+        int count = 1 + left.count + right.count;
+        double maxAvg = (double)sum / count;
+        ResultType result = new ResultType(sum, count, maxAvg, node);
+
+        if (result.maxAvg < left.maxAvg) {
+            result.maxAvg = left.maxAvg;
+            result.node = left.node;
+        }
+
+        if (result.maxAvg < right.maxAvg) {
+            result.maxAvg = right.maxAvg;
+            result.node = right.node;
+        }
+
         return result;
     }
 }
