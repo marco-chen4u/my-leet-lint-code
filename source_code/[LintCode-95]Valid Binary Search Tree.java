@@ -162,3 +162,63 @@ public class Solution {
         return helper(root).isBst;
     }
 }
+
+//version-4: recursion(devide&conquer) + new data type
+public class Solution {
+
+    class ResultType {
+        // fields
+        boolean isBST;
+        TreeNode min;
+        TreeNode max;
+
+        // constructors
+        public ResultType(boolean isBST, TreeNode min, TreeNode max) {
+            this.isBST = isBST;
+            this.min = min;
+            this.max = max;
+        }
+
+        public ResultType(boolean isBST) {
+            this.isBST = isBST;
+            this.min = null;
+            this.max = null;
+        }
+    }
+
+    /**
+     * @param root: The root of binary tree.
+     * @return: True if the binary tree is BST, or false
+     */
+    public boolean isValidBST(TreeNode root) {
+        // write your code here
+        ResultType result = find(root);
+        return result.isBST;
+    }
+
+    // helper method
+    private ResultType find(TreeNode node) {
+        if (node == null) {
+            return new ResultType(true);
+        }
+
+        if (node.left == null && node.right == null) {
+            return new ResultType(true, node, node);
+        }
+
+        ResultType left = find(node.left);
+        ResultType right = find(node.right);
+
+        ResultType result =  new ResultType(false);
+
+        if (left.isBST && right.isBST && 
+            (left.max == null || left.max.val < node.val) && 
+            (right.min == null || right.min.val > node.val)) {
+            result.isBST = true;
+            result.min = left.min == null ? node : left.min;
+            result.max = right.max == null ? node : right.max;
+        }
+
+        return result;
+    }
+}
