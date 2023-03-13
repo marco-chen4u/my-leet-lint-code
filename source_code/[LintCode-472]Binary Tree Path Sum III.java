@@ -58,12 +58,26 @@ public class Solution {
         }
         
         List<Integer> path = new ArrayList<Integer>();
-        binaryTreePathSum3Helper(result, root, target);
+        find(result, root, target);
         
         return result;
     }
 	
     // helper methods
+    private void find(List<List<Integer>> result,
+                      ParentTreeNode node,
+                      int target) {
+        if (node == null) {
+            return;
+        }
+        
+        List<Integer> path = new ArrayList<Integer>();
+        findBinaryTreePathSum(result, path, node, null, target);
+        
+        find(result, node.left, target);
+        find(result, node.right, target);
+    }
+
     private void findBinaryTreePathSum(List<List<Integer>> result,
                                             List<Integer> path,
                                             ParentTreeNode node,
@@ -93,19 +107,5 @@ public class Solution {
         }
         
         path.remove(path.size() -1);
-    }
-    
-    private void binaryTreePathSum3Helper(List<List<Integer>> result,
-                                            ParentTreeNode node,
-                                            int target) {
-        if (node == null) {
-            return;
-        }
-        
-        List<Integer> path = new ArrayList<Integer>();
-        findBinaryTreePathSum(result, path, node, null, target);
-        
-        binaryTreePathSum3Helper(result, node.left, target);
-        binaryTreePathSum3Helper(result, node.right, target);
     }
 }
