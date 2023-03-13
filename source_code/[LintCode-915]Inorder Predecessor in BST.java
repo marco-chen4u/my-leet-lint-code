@@ -26,6 +26,7 @@ Notice
  * }
  */
 
+//version-1: iteration
 public class Solution {
     /**
      * @param root: the given BST
@@ -33,27 +34,27 @@ public class Solution {
      * @return: the in-order predecessor of the given node in the BST
      */
     public TreeNode inorderPredecessor(TreeNode root, TreeNode p) {
-        // check corner case
-        if (root == null || p == null) {
+        // write your code here
+        if (root == null) {
             return null;
         }
-		
-        TreeNode pre = null;
+
+        int targetVal = p.val;
+
         TreeNode current = root;
-		
+        TreeNode pre = null;
+
         while (current != null) {
-            if (current.val >= p.val) {
-                current = current.left;
-            }
-            else {
-                if (pre == null || current.val > pre.val) {
-                    pre = current;
-                }
-				
+            if (current.val < targetVal) {
+                pre = current;
                 current = current.right;
+
+                continue;
             }
+
+            current = current.left;
         }
-		
+
         return pre;
     }
 }
