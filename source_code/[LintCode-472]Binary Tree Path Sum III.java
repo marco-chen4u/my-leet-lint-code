@@ -95,7 +95,7 @@ public class Solution {
         }
         
         if (node.parent != null && node.parent != parent) {
-            findBinaryTreePathSum(result, path, node.parent, node, target);
+            findBinaryTreePathSum(result, path, node.parent, node, target);// it might be the reverse diretion to look up.
         }
         
         if (node.left != parent) {
