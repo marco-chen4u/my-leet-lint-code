@@ -50,7 +50,7 @@ Example 4
            /  \
           2    3
 ***/
-//version-1: Recursion(Divide&Conquer)
+
 /**
  * Definition of TreeNode:
  * public class TreeNode {
@@ -62,7 +62,7 @@ Example 4
  *     }
  * }
  */
-
+//version-1: Recursion(Divide&Conquer)
 public class Solution {
 
     // inner class
