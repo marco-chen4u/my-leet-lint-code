@@ -58,3 +58,44 @@ public class Solution {
         return pre;
     }
 }
+
+//version-2: InOrder traversal Iteration
+public class Solution {
+    /**
+     * @param root: the given BST
+     * @param p: the given node
+     * @return: the in-order predecessor of the given node in the BST
+     */
+    public TreeNode inorderPredecessor(TreeNode root, TreeNode p) {
+        // write your code here
+        if (root == null) {
+            return null;
+        }
+
+        int targetVal = p.val;
+
+        TreeNode current = root;
+        TreeNode pre = null;
+
+        TreeNode result = null;
+        Stack<TreeNode> stack = new Stack<>();
+        while (!stack.isEmpty() || current != null) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+            if (p.equals(current)) {
+                result = pre;
+                break;
+            }
+
+            pre = current;
+
+            current = current.right;
+        }
+
+        return result;
+    }
+}
