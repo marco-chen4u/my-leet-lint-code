@@ -93,15 +93,18 @@ public class Solution {
         if (target == 0) {
             result.add(new ArrayList<Integer>(path));
         }
-        
+        // there are 3 direction to start to look up
+        /* (1)[current->parent] direction to look up */
         if (node.parent != null && node.parent != parent) {
             findBinaryTreePathSum(result, path, node.parent, node, target);// it might be the reverse diretion to look up.
         }
         
+        /* (2)[current->left child] direction to look up */ 
         if (node.left != parent) {
             findBinaryTreePathSum(result, path, node.left, node, target);
         }
         
+        /* (3)[current->right child] direction to look up */
         if (node.right != parent) {
             findBinaryTreePathSum(result, path, node.right, node, target);
         }
