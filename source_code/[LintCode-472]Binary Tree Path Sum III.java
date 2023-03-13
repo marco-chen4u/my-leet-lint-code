@@ -93,6 +93,7 @@ public class Solution {
         if (target == 0) {
             result.add(new ArrayList<Integer>(path));
         }
+
         // there are 3 direction to start to look up
         /* (1)[current->parent] direction to look up */
         if (node.parent != null && node.parent != parent) {
