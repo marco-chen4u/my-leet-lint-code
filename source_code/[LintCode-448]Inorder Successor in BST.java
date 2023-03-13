@@ -40,6 +40,35 @@ Notice
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+//version-1: iteration
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        // write your code here
+        if (root == null) {
+            return null;
+        }
+
+        int target = p.val;
+
+        TreeNode current = root;
+        TreeNode next = null;
+
+        while (current != null) {
+
+            if (current.val > target) {
+                next = current;
+                current = current.left;
+                continue;
+            }
+
+            current = current.right;
+        }
+
+        return next;
+    }
+}
+
+//version-2: InOrder traversal iteration
 public class Solution {
     /*
      * @param root: The root of the BST.
@@ -47,24 +76,36 @@ public class Solution {
      * @return: Successor of p.
      */
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-        // check corner case
-        if (root == null || p == null) {
+        // corner case
+        if (root == null) {
             return null;
-        }
+	}
 
-        TreeNode successor = null;
+        // normal case
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode current = root;
-        
-        while (current != null) {
-            if (current.val > p.val) {
-                successor = current;
+
+        TreeNode result = null;
+
+        TreeNode pre = null;
+        while (!stack.isEmpty() || current != null) {
+            while (current != null) {
+                stack.push(current);
                 current = current.left;
             }
-            else {
-                current = current.right;
+
+            current = stack.pop();
+
+            if (pre != null && pre.equals(p)) {
+                result = current;
+                break;
             }
+            
+            pre = current;
+
+            current = current.right;
         }
 
-        return successor;
+        return result;
     }
 }
