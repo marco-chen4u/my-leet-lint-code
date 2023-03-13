@@ -5,35 +5,35 @@ find all path that the sum of nodes equal to target,
 the path could be start and end at any node in the tree.
 
 Example
-	Example1
-		Input:
-			tree = {1,2,3,4}
-			target = 6
-		Output: 
-			[
-			  [2, 4],
-			  [2, 1, 3],
-			  [3, 1, 2],
-			  [4, 2]
-			]
-		Explanation:
-			The tree is look like this:
-				1
-			   / \
-			  2   3
-			 /
-			4
+    Example1
+        Input:
+            tree = {1,2,3,4}
+            target = 6
+        Output: 
+            [
+              [2, 4],
+              [2, 1, 3],
+              [3, 1, 2],
+              [4, 2]
+            ]
+        Explanation:
+            The tree is look like this:
+                1
+               / \
+              2   3
+             /
+            4
 
-	Example2
-		Input:
-			tree ={1,2,3,4}
-			target = 3
-		Output: 
-			[
-				[1,2],
-				[2,1],
-				[3]
-			]
+    Example2
+        Input:
+            tree ={1,2,3,4}
+            target = 3
+        Output: 
+            [
+                [1,2],
+                [2,1],
+                [3]
+            ]
 ***/
 /**
  * Definition of ParentTreeNode:
@@ -45,6 +45,24 @@ Example
  */
 public class Solution {
     
+    /*
+     * @param root: the root of binary tree
+     * @param target: An integer
+     * @return: all valid paths
+     */
+    public List<List<Integer>> binaryTreePathSum3(ParentTreeNode root, int target) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        // check corner case
+        if (root == null) {
+            return result;
+        }
+        
+        List<Integer> path = new ArrayList<Integer>();
+        binaryTreePathSum3Helper(result, root, target);
+        
+        return result;
+    }
+	
     // helper methods
     private void findBinaryTreePathSum(List<List<Integer>> result,
                                             List<Integer> path,
@@ -89,24 +107,5 @@ public class Solution {
         
         binaryTreePathSum3Helper(result, node.left, target);
         binaryTreePathSum3Helper(result, node.right, target);
-    }
-    
-    
-    /*
-     * @param root: the root of binary tree
-     * @param target: An integer
-     * @return: all valid paths
-     */
-    public List<List<Integer>> binaryTreePathSum3(ParentTreeNode root, int target) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        // check corner case
-        if (root == null) {
-            return result;
-        }
-        
-        List<Integer> path = new ArrayList<Integer>();
-        binaryTreePathSum3Helper(result, root, target);
-        
-        return result;
     }
 }
