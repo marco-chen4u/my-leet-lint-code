@@ -4,8 +4,7 @@ our are given a binary tree in which each node contains a value.
 Design an algorithm to get all paths which sum to a given value. 
 The path does not need to start or end at the root or a leaf, but it must go in a straight line down.
 
-Example
-Example 1:
+Example 1
     Input:
         {1,2,3,4,#,2}
         6
@@ -23,7 +22,7 @@ Example 1:
         4   2
         for target 6, it is obvious 2 + 4 = 6 and 1 + 3 + 2 = 6.
 
-Example 2:
+Example 2
     Input:
         {1,2,3,4}
         10
@@ -52,6 +51,25 @@ Example 2:
  */
 public class Solution {
     
+    /*
+     * @param root: the root of binary tree
+     * @param target: An integer
+     * @return: all valid paths
+     */
+    public List<List<Integer>> binaryTreePathSum2(TreeNode root, int target) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        // check corner case
+        if (root == null) {
+            return result;
+        }
+        
+        List<Integer> path = new ArrayList<Integer>();
+        binaryTreePathSum2Helper(result, root, target, path, 0);
+        
+        return result;
+    }
+
+    // helper method
     private void binaryTreePathSum2Helper(List<List<Integer>> result, TreeNode node, 
                                             int target, List<Integer> path, int level) {
         if (node == null) {
@@ -77,23 +95,5 @@ public class Solution {
         binaryTreePathSum2Helper(result, node.right, target, path, level + 1);
         
         path.remove(path.size() - 1);
-    }
-    
-    /*
-     * @param root: the root of binary tree
-     * @param target: An integer
-     * @return: all valid paths
-     */
-    public List<List<Integer>> binaryTreePathSum2(TreeNode root, int target) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        // check corner case
-        if (root == null) {
-            return result;
-        }
-        
-        List<Integer> path = new ArrayList<Integer>();
-        binaryTreePathSum2Helper(result, root, target, path, 0);
-        
-        return result;
     }
 }
