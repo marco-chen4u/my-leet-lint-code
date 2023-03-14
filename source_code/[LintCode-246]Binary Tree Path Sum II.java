@@ -1,8 +1,9 @@
 /**
  * LintCode 246. Binary Tree Path Sum II
-Given a binary tree in which each node contains a value. 
-Design an algorithm to get all paths which sum to a given value. 
-The path does not need to start or end at the root or a leaf, but it must go in a straight line down.
+Given a binary tree and a target value, 
+design an algorithm to find all paths in the binary tree that sum to that target value. 
+The path can start and end at any node, but it needs to be a route that goes all the way down. 
+That is, the hierarchy of nodes on the path is incremented one by one.
 
 Example 1
     Input:
@@ -49,51 +50,52 @@ Example 2
  *     }
  * }
  */
+//version-1: recursion(dfs)
 public class Solution {
-    
-    /*
+    /**
      * @param root: the root of binary tree
      * @param target: An integer
      * @return: all valid paths
+     *          we will sort your return value in output
      */
     public List<List<Integer>> binaryTreePathSum2(TreeNode root, int target) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        // check corner case
+        // write your code here
+        List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
             return result;
         }
-        
-        List<Integer> path = new ArrayList<Integer>();
-        binaryTreePathSum2Helper(result, root, target, path, 0);
-        
+
+        List<Integer> path = new ArrayList();
+        find(root, target, path, result, 0);
+
         return result;
     }
 
     // helper method
-    private void binaryTreePathSum2Helper(List<List<Integer>> result, TreeNode node, 
-                                            int target, List<Integer> path, int level) {
+    private void find(TreeNode node, int target, List<Integer> path, List<List<Integer>> result, int level) {
         if (node == null) {
             return;
         }
-        
+
         path.add(node.val);
-        
-        int size = level;
-        int index = size;
+
+        int size = level + 1;
+
+        int index = size - 1;
         int sum = 0;
         while (index >= 0) {
             sum += path.get(index);
-            
+
             if (sum == target) {
-                result.add(new ArrayList<Integer>(path.subList(index, size + 1)));
+                result.add(new ArrayList<>(path.subList(index, size)));
             }
-            
-            index--;
+
+            index -= 1;
         }
-        
-        binaryTreePathSum2Helper(result, node.left, target, path, level + 1);
-        binaryTreePathSum2Helper(result, node.right, target, path, level + 1);
-        
+
+        find(node.left, target, path, result, level + 1);
+        find(node.right, target, path, result, level + 1);
+
         path.remove(path.size() - 1);
     }
 }
