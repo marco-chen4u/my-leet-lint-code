@@ -66,7 +66,7 @@ public class Solution {
         }
 
         List<Integer> path = new ArrayList();
-        find(root, target, path, result, 0);
+        find(root, target, path, result, 0);//DFS
 
         return result;
     }
