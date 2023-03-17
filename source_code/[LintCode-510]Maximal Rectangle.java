@@ -21,7 +21,7 @@ Example 2
     Output: 0
 ***/
 
-//mono-stack
+//monotonic-stack
 public class Solution {
     /**
      * @param matrix: a boolean 2D matrix
