@@ -1,23 +1,24 @@
 /*** LintCode 510. Maximal Rectangle
 Given a 2D boolean matrix filled with False and True, find the largest rectangle containing all True and return its area.
-Example
-	Example 1
-		Input:
-			[
-			  [1, 1, 0, 0, 1],
-			  [0, 1, 0, 0, 1],
-			  [0, 0, 1, 1, 1],
-			  [0, 0, 1, 1, 1],
-			  [0, 0, 0, 0, 1]
-			]
-		Output: 6
-	Example 2
-		Input:
-			[
-				[0,0],
-				[0,0]
-			]
-		Output: 0
+
+Example 1
+    Input:
+        [
+          [1, 1, 0, 0, 1],
+          [0, 1, 0, 0, 1],
+          [0, 0, 1, 1, 1],
+          [0, 0, 1, 1, 1],
+          [0, 0, 0, 0, 1]
+        ]
+    Output: 6
+
+Example 2
+    Input:
+        [
+            [0,0],
+            [0,0]
+        ]
+    Output: 0
 ***/
 public class Solution {
     /**
