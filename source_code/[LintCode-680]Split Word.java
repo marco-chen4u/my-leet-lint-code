@@ -21,47 +21,49 @@ Example2
 	 ["1","2","3","4","5"]
 	]
 ***/
+//version-1: DFS-cominbation based problem to solve
 public class Solution {
-	
-    /*
-     * @param : a string to be split
+    /**
+     * @param s: a string to be split
      * @return: all possible split string array
      */
     public List<List<String>> splitString(String s) {
-        List<List<String>> result = new ArrayList<List<String>>();
-        List<String> combination = new ArrayList<String>();
-        // check corner case
+        // write your code here
+        List<List<String>> result = new ArrayList<>();
         if (s == null) {
             return result;
         }
 
-        if (s.length() == 0) {
+        List<String> combination = new ArrayList<>();
+        if (s.isEmpty()) {
             result.add(combination);
             return result;
         }
 
-        splitStringHelper(result, combination, s, 0);
+        find(s, 0, combination, result);
 
         return result;
     }
 
     // helper method
-    private void splitStringHelper(List<List<String>> result, List<String> combination, String s, int index) {
-        if (index == s.length()) {
+    private void find(String str, int currentIndex, List<String> combination, List<List<String>> result) {
+        if (currentIndex == str.length()) {
             result.add(new ArrayList<String>(combination));
             return;
         }
 
-        // (1) one-character combination way
-        combination.add(String.valueOf(s.charAt(index)))
-        splitStringHelper(result, combination, s, index + 1);
+        // (1)concatenate 1 character scenario
+        combination.add(String.valueOf(str.charAt(currentIndex)));
+        find(str, currentIndex + 1, combination, result);
         combination.remove(combination.size() - 1);
 
-        // (2) two-character combination way
-        if (index < s.length() - 1) {
-            combination.add(s.substring(index, index + 2)); //*notice* substring(index,index+2)=s[index,index+1]
-            splitStringHelper(result, combination, s, index + 2);
-            combination.remove(combination.size() - 1);
+        // (2)contatenate 2 character scenario
+        if (currentIndex >= str.length() - 1) {
+            return;
         }
+        combination.add(str.substring(currentIndex, currentIndex + 2));
+        find(str, currentIndex + 2, combination, result);
+        combination.remove(combination.size() - 1);
+
     }
 }
