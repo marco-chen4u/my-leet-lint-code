@@ -3,30 +3,31 @@
 Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. 
 (each operation is counted as 1 step.)
 You have the following 3 operations permitted on a word:
-	Insert a character
-	Delete a character
-	Replace a character
-Example
-	Example 1:
-		Input: 
-			"horse"
-			"ros"
-		Output: 3
-		Explanation: 
-			horse -> rorse (replace 'h' with 'r')
-			rorse -> rose (remove 'r')
-			rose -> ros (remove 'e')
-	Example 2:
-		Input: 
-			"intention"
-			"execution"
-		Output: 5
-		Explanation: 
-			intention -> inention (remove 't')
-			inention -> enention (replace 'i' with 'e')
-			enention -> exention (replace 'n' with 'x')
-			exention -> exection (replace 'n' with 'c')
-			exection -> execution (insert 'u')
+    Insert a character
+    Delete a character
+    Replace a character
+
+Example 1:
+    Input: 
+        "horse"
+        "ros"
+    Output: 3
+    Explanation: 
+        horse -> rorse (replace 'h' with 'r')
+        rorse -> rose (remove 'r')
+        rose -> ros (remove 'e')
+	
+Example 2:
+    Input: 
+        "intention"
+        "execution"
+    Output: 5
+    Explanation: 
+        intention -> inention (remove 't')
+        inention -> enention (replace 'i' with 'e')
+        enention -> exention (replace 'n' with 'x')
+        exention -> exection (replace 'n' with 'c')
+        exection -> execution (insert 'u')
 ***/
 /*
 * 状态dp[i][j]为word1前i个字符word1[0..i - 1]和word2前j个字符word2[0..j - 1]的最小编辑距离
@@ -42,38 +43,39 @@ Example
 //version-1
 public class Solution {
     public int minDistance(String word1, String word2) {
-		// check corner cases
-		if ((word1 == null || word1.length() == 0) &&
-		    (word2 == null || word2.length() == 0)){
-			return 0;
-		}
-		// state
-		int n = word1.length();
-		int m = word2.length();		
-		int[][] f = new int[n + 1][m + 1];
-		// initialize
-		f[0][0] = 0;
-		for (int i = 1; i <= n; i++) {
-			f[i][0] = i;
-		}
-		for (int j = 1; j <= m; j++) {
-			f[0][j] = j;
-		}		
-		// function
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= m; j++) {
-				f[i][j] = Integer.MAX_VALUE;
-				if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
-					f[i][j] = f[i - 1][j - 1];
-				}
-				else {
-					f[i][j] = 1 + Math.min(f[i - 1][j - 1], Math.min(f[i - 1][j], f[i][j - 1]));
-				}
-			}
-		}
-		//return
-		return f[n][m];		
-	}
+        // check corner cases
+        if ((word1 == null || word1.length() == 0) &&
+            (word2 == null || word2.length() == 0)){
+            return 0;
+        }
+
+        // state
+        int n = word1.length();
+        int m = word2.length();		
+        int[][] f = new int[n + 1][m + 1];
+        // initialize
+        f[0][0] = 0;
+        for (int i = 1; i <= n; i++) {
+            f[i][0] = i;
+        }
+        for (int j = 1; j <= m; j++) {
+            f[0][j] = j;
+        }		
+        // function
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                f[i][j] = Integer.MAX_VALUE;
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    f[i][j] = f[i - 1][j - 1];
+                }
+                else {
+                    f[i][j] = 1 + Math.min(f[i - 1][j - 1], Math.min(f[i - 1][j], f[i][j - 1]));
+                }
+            }
+        }
+        //return
+        return f[n][m];		
+    }
 }
 
 //version-2: double-space dp
