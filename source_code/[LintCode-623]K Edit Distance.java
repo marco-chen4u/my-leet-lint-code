@@ -4,34 +4,35 @@ Given a set of strings which just has lower case letters and a target string,
 output all the strings for each the edit distance with the target no greater than k.
 
 You have the following 3 operations permitted on a word:
-	-Insert a character
-	-Delete a character
-	-Replace a character
-Example
-	Example 1:
-		Given words = `["abc", "abd", "abcd", "adc"]` and target = `"ac"`, k = `1`
-		Return `["abc", "adc"]`
-		Input:
-			["abc", "abd", "abcd", "adc"]
-			"ac"
-			1
-		Output:
-			["abc","adc"]
-		Explanation:
-			"abc" remove "b"
-			"adc" remove "d"
-	Example 2:
-		Input:
-			["acc","abcd","ade","abbcd"]
-			"abc"
-			2
-		Output:
-			["acc","abcd","ade","abbcd"]
-		Explanation:
-			"acc" turns "c" into "b"
-			"abcd" remove "d"
-			"ade" turns "d" into "b" turns "e" into "c"
-			"abbcd" gets rid of "b" and "d"
+    -Insert a character
+    -Delete a character
+    -Replace a character
+
+Example 1:
+    Given words = `["abc", "abd", "abcd", "adc"]` and target = `"ac"`, k = `1`
+    Return `["abc", "adc"]`
+    Input:
+        ["abc", "abd", "abcd", "adc"]
+        "ac"
+        1
+    Output:
+        ["abc","adc"]
+    Explanation:
+        "abc" remove "b"
+        "adc" remove "d"
+
+Example 2:
+    Input:
+        ["acc","abcd","ade","abbcd"]
+        "abc"
+        2
+    Output:
+        ["acc","abcd","ade","abbcd"]
+    Explanation:
+        "acc" turns "c" into "b"
+        "abcd" remove "d"
+        "ade" turns "d" into "b" turns "e" into "c"
+        "abbcd" gets rid of "b" and "d"
 ***/
 
 public class Solution {
@@ -49,10 +50,10 @@ public class Solution {
      */     
     public List<String> kDistance(String[] words, String target, int k) {
         result = new ArrayList<String>();
-		// check corner case
-		if (words == null || words.length == 0 || k <= 0) {
-			return result;
-		}
+        // check corner case
+        if (words == null || words.length == 0 || k <= 0) {
+            return result;
+        }
 		
         K = k;
         TrieNode root = new TrieNode();
@@ -63,20 +64,20 @@ public class Solution {
         
         targetCharArray = target.toCharArray();
         n = targetCharArray.length;
-		// state
+        // state
         int[] f = new int[n + 1];
-		// initialize
+        // initialize
         for (i = 0; i <= n; ++i) {
             f[i] = i;
         }
         
-		// function
+        // function
         search(root, f);
 		
         return result;
     }
 	
-	// helper method
+    // helper method
     // node is the current TrieNode
     // f[] representss f[Sp][...]
     void search(TrieNode node, int[] f) {
@@ -119,12 +120,12 @@ public class Solution {
 
 // helper class
 class TrieNode{
-	// fields
+    // fields
     public TrieNode[] sons;
     public boolean isWord;
     public String word;
     
-	// constructor
+    // constructor
     public TrieNode() {
         int i;
         sons = new TrieNode[26];
@@ -135,7 +136,7 @@ class TrieNode{
         isWord = false;
     }
     
-	// method
+    // method
     static public void Insert(TrieNode node, String word) {
         int i;
         char[] s = word.toCharArray();
