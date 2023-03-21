@@ -80,7 +80,7 @@ public class Solution {
     // helper method
     // node is the current TrieNode
     // f[] representss f[Sp][...]
-    void search(TrieNode node, int[] f) {
+    private void search(TrieNode node, int[] f) {
         int[] newf;
         int i;
         if (node.isWord && f[n] <= K) {
@@ -121,16 +121,15 @@ public class Solution {
 // helper class
 class TrieNode{
     // fields
-    public TrieNode[] sons;
+    public TrieNode[] children;
     public boolean isWord;
     public String word;
     
     // constructor
     public TrieNode() {
-        int i;
-        sons = new TrieNode[26];
-        for (i = 0; i < 26; ++i) {
-            sons[i] = null;
+        children = new TrieNode[26];
+        for (int i = 0; i < 26; ++i) {
+            children[i] = null;
         }
         
         isWord = false;
@@ -138,15 +137,14 @@ class TrieNode{
     
     // method
     static public void Insert(TrieNode node, String word) {
-        int i;
         char[] s = word.toCharArray();
-        for (i = 0; i < s.length; ++i) {
-            int c = s[i] - 'a';
-            if (node.sons[c] == null) {
-                node.sons[c] = new TrieNode();
+        for (int i = 0; i < s.length; ++i) {
+            int current = s[i] - 'a';
+            if (node.children[current] == null) {
+                node.children[current] = new TrieNode();
             }
             
-            node = node.sons[c];
+            node = node.sons[current];
         }
         
         node.isWord = true;
