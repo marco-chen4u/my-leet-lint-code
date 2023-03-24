@@ -183,3 +183,47 @@ public class Solution {
     }
 }
 
+//version-4: DP
+public class Solution {
+    /*
+     * @param s: A string
+     * @param dict: A dictionary of words dict
+     * @return: A boolean
+     */
+    public boolean wordBreak(String s, Set<String> dict) {
+        // check corner case
+        if ((s == null || s.length() == 0) && (dict == null || dict.isEmpty())) {
+            return true;
+        }
+        
+        if (dict == null || dict.isEmpty()) {
+            return false;
+        }
+        
+        int maxLength = getMaxLength(dict);
+        int n = s.length();
+        boolean[] f = new boolean[n + 1];
+        
+        f[n] = true;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i + 1; j <= n && j - i <= maxLength; j++) {
+                if (f[j] && dict.contains(s.substring(i, j))) {
+                    f[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return f[0];
+    }
+    
+    private int getMaxLength(Set<String> dict) {
+        int result = 0;
+        for (String keyWord : dict) {
+            result = Math.max(result, keyWord.length());
+        }
+        
+        return result;
+    }
+}
