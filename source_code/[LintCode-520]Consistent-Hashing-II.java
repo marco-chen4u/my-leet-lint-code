@@ -1,5 +1,5 @@
 /***
-* 	
+* LintCode 520. Consisent Hashing II
 In Consistent Hashing I we introduced a relatively simple consistency hashing algorithm. 
 This simple version has two defects：
     -After adding a machine, the data comes from one of the machines. 
