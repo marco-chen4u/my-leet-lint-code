@@ -125,3 +125,34 @@ class Solution {
         }
     }
 }
+
+//version-3: dp
+class Solution {
+    public int nthSuperUglyNumber(int n, int[] primes) {
+        long[] dp = new long[n];
+        int[] pointers = new int[primes.length];
+
+        dp[0] = 1;
+
+        for (int i = 1; i < n; i++) {
+            dp[i] = Integer.MAX_VALUE;
+
+            for (int j = 0; j < primes.length; j++) {
+               
+                long current = dp[pointers[j]] * primes[j];
+                
+                dp[i] = Math.min(current, dp[i]);
+            }
+
+            for (int j = 0; j < primes.length; j++) {
+                int prePos = pointers[j];
+                if (dp[i] == dp[prePos] * primes[j]) {
+                    pointers[j] ++;
+                }
+            }
+
+        }
+
+        return (int)dp[n - 1];
+    }
+}
