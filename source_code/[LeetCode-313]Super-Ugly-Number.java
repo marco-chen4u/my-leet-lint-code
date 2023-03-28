@@ -80,18 +80,20 @@ class Solution {
         for (int i = 1; i < n; i++) {
             dp[i] = minHeap.peek().val;
 
-            int loopCount = 0;
+            //int loopCount = 0;
             while (minHeap.peek().val == dp[i]) {
                 Element current = minHeap.poll();
-                System.out.println("currentIndex = " + current.index);
+                //System.out.println("currentIndex = " + current.index);
+                
                 int nextVal = current.prime * dp[current.index];
                 int nextIndex = current.index + 1;
                 int prime = current.prime;
                 Element next = new Element(nextVal, nextIndex, prime);
                 minHeap.offer(next);
-                loopCount++;
+                
+                //loopCount++;
             }
-            System.out.println(minHeap.toString() + "loopCoutn = " + loopCount);
+            //System.out.println(minHeap.toString() + "loopCoutn = " + loopCount);
 
         }
 
