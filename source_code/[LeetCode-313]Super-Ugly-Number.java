@@ -81,7 +81,7 @@ class Solution {
             dp[i] = minHeap.peek().val;
 
             //int loopCount = 0;
-            while (minHeap.peek().val == dp[i]) {
+            while (minHeap.peek().val == dp[i]) {//there's some duplicate, some we need to handle this potential duplicates
                 Element current = minHeap.poll();
                 //System.out.println("currentIndex = " + current.index);
                 
