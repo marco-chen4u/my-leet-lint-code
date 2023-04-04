@@ -177,3 +177,46 @@ public class Solution {
         return max;
     }
 }
+
+//version-5: minHeap, handle the duplicates inside the iteration of minHeap
+public class Solution {
+    
+    /**
+     * @param nums: A list of integers
+     * @return: An integer
+     */
+    public int longestConsecutive(int[] nums) {
+        // write your code here
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        Queue<Integer> minHeap = new PriorityQueue();
+        for (int num : nums) {
+            minHeap.offer(num);
+        }
+
+        int pre = minHeap.poll();
+        int result = 1;
+        int currentSize = 1;
+        while (!minHeap.isEmpty()) {
+            int current = minHeap.poll();
+
+            if (pre == current) {
+                continue;
+            }
+
+            if (pre + 1 == current) {
+                currentSize += 1;
+                result = Math.max(result, currentSize);
+            }
+            else {
+                currentSize = 1;
+            }
+
+            pre = current;
+        }
+
+        return result;
+    }
+}
