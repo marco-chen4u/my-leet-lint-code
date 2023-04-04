@@ -25,6 +25,7 @@ Challenge
 *N is the total number of integers.
 *k is the number of arrays.
 ***/
+//version-1: minHeap
 public class Solution {
     // inner class
     class Element {
@@ -74,6 +75,66 @@ public class Solution {
             }
         }
         
+        return result;
+    }
+}
+
+//version-2: merge sort(divide & conquer, recursion)
+public class Solution {
+    /**
+     * @param arrays: k sorted integer arrays
+     * @return: a sorted array
+     */
+    public int[] mergekSortedArrays(int[][] arrays) {
+        // write your code here
+        int rowSize = arrays.length;
+        return mergeSortedArrays(arrays, 0, rowSize - 1);
+    }
+
+    // helper mehtods
+    private int[] mergeSortedArrays(int[][] arrays, int start, int end) {
+        if (start >= end) {
+            return arrays[start];
+        }
+
+        int left = start;
+        int right = end;
+        int mid = left + (right - left) / 2;
+        int[] leftNums = mergeSortedArrays(arrays, left, mid);
+        int[] rightNums = mergeSortedArrays(arrays, mid + 1, right);
+
+        return mergeSortedArray(leftNums, rightNums);
+    }
+
+    private int[] mergeSortedArray(int[] leftNums, int[] rightNums) {
+        int leftSize = leftNums.length;
+        int rightSize = rightNums.length;
+        int size = leftSize + rightSize;
+
+        int[] result = new int[size];
+
+        // two pointers
+        int i = 0;
+        int j = 0;
+
+        int index = 0;
+        while (i < leftSize && j < rightSize) {
+            if (leftNums[i] <= rightNums[j]) {
+                result[index++] = leftNums[i++];
+            }
+            else {
+                result[index++] = rightNums[j++];
+            }
+        }
+
+        while (i < leftSize) {
+            result[index++] = leftNums[i++];
+        }
+
+        while (j < rightSize) {
+            result[index++] = rightNums[j++];
+        }
+
         return result;
     }
 }
