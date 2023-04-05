@@ -6,6 +6,9 @@ Return a deep copy of the list.
 
 Challenge
     Could you solve it with O(1) space?
+    
+lintcode link: https://www.lintcode.com/problem/105/
+leetcode link: https://leetcode.com/problems/copy-list-with-random-pointer/
 ***/
 /**
  * Definition for singly-linked list with a random pointer.
