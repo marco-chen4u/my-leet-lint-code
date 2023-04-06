@@ -38,55 +38,62 @@ Example 1:
     collection.getRandom();
     
 **/
-//version-1: Linked + HashMap to support for all O(1) operaiton
+//version-1: Linked + HashMap<val, Set-of-val-position/idex-in-linkedlist> to support for all O(1) operaiton
 class RandomizedCollection {
     // fields
     private List<Integer> valueList;
-    private Map<Integer, Integer> valueToIndexMap;
+    private Map<Integer, Set<Integer>> map;
     private Random random;
 
     /** Initialize your data structure here. */
     public RandomizedCollection() {
-        valueList = new LinkedList<>();
-        valueToIndexMap = new HashMap<>();
+        valueList = new ArrayList<>();
+        map = new HashMap<>();
         random = new Random();
     }
     
     /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
     public boolean insert(int val) {
         // write your code here
-        if (valueToIndexMap.containsKey(val)) {
-            return false;
-        }
+        boolean result = map.containsKey(val);
 
         valueList.add(val);
         int size = valueList.size();
         int lastPos = size - 1;
 
-        valueToIndexMap.put(val, lastPos);
+        map.putIfAbsent(val, new HashSet<Integer>());
 
-        return true;
+        map.get(val).add(lastPos);
+
+        return result;
     }
     
     /** Removes a value from the collection. Returns true if the collection contained the specified element. */
     public boolean remove(int val) {
         // write your code here
-        if (!valueToIndexMap.containsKey(val)) {
+        if (!map.containsKey(val)) {
             return false;
         }
 
-        int currentPos = valueToIndexMap.get(val);
+        Set<Integer> set = map.get(val);
+        Iterator<Integer> iterator = map.get(val).iterator();
+        int currentPos = iterator.next();
         int lastPos = valueList.size() - 1;
         int lastVal = valueList.get(lastPos);
 
         // swap the curretn value and the last pos value
         valueList.set(currentPos, lastVal);
         valueList.set(lastPos, val);
-
-        valueToIndexMap.put(lastVal, currentPos);
-
-        valueToIndexMap.remove(val);
         valueList.remove(lastPos);
+
+        Set<Integer> lastValPosSet = map.get(lastVal);
+        lastValPosSet.add(currentPos);
+        lastValPosSet.remove(lastPos);
+
+        set.remove(currentPos);
+        if (set.isEmpty()) {
+            map.remove(val);
+        }
 
         return true;
     }
@@ -95,6 +102,7 @@ class RandomizedCollection {
     public int getRandom() {
         // write your code here
         int size = valueList.size();
+        //System.out.println("size = " + size);
         int randomPos = random.nextInt(size);
         return valueList.get(randomPos);
     }
