@@ -30,60 +30,70 @@ Example
     // Since 2 is the only number in the set, getRandom always return 2.
     randomSet.getRandom();
 ***/
-public class RandomizedSet {
+class RandomizedSet {
+
     // fields
-    private List<Integer> nums;
-    private Map<Integer, Integer> num2IndexMap;
+    private List<Integer> valueList;
+    private Map<Integer, Set<Integer>> map;
     private Random random;
-	
-	// methods
+
     public RandomizedSet() {
-        nums = new ArrayList<Integer>();
-        num2IndexMap = new HashMap<Integer, Integer>();
+        valueList = new LinkedList<>();
+        map = new HashMap<>();
         random = new Random();
     }
-
-    /*
-     * @param val: a value to the set
-     * @return: true if the set did not already contain the specified element or false
-     */
+    
     public boolean insert(int val) {
-        if (num2IndexMap.containsKey(val)) {
+        boolean found = map.containsKey(val);
+        if (found) {
             return false;
         }
 
-        num2IndexMap.put(val, nums.size());
-        nums.add(val);
+        map.putIfAbsent(val, new HashSet<Integer>());
+        
+        valueList.add(val);
+        int lastPos = valueList.size() - 1;
+        map.get(val).add(lastPos);
 
         return true;
     }
-
-    /*
-     * @param val: a value from the set
-     * @return: true if the set contained the specified element or false
-     */
+    
     public boolean remove(int val) {
-        if (!num2IndexMap.containsKey(val)) {
+        if (!map.containsKey(val)) {
             return false;
         }
 
-        int index = num2IndexMap.get(val);
-        int last = nums.get(nums.size() - 1);
+        Set<Integer> set = map.get(val);
+        int currentPos = set.iterator().next();
 
-        nums.set(index, last);
-        nums.remove(nums.size() - 1);
+        if (set.size() == 1) {
+            map.remove(val);
+        }
+        else {
+            set.remove(currentPos);
+        }
 
-        num2IndexMap.put(last, index);
-        num2IndexMap.remove(val);
+        int lastPos = valueList.size() - 1;
+        int lastVal = valueList.get(lastPos);
+        Set<Integer> lastValSet = map.get(lastVal);
+        if (lastPos != currentPos) {
+            valueList.set(currentPos, lastVal);
+            valueList.set(lastPos, val);
+
+            lastValSet.remove(lastPos);
+            lastValSet.add(currentPos);
+        }
+
+        valueList.remove(lastPos);
 
         return true;
     }
-
-    /*
-     * @return: Get a random element from the set
-     */
+    
     public int getRandom() {
-        return nums.get(random.nextInt(nums.size()));
+        int size = valueList.size();
+        int result = valueList.get(random.nextInt(size));
+
+        return result;
     }
 }
 
