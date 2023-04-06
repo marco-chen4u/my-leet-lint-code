@@ -78,22 +78,27 @@ class RandomizedCollection {
         Set<Integer> set = map.get(val);
         Iterator<Integer> iterator = map.get(val).iterator();
         int currentPos = iterator.next();
-        int lastPos = valueList.size() - 1;
-        int lastVal = valueList.get(lastPos);
-
-        // swap the curretn value and the last pos value
-        valueList.set(currentPos, lastVal);
-        valueList.set(lastPos, val);
-        valueList.remove(lastPos);
-
-        Set<Integer> lastValPosSet = map.get(lastVal);
-        lastValPosSet.add(currentPos);
-        lastValPosSet.remove(lastPos);
-
-        set.remove(currentPos);
-        if (set.isEmpty()) {
+        if (set.size() == 1) {
             map.remove(val);
         }
+        else {
+            set.remove(currentPos);
+        }
+
+        int lastPos = valueList.size() - 1;
+        int lastVal = valueList.get(lastPos);
+        Set<Integer> lastPosSet = map.get(lastVal);
+
+        // swap the curretn value and the last pos value
+        if (lastPos != currentPos) {
+            valueList.set(currentPos, lastVal);
+            valueList.set(lastPos, val);
+
+            lastPosSet.remove(lastPos);
+            lastPosSet.add(currentPos);
+        }
+
+        valueList.remove(lastPos);
 
         return true;
     }
@@ -107,7 +112,6 @@ class RandomizedCollection {
         return valueList.get(randomPos);
     }
 }
-
 /**
  * Your RandomizedCollection object will be instantiated and called as such:
  * RandomizedCollection obj = new RandomizedCollection();
