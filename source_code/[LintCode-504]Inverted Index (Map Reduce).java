@@ -64,23 +64,22 @@ public class InvertedIndex {
             // Write your code here
             // Output the results into output buffer.
             // Ps. output.collect(String key, List<Integer> value);
-            if (SEPERATOR.equals(key) || isEmpty(key)) {
+
+            if (key == null || key.isEmpty()) {
                 return;
             }
-            
-            List<Integer> results = new ArrayList<Integer>();
-            int previous = -1;
-            NavigableSet<Integer> set = new TreeSet<Integer>();
+
+            Set<Integer> documentIdSet = new HashSet<>();
+            // remove the duplicates
             while (values.hasNext()) {
-                int value = values.next();
-                set.add(value);
+                int documentId = values.next();
+                documentIdSet.add(documentId);
             }
-            
-            for (int value : set) {
-                results.add(value);
-            }
-            
-            output.collect(key, results);
+
+            List<Integer> documentIdList = new ArrayList<>(documentIdSet);
+            // sort the document id list
+            Collections.sort(documentIdList);
+
+            output.collect(key, documentIdList);
         }
-    }
 }
