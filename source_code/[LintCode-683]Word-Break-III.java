@@ -5,26 +5,25 @@ return the number of sentences you can form by inserting whitespaces to the sent
 
 Example 1
     Input:
-    "CatMat"
-    ["Cat", "Mat", "Ca", "tM", "at", "C", "Dog", "og", "Do"]
+        "CatMat"
+        ["Cat", "Mat", "Ca", "tM", "at", "C", "Dog", "og", "Do"]
     Output: 3
     Explanation:
-    we can form 3 sentences, as follows:
-    "CatMat" = "Cat" + "Mat"
-    "CatMat" = "Ca" + "tM" + "at"
-    "CatMat" = "C" + "at" + "Mat"
-    
+        we can form 3 sentences, as follows:
+        "CatMat" = "Cat" + "Mat"
+        "CatMat" = "Ca" + "tM" + "at"
+        "CatMat" = "C" + "at" + "Mat"
+
 Example 2
     Input:
-    "a"
-    []
+        "a"
+        []
     Output: 
-    0
-    
-Link: https://www.lintcode.com/problem/683/
-tags: DP, DFS
-***/
+        0
 
+Link: https://www.lintcode.com/problem/683/
+
+***/
 //version-1: memorized DFS
 public class Solution {
     /**
