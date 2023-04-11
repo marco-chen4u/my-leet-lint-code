@@ -81,7 +81,7 @@ class Solution {
                         continue;
                     }
 
-                    // column scan for 3 ajenction elements                    
+                    // column scan for 3 consecutive elements                    
                     if (j + 2 < n && Math.abs(board[i][j + 1]) == val && Math.abs(board[i][j + 2]) == val) {
                         end = false;
                         for (int k = j; k <= j + 2; k++) {
