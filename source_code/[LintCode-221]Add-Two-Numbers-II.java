@@ -14,6 +14,8 @@ Input: 1->2->3
        4->5->6
 Output: 5->7->9
 
+LeetCode link: https://www.lintcode.com/problem/221/
+LeetCode link: https://leetcode.com/problems/add-two-numbers-ii/
 **/
 //version-1: iteration
 /**
