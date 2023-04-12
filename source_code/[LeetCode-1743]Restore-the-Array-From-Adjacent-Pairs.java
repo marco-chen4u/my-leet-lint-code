@@ -132,3 +132,57 @@ class Solution {
         return result;
     }
 }
+
+
+//version-3: DFS(recursion)
+class Solution {
+    public int[] restoreArray(int[][] adjacentPairs) {
+
+        // building a graph with n ndoes from n-1 dege relationship/adjacentPairs
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        int n = adjacentPairs.length + 1;
+        for (int[] edge : adjacentPairs) {
+            graph.putIfAbsent(edge[0], new HashSet<>());
+            graph.get(edge[0]).add(edge[1]);
+
+            graph.putIfAbsent(edge[1], new HashSet<>());
+            graph.get(edge[1]).add(edge[0]);
+        }
+
+        int start = -1;
+        Set<Integer> visited = new HashSet<>();
+
+        // finding the source/terminal node
+        for (Map.Entry<Integer, Set<Integer>> entry : graph.entrySet()) {
+            if (entry.getValue().size() == 1) {
+                start = entry.getKey();               
+                break;
+            }
+        }
+
+        List<Integer> path = new LinkedList<>();
+        find(start, visited, path, graph);
+
+        int[] result = new int[n];
+        int index = 0;
+        for (int node : path) {
+            result[index++] = node;
+        }
+
+        return result;
+    }
+
+    // helper method
+    private void find(int current, Set<Integer> visited, List<Integer> path, Map<Integer, Set<Integer>> graph) {
+        path.add(current);
+        visited.add(current);
+
+        for (int next : graph.get(current)) {
+            if (visited.contains(next)) {
+                continue;
+            }
+
+            find(next, visited, path, graph);
+        }
+    }
+}
