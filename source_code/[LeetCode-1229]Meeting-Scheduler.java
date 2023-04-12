@@ -31,6 +31,8 @@ LeetCode link: https://leetcode.com/problems/meeting-scheduler/
 ***/
 //version-1: sorting with comparator + two pointers
 class Solution {
+    
+    // field
     private Comparator<int[]> comparator = new Comparator<int[]>(){
         @Override
         public int compare(int[] a, int[] b) {
