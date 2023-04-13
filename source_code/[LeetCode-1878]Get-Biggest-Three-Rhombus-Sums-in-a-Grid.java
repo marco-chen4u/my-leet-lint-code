@@ -43,6 +43,7 @@ Constraints:
 LeetCode link: https://leetcode.com/problems/get-biggest-three-rhombus-sums-in-a-grid/
 ***/
 //version-1: brute-force with set(remove duplicates) + minHeap(for top k largest value)
+//time complexity: O(m*n*min(n,m)^2)
 class Solution {
     // fields
     private static int m; // row size
@@ -62,7 +63,6 @@ class Solution {
                 radius = Math.min(radius, n - 1 - j);
 
                 set.add(grid[i][j]);
-                boolean isValidToAdd = true;
 
                 for (int r = 1; r <= radius; r++) {
                     
@@ -102,24 +102,107 @@ class Solution {
                         
                         sum += isBound(row, column) ? grid[row][column] : 0;
                     }
-
-                    //minHeap.offer(sum);
+                    
                     set.add(sum);
                 }
             }
         }
         
-        //System.out.println("set = " + set.toString());
-        
         minHeap = new PriorityQueue<>(set);
-        //System.out.println("minHeap = " + minHeap.toString());
         
         while (minHeap.size() > 3) {
             minHeap.poll();
         }
 
         int size = Math.min(minHeap.size(), 3);
-        //System.out.println("size = " + size);
+
+        int[] result = new int[size];
+        int index = size - 1;
+        while (!minHeap.isEmpty()) {
+            result[index--] = minHeap.poll();
+        }
+
+        return result;
+    }
+
+    // helper method
+    private boolean isBound(int row, int column) {
+        return row >= 0 && row < m && column >= 0 && column < n;
+    }
+}
+
+//version-2: preSum 
+//time complexity: O(m * n * min(n, m))
+class Solution {
+    // fields
+    private static int m; // row size
+    private static int n; // column size
+
+    int[][] preSum1 = new int[50][50]; //"\"
+    int[][] preSum2 = new int[50][50]; //"/"
+
+    public int[] getBiggestThree(int[][] grid) {
+        m = grid.length; // row size
+        n = grid[0].length; // column size
+
+        Queue<Integer> minHeap = null;;
+        Set<Integer> set = new HashSet<>();// to handle the duplicates
+
+        // preSum from top-left to bottom-right
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++) {
+                preSum1[i][j] = (isBound(i - 1, j - 1) ? preSum1[i - 1][j - 1] : 0) + grid[i][j];
+            }
+        }
+
+        // preSum from top-right to bottom-left
+        for (int i = 0; i < m; i++) {
+            for (int j = n - 1; j >= 0; j--) {
+                preSum2[i][j] = (isBound(i - 1, j + 1) ? preSum2[i - 1][j + 1] : 0) + grid[i][j];
+            }
+        }
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int radius = Math.min(i, j);
+                radius = Math.min(radius, m - 1 - i);
+                radius = Math.min(radius, n - 1 - j);
+
+                set.add(grid[i][j]);
+
+                for (int r = 1; r <= radius; r++) {
+                    
+                    int sum = 0;
+                    int x1, y1, x2, y2;
+
+                    x1 = i - r; y1 = j;
+                    x2 = i; y2 = j + r;
+                    sum += preSum1[x2][y2] - (isBound(x1 -1, y1 -1) ? preSum1[x1 - 1][y1 -1] : 0);
+
+                    x1 = i; y1 = j - r;
+                    x2 = i + r; y2 = j;
+                    sum += preSum1[x2][y2] - (isBound(x1 -1, y1 -1) ? preSum1[x1 - 1][y1 -1] : 0);
+
+                    x1 = i - r; y1 = j;
+                    x2 = i; y2 = j - r;
+                    sum += preSum2[x2 - 1][y2 + 1] - preSum2[x1][y1];
+
+                    x1 = i; y1 = j + r;
+                    x2 = i + r; y2 = j;
+                    sum += preSum2[x2 - 1][y2 + 1] - preSum2[x1][y1];
+
+                    set.add(sum);
+                }
+            }
+        }
+        
+        minHeap = new PriorityQueue<>(set);
+        
+        while (minHeap.size() > 3) {
+            minHeap.poll();
+        }
+
+        int size = Math.min(minHeap.size(), 3);
 
         int[] result = new int[size];
         int index = size - 1;
