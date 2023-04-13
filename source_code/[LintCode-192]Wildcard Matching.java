@@ -58,8 +58,12 @@ public class Solution {
      */
     public boolean isMatch(String s, String p) {
         // check corner case
-        if (s == null || s.length() == 0 || p == null || p.length() == 0) {
+        if ((s == null || s.length() == 0) && (p == null || p.length() == 0)) {
             return false;
+        }
+
+        if (p.equals("*")) {
+            return true;
         }
 
         boolean[][] visited = new boolean[s.length()][p.length()];
@@ -69,7 +73,7 @@ public class Solution {
     }
 
     // helper methods
-    private boolean isAllStar(String p, int pIndex) {
+    private boolean isAllStarFrom(String p, int pIndex) {
         for (int i = pIndex; i < p.length(); i++) {
             if (p.charAt(i) != '*') {
                 return false;
@@ -89,11 +93,11 @@ public class Solution {
                                     boolean[][] memo) {
         // check corner cases
         if (p.length() == pIndex) {
-            return s.length() = sIndex;
+            return s.length() == sIndex;
         }
 
         if (s.length() == sIndex) {
-            isAllStar(p, pIndex);
+            isAllStarFrom(p, pIndex);
         }
 
         if (visited[sIndex][pIndex]) {
