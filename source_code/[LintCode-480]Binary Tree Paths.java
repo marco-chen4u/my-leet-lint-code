@@ -17,7 +17,10 @@ Example 2:
     Explanation：
            1
          /   
-        2     
+        2
+
+LintCode link: https://www.lintcode.com/problem/480/
+LeetCode link: https://leetcode.com/problems/binary-tree-paths/
 ***/
 /*
  * Definition of TreeNode:
