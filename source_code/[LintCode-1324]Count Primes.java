@@ -12,6 +12,8 @@ Example
         Output: 2
         Explanation：2, 3 are prime number
 ***/
+
+//version-1: prime definition to calculation, but the time space is O(nlogn)
 public class Solution {
     /**
      * @param n: a integer
@@ -46,4 +48,38 @@ public class Solution {
         
         return true;
     }
+}
+
+//version-2: ieve of Eratosthenes(https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes),time complexity O(nloglogn)=> O(n), space complexity: O(n)
+class Solution {
+    public int countPrimes(int n) {
+        // check corner case
+        if (n <= 2) {
+            return 0;
+        }
+        
+        // regular case
+        boolean[] dp = new boolean[n];
+        Arrays.fill(dp, true);
+
+        dp[0] = false;
+        dp[1] = false;
+
+        int count = 0;
+        for (long i = 2; i < n; i++) {
+            if (!dp[(int)i]) {
+                continue;
+            }
+
+            count+=1;// if current dp[i] is a prime
+                     // then it's times * i should not be prime
+            for (long j = i * i; j < n; j+= i) {/* mark the times of i value is not prime */
+                dp[(int)j] = false;
+            }
+
+        }
+
+        return count;
+    }
+    
 }
