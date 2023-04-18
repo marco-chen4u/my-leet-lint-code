@@ -2,15 +2,17 @@
 * LintCode 1324. Count Primes
 Count the number of prime numbers less than a non-negative number, n.
 
-Example
-    Example 1：
-        Input: n = 2
-        Output: 0
+Example 1：
+    Input: n = 2
+    Output: 0
 
-    Example 2：
-        Input: n = 4
-        Output: 2
-        Explanation：2, 3 are prime number
+Example 2：
+    Input: n = 4
+    Output: 2
+    Explanation：2, 3 are prime number
+        
+LintCode link: https://www.lintcode.com/problem/1324/
+LeetCode link: https://leetcode.com/problems/count-primes/
 ***/
 
 //version-1: prime definition to calculation, but the time space is O(nlogn)
