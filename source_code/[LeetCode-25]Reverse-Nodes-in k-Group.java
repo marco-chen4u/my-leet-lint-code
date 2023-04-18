@@ -81,3 +81,47 @@ class Solution {
         return dummy.next;
     }
 }
+
+//version-2: iteration with loop, space complexity: O(1)
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        //edge case check
+        if(head == null || k == 0){
+            return head;
+        }
+        
+       
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        
+        ListNode pre = dummy;
+        ListNode current = pre.next;
+        ListNode next = current.next;
+
+        int count = 0;
+        while (current != null) {
+            count += 1;
+            current = current.next;
+        }
+
+        while (count >= k) {
+
+            current = pre.next;
+            next = current.next;
+
+            for (int i = 1; i < k; i++) {
+                current.next = next.next;
+                next.next = pre.next;
+                pre.next = next;
+                next = current.next;
+            }
+
+            pre = current;
+
+            count -= k;
+        }
+
+        
+        return dummy.next;
+    }
+}
