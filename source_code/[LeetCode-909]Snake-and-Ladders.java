@@ -6,7 +6,7 @@ where the cells are labeled from 1 to n2 in a Boustrophedon style starting from 
 
 You start on square 1 of the board. In each move, starting from square curr, do the following:
     -Choose a destination square next with a label in the range [curr + 1, min(curr + 6, n2)].
-      This choice simulates the result of a standard 6-sided die roll: i.e., 
+      This choice simulates the result of a standard 6-sided dice roll: i.e., 
       there are always at most 6 destinations, regardless of the size of the board.
     -If next has a snake or ladder, you must move to the destination of that snake or ladder. Otherwise, you move to next.
     -The game ends when you reach the square n2.
