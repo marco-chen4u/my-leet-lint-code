@@ -109,3 +109,70 @@ class Solution {
         return -1;
     }
 }
+
+
+//version-2: BFS
+class Solution {
+
+    private static int n;
+
+    public int snakesAndLadders(int[][] board) {
+        n = board.length;
+
+        int start = 1;
+        int destination = n * n;
+
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+
+        queue.offer(start);
+        visited.add(start);
+
+        int step = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int current = queue.poll();
+
+                if (destination == current) {
+                    return step;
+                }
+
+                for (int next = current + 1; next <= Math.min(current + 6, destination); next++) {
+                    int[] nextPosition = getNextPosition(next);
+                    int row = nextPosition[0];
+                    int column = nextPosition[1];
+
+                    int nextPos = board[row][column] == -1 ? next : board[row][column];
+
+                    if (visited.contains(nextPos)) {
+                        continue;
+                    }
+
+                    visited.add(nextPos);
+                    queue.offer(nextPos);
+                }
+            }
+
+            step++;
+        }
+
+        return -1;
+    }
+
+    // helper method
+    private int[] getNextPosition(int next) {
+        int[] result = new int[2];
+
+        int row = (next - 1) / n; // 0-based position in row
+        int column = (next - 1) % n; // 0-based position in column
+
+        // re-projection to origin point of top-left
+        int newRow = n - 1 - row;
+        int newColumn = (row % 2 == 0) ? column : n - 1 - column;
+
+        result[0] = newRow;
+        result[1] = newColumn;
+        return result;
+    }
+}
