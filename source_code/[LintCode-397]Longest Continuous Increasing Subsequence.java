@@ -6,17 +6,16 @@ An increasing continuous subsequence:
     -Can be from right to left or from left to right.
     -Indices of the integers in the subsequence should be continuous.
 
-Example
-    Example 1:
-        Input: [5, 4, 2, 1, 3]
-        Output: 4
-        Explanation:
+Example 1
+    Input: [5, 4, 2, 1, 3]
+    Output: 4
+    Explanation:
         For [5, 4, 2, 1, 3], the LICS  is [5, 4, 2, 1], return 4.
 
-    Example 2:
-        Input: [5, 1, 2, 3, 4]
-        Output: 4
-        Explanation:
+Example 2
+    Input: [5, 1, 2, 3, 4]
+    Output: 4
+    Explanation:
         For [5, 1, 2, 3, 4], the LICS  is [1, 2, 3, 4], return 4.
 
 Challenge
@@ -35,7 +34,7 @@ public class Solution {
             return result;
         }        
         
-	    result = 1;
+	result = 1;
         if (nums.length == 1) {
             return result;
         }
