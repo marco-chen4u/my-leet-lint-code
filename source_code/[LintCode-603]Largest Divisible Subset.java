@@ -15,14 +15,13 @@ Notice
     If there are multiple solutions, return any subset is fine.
 ***/
 public class Solution {
-    /*
+    /**
      * @param nums: a set of distinct positive integers
      * @return: the largest subset 
      */
     public List<Integer> largestDivisibleSubset(int[] nums) {
-        List<Integer> result = new ArrayList<Integer>();
-
-        // check corner case
+        // write your code here
+        List<Integer> result = new ArrayList<>();
         if (nums == null || nums.length == 0) {
             return result;
         }
@@ -30,41 +29,52 @@ public class Solution {
         Arrays.sort(nums);
 
         int n = nums.length;
-
-        // state
-        int[] dp = new int[n];
-        int[] preIndexes = new int[n];
-		
-        // initialize
+	    
+	//[1]initialize
+        int[] dp = new int[n];// the count of last divisible num subset for each position on the sorted array
         Arrays.fill(dp, 1);
-		
-        // function
+
+        int[] preIndex = new int[n];// mark each position's num previous divisor prvious neighboring position
         for (int i = 0; i < n; i++) {
-            preIndexes[i] = i;
+            preIndex[i] = i;
+        }
+
+	//[2]function
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[i] % nums[j] == 0 && dp[i] < dp[j] + 1) {
-                    dp[i] = dp[j] + 1;
-                    preIndexes[i] = j;
+                if (nums[i] % nums[j] != 0) {
+                    continue;
                 }
+
+                if (dp[i] >= dp[j] + 1) {
+                    continue;
+                }
+
+                dp[i] = dp[j] + 1;
+                preIndex[i] = j; // mark the current's previous divisible num position
             }
         }
+	    
+	//[3] return
 
-        int max = Integer.MIN_VALUE;
-        int maxIndex = 0;
+        // find the max divisable num and it's prev-index(of pervious neighboring position)
+        int maxCount = 0;
+        int currentPos = 0;
         for (int i = 0; i < n; i++) {
-            if (dp[i] > max) {
-                max = dp[i];
-                maxIndex = i;
+            if (dp[i] > maxCount) {
+                maxCount = dp[i];
+                currentPos = i;
             }
         }
 
-        result.add(nums[maxIndex]);
+        result.add(0, nums[currentPos]);
 
-        while (maxIndex != preIndexes[maxIndex]) {
-            maxIndex = preIndexes[maxIndex];
-            result.add(nums[maxIndex]);
+        while (currentPos != preIndex[currentPos]) {
+            currentPos = preIndex[currentPos];
+            result.add(0, nums[currentPos]);            
         }
 
         return result;
+
     }
 }
