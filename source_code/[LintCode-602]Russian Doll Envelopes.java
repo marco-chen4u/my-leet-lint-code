@@ -20,7 +20,56 @@ Example 2:
 	
 Related question:
     LintCode. 1858 Set of boxes https://www.lintcode.com/problem/1858
+    
+    
+LintCode link: https://www.lintcode.com/problem/602/
+LeetCode link: https://leetcode.com/problems/russian-doll-envelopes/
 ***/
+//version-1: dp, time complexity: O(n^2), space complexity: O(n), in leetcode testing, it will get execute time exceeded error
+    private Comparator<int[]> comparator = new Comparator<int[]>() {
+        @Override
+        public int compare(int[] a, int[] b) {
+            if (a[0] != b[0]) {
+                return a[0] - b[0];
+            }
+            else {
+                return b[1] - a[1];
+            }
+        }
+    };
+
+    public int maxEnvelopes(int[][] envelopes) {
+        if (envelopes == null || envelopes.length == 0) {
+            return 0;
+        }
+
+        int n = envelopes.length;
+        Arrays.sort(envelopes, (a, b) -> (a[0] != b[0]) ? (a[0] - b[0]) : (a[1] - b[1]));
+
+        int[] dp = new int[n];
+
+        Arrays.fill(dp, 1);
+
+        int result = 1;
+        for (int i = 1; i < n; i++) {
+            int[] current = envelopes[i];
+            for (int j = 0; j < i; j++) {
+                int[] pre = envelopes[j];
+
+                if (current[0] > pre[0] && current[1] > pre[1]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            result = Math.max(result, dp[i]);
+        }
+
+        return result;
+    }
+
+ 
+}
+
+//version-2: greedy, time complexity: O(nlogn), space complexity: O(n)
 public class Solution {
     // fields
     private final int DEFAULT_MAX = Integer.MAX_VALUE;
@@ -104,4 +153,74 @@ public class Solution {
 
         return end;
     }
+}
+
+
+//version-3: greedy, time complexity: O(nlogn), space complexity: O(n)
+class Solution {
+
+    private Comparator<int[]> comparator = new Comparator<int[]>() {
+        @Override
+        public int compare(int[] a, int[] b) {
+            if (a[0] != b[0]) {
+                return a[0] - b[0];
+            }
+            else {
+                return b[1] - a[1];
+            }
+        }
+    };
+
+    public int maxEnvelopes(int[][] envelopes) {
+        if (envelopes == null || envelopes.length == 0) {
+            return 0;
+        }
+
+        int n = envelopes.length;
+        Arrays.sort(envelopes, (a, b) -> (a[0] != b[0]) ? (a[0] - b[0]) : (b[1] - a[1]));
+
+        int[] values = new int[n];
+
+        Arrays.fill(values, Integer.MAX_VALUE);
+
+        int result = 1;
+        for (int i = 0; i < n; i++) {
+            int[] current = envelopes[i];
+            int currentHeight = current[1];
+            int index = binarySearchFirst(values, currentHeight);
+            values[index] = currentHeight;
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (values[i] != Integer.MAX_VALUE) {
+                result = i + 1;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    // helper method
+    private int binarySearchFirst(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) /2;
+            if (nums[mid] >= target) {
+                end = mid;
+            }
+            else {
+                start = mid;
+            }
+        }
+
+        if (nums[start] >= target) {
+            return start;
+        }
+
+        return end;
+    }
+
+ 
 }
