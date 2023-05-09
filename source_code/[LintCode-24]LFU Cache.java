@@ -49,6 +49,19 @@ public class LFUCache {
     private int maxFrequency;
     private Set<CacheNode>[] frequencySets;
     private Map<Integer, CacheNode> cache;
+
+    // constructor
+    /*
+    * @param capacity: An integer
+    */public LFUCache(int capacity) {
+        this.capacity = capacity;
+        this.lowestFrequency = 0;
+        this.maxFrequency = capacity;
+        this.frequencySets = new Set[capacity * 2];
+        this.cache = new HashMap<Integer, CacheNode>(capacity);
+        
+        initializeFrequencySets();
+    }
     
     // private methods
     private void initializeFrequencySets() {
@@ -121,19 +134,6 @@ public class LFUCache {
         }
     }
     
-    // constructor
-    /*
-    * @param capacity: An integer
-    */public LFUCache(int capacity) {
-        this.capacity = capacity;
-        this.lowestFrequency = 0;
-        this.maxFrequency = capacity;
-        this.frequencySets = new Set[capacity * 2];
-        this.cache = new HashMap<Integer, CacheNode>(capacity);
-        
-        initializeFrequencySets();
-    }
-
     // public methods
     /*
      * @param key: An integer
