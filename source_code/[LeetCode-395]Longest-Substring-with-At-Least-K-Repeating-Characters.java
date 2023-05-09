@@ -21,6 +21,10 @@ Constraints:
 LintCode link: https://www.lintcode.com/problem/1261/
 LeetCode link: https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/ 
 ***/
+/*
+* idea: https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/solutions/403337/summary-of-3-approaches-from-brute-force-to-optimal/
+*/
+
 //version-1: brute force, time complexity: O(n^2), space compexity: O(1)   ***[int[26]]
 class Solution {
     public int longestSubstring(String s, int k) {
