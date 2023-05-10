@@ -143,4 +143,72 @@ class Solution {
     }
 }
 
-//version-3: to continue
+//version-3: recursion, devide and conquer, two pointers
+// time complexity: O(n), space complexity: O(1)
+/*find the delimiters that is not satisfied with at-least-k char condtion, and divide by this delimiters(char) and find max substring length*/
+public class Solution {
+    /**
+     * @param s: a string
+     * @param k: an integer
+     * @return: return an integer
+     */
+    public int longestSubstring(String s, int k) {
+        // corner case
+        if (s == null || s.isEmpty() || k > s.length()) {
+            return 0;
+        }
+
+        return longestSubstring(s, k, 0, s.length() - 1);
+    }
+
+    // helper method
+    private int longestSubstring(String s, int k, int start, int end) {
+        // corner case
+        if (end - start + 1 < k) {// no at least k repeat character conditions satisfied
+            return 0;
+        }
+
+        char[] chars = s.toCharArray();
+
+        int[] charFreqCount = new int[26];
+        for (int i = start; i <= end; i++) {
+            int current = chars[i] - 'a';
+            charFreqCount[current]++;
+        }
+
+        Set<Character> delimiters = new HashSet<>();
+        for (int i = start; i <= end; i++) {
+            char ch = chars[i];
+            int current = ch - 'a';
+            int value = charFreqCount[current];
+            if (value > 0 && value < k) {
+                delimiters.add(ch);
+            }
+        }
+
+        // don't forget this corner case condition to get return
+        if (delimiters.isEmpty()) {
+            return end -start + 1;
+        }
+
+        int max = 0;
+
+        // two pointers
+        int left = start;
+        int right = start;
+        for (; right <= end; right++) {
+            char ch = chars[right];
+            if (delimiters.contains(ch)) {// devide and conquer
+                max = Math.max(max, longestSubstring(s, k, left, right - 1));
+
+                left = right + 1;
+            }
+        }
+
+        // don't forget the last part of split by delimiters to check
+        max = Math.max(max, longestSubstring(s, k, left, end));
+
+        return max;
+    }
+}
+
