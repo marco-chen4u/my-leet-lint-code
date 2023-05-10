@@ -73,4 +73,72 @@ class Solution {
     }
 }
 
-//version-2: to continue
+//version-2: O(n) brute force
+/* Instead of looping over all possible substrings, which takes O(n^2), 
+we can loop over all possible number of unique letters in substring, from 1 to 26.*/
+// time O(n), space O(1)
+class Solution {
+    public int longestSubstring(String s, int k) {
+        if (s == null || s.isEmpty() || k > s.length()) {
+            return 0;
+        }
+
+        int max = 0;
+        for (int uniqueCharCount = 1; uniqueCharCount <= 26; uniqueCharCount++) {
+            max = Math.max(max, longestSubstringWithUniqueChar(s, k, uniqueCharCount));
+        }
+
+        return max;
+    }
+
+    private int longestSubstringWithUniqueChar(String str, int k, int uniqueCharCount) {
+        int n = str.length();
+
+        char[] chars = str.toCharArray();
+
+        int[] charFreqCount = new int[26];
+        int distinctCharCount = 0;
+        int atLeastKCharCount = 0;
+
+        int max = 0;
+
+        // two pointers
+        int left = 0;
+        int right = 0;
+        while (right < n) {
+            int current = chars[right] - 'a';// new right most char
+            
+            charFreqCount[current]++;
+            distinctCharCount += charFreqCount[current] == 1 ? 1 : 0;
+            
+            atLeastKCharCount += charFreqCount[current] == k ? 1 : 0;
+
+            while (distinctCharCount > uniqueCharCount) {// moving the sliding window
+                char leftChar = chars[left];
+                int leftIndex = leftChar - 'a';
+
+                if (charFreqCount[leftIndex] == 1) {
+                    distinctCharCount--;
+                }
+
+                if (charFreqCount[leftIndex] == k) {
+                    atLeastKCharCount--;
+                }
+
+                charFreqCount[leftIndex]--;
+
+                left++;// moving the sliding window forward
+            }
+
+            if (distinctCharCount == uniqueCharCount && 
+                distinctCharCount == atLeastKCharCount) {
+                max = Math.max(max, right - left + 1);
+            }
+            
+            
+            right++;
+        }
+
+        return max;
+    }
+}
