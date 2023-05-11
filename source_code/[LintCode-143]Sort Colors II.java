@@ -84,7 +84,7 @@ public class Solution {
             return;
         }
         
-        qickSort(colors, 0, colors.length - 1, 1, k);
+        qickSort(colors, 0, colors.length - 1, 1, k);//****note it's from 0, instead from 1, see the 2nd parameter value(0)
     }
     
     // helper methods
