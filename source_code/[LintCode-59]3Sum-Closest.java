@@ -81,7 +81,7 @@ public class Solution {
 }
 
 //version-2
-ublic class Solution {
+public class Solution {
     /**
      * @param numbers: Give an array numbers of n integer
      * @param target: An integer
