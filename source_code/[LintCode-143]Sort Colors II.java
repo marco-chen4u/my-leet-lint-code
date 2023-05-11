@@ -84,7 +84,7 @@ public class Solution {
             return;
         }
         
-        rainbowSort(colors, 0, colors.length - 1, 1, k);
+        qickSort(colors, 0, colors.length - 1, 1, k);
     }
     
     // helper methods
