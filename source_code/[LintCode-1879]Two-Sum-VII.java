@@ -100,3 +100,130 @@ public class Solution {
 
 //version-2: two pointers and statisfy the challenge requirements with O(n) time complexity and O(1) space complexity
 // to continue
+public class Solution {
+    /**
+     * @param nums: the input array
+     * @param target: the target number
+     * @return: return the target pair
+     *          we will sort your return value in output
+     */
+    public List<List<Integer>> twoSumVII(int[] nums, int target) {
+        // write your code here
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums == null || nums.length <= 1) {
+            return result;
+        }
+
+        int size = nums.length;
+        int left = 0;
+        int right = 0;
+
+        for (int i = 0; i < size; i++) {
+            left = (nums[i] < nums[left]) ? i : left;
+            right = (nums[i] > nums[right]) ? i : right;
+        }
+
+        while (nums[left] < nums[right]) {
+            int sum = nums[left] + nums[right];
+            if (sum == target) {
+                List<Integer> indexes = new ArrayList<>();
+                indexes.add(Math.min(left, right));
+                indexes.add(Math.max(left, right));
+                result.add(indexes);
+
+                left = nextLeft(nums, left);
+                
+                // corner case
+                if (left == -1) {
+                    System.out.println("a");
+                    break;
+                }
+
+                continue;
+            }
+
+            if (sum < target) {
+                left = nextLeft(nums, left);
+
+                // corner case
+                if (left == -1) {
+                    System.out.println("b");
+                    break;
+                }
+
+                continue;
+            }
+
+            if (sum > target) {
+                right = nextRight(nums, right);
+
+                // corner case
+                if (right == -1) {
+                    System.out.println("c");
+                    break;
+                }
+
+                continue;
+            }
+        }
+
+        return result;
+    }
+
+    // helper method
+    private int nextLeft(int[] nums, int left) {
+        int size = nums.length;
+
+        if (nums[left] >= 0) {
+            for (int i = left + 1; i < size; i++) {
+                if (nums[i] >= 0) {
+                    return i;
+                }
+            }
+        } 
+        
+        if (nums[left] < 0) {
+            for (int i = left - 1; i >= 0; i--) {
+                if (nums[i] < 0) {
+                    return i;
+                }
+            }
+
+            for (int i = 0; i < size; i++) {
+                if (nums[i] >= 0) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    private int nextRight(int[] nums, int right) {
+        int size = nums.length;
+
+        if (nums[right] >= 0) {
+            for (int i = right - 1; i >= 0; i--) {
+                if (nums[i] >= 0) {
+                    return i;
+                }
+            }
+
+            for (int i = 0; i < size; i++) {
+                if (nums[i] < 0) {
+                    return i;
+                }
+            }
+        }
+
+        if (nums[right] < 0) {
+            for (int i = right + 1; i < size; i++) {
+                if (nums[i] < 0) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+    }
+}
