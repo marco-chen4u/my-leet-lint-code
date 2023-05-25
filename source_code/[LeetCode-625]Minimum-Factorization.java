@@ -14,6 +14,7 @@ Example 2
 Constraints:
     1 <= num <= 231 - 1
 
+* LintCode link: https://www.lintcode.com/problem/871/
 * LeetCode link: https://leetcode.com/problems/minimum-factorization/
 ***/
 /**
