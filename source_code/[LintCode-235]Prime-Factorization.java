@@ -29,7 +29,7 @@ public class Solution {
         int i = 2;
         for (; i * i <= num; i++) {
             while (num % i == 0) {
-                num /= i;
+                num /= i; /* keep in mind that this num has change in this loop, so the upper bound of the look has also changed */
                 result.add(i);
             }
         }
@@ -62,7 +62,7 @@ public class Solution {
             }
 
             values.add(i);
-            num /= i;
+            num /= i;  /* keep in mind that this num has change in this loop, so the upper bound of the look has also changed */
         }
 
         if (num != 1) {
