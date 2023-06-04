@@ -56,6 +56,9 @@ Example
 Challenge
     How to optimize the memory?
     Can you solve it with A* algorithm?
+    
+* LintCode link: https://www.lintcode.com/problem/794/
+* related: LintCode 941. Sliding Puzzle
 ***/
 public class Solution {
     // fields
