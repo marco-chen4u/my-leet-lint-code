@@ -37,6 +37,7 @@ Example 4:
 
 * LintCode link: https://www.lintcode.com/problem/941
 * LeetCode link: https://leetcode.com/problems/sliding-puzzle/description/
+* Related : LintCode 794. Sliding Puzzle II
 ***/
 //BFS
 public class Solution {
