@@ -35,6 +35,8 @@ Example 3:
 Example 4:
     Given board = `[[3,2,4],[1,5,0]]`, return `14`.
 
+* LintCode link: https://www.lintcode.com/problem/941
+* LeetCode link: https://leetcode.com/problems/sliding-puzzle/description/
 ***/
 //BFS
 public class Solution {
