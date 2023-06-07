@@ -128,7 +128,7 @@ public class Solution {
         * (that means get its nearest machine id)
         **/
         
-        int distance = n + 1;// the maximum value.(to get the minimu distance from hashCode)
+        int distance = n + 1;// the maximum value.(to get the minimum distance from hashCode)
         int machineId = 0;
         for (Map.Entry<Integer, List<Integer>> entry : machines.entrySet()) {
             int key = entry.getKey();// machine id
