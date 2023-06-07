@@ -4,36 +4,35 @@ Give a binary tree, and a target number,
 find all path that the sum of nodes equal to target, 
 the path could be start and end at any node in the tree.
 
-Example
-    Example1
-        Input:
-            tree = {1,2,3,4}
-            target = 6
-        Output: 
-            [
-              [2, 4],
-              [2, 1, 3],
-              [3, 1, 2],
-              [4, 2]
-            ]
-        Explanation:
-            The tree is look like this:
-                1
-               / \
-              2   3
-             /
-            4
+Example1
+    Input:
+        tree = {1,2,3,4}
+        target = 6
+    Output: 
+        [
+          [2, 4],
+          [2, 1, 3],
+          [3, 1, 2],
+          [4, 2]
+        ]
+    Explanation:
+        The tree is look like this:
+            1
+           / \
+          2   3
+         /
+        4
 
-    Example2
-        Input:
-            tree ={1,2,3,4}
-            target = 3
-        Output: 
-            [
-                [1,2],
-                [2,1],
-                [3]
-            ]
+Example2
+    Input:
+        tree ={1,2,3,4}
+        target = 3
+    Output: 
+        [
+    	[1,2],
+    	[2,1],
+    	[3]
+        ]
 ***/
 /**
  * Definition of ParentTreeNode:
