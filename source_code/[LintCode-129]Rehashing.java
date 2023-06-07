@@ -23,7 +23,7 @@ rehashing this hash table, double the capacity, you will get:
     index:   0    1    2    3     4    5    6   7
     hash : [null, 9, null, null, null, 21, 14, null]
 
-Given the original hash table, return the new hash table after rehashing .
+Given the original hash table, return the new hash table after rehashing.
 
 Example
     Given  [null, 21->9->null, 14->null, null],
