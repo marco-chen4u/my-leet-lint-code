@@ -1,8 +1,9 @@
 /***
 * LintCode 128. Hash Function
 In data structure Hash, 
-hash function is used to convert a string(or any other type) into an integer 
-smaller than hash size and bigger or equal to zero. 
+hash function is used to convert a string(or any other type) 
+into an integer smaller than hash size and bigger or equal to zero. 
+
 The objective of designing a hash function is to "hash" the key as unreasonable as possible. 
 A good hash function can avoid collision as less as possible. 
 A widely used hash function algorithm is using a magic number 33, 
