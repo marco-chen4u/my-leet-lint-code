@@ -56,17 +56,17 @@ Example 3
          ]
 
 Clarification
-If the maximal interval is [x, y], and it belongs to machine id z, 
-when you add a new machine with id n, you should divide [x, y, z] into two intervals:
-    [x, (x + y) / 2, z] and [(x + y) / 2 + 1, y, n]
+    If the maximal interval is [x, y], and it belongs to machine id z, 
+    when you add a new machine with id n, you should divide [x, y, z] into two intervals:
+        [x, (x + y) / 2, z] and [(x + y) / 2 + 1, y, n]
 
 Notice
-You can assume n <= 360. At the same time, 
-we agree that when there are multiple occurrences in the maximum interval, 
-we split the machine with the smaller number.
+    You can assume n <= 360. At the same time, 
+    we agree that when there are multiple occurrences in the maximum interval, 
+    we split the machine with the smaller number.
 
-For example, the size of 0~119, 120~239 is 120, but the number of the previous machine is 1, 
-and the number of the next machine is 2, so we split the range of 0~119.
+    For example, the size of 0~119, 120~239 is 120, but the number of the previous machine is 1, 
+    and the number of the next machine is 2, so we split the range of 0~119.
 ***/
 /*
 *查找所有的sharding分段，每次需要分配新的token-range给新加入的机器时，在整个现有的token-range sharding segements中，
