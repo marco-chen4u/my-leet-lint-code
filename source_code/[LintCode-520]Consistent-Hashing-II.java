@@ -22,6 +22,7 @@ Implement these methods of introducing consistent hashing of micro-shard.
 Example 1:
     Input:
         create(100, 3)
+	
         addMachine(1)
         getMachineIdByHashCode(4)
         addMachine(2)
@@ -37,6 +38,7 @@ Example 1:
 Example 2:
     Input:
         create(10, 5)
+	
         addMachine(1)
         getMachineIdByHashCode(4)
         addMachine(2)
