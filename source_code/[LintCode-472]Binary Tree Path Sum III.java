@@ -43,7 +43,6 @@ Example2
  * }
  */
 public class Solution {
-    
     /*
      * @param root: the root of binary tree
      * @param target: An integer
@@ -55,13 +54,12 @@ public class Solution {
         if (root == null) {
             return result;
         }
-        
-        List<Integer> path = new ArrayList<Integer>();
+
         find(result, root, target);
-        
+
         return result;
     }
-	
+
     // helper methods
     private void find(List<List<Integer>> result,
                       ParentTreeNode node,
@@ -69,10 +67,10 @@ public class Solution {
         if (node == null) {
             return;
         }
-        
+
         List<Integer> path = new ArrayList<Integer>();
         findBinaryTreePathSum(result, path, node, null, target);
-        
+
         find(result, node.left, target);
         find(result, node.right, target);
     }
@@ -85,9 +83,9 @@ public class Solution {
         if (node == null) {
             return;
         }
-        
+
         path.add(node.val);
-        
+
         target -= node.val;
         if (target == 0) {
             result.add(new ArrayList<Integer>(path));
@@ -98,17 +96,17 @@ public class Solution {
         if (node.parent != null && node.parent != parent) {
             findBinaryTreePathSum(result, path, node.parent, node, target);// it might be the reverse diretion to look up.
         }
-        
+ 
         /* (2)[current->left child] direction to look up */ 
         if (node.left != parent) {
             findBinaryTreePathSum(result, path, node.left, node, target);
         }
-        
+
         /* (3)[current->right child] direction to look up */
         if (node.right != parent) {
             findBinaryTreePathSum(result, path, node.right, node, target);
         }
-        
+
         path.remove(path.size() -1);
     }
 }
