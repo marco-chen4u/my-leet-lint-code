@@ -2,7 +2,7 @@
 * LintCode 129. Rehashing
 The size of the hash table is not determinate at the very beginning. 
 If the total size of keys is too large (e.g. size >= capacity / 10), 
-we should double the size of the hash table and rehash every keys. 
+we should double the capacity of the hash table and rehash every keys. 
 Say you have a hash table looks like below:
     size=3, capacity=4
     [null, 21, 14, null]
