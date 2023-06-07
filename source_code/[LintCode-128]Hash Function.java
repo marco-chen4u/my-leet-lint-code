@@ -8,13 +8,13 @@ A good hash function can avoid collision as less as possible.
 A widely used hash function algorithm is using a magic number 33, 
 consider any string as a 33 based big integer like follow:
 
-	hashcode("abcd") 
-		= (ascii(a) * 33^3 + ascii(b) * 33^2 + ascii(c) *33 + ascii(d)) % HASH_SIZE 
-		= (97* 333 + 98 * 332 + 99 * 33 +100) % HASH_SIZE
-		= 3595978 % HASH_SIZE
+    hashcode("abcd") 
+        = (ascii(a) * 33^3 + ascii(b) * 33^2 + ascii(c) *33 + ascii(d)) % HASH_SIZE 
+        = (97* 333 + 98 * 332 + 99 * 33 +100) % HASH_SIZE
+        = 3595978 % HASH_SIZE
 
-	here HASH_SIZE is the capacity of the hash table 
-	(you can assume a hash table is like an array with index 0 ~ HASH_SIZE-1).
+    here HASH_SIZE is the capacity of the hash table 
+    (you can assume a hash table is like an array with index 0 ~ HASH_SIZE-1).
 
 Given a string as a key and the size of hash table, return the hash value of this key.
 ***/
@@ -25,16 +25,16 @@ public class Solution {
      * @return: An integer
      */
     public int hashCode(char[] key, int HASH_SIZE) {
-		// check corner case
-		if (key == null || key.length == 0 ){
-			return 0;
-		}
-		
-		long result = 0;
-		for (int i = 0; i < key.length; i++) {
-			result = (result * 33 + (int)(key[i])) % HASH_SIZE;
-		}
-		
-		return (int)result;
-	}
+        // check corner case
+        if (key == null || key.length == 0 ){
+            return 0;
+        }
+
+        long result = 0;
+        for (int i = 0; i < key.length; i++) {
+            result = (result * 33 + (int)(key[i])) % HASH_SIZE;
+        }
+
+        return (int)result;
+    }
 }
