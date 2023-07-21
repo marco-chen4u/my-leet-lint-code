@@ -2,7 +2,8 @@
 * LintCode 130. Heapify
 Given an integer array, heapify it into a min-heap array.
 
-For a heap array A, A[0] is the root of heap, and for each A[i], A[i * 2 + 1] is the left child of A[i] and A[i * 2 + 2] is the right child of A[i].
+For a heap array A, A[0] is the root of heap, and for each A[i], 
+A[i * 2 + 1] is the left child of A[i] and A[i * 2 + 2] is the right child of A[i].
 
 Example 1
     Input : [3,2,1,4,5]
