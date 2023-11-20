@@ -171,23 +171,6 @@ public class BSTIterator {
 }
 
 //version-3
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- * Example of iterate a tree:
- * BSTIterator iterator = new BSTIterator(root);
- * while (iterator.hasNext()) {
- *    TreeNode node = iterator.next();
- *    do something for node
- * } 
- */
 public class BSTIterator {
     // fields
     private Stack<TreeNode> stack;
@@ -237,25 +220,6 @@ public class BSTIterator {
 }
 
 //version-4
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- * Example of iterate a tree:
- * BSTIterator iterator = new BSTIterator(root);
- * while (iterator.hasNext()) {
- *    TreeNode node = iterator.next();
- *    do something for node
- * } 
- */
-
-
 public class BSTIterator {
 
     // field
@@ -312,25 +276,6 @@ public class BSTIterator {
 }
 
 //version-5
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- * Example of iterate a tree:
- * BSTIterator iterator = new BSTIterator(root);
- * while (iterator.hasNext()) {
- *    TreeNode node = iterator.next();
- *    do something for node
- * } 
- */
-
-
 public class BSTIterator {
 
     // field
@@ -377,25 +322,6 @@ public class BSTIterator {
 }
 
 //version-6:
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- * Example of iterate a tree:
- * BSTIterator iterator = new BSTIterator(root);
- * while (iterator.hasNext()) {
- *    TreeNode node = iterator.next();
- *    do something for node
- * } 
- */
-
-
 public class BSTIterator {
 
     // field
@@ -439,25 +365,6 @@ public class BSTIterator {
 }
 
 //version-7
-/**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- * Example of iterate a tree:
- * BSTIterator iterator = new BSTIterator(root);
- * while (iterator.hasNext()) {
- *    TreeNode node = iterator.next();
- *    do something for node
- * } 
- */
-
-
 public class BSTIterator {
 
     // field
