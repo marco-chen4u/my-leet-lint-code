@@ -103,3 +103,46 @@ class Solution {
         return result;
     }
 }
+
+//version-2: minHeap[PriorityQueue] + HashMap
+class Solution {
+    public int[][] highFive(int[][] items) {
+        Map<Integer, Queue<Integer>> studentMap = new HashMap<>();
+        for (int[] item : items) {
+            int id = item[0];
+            int score = item[1];
+
+            studentMap.putIfAbsent(id, new PriorityQueue<Integer>(5));
+            Queue<Integer> queue = studentMap.get(id);
+            queue.offer(score);
+
+            while (queue.size() > 5) {
+                queue.poll();
+            }
+        }
+
+        int size = studentMap.size();
+        int[][] result = new int[size][2];
+        int index = 0;
+        
+        for (Map.Entry<Integer, Queue<Integer>> entry : studentMap.entrySet()) {
+            int id = entry.getKey();
+            
+            Queue<Integer> queue = entry.getValue();
+            int count = queue.size();
+            int total = 0;
+            while (!queue.isEmpty()) {
+                total += queue.poll();
+            }
+
+            int average = total / count;
+            
+            result[index][0] = id;
+            result[index][1] = average;
+
+            index++;
+        }
+
+        return result;
+    }
+}
