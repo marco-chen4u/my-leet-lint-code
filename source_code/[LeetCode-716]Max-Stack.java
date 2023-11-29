@@ -115,4 +115,111 @@ class MaxStack {
     }
 }
 
-//solution-2: HashMap + Deque(or Doubly Linked List) to continue
+//solution-2: HashMap + Doubly Linked List + heap(max heap for popMAX() operaiton)
+class MaxStack {
+
+    // inner class
+    class Node implements Comparable<Node> {
+        int value;
+        int index;
+        Node prev;
+        Node next;
+
+        public Node(int value, int index) {
+            this.value = value;
+            this.index = index;
+        }
+
+        @Override
+        public int compareTo(Node other) {
+            if (this.value == other.value) {
+                return other.index - this.index;
+            }
+
+            return other.value - this.value;
+        }
+    }
+
+    // fields
+    PriorityQueue<Node> heap;  // maxHeap
+    Map<Integer, Integer> map; //<value, index>
+    Node head;
+    Node tail;
+
+    public MaxStack() {
+
+        heap = new PriorityQueue<Node>();
+        map = new HashMap<>();
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
+
+        head.next = tail;
+        tail.prev = head;
+        
+    }
+    
+    public void push(int x) {
+
+        int index = map.getOrDefault(x, 0) + 1;
+        map.put(x, index);
+
+        Node current = new Node(x, index);
+
+        tail.prev.next = current;
+        current.prev = tail.prev;
+
+        current.next = tail;
+        tail.prev = current;
+
+        heap.offer(current);
+        
+    }
+    
+    public int pop() {
+
+        Node current = tail.prev;
+        int value = current.value;
+        map.put(value, map.get(value) - 1);
+        if (map.get(value) == 0) {
+            map.remove(value);
+        }
+
+        current.prev.next = tail;
+        tail.prev = current.prev;
+
+        current.next = null;
+        current.prev = null;
+
+        heap.remove(current);
+        
+        return value;
+    }
+    
+    public int top() {
+
+        return tail.prev.value;
+        
+    }
+    
+    public int peekMax() {
+        return heap.peek().value;
+    }
+    
+    public int popMax() {
+        Node current = heap.poll();//max node
+        int value = current.value;
+
+        map.put(value, map.get(value) - 1);
+        if (map.get(value) == 0) {
+            map.remove(value);
+        }
+
+        current.prev.next = current.next;
+        current.next.prev = current.prev;
+
+        current.next = null;
+        current.prev = null;
+
+        return value;
+    }
+}
