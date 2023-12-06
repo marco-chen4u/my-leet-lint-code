@@ -68,22 +68,22 @@ public class Solution {
         }
 
         // calculate the mapping
-        Map<Character, String> patternMapping = new HashMap<Character, String>();
-        Set<Character> keyRecord = new HashSet<Character>();
+        Map<Character, String> patternMap = new HashMap<Character, String>();
+        Set<Character> keySet = new HashSet<Character>();
         for (int index = 0; index < patternSize; index++) {
             char key = pattern.charAt(index);
             String value = testStrings[index];
 
-            if (!keyRecord.contains(key) && 
-                    !patternMapping.containsKey(key) &&
-                    !patternMapping.containsValue(value)) {
-                keyRecord.add(key);
-                patternMapping.put(key, value);
+            if (!keySet.contains(key) && 
+                    !patternMap.containsKey(key) &&
+                    !patternMap.containsValue(value)) {
+                keySet.add(key);
+                patternMap.put(key, value);
 
                 continue;
             }
 
-            if (value.equals(patternMapping.get(key))) {
+            if (value.equals(patternMap.get(key))) {
                 continue;
             }
             else {
@@ -129,25 +129,25 @@ public class Solution {
             return false;
         }
 
-        Set<Character> keyRecord = new HashSet<Character>();
-        Set<String> valueRecord = new HashSet<String>();
-        Map<Character, String> patternMapping = new HashMap<Character, String>();
+        Set<Character> keySet = new HashSet<Character>();
+        Set<String> valueSet = new HashSet<String>();
+        Map<Character, String> patternMap = new HashMap<Character, String>();
 
         // calculate the mapping
         for (int index = 0; index < patternSize; index++) {
             char key = pattern.charAt(index);
             String value = testStrings[index];
 
-            if (!keyRecord.contains(key) && !valueRecord.contains(value)) {
-                keyRecord.add(key);
-                valueRecord.add(value);
+            if (!keySet.contains(key) && !valueSet.contains(value)) {
+                keySet.add(key);
+                valueSet.add(value);
 
-                patternMapping.put(key, value);
+                patternMap.put(key, value);
 
                 continue;
             }
 
-            if (value.equals(patternMapping.get(key))) {
+            if (value.equals(patternMap.get(key))) {
                 continue;
             }
             else {
