@@ -47,16 +47,16 @@ public class Solution {
         }
 
         Map<Character, String> map = new HashMap<Character, String>();
-        Set<String> valueRecord = new HashSet<String>();
+        Set<String> valueSet = new HashSet<String>();
 
-        return find(pattern, 0, str, 0, map, valueRecord);
+        return find(pattern, 0, str, 0, map, valueSet);
     }
 	
     // helper method
     private boolean find(String pattern, int patternIndex,
                           String testString, int strIndex,
                           Map<Character, String> map,
-                          Set<String> valueRecord) {
+                          Set<String> valueSet) {
         if (patternIndex == pattern.length()) {
             return strIndex == testString.length();
         }
@@ -71,7 +71,7 @@ public class Solution {
                 return find(pattern, patternIndex + 1, 
                              testString, strIndex + value.length(),
                              map, 
-                             valueRecord);// check the remaining
+                             valueSet);// check the remaining
             }
             else {
                 return false;
@@ -82,21 +82,21 @@ public class Solution {
         for (int i = strIndex; i < testString.length(); i++) {
             String value = testString.substring(strIndex, i + 1);
 
-            if (valueRecord.contains(value)) {
+            if (valueSet.contains(value)) {
                 continue;
             }
 
             map.put(key, value);
 
-            valueRecord.add(value);
+            valueSet.add(value);
 
             if (find(pattern, patternIndex + 1, 
                       testString, i + 1, 
-                      map, valueRecord)) {
+                      map, valueSet)) {
                  return true;
             }
 
-            valueRecord.remove(value);
+            valueSet.remove(value);
 
             map.remove(key);			
         }
