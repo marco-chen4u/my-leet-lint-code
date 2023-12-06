@@ -19,7 +19,7 @@ Link:
     (1)LintCode: https://www.lintcode.com/problem/829
     (2)LeetCode: https://leetcode.com/problems/word-pattern-ii/
 ***/
-
+//solution-1: HashSet<String> + HashMap<Character, String>
 public class Solution {
 	
     /**
@@ -102,5 +102,68 @@ public class Solution {
         }
 
         return false;// default value
+    }
+}
+
+
+// solution-2: HashMap<Character, String> only
+class Solution {
+    public boolean wordPatternMatch(String pattern, String s) {
+        if (isNull(pattern) && isNull(s)) {
+            return true;
+        }
+
+        if (isEmpty(pattern) && isEmpty(s)) {
+            return true;
+        }
+
+        return find(pattern, 0, s, 0, new HashMap<Character, String> ());
+    }
+
+    // helper methods
+    private boolean isNull(String str) {
+        return str == null;
+    }
+
+    private boolean isEmpty(String str) {
+        return str == "";
+    }
+
+    private boolean find(String pattern, int patternIndex, String valueStr, int valueIndex, Map<Character, String> map) {
+        if (patternIndex == pattern.length()) {
+            return valueIndex == valueStr.length();
+        }
+
+        char currentKey = pattern.charAt(patternIndex);
+
+        if (map.containsKey(currentKey)) {
+            String currentValue = map.get(currentKey);
+
+            if (valueStr.startsWith(currentValue, valueIndex)) {
+                return find(pattern, patternIndex + 1, valueStr, valueIndex + currentValue.length(), map);
+            }
+            else {
+                return false;
+            }
+        }
+
+        for (int i = valueIndex; i < valueStr.length(); i++) {
+            String value = valueStr.substring(valueIndex, i + 1);//potential value
+            
+            if (map.containsValue(value)) {
+                continue;
+            }
+
+            map.put(currentKey, value);
+
+            if (find(pattern, patternIndex + 1, valueStr, valueIndex + value.length(), map)) {
+                return true;
+            }
+
+            map.remove(currentKey);
+
+        }
+
+        return false;
     }
 }
