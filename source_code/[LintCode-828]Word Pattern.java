@@ -158,3 +158,52 @@ public class Solution {
         return true;
     }
 }
+
+// solution-3
+public class Solution {
+    /**
+     * @param pattern: a string, denote pattern string
+     * @param teststr: a string, denote matching string
+     * @return: an boolean, denote whether the pattern string and the matching string match or not
+     */
+    public boolean wordPattern(String pattern, String teststr) {
+        // skip corner cases
+
+	// regular case
+        String[] values = teststr.split(" ");
+        int length = values.length;
+        if (pattern.length() != length) {
+            return false;
+        }
+
+
+        Map<Character, String> patternMap = new HashMap<>();
+
+        int index = 0;
+        for (String value : values) {
+            
+            char key = pattern.charAt(index);
+            index ++;// for the next iteration to get the next key to check
+
+            if (!patternMap.containsKey(key) && !patternMap.containsValue(value)) {
+
+                patternMap.put(key, value);
+                
+                continue;
+            }
+
+            if (!patternMap.containsKey(key)) {
+                return false;
+            }
+
+            if (value.equals(patternMap.get(key))) {
+                continue;
+            }
+            else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
