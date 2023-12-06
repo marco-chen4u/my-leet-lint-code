@@ -90,9 +90,9 @@ public class Solution {
 
             valueRecord.add(value);
 
-            if (wordPatternMatchHelper(pattern, patternIndex + 1, 
-                                    testString, i + 1, 
-                                    map, valueRecord)) {
+            if (find(pattern, patternIndex + 1, 
+                      testString, i + 1, 
+                      map, valueRecord)) {
                  return true;
             }
 
