@@ -7,30 +7,30 @@ Given an integer n, return all distinct solutions to the n-queens puzzle.
 Each solution contains a distinct board configuration of the n-queens' placement, 
 where 'Q' and '.' both indicate a queen and an empty space respectively.
 
-Example
-    Example 1:
-        Input:1
-        Output:
-           [["Q"]]
+
+Example 1:
+    Input:1
+    Output:
+       [["Q"]]
     
     
-    Example 2:
-        Input:4
-        Output:
-            [
-              // Solution 1
-              [".Q..",
-               "...Q",
-               "Q...",
-               "..Q."
-              ],
-              // Solution 2
-              ["..Q.",
-               "Q...",
-               "...Q",
-               ".Q.."
-              ]
-            ]
+Example 2:
+    Input:4
+    Output:
+        [
+          // Solution 1
+          [".Q..",
+           "...Q",
+           "Q...",
+           "..Q."
+          ],
+          // Solution 2
+          ["..Q.",
+           "Q...",
+           "...Q",
+           ".Q.."
+          ]
+        ]
 
 Challenge
     Can you do it without recursion?
@@ -64,23 +64,37 @@ public class Solution {
         return chessBoard;
     }
     
-    private boolean isValid(List<Integer> rows, int columnValue) {
-        int rowSize = rows.size();
-        for (int rowIndex = 0; rowIndex < rowSize; rowIndex++) {
+    private boolean isValid(List<Integer> rows, int currentVal) {
+        int newIndex = rows.size();
+
+        int index = 0;
+        for (int columnVal : rows) {
             // same column
-            if (rows.get(rowIndex) == columnValue) {
+            if (currentVal == columnVal) {
                 return false;
             }
             
             // slash attach (left-top -> right-bottom)
-            if (rowIndex + rows.get(rowIndex) == rowSize + columnValue){
+            /*
+               x + 1 = x'
+	                     => x - y = x' - y'
+	       y + 1 = y'
+            */
+            if (index - columnVal == currentVal - newIndex){
                 return false;
             }
             
             // back-slash attach (left-bottom -> right-top)
-            if (rowIndex - rows.get(rowIndex) == rowSize - columnValue){
+            /*
+               x + 1 = x'
+	                     => x + y = x' + y'
+	       y - 1 = y'
+            */
+            if (index + columnVal == newIndex + currentVal){
                 return false;
             }
+
+            index += 1;
         }
         
         return true;
@@ -89,6 +103,7 @@ public class Solution {
     private void search(List<List<String>> result, List<Integer> rows, int n) {
         if (rows.size() == n) {
             result.add(drawChessBoard(rows));
+            return;
         }
         
         for (int i = 0; i < n; i++) {
