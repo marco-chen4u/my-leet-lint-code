@@ -34,7 +34,7 @@ Link:
     (1)LintCode: https://www.lintcode.com/problem/828/
     (2)LeetCode: https://leetcode.com/problems/word-pattern/
 ***/
-//solution-1
+//solution-1: Array, HashSet, HashMap
 public class Solution {
     /**
      * @param pattern: a string, denote pattern string
@@ -95,7 +95,7 @@ public class Solution {
     }
 }
 
-//solution-2
+//solution-2: Array, HashSet, HashMap
 public class Solution {
     /**
      * @param pattern: a string, denote pattern string
@@ -159,7 +159,7 @@ public class Solution {
     }
 }
 
-// solution-3
+// solution-3: Array, HashSet, and HashMap
 public class Solution {
     /**
      * @param pattern: a string, denote pattern string
@@ -194,6 +194,42 @@ public class Solution {
 
             if (!patternMap.containsKey(key)) {
                 return false;
+            }
+
+            if (value.equals(patternMap.get(key))) {
+                continue;
+            }
+            else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+// solution-4: HashMap and Array
+class Solution {
+    public boolean wordPattern(String pattern, String s) {
+        
+	// skip the corner cases check
+
+	// regular case
+        String[] values = s.split(" ");
+        
+        if (pattern.length() != values.length) {
+            return false;
+        }
+        
+        Map<Character, String> patternMap = new HashMap<>();
+
+        int index = 0;
+        for (String value : values) {
+            char key = pattern.charAt(index++);
+
+            if (!patternMap.containsKey(key) && !patternMap.containsValue(value)) {
+                patternMap.put(key, value);
+                continue;
             }
 
             if (value.equals(patternMap.get(key))) {
