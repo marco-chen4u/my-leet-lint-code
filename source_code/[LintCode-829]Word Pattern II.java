@@ -49,14 +49,14 @@ public class Solution {
         Map<Character, String> map = new HashMap<Character, String>();
         Set<String> valueRecord = new HashSet<String>();
 
-        return wordPatternMatchHelper(pattern, 0, str, 0, map, valueRecord);
+        return find(pattern, 0, str, 0, map, valueRecord);
     }
 	
     // helper method
-    private boolean wordPatternMatchHelper(String pattern, int patternIndex,
-                                            String testString, int strIndex,
-                                            Map<Character, String> map,
-                                            Set<String> valueRecord) {
+    private boolean find(String pattern, int patternIndex,
+                          String testString, int strIndex,
+                          Map<Character, String> map,
+                          Set<String> valueRecord) {
         if (patternIndex == pattern.length()) {
             return strIndex == testString.length();
         }
@@ -68,10 +68,10 @@ public class Solution {
             String value = map.get(key);
 
             if (testString.startsWith(value, strIndex)) {
-                return wordPatternMatchHelper(pattern, patternIndex + 1, 
-                                                testString, strIndex + value.length(),
-                                                map, 
-                                                valueRecord);// check the remaining
+                return find(pattern, patternIndex + 1, 
+                             testString, strIndex + value.length(),
+                             map, 
+                             valueRecord);// check the remaining
             }
             else {
                 return false;
