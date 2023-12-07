@@ -87,16 +87,6 @@ public class Solution {
 
     }
 
-    private int getCost(Set<Integer> visited) {
-        int result = 0;
-
-        for (int cost : visited) {
-            result += cost;
-        }
-
-        return result;
-    }
-
     private int[][] buildGraph(int n, int[][] roads) {
         int[][] graph = new int[n + 1][n + 1];
         
