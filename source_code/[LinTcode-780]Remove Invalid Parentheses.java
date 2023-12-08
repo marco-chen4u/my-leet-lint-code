@@ -95,6 +95,36 @@ public class Solution {
         
         return count == 0;
     }
+
+
+    
+/*  private boolean isValidParenthese(String str) {
+        if (str == null || str.isEmpty()) {
+            return true;
+        }
+
+        char[] chars = str.toCharArray();
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : str.toCharArray()) {
+            if (isLeftBracket(ch)) {
+                stack.push(ch);
+                continue;
+            }
+
+            if (isRightBracket(ch) && !stack.isEmpty() && isPair(stack.peek(), ch)) {
+                stack.pop();
+                continue;
+            }
+        }
+
+        return stack.isEmpty();
+    }
+    
+    private boolean isPair(char left, char right) {
+        return isLeftBracket(left) && isRightBracket(right);
+    }
+*/
     
     private void dfs(List<String> result, 
                         String str, int startIndex, 
