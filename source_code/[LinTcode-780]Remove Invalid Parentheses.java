@@ -96,7 +96,7 @@ public class Solution {
         return count == 0;
     }
     
-    private void helper(List<String> result, 
+    private void dfs(List<String> result, 
                         String str, int startIndex, 
                         int leftBracketCount, int rightBracketCount) {
         // check corner case
@@ -117,7 +117,7 @@ public class Solution {
                 isLeftBracket(currentChar) &&
                 (i == 0 || currentChar != preChar)) {
                 String newStr = str.substring(0, i) + str.substring(i + 1);// delete the current char
-                helper(result, newStr, i, leftBracketCount - 1, rightBracketCount);
+                dfs(result, newStr, i, leftBracketCount - 1, rightBracketCount);
             }
             
             // check if more right brackets
@@ -125,7 +125,7 @@ public class Solution {
                 isRightBracket(currentChar) &&
                 (i == 0 || currentChar != preChar)) {
                 String newStr = str.substring(0, i) + str.substring(i + 1);// delete the current char
-                helper(result, newStr, i, leftBracketCount, rightBracketCount - 1);
+                dfs(result, newStr, i, leftBracketCount, rightBracketCount - 1);
             }
         }
     }
