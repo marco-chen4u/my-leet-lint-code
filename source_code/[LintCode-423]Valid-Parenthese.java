@@ -13,6 +13,10 @@ Example 2:
     Output: True
 
 Note: Use O(n) time, n is the number of parentheses.
+
+Link
+    LintCode: https://www.lintcode.com/problem/423/
+    LeetCode: https://leetcode.com/problems/valid-parentheses/description/
 ***/
 //version-1: stack
 public class Solution {
