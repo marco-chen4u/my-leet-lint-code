@@ -33,7 +33,9 @@ Example
         [6,4,1,2,7,5,9,8,3]
         ]
 
-Link: https://www.lintcode.com/problem/802/
+Link
+    LintCode  https://www.lintcode.com/problem/802/
+    LeetCode  https://leetcode.com/problems/sudoku-solver/
 ***/
 
 /**
