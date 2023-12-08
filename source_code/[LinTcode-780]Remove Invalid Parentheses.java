@@ -22,6 +22,10 @@ Example 3:
         [""] 
 Notice
     The input string may contain letters other than the parentheses ( and ).
+
+Link
+    LintCode: https://www.lintcode.com/problem/780/
+    LeetCode: https://leetcode.com/problems/remove-invalid-parentheses/
 ***/
 public class Solution {
     // field
