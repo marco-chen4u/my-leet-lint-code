@@ -63,7 +63,7 @@ public class Solution {
             }
         }
         
-        helper(result, s, 0, leftBracketCount, rightBracketCount);
+        dfs(result, s, 0, leftBracketCount, rightBracketCount);
         
         return result;
     }
