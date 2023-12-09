@@ -173,4 +173,160 @@ public class Solution {
 
 }
 
-// solution-2: TBD
+// solution-2: using 2 map: (1) build a map for map<key = ['a'-'z'], value = ['1'-'9']>, which is for converting character-keyword of dic into digital-keyword string; (2)build a counter map for map<key = each "query-string", value = counter of each prefix digital string[Integer tyep]>
+public class Solution {
+
+    private static final Map<Character, Integer> map;
+
+    static {
+        map = new HashMap<>();
+        map.put('a', 2); map.put('b', 2); map.put('c', 2);
+        map.put('d', 3); map.put('e', 3); map.put('f', 3);
+        map.put('g', 4); map.put('h', 4); map.put('i', 4);
+        map.put('j', 5); map.put('k', 5); map.put('l', 5);
+        map.put('m', 6); map.put('n', 6); map.put('o', 6);
+        map.put('p', 7); map.put('q', 7); map.put('r', 7); map.put('s', 7);
+        map.put('t', 8); map.put('u', 8); map.put('v', 8);
+        map.put('w', 9); map.put('x', 9); map.put('y', 9); map.put('z', 9);
+    }
+
+    /**
+     * @param queries: the queries
+     * @param dict: the words
+     * @return: return the queries' answer
+     */
+    public int[] letterCombinationsII(String[] queries, String[] dict) {
+        // write your code here
+        Map<String, Integer> counterMap = new HashMap<>();
+        int size = queries.length;
+        int[] results = new int[size];
+
+        for (String digitStr : queries) {
+            counterMap.put(digitStr, 0);
+        }
+
+        for (String keyword: dict) {
+            String keyDigitStr = "";
+            //System.out.println("keyword = " + keyword);
+            for (char ch : keyword.toCharArray()) {
+                keyDigitStr += map.get(ch);
+
+                counterMap.put(keyDigitStr, counterMap.getOrDefault(keyDigitStr, 0) + 1);
+            }
+            //System.out.println("keyword = " + keyword + ", keyDigitStr= " + keyDigitStr + ", value = " + counterMap.get(keyDigitStr));
+        }
+
+        int index = 0;
+        for(String digitStr : queries) {
+            results[index ++] = counterMap.get(digitStr);
+        }
+
+        return results;
+    }
+}
+
+// solution-3: convert keyword inside of dic into all digit string keywords, build Map<Character, Integer> for accomdate those reversed map, build a digit character trie to get the counter
+public class Solution {
+
+    private static final Map<Character, Integer> map;
+
+    static {
+        map = new HashMap<>();
+        map.put('a', 2); map.put('b', 2); map.put('c', 2);
+        map.put('d', 3); map.put('e', 3); map.put('f', 3);
+        map.put('g', 4); map.put('h', 4); map.put('i', 4);
+        map.put('j', 5); map.put('k', 5); map.put('l', 5);
+        map.put('m', 6); map.put('n', 6); map.put('o', 6);
+        map.put('p', 7); map.put('q', 7); map.put('r', 7); map.put('s', 7);
+        map.put('t', 8); map.put('u', 8); map.put('v', 8);
+        map.put('w', 9); map.put('x', 9); map.put('y', 9); map.put('z', 9);
+    }
+
+    /**
+     * @param queries: the queries
+     * @param dict: the words
+     * @return: return the queries' answer
+     */
+    public int[] letterCombinationsII(String[] queries, String[] dict) {
+        // write your code here
+        Map<String, Integer> counterMap = new HashMap<>();
+        int size = queries.length;
+        int[] results = new int[size];
+
+        Trie trie = new Trie();
+
+        for (String keyword: dict) {
+            String keyDigitStr = "";
+            for (char ch : keyword.toCharArray()) {
+                keyDigitStr += map.get(ch);
+            }
+
+            trie.insert(keyDigitStr);
+        }
+
+        int index = 0;
+        for(String digitStr : queries) {
+            results[index ++] = trie.getCount(digitStr);
+        }
+
+        return results;
+    }
+
+    // helper class
+    class TrieNode {
+        TrieNode[] children;
+        boolean isQueryDigitStr;
+        int count;
+
+        public TrieNode() {
+            children = new TrieNode[10];// for digital node other than alphabetic node
+            Arrays.fill(children, null);
+            isQueryDigitStr = false;
+            count = 0;
+        }
+    }
+
+    class Trie {
+        private TrieNode root;
+
+        public Trie() {
+            root = new TrieNode();
+        }
+
+        public void insert(String digitStr) {
+            TrieNode node = root;
+            for (char digitKey : digitStr.toCharArray()) {
+                if (node.children[digitKey - '1'] == null) {
+                    node.children[digitKey - '1'] = new TrieNode();
+                }
+
+                node = node.children[digitKey - '1'];
+                node.count += 1;
+            }
+
+            node.isQueryDigitStr = true;
+        }
+
+        private TrieNode find(String digitPrefixStr) {
+            TrieNode node = root;
+            for (char digitKey : digitPrefixStr.toCharArray()) {
+                if (node.children[digitKey - '1'] == null) {
+                    return null;
+                }
+
+                node = node.children[digitKey - '1'];
+            }
+
+            return node;
+        }
+
+        public int getCount(String digitStr) {
+            TrieNode node = find(digitStr);
+            if (node == null) {
+                return 0;
+            }
+
+            return node.count;
+        }
+    }
+}
