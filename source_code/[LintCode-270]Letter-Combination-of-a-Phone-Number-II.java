@@ -19,7 +19,13 @@ A mapping of digit to letters (just like on the telephone buttons) is given belo
    PQRS  TUV  WXYZ
 ----------------------------------   
 
-
+Constraints
+    words only contain lowercase letters.
+    1 <= len(queries) <= 10^3
+    1 <= sum{queries[i]} <= 5 * 10 ^4
+    1 <= len(dict) <= 10^3
+    1 <= sum{dict[i]} <= 5 * 10 ^4
+    
 Example
     Input: query = ["2", "3", "4"]
     dict = ["a","abc","de","fg"]
@@ -33,7 +39,7 @@ Link
   LintCode link: https://www.lintcode.com/problem/270/
 ***/
 
-//solution-1: Trie + DFS, run time excepthon: Memory Limit Exceeded
+//solution-1: Trie + DFS, run time excepthon: Memory Limit Exceeded, it's because of the testing data volum constraint issue
 public class Solution {
 
     /* initialization start */
@@ -174,6 +180,7 @@ public class Solution {
 }
 
 // solution-2: using 2 map: (1) build a map for map<key = ['a'-'z'], value = ['1'-'9']>, which is for converting character-keyword of dic into digital-keyword string; (2)build a counter map for map<key = each "query-string", value = counter of each prefix digital string[Integer tyep]>
+// better solution compared to solution-1
 public class Solution {
 
     private static final Map<Character, Integer> map;
@@ -226,6 +233,7 @@ public class Solution {
 }
 
 // solution-3: convert keyword inside of dic into all digit string keywords, build Map<Character, Integer> for accomdate those reversed map, build a digit character trie to get the counter
+// better solution with using the proper data structure, but same idea of solution-2, just with different data structure to optimize
 public class Solution {
 
     private static final Map<Character, Integer> map;
