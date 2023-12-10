@@ -35,6 +35,7 @@ public class Solution {
 
         int size= nums.length;
 
+        //[1] find the exact index position which is to be replace for the good candidate
         int indexToReplace = DEFAULT_VALUE;
         int pivot = DEFAULT_VALUE;
         for (int i = size - 2; i >= 0; i--) {
@@ -51,16 +52,18 @@ public class Solution {
             return;
         }
 
+        //[2] find the perfect candidate wich is just a little bit (>=) larger than the item-value where to replace done with step-[1]
         int i = indexToReplace + 1;
         while (i < size && nums[i] > pivot) {
             i++;
         }
 
+        //[3] swap this candidates to the index position where found in step-[1]
         swap(nums, indexToReplace, i - 1);
 
+        //[4] sort the rest part of [replaceIndex + 1, lastIndex] inside the array
         int startPos = indexToReplace + 1;
         int endPos = size;
-
         Arrays.sort(nums, startPos, endPos);
     }
     
