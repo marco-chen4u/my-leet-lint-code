@@ -76,6 +76,7 @@ public class Solution {
         nums[j] = tmp;
     }
 }
+
 //solution-2: same idea as solution-1 with different sort(quick sort implementation with 2-pointer strategy) 
 class Solution {
     public void nextPermutation(int[] nums) {
