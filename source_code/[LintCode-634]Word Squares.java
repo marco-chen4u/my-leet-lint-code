@@ -348,7 +348,7 @@ public class Solution {
     }
 }
 
-//solution-3: dfs
+//solution-3: dfs + prefix HashMap
 public class Solution {
 
     private static final String EMPTY = "";
@@ -424,3 +424,144 @@ public class Solution {
         return prefixMap.containsKey(nextPrefix);
     }
 }
+
+//solution-4: dfs + trie to work as prefix HashMap but butter performance 
+class Solution {
+
+    private static final String EMPTY = "";
+
+    private int wordSize = 0;
+    private Trie trie;
+
+    public List<List<String>> wordSquares(String[] words) {
+        if (words == null || words.length == 0) {
+            return Collections.emptyList();
+        }
+
+        wordSize = words[0].length(); // size all words have the same length
+        trie = new Trie();
+        for (String word : words) {
+            trie.insert(word);
+        }
+
+        List<List<String>> results = new ArrayList<>();
+        List<String> path = new ArrayList<>();
+
+        find(0, path, results);
+
+        return results;
+    }
+
+    // helper methods
+    private void find(int currentIndex, List<String> path, List<List<String>> results) {
+        if (currentIndex == wordSize) {
+            if (!path.isEmpty()) {
+                results.add(new ArrayList<>(path));
+            }
+
+            return;
+        }
+
+        String prefix = EMPTY;
+        for (String currentWord : path) {
+            prefix += currentWord.charAt(currentIndex);
+        }
+
+        Set<String> nextWordList = currentIndex == 0 ? trie.getRootWordSet() : trie.getWordSet(prefix);
+
+        if (nextWordList == null || nextWordList.isEmpty()) {
+            return;
+        }
+
+        for (String next : nextWordList) {
+            if (!isValid(prefix, currentIndex, next)) {
+                continue;
+            }
+
+            path.add(next);
+            find(currentIndex + 1, path, results);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    private boolean isValid(String prefix, int currentIndex, String nextWord) {
+        String newPrefix = prefix + nextWord.charAt(currentIndex);
+        return trie.search(newPrefix);
+    }
+
+    // helper class
+    class TrieNode {
+        TrieNode[] children;
+        Set<String> wordSet;
+        boolean isEndOfWord;
+        String prefix;
+
+        public TrieNode() {
+            children = new TrieNode[26];
+            wordSet = new HashSet<>();
+            isEndOfWord = false;
+        }
+    }
+
+    class Trie {
+        private TrieNode root;
+
+        public Trie() {
+            root = new TrieNode();
+        }
+
+        public void insert(String word) {
+            if (word == null || word.isEmpty()) {
+                return;
+            }
+
+            TrieNode node = root;
+            node.wordSet.add(word);//new added
+            for (char ch : word.toCharArray()) {
+                if (node.children[ch - 'a'] == null) {
+                    node.children[ch - 'a'] = new TrieNode();
+                }
+
+                node = node.children[ch - 'a'];
+                node.wordSet.add(word);
+            }
+            node.isEndOfWord = true;
+        }
+
+        private TrieNode find(String prefix) {
+            if (prefix == null || prefix.isEmpty()) {
+                return null;
+            }
+
+            TrieNode node = root;
+            for (char ch : prefix.toCharArray()) {
+                if (node.children[ch - 'a'] == null) {
+                    return null;
+                }
+
+                node = node.children[ch - 'a'];
+            }
+
+            return node;
+        }
+
+        private Set<String> getWordSet(String prefix) {
+            TrieNode node = find(prefix);
+            if (node == null) {
+                return null;
+            }
+
+            return node.wordSet;
+        }
+
+        private boolean search(String prefix) {
+            TrieNode node = find(prefix);
+            return node != null;
+        }
+
+        public Set<String> getRootWordSet() {
+            return root.wordSet;
+        }
+    }
+}
+
