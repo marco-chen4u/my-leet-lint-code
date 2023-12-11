@@ -260,7 +260,7 @@ class TrieTree {
 
 }
 
-// version-3: working solution: dfs + prefix hashMap + memorized search
+// version-2: working solution: dfs + prefix hashMap + memorized search
 public class Solution {
     // field
     private List<List<String>> result;
@@ -345,5 +345,82 @@ public class Solution {
                 prefixMap.get(prefix).add(word);
             }
         }
+    }
+}
+
+//solution-3: dfs
+public class Solution {
+
+    private static final String EMPTY = "";
+    private static int wordSize;
+    private static Map<String, Set<String>> prefixMap;
+
+    /**
+     * @param words: a set of words without duplicates
+     * @return: all word squares
+     *          we will sort your return value in output
+     */
+    public List<List<String>> wordSquares(String[] words) {
+        // write your code here
+        if (words == null || words.length == 0) {
+            return Collections.emptyList();
+        }
+
+        wordSize = words[0].length();
+
+        prefixMap = new HashMap<>();
+        for (String word : words) {
+            prefixMap.putIfAbsent(EMPTY, new HashSet<String>());
+            prefixMap.get(EMPTY).add(word);
+
+            String prefix = EMPTY;
+            for (char ch : word.toCharArray()) {
+                prefix += ch;
+                prefixMap.putIfAbsent(prefix, new HashSet<String>());
+                prefixMap.get(prefix).add(word);
+            }
+        }
+
+        List<List<String>> results = new ArrayList<>();
+        List<String> path = new ArrayList<>();
+
+        find(0, path, results);
+
+        return results;
+    }
+
+    // help method
+    private void find(int currentIndex, List<String> path, List<List<String>> results) {
+        if (currentIndex == wordSize) {
+            if (!path.isEmpty()) {
+                results.add(new ArrayList<>(path));
+            }
+
+            return;
+        }
+
+        String prefix = EMPTY;
+        for (String currentWord : path) {
+            prefix += currentWord.charAt(currentIndex);
+        }
+
+        if (!prefixMap.containsKey(prefix)) {
+            return;
+        }
+
+        for (String next : prefixMap.get(prefix)) {
+            if (!isValid(prefix, currentIndex, next)) {
+                continue;
+            }
+
+            path.add(next);
+            find(currentIndex + 1, path, results);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    private boolean isValid(String prefix, int currentIndex, String nextWord) {
+        String nextPrefix = prefix + nextWord.charAt(currentIndex);
+        return prefixMap.containsKey(nextPrefix);
     }
 }
