@@ -215,7 +215,8 @@ class Solution {
         }
 
         wordSize = words[0].length(); // size all words have the same length
-        trie = new Trie();
+        
+        trie = new Trie(); // build up a trie to accommodate all prefix which serve as prefixMap as well butter better storage performance
         for (String word : words) {
             trie.insert(word);
         }
@@ -243,7 +244,7 @@ class Solution {
             prefix += currentWord.charAt(currentIndex);
         }
 
-        Set<String> nextWordList = currentIndex == 0 ? trie.getRootWordSet() : trie.getWordSet(prefix);
+        Set<String> nextWordList = (currentIndex == 0) ? trie.getRootWordSet() : trie.getWordSet(prefix);
 
         if (nextWordList == null || nextWordList.isEmpty()) {
             return;
@@ -284,6 +285,10 @@ class Solution {
 
         public Trie() {
             root = new TrieNode();
+        }
+
+        public Set<String> getRootWordSet() {
+            return root.wordSet;
         }
 
         public void insert(String word) {
@@ -335,9 +340,6 @@ class Solution {
             return node != null;
         }
 
-        public Set<String> getRootWordSet() {
-            return root.wordSet;
-        }
-    }
+    } //end of trie class
 }
 
