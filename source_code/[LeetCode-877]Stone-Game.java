@@ -36,6 +36,7 @@ Constraints:
 Link: https://leetcode.com/problems/stone-game/
 
 Similar question
+    LeetCode 1140. Stone Game II (https://leetcode.com/problems/stone-game-ii/)
     LeetCode 1563. Stone Game V (https://leetcode.com/problems/stone-game-v/)
     LeetCode 1686. Stone Game VI (https://leetcode.com/problems/stone-game-vi/)
     LeetCode 1690. Stone Game VII (https://leetcode.com/problems/stone-game-vii/)
