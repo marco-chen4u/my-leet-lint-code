@@ -24,6 +24,8 @@ Link
 Similar question
     LintCode 593. Stone Game II (https://www.lintcode.com/problem/593)
 ***/
+
+// solution-1: DFS
 public class Solution {
     /**
      * @param A: An integer array
@@ -81,3 +83,64 @@ public class Solution {
         return dp[left][right];
     }
 }
+
+//solution-2: DP, zone type DP
+/*
+step(1)
+    dp[i][j] = MAX_VALUE
+    dp[i][i] = 0; // no stone to merge, only one pile of stone itself
+    
+step(2)
+    dp[i][j] = min score of merge stone game from pile of stones[i:j]
+    where 
+        for (int k = i; k < j; k++) {
+            dp[i][j] = min(dp[i][j], dp[i][k] + dp[k + 1][j] + continuous-sum[i:j])
+        }
+
+        continuous-sum[i:j] = prefixSum[j + 1] - prefixSum[i]
+	(note: prefixSum[] = new int[n + 1])
+
+step(3)
+     return dp[0][n - 1]
+*/
+public class Solution {
+    /**
+     * @param nums: An integer array
+     * @return: An integer
+     */
+    public int stoneGame(int[] nums) {
+        // write your code here
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        int n = nums.length;
+        int[] prefixSum = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            int currentVal = nums[i - 1];
+            prefixSum[i] = prefixSum[i - 1] + currentVal;
+        }
+
+        int[][] dp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+            }
+
+            dp[i][i] = 0;
+        }
+
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i < n - len + 1; i++) {
+                int j = i + len - 1;
+
+                for (int k = i; k < j; k++) {
+                    dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k + 1][j] + prefixSum[j + 1] - prefixSum[i]);
+                }
+            }
+        }
+
+        return dp[0][n - 1];
+
+    }
+}	
