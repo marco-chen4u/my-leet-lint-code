@@ -32,6 +32,8 @@ similar question:
       dp[i][j] = dp[i - 1][j - 1];
   else 
       dp[i][j] = (dp[i - 1][j] + 1, dp[i][j - 1] + 1) //删除其中一个字符的操作，并判断那个操作的最小值
+
+ref: https://www.youtube.com/watch?v=O1K_T4ZqstM
 */
 class Solution {
     public int minDistance(String word1, String word2) {
