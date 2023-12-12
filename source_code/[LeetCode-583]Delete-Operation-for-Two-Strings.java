@@ -20,6 +20,9 @@ Constraints:
 Link
     LeetCode: https://leetcode.com/problems/delete-operation-for-two-strings/
     LintCode: https://www.lintcode.com/problem/1156/
+
+similar question:
+    LeetCode 712. inimum ASCII Delete Sum for Two Strings   (link: https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/)
 ***/
 //solution-1:DP
 /*
