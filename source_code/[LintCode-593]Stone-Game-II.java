@@ -52,8 +52,56 @@ step(2)
 	(note: prefixSum[] = new int[m + 1])
 
 step(3)
-     return dp[0][m - 1]
+     int answer = MAX_VALUE;
+     for (int i = 0; i < n; i++) {
+         answer = min(answer, dp[i][i + n - 1])
+     }
+     return dp[i][i + n - 1]  *note: i = [0:n)
 */
 
 //solution-1: DP, zone type dp
-//DBT
+public class Solution {
+    /**
+     * @param nums: An integer array
+     * @return: An integer
+     */
+    public int stoneGame2(int[] nums) {
+        // write your code here
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        int n = nums.length;
+        int m = n * 2; //connection first and last elements of array, so the iteration for each one to connect would be 2n - 1, so space would be 2n
+        int[][] dp = new int[m][m];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+            }
+
+            dp[i][i] = 0;
+        }
+
+        int[] prefixSum = new int[m + 1];
+        for (int i = 1; i <=m; i++) {
+            prefixSum[i] = prefixSum[i - 1] + nums[(i - 1)%n];
+        }
+
+        for (int len = 2; len <= m; len++) {
+            for (int i = 0; i < m - len + 1; i++) {
+                int j = i + len - 1;
+
+                for (int k = i; k < j; k++) {
+                    dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k+1][j] + prefixSum[j + 1] - prefixSum[i]);
+                }
+            }
+        }
+
+        int result = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            result = Math.min(result, dp[i][i + n - 1]);
+        }
+
+        return result;
+    }
+}
