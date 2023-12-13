@@ -21,6 +21,10 @@ Example 2
 Challenge
     Do it in O(n^2) time and O(n) memory.
     O(n^2n) memory is also acceptable if you do not know how to optimize memory.
+
+Link:
+    LintCode: https://www.lintcode.com/problem/118/
+    LeetCode: https://leetcode.com/problems/distinct-subsequences/
 ***/
 /*
 * T在S中出现多少次，即T中的每一个字符都要在S中出现
