@@ -52,7 +52,8 @@ Similar question
         [b] pick last item  => piles[n] + sum[1 : n - 1] - solve(1, n - 1) => prefix-sum[1:n] - solve(1, n - 1)
           so
               solve(1,n) = max(a, b)
-                        = prefix-sum[1:n] - min(solve(2, n), solve(1, n - 1))
+              =>
+                  solve(1,n) = prefix-sum[1:n] - min(solve(2, n), solve(1, n - 1))
 
     
 */
