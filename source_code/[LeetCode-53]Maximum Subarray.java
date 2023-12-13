@@ -54,7 +54,7 @@ class Solution {
     }
 }
 
-//version-2: prefix
+//version-2: iteration
 class Solution {
     public int maxSubArray(int[] nums) {
         int currentSum = 0;
