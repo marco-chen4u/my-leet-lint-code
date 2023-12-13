@@ -44,6 +44,7 @@ Example 2:
 * 时间复杂度O(m * n), 空间复杂度O(m * n)
 * 可以用滚动数据中优化空间至O(n)
 */
+/* it's a dual serial space DP */
 //version-1
 public class Solution {
     public int minDistance(String word1, String word2) {
