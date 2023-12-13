@@ -1,22 +1,26 @@
 /***
 * LintCode 118. Distinct Subsequences
-Given two strings S and T. Count the number of distinct subsequences of S which equals T.
-A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. 
+Given two strings S and T. 
+Count the number of distinct subsequences of S which equals T.
+
+A subsequence of a string is a new string 
+which is formed from the original string by deleting some (can be none) of the characters 
+without disturbing the relative positions of the remaining characters. 
 (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not)
 
-Example
-Example 1:
-	Input: S = "rabbbit", T = "rabbit"
-	Output: 3
-	Explanation: You could remove any 'b' in S, so there are 3 ways to get T.
-Example 2:
-	Input: S = "abcd", T = ""
-	Output: 1
-	Explanation: There is only 1 way to get T - remove all chars in S.
+Example 1
+    Input: S = "rabbbit", T = "rabbit"
+    Output: 3
+    Explanation: You could remove any 'b' in S, so there are 3 ways to get T.
+
+Example 2
+    Input: S = "abcd", T = ""
+    Output: 1
+    Explanation: There is only 1 way to get T - remove all chars in S.
 
 Challenge
-	Do it in O(n^2) time and O(n) memory.
-	O(n^2n) memory is also acceptable if you do not know how to optimize memory.
+    Do it in O(n^2) time and O(n) memory.
+    O(n^2n) memory is also acceptable if you do not know how to optimize memory.
 ***/
 /*
 * T在S中出现多少次，即T中的每一个字符都要在S中出现
@@ -61,12 +65,12 @@ public class Solution {
         for (int i = 1; i <= m; i++) {
             for (int j =1; j <= n; j++) {
 				
-				if (j == 0) {
-					nums[i][j] = 1;
-					continue;
-				}
-				
-				nums[i][j] = nums[i - 1][j];
+                if (j == 0) {
+                    nums[i][j] = 1;
+                    continue;
+                }
+	
+                nums[i][j] = nums[i - 1][j];
 				
                 if (S.charAt(i - 1) == T.charAt(j - 1)) {
                     nums[i][j] += nums[i - 1][j - 1]; 
@@ -114,18 +118,18 @@ public class Solution {
         for (int i = 0; i <= m; i++) {
             for (int j =0; j <= n; j++) {
 				
-				if (j == 0) {
-					nums[i%2][j] = 1;// initialize
-					continue;
-				}
-				
-				if (i == 0) {
-				    nums[i%2][j] = 0;// initialize
-				    continue;
-				}
-				
-				nums[i%2][j] = nums[(i - 1)%2][j];
-				
+                if (j == 0) {
+                    nums[i%2][j] = 1;// initialize
+                    continue;
+                }
+	
+                if (i == 0) {
+                    nums[i%2][j] = 0;// initialize
+                    continue;
+                }
+
+                nums[i%2][j] = nums[(i - 1)%2][j];
+
                 if (S.charAt(i - 1) == T.charAt(j - 1)) {
                     nums[i%2][j] += nums[(i - 1)%2][j - 1]; 
                 }
