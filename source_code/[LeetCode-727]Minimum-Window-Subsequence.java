@@ -18,13 +18,16 @@ step(2)
                      or
                dp[i - 1][j] + 1 or default-value(if dp[i - 1][j] ==  default-value which means there no preceding match)
 
-               if (dp[i][j] < minLength) {
+               if (j == n && 
+                   dp[i][j] != default-value && 
+                   dp[i][j] < minLength) {
+                   
                     minLength = dp[i][j]
                     startIndex = i - minLength;
                }
 
 step(3)
-    return s1.substring(startIndex, minLength) or empty string
+    return s1.substring(startIndex, startIndex + minLength) or empty string
 */
 class Solution {
     public String minWindow(String s1, String s2) {
