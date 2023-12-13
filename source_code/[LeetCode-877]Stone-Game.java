@@ -88,5 +88,51 @@ class Solution {
     }
 }
 
-//solution-2: DP, gaming type dp
-// TBD
+//solution-2: DP, gaming type dp. DP + prefix sum
+/*
+step(1)
+    int[][] dp = new int[n][n]
+    int[] prefixSum = new int[n + 1]
+
+step(2)
+    for (int i = 0; i < n; i++) {
+        dp[i][i] = piles[i]
+    }
+
+step(3)
+    dp[1][n] = sum[1:n] - min(dp[2][n], dp[1][n - 1])
+
+step(4)
+    return dp[1][n]
+*/
+class Solution {
+
+    public boolean stoneGame(int[] piles) {
+        int n = piles.length;
+        int[][] dp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = piles[i];
+        }
+
+        int[] prefixSum = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            prefixSum[i] = prefixSum[i - 1] + piles[i - 1];
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (i == j) {
+                    continue;
+                }
+
+                int sum = prefixSum[j + 1] - prefixSum[i];
+                dp[i][j] = sum - Math.min(dp[i + 1][j], dp[i][j - 1]);
+            }
+        }
+
+        int gain = dp[0][n - 1];
+
+        return gain > prefixSum[n] - gain;
+    }
+
+}
