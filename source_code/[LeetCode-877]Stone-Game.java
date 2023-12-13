@@ -45,5 +45,47 @@ Similar question
     LeetCode 2396. Strictly Palindromic Number (https://leetcode.com/problems/strictly-palindromic-number/)
     LeetCode 2786. Visit Array Positions to Maximum Score (https://leetcode.com/problems/visit-array-positions-to-maximize-score/)
 ***/
-//solution-1: DP, gaming type dp
+//solution-1: dfs + prefix sum
+/*
+    solve(1, n) 
+        [a] pick first item => piles[1] + sum[2:n] - solve(2, n)           => prefix-sum[1:n] - solve(2, n)
+        [b] pick last item  => piles[n] + sum[1 : n - 1] - solve(1, n - 1) => prefix-sum[1:n] - solve(1, n - 1)
+          so
+              solve(1,n) = max(a, b)
+                        = prefix-sum[1:n] - min(solve(2, n), solve(1, n - 1))
+
+    
+*/
+class Solution {
+    private static int[][] dp;
+    private static int[] prefixSum;
+
+    public boolean stoneGame(int[] piles) {
+        int n = piles.length;
+        dp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = piles[i];
+        }
+
+        prefixSum = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            prefixSum[i] = prefixSum[i - 1] + piles[i - 1];
+        }
+
+        int gain = solve(0, n - 1);
+        return gain > prefixSum[n] - gain;
+    }
+
+    private int solve(int i, int j) {
+        if (dp[i][j] != 0) {
+            return dp[i][j];
+        }
+
+        dp[i][j] = (prefixSum[j + 1] - prefixSum[i]) - Math.min(solve(i + 1, j), solve(i, j - 1));
+
+        return dp[i][j];
+    }
+}
+
+//solution-2: DP, gaming type dp
 // TBD
