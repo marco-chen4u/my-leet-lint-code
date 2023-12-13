@@ -30,42 +30,45 @@ step(3)
     return s1.substring(startIndex, startIndex + minLength) or empty string
 */
 class Solution {
+    private static final int DEFAULT_VALUE = -1;
+    private static final int MAX = Integer.MAX_VALUE;
+
     public String minWindow(String s1, String s2) {
         int m = s1.length();
         int n = s2.length();
 
-        int startIndex = 0; //for s1 string
-        int minLength = Integer.MAX_VALUE; // for s1 string
-
         int[][] dp = new int[m + 1][n + 1];
+
         for (int j = 1; j <= n; j++) {
-            dp[0][j] = -1;// default-value
+            dp[0][j] = DEFAULT_VALUE;
         }
 
+        int minLength = MAX;
+        int startIndex = 0;
 
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1] == -1 ? -1 : dp[i - 1][j - 1] + 1;
+                    dp[i][j] = dp[i - 1][j - 1] == DEFAULT_VALUE ? DEFAULT_VALUE : dp[i - 1][j - 1] + 1;
                 }
                 else {
-                    dp[i][j] = dp[i - 1][j] == -1 ? -1 : dp[i - 1][j] + 1;
+                    dp[i][j] = dp[i - 1][j] == DEFAULT_VALUE ? DEFAULT_VALUE : dp[i - 1][j] + 1;
                 }
 
-                if (j == n && dp[i][j] != -1 && dp[i][j] < minLength) {
-                    minLength = dp[i][j];
-                    startIndex = i - minLength;
-                }
             }
+
+            //when compare the whole string of s2 at index i on string s2
+            if (dp[i][n] != DEFAULT_VALUE && dp[i][n] < minLength) {
+               minLength = dp[i][n];
+               startIndex = i - minLength;
+            } 
         }
 
-        if (minLength == Integer.MAX_VALUE || minLength == -1) {
+        if (minLength == MAX) {
             return "";
         }
 
         //System.out.println("s1 = " + s1 + ", startIndex = " + startIndex + ", minLength = " + minLength);
         return s1.substring(startIndex, startIndex + minLength);
-
-
     }
 }
