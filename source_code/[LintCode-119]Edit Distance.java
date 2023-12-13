@@ -31,11 +31,15 @@ Example 2:
 ***/
 /*
 * 状态dp[i][j]为word1前i个字符word1[0..i - 1]和word2前j个字符word2[0..j - 1]的最小编辑距离
-* dp[i][j] = min{dp[i][j -1] + 1, dp[i - 1][j] + 1, dp[i - 1][j - 1] + 1, dp[i - 1][j - 1] AND word1[i - 1] == word2[j - 1]}
-	-dp[i][j -1] + 1,即word1在最后插入word2[j - 1]这个字符。
-	-dp[i - 1][j] + 1， 即word1删除最后一个字符。
-	-dp[i - 1][j - 1] + 1， 即word1最后一个字符替换成word2[j - 1]。
-	-dp[i - 1][j - 1] AND word1[i - 1] == word2[j - 1], 即word1和word2最后一个字符相等。
+* dp[i][j] =  dp[i - 1][j - 1] (if word1[i - 1] == word2[j - 1])
+                              or
+              min{dp[i][j -1] + 1, dp[i - 1][j] + 1, dp[i - 1][j - 1] + 1}
+	      
+               -dp[i][j -1] + 1,即word1在最后插入word2[j - 1]这个字符。
+	       -dp[i - 1][j] + 1， 即word1删除最后一个字符。
+	       -dp[i - 1][j - 1] + 1， 即word1最后一个字符替换成word2[j - 1]。
+	       
+	       -dp[i - 1][j - 1] AND word1[i - 1] == word2[j - 1], 即word1和word2最后一个字符相等。
 	
 * 时间复杂度O(m * n), 空间复杂度O(m * n)
 * 可以用滚动数据中优化空间至O(n)
