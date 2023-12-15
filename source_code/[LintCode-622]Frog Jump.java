@@ -115,7 +115,7 @@ public class Solution {
     }
 }
 
-//version-2: DFS(/w HashSet to record each position last jump steps to reach)
+//version-2: Iteration(/w HashSet to record each position last jump steps to reach), but same idea as BFS
 class Solution {
     public boolean canCross(int[] stones) {
         if (stones == null || stones.length == 0) {
