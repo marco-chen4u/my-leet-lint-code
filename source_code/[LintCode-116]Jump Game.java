@@ -16,7 +16,40 @@ Notice
     This is just to let you learn how to use this problem in dynamic programming ways. 
     If you finish it in dynamic programming ways, you can try greedy method to make it accept again.
 ***/
+//solution-1: dp
+public class Solution {
+    /**
+     * @param a: A list of integers
+     * @return: A boolean
+     */
+    public boolean canJump(int[] a) {
+        // write your code here
+        int n = a.length;
 
+        boolean[] dp = new boolean[n];
+        dp[0] = true;
+
+        for (int i = 0; i < n - 1; i++) {
+            int stepSize = a[i];
+            
+            if (stepSize == 0) {
+                continue;
+            }
+
+            for (int k = 1; k <= stepSize; k++) {
+                if (i + k > n - 1 || !dp[i] ||dp[i + k]) {
+                    continue;
+                }
+
+                dp[i + k] = true;
+            }
+        }
+
+        return dp[n - 1];
+    }
+}
+
+//soution-2: dp
 public class Solution {
     /**
      * @param A: A list of integers
