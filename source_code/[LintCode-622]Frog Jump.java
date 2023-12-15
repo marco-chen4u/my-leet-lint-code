@@ -116,6 +116,7 @@ public class Solution {
 }
 
 //version-2: dfs + memorized(working in leetcode, coz it's run time env suports Pair data type)
+//ref: https://www.youtube.com/watch?v=gq4q_PeF9pQ
 class Solution {
     public boolean canCross(int[] stones) {
         if (stones == null || stones.length == 0) {
