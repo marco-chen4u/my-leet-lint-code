@@ -116,49 +116,52 @@ public class Solution {
 }
 
 //version-2: DFS(/w HashSet to record each position last jump steps to reach)
-public class Solution {
-    /**
-     * @param stones: a list of stones' positions in sorted ascending order
-     * @return: true if the frog is able to cross the river or false
-     */
+class Solution {
     public boolean canCross(int[] stones) {
-        boolean result = false;
-        // check corner case
         if (stones == null || stones.length == 0) {
-            return result;
+            return false;
         }
 
-        int size = stones.length;
-        if (size == 1) {
-            return stones[0] == 0;
-        }
-		
-        //Map<currentPos, Set[step-sizes of last jump to reach current position]>
-        Map<Integer, Set<Integer>> map = new HashMap<Integer, Set<Integer>>();
-        // initialize
-        for (int i = 0; i < size; i++) {
-            map.put(stones[i], new HashSet<Integer>());
-        }
+        int length = stones.length;
+        Map<Integer, Set<Integer>> map = new HashMap<>();// map<position, set[different, jump-setp]>
 
-        map.get(stones[0]).add(0);// first position, start to jump
-
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < length; i++) {
             int currentPos = stones[i];
-            for (int lastStepSize : map.get(currentPos)) {
-                for (int nextStepSize = lastStepSize - 1; nextStepSize <= lastStepSize + 1; nextStepSize++) {
-  
-                    if (nextStepSize <= 0 || 
-                        !map.containsKey(currentPos + nextStepSize)) {
-                        continue;
+            map.put(currentPos, new HashSet<Integer>());
+        }
+
+        map.get(stones[0]).add(0);
+
+        for (int i = 0; i < length; i++) {
+            int currentPos = stones[i];
+            
+            Set<Integer> lastSteps = map.containsKey(currentPos) ? map.get(currentPos) : null;
+            if (lastSteps == null || lastSteps.isEmpty()) {
+                continue;
+            }
+
+            for (int stepSize : lastSteps) {
+                for (int nextStep = stepSize - 1; nextStep <= stepSize + 1; nextStep++) {
+                    if (nextStep <= 0) {//no point of this jump step
+                        continue;// skip it
                     }
 
-                    map.get(currentPos + nextStepSize).add(nextStepSize);					
-                }// for nextStepSize
-            }// for lastJumpStepSize
-        }// for i
-		
-        result = !map.get(stones[size - 1]).isEmpty();
+                    // is it possible to jump into the water
+                    int nextPos = currentPos + nextStep;
+                    if (!map.containsKey(nextPos)) {
+                        continue; // skip it
+                    }
 
-        return result;
+                    map.get(nextPos).add(nextStep);// keep current jump unit
+                }// end nextStep
+            }// end stepSize
+        }// end ith jump location
+
+        int lastPos = stones[length - 1];
+        if (map.get(lastPos).isEmpty()) { // check if the last location is able to get reach
+            return false;
+        }
+
+        return true;
     }
 }
