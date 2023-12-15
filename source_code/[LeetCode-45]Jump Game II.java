@@ -75,3 +75,33 @@ class Solution {
         
     }
 }
+
+//solution-2: dp
+class Solution {
+    public int jump(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        // State
+        int[] dp = new int[nums.length];
+        
+        // Initialize
+        dp[0] = 0;
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Integer.MAX_VALUE;
+        }
+        
+        // Function
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] + j >= i && dp[j] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[j] + 1, dp[i]);
+                }  
+            }
+        }
+        
+        // Answer
+        return dp[nums.length - 1];
+    }
+}
