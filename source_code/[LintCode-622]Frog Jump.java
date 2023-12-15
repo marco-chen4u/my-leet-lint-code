@@ -53,7 +53,7 @@ Link
     LintCode: https://www.lintcode.com/problem/622/
     LeetCode: https://leetcode.com/problems/frog-jump/
 ***/
-// version-1: memorization search(DFS),
+// version-1: memorization search(DFS)
 public class Solution {
     // field
     private boolean result = false;
@@ -76,18 +76,18 @@ public class Solution {
         }
 
         // normal case
-        helper(stones, 0, 1, 1);
+        dfs(stones, 0, 1, 1);
 
         return result;
     }
 
     // helper method
-    private void helper(int[] stones, // units of postion in wartor to jump
-                        int index,    // the index of postions, where the frog start to jump  
+    private void dfs(int[] stones, // units of postion in wartor to jump
+                        int currentIndex,    // the index of postions, where the frog start to jump  
                         int start,    // the smallest jump step size ( k -1)
                         int end) {    // the biggest jump step size (k + 1)
         // check corner cases
-        if (index == stones.length - 1) {
+        if (currentIndex == stones.length - 1) {
             result = true;
             return;
         }
@@ -98,8 +98,8 @@ public class Solution {
 
         // normal case
         // next step to jump
-        int currentPos = stones[index];// current position where the frog to jump
-        for (int i = index + 1; i < stones.length; i++) {			
+        int currentPos = stones[currentIndex];// current position where the frog to jump
+        for (int i = currentIndex + 1; i < stones.length; i++) {			
             int jumpStepSize = stones[i] - currentPos;
 
             if (jumpStepSize < start) {
@@ -110,7 +110,7 @@ public class Solution {
                 break;
             }
 
-            helper(stones, i, jumpStepSize - 1, jumpStepSize + 1);
+            dfs(stones, i, jumpStepSize - 1, jumpStepSize + 1);
         }// for
     }
 }
