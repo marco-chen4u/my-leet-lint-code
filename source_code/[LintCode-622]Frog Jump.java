@@ -215,3 +215,53 @@ class Solution {
         return true;
     }
 }
+
+//version-4: DP
+public class Solution {
+    /**
+     * @param stones: a list of stones' positions in sorted ascending order
+     * @return: true if the frog is able to cross the river or false
+     */
+    public boolean canCross(int[] stones) {
+        // write your code here
+        int n = stones.length;
+        boolean[][] dp = new boolean[n][n  + 1]; // 
+                                 //  |     |
+                                 //  |   last jump steps
+                                 //  |
+                                 //  stone's index postion
+
+        dp[0][1] = true; 
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                int lastStep = stones[i] - stones[j];
+
+                if (lastStep - 1 < 0) {// if it's moving backward
+                    continue;
+                }
+
+                if (lastStep == 0) {// if there's no jump
+                    continue;
+                }
+
+                if (lastStep > j + 1) { // stilling wondering why we need this condition.....
+                    continue;
+                }
+
+                dp[i][lastStep] = dp[j][lastStep - 1] || 
+                                      dp[j][lastStep] ||
+                                      dp[j][lastStep + 1];
+
+            }
+        }
+
+        for (int j = 0; j <= n; j++) {
+            if (dp[n - 1][j]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
