@@ -41,7 +41,8 @@ Example 2
     Output:
         false
     Explanation:
-        Return false. There is no way to jump to the last stone as the gap between the 5th and 6th stone is too large.
+        Return false. 
+	There is no way to jump to the last stone as the gap between the 5th and 6th stone is too large.
 
 Notice
     -The number of stones is ≥ 2 and is < 1100.
