@@ -22,7 +22,12 @@ Example 2
  
 Notice
     All costs are positive integers.
+
+Link
+    LintCode: https://www.lintcode.com/problem/515/
+    LeetCode: https://leetcode.com/problems/paint-house/
 ***/
+//solution-1: DP, serial type dp
 public class Solution {
     // filed
     private final int DEFAULT_MAX = Integer.MAX_VALUE;
@@ -68,5 +73,40 @@ public class Solution {
         }// for i
 	
         return Math.min(dp[n][RED], Math.min(dp[n][BLUE], dp[n][GREEN]));
+    }
+}
+
+// solution-2: DP
+class Solution {
+    public int minCost(int[][] costs) {
+        int n = costs.length;
+        int[][] dp = new int[n + 1][3];
+        for (int i = 0; i <= n; i++) {
+            if (i == 0) {
+                Arrays.fill(dp[i], 0);
+                continue;
+            }
+
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int pre = 0; pre < 3; pre++) {
+                for (int j = 0; j < 3; j++) {
+                    if (j == pre) {
+                        continue;
+                    }
+
+                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][pre] + costs[i - 1][j]);
+                }
+            }
+        }
+
+        int result = Integer.MAX_VALUE;
+        for (int k = 0; k < 3; k++) {
+            result = Math.min(dp[n][k], result);
+        }
+
+        return result;
     }
 }
