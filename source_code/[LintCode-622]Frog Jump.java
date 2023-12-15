@@ -115,7 +115,56 @@ public class Solution {
     }
 }
 
-//version-2: Iteration(/w HashSet to record each position last jump steps to reach), but same idea as BFS
+//version-2: dfs + memorized(working in leetcode, coz it's run time env suports Pair data type)
+class Solution {
+    public boolean canCross(int[] stones) {
+        if (stones == null || stones.length == 0) {
+            return false;
+        }
+
+        Set<Integer> stoneSet = new HashSet<>();
+        for (int stone : stones) {
+            stoneSet.add(stone);
+        }
+
+        Set<Pair<Integer, Integer>> visited = new HashSet<>();
+        return canJump(stones, stoneSet, visited, 0, 0);
+    }
+
+    private boolean canJump(int[] stones, Set<Integer> stoneSet, Set<Pair<Integer, Integer>> visited, int currentPos, int lastStep) {
+        int lastIndex = stones.length - 1;
+        if (stones[lastIndex] == currentPos) {
+            return true;
+        }
+
+        if (!stoneSet.contains(currentPos)) { // jump into the water
+            return false;
+        }
+
+        Pair<Integer, Integer> pair = new Pair(currentPos, lastStep);
+        if (visited.contains(pair)) {
+            return false;
+        }
+
+        if (lastStep - 1 > 0 && canJump(stones, stoneSet, visited, currentPos + lastStep - 1, lastStep - 1)) {
+            return true;
+        }
+
+        if (lastStep > 0 && canJump(stones, stoneSet, visited, currentPos + lastStep, lastStep)) {
+            return true;
+        }
+
+        if (canJump(stones, stoneSet, visited, currentPos + lastStep + 1, lastStep + 1)) {
+            return true;
+        }
+
+        visited.add(pair);
+
+        return false;
+    }
+}
+
+//version-3: Iteration(/w HashSet to record each position last jump steps to reach), but same idea as BFS
 class Solution {
     public boolean canCross(int[] stones) {
         if (stones == null || stones.length == 0) {
