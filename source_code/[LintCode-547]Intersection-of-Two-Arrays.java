@@ -17,6 +17,10 @@ Link: https://www.lintcode.com/problem/547/
 Related problem:
     LintCode 548. Intersection of Two Arrays II 
     LintCode 248. Count of Smaller Number
+
+Link: 
+    LintCode: https://www.lintcode.com/problem/547
+    LeetCode: https://leetcode.com/problems/intersection-of-two-arrays/
 **/
 
 //version-1: sort & binary search
