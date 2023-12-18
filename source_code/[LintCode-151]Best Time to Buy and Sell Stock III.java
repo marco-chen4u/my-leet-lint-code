@@ -4,12 +4,16 @@ Say you have an array for which the ith element is the price of a given stock on
 
 Design an algorithm to find the maximum profit. You may complete at most two transactions.
 
-Example
-    Example 1
-        Input : [4,4,6,1,1,4,2,5]
-        Output : 6
+Example 1
+    Input : [4,4,6,1,1,4,2,5]
+    Output : 6
+
 Notice
     You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+Link:
+    LintCode: https://www.lintcode.com/problem/151/
+    LeetCode: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
 ***/
 //version-1: scan line solution
 public class Solution {
