@@ -204,3 +204,91 @@ public class Solution {
         return result;
     }
 }
+
+//version-4: minHeap + sorted Array + pointer
+public class Solution {
+    /**
+     * @param nums1: an integer array
+     * @param nums2: an integer array
+     * @return: an integer array
+     *          we will sort your return value in output
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        // write your code here
+        if (isEmpty(nums1)) {
+            return nums1;
+        }
+
+        if (isEmpty(nums2)) {
+            return nums2;
+        }
+
+        Arrays.sort(nums1);
+        //System.out.println("nums1 = " + Arrays.toString(nums1));
+
+        Arrays.sort(nums2);
+        //System.out.println("nums1 = " + Arrays.toString(nums2));
+
+
+        Queue<Integer> minHeap = new PriorityQueue<>();
+
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+
+        int[] nums = (n1 > n2) ? nums1 : nums2;
+
+        for (int num : nums) {
+            minHeap.offer(num);
+        }
+
+        //System.out.println("minHeap = " + minHeap.toString());
+
+        int[] numsToFind = (n1 > n2) ? nums2 : nums1;
+        //System.out.println("numsToFind = " + Arrays.toString(numsToFind));
+
+        int m = numsToFind.length;
+        //System.out.println("m = " + m);
+
+        int i = 0;
+        Set<Integer> set = new HashSet<>();
+
+        while (!minHeap.isEmpty()) {
+            int current = minHeap.peek();
+
+            if (i < m && current < numsToFind[i]) {
+                minHeap.poll();
+                continue;
+            }
+
+            if (i < m && current > numsToFind[i]) {
+                i++;
+                continue;
+            }
+
+            if (i < m && current == numsToFind[i]) {
+                set.add(current);
+
+                minHeap.poll();
+                i++;
+                
+                continue;
+            }
+
+            minHeap.poll();
+        }
+
+        int size = set.size();
+        int index = 0;
+        int[] result = new int[size];
+        for (int num : set) {
+            result[index++] = num;
+        }
+
+        return result;
+    }
+
+    // helper method
+    private boolean isEmpty(int[] nums) {
+        return (nums == null || nums.length == 0);
+    }
+}
