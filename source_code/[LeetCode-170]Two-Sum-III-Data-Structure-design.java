@@ -16,7 +16,7 @@ Example 2:
     find(6) -> false
 
 ***/
-//version-1:O(n), Map+TreeSet
+//version-1:O(n), Map+Set
 class TwoSum {
     // field
     private Map<Integer, Integer> map;
