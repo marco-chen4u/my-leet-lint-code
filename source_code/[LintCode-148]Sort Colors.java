@@ -18,6 +18,9 @@ Challenge
 Notice
     You are not suppose to use the library's sort function for this problem.
     You should do it in-place (sort numbers in the original array).
+
+Link:
+    https://www.lintcode.com/problem/608/
 ***/
 //version-1: 3 pointers + partition
 public class Solution {
