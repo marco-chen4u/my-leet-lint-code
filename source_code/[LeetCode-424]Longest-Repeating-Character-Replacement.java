@@ -68,4 +68,55 @@ public class Solution {
 
         return right - left;
     }
+    
+}
+
+//version-2: sliding window, better understanding
+class Solution {
+    public int characterReplacement(String s, int k) {
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
+
+        int maxLen = 0;
+        int n = s.length();
+        int[] letter_counter = new int[26];
+
+        int left, right;
+        for (left = 0, right = 0; left < n; left++) {
+            while (right < n && isValid(s, left, right, k, letter_counter)) {
+                right++;
+            }
+
+            int currentLen = right - left;
+            maxLen = Math.max(maxLen, currentLen);
+
+            int pre = s.charAt(left) - 'A';
+            letter_counter[pre] -= 1;
+        }
+
+        return maxLen;
+    }
+
+    /**
+        (total-length) - (majority-letter-count) <= k 
+     */
+    private boolean isValid(String str, int start, int currentIndex, int k, int[] letter_counter) {
+        int totalLength = currentIndex - start + 1;
+
+        int current = str.charAt(currentIndex) - 'A';
+        letter_counter[current] += 1;
+        int maxLetterCount = 0;
+        for (int count : letter_counter) {
+            maxLetterCount = Math.max(maxLetterCount, count);
+        }
+
+        if (totalLength - maxLetterCount <= k) {
+            return true;
+        }
+        else {
+            letter_counter[current] -= 1;// reset for the next iteration to re-calculate from the changed start position
+            return false;
+       }
+    }
 }
