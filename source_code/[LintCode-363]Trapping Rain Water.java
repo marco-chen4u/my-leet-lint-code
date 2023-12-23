@@ -5,17 +5,18 @@ compute how much water it is able to trap after raining.
 
 Trapping Rain Water
 
-Example
-	Example 1:
-		Input: [0,1,0]
-		Output: 0
-	Example 2:
-		Input: [0,1,0,2,1,0,1,3,2,1,2,1]
-		Output: 6
+
+Example 1
+    Input: [0,1,0]
+    Output: 0
+
+Example 2
+    Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+    Output: 6
 
 Challenge
-	O(n) time and O(1) memory
-	O(n) time and O(n) memory is also acceptable.
+    O(n) time and O(1) memory
+    O(n) time and O(n) memory is also acceptable.
 ***/
 public class Solution {
     /**
