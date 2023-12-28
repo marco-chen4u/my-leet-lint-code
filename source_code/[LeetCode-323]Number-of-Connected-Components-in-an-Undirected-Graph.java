@@ -88,3 +88,59 @@ class UnionFind{
         return count;
     }
 }
+
+//solution-2: BFS
+class Solution {
+    public int countComponents(int n, int[][] edges) {
+        Set<Integer>[] graph = new Set[n];
+        for (int i = 0; i < n; i++) {
+            graph[i] = new HashSet<Integer>();
+        }
+
+        for (int[] edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            graph[from].add(to);
+            graph[to].add(from);
+        }
+
+        Set<Integer> visited = new HashSet<>();
+        int count = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (visited.contains(i)) {
+                continue;
+            }
+
+
+            bfs(i, graph, visited);
+            count++;
+        }
+
+        return count;
+    }
+
+    // helper method
+    private void bfs(int start, Set<Integer>[] graph, Set<Integer> visited) {
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        queue.offer(start);
+        visited.add(start);
+
+        while(!queue.isEmpty()) {
+            int current = queue.poll();
+
+            for (int next : graph[current]) {
+
+                if (visited.contains(next)) {
+                    continue;
+                }
+
+                visited.add(next);
+
+                queue.offer(next);
+            }
+        }
+    }
+}
