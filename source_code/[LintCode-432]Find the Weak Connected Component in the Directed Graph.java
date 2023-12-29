@@ -5,23 +5,24 @@ Each node in the graph contains a label and a list of its neighbors.
 (a weak connected component of a directed graph is a maximum subgraph 
 in which any two vertices are connected by direct edge path.)
 
-Example
-	Example 1:
-		Input: {1,2,4#2,4#3,5#4#5#6,5}
-		Output: [[1,2,4],[3,5,6]]
-		Explanation:
-		  1----->2    3-->5
-		   \     |        ^
-   		    \    |        |
-		     \   |        6
-		      \  v
-		       ->4
-	Example 2:
-		Input: {1,2#2,3#3,1}
-		Output: [[1,2,3]]
+
+Example 1
+    Input: {1,2,4#2,4#3,5#4#5#6,5}
+    Output: [[1,2,4],[3,5,6]]
+    Explanation:
+      1----->2    3-->5
+       \     |        ^
+        \    |        |
+         \   |        6
+          \  v
+           ->4
+
+Example 2
+    Input: {1,2#2,3#3,1}
+    Output: [[1,2,3]]
 
 Notice
-	Sort the elements of a component in ascending order.
+    Sort the elements of a component in ascending order.
 ***/
 /**
  * Definition for Directed graph.
