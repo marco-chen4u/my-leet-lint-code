@@ -12,10 +12,10 @@ Example
 		Explanation:
 		  1----->2    3-->5
 		   \     |        ^
-			\    |        |
-			 \   |        6
-			  \  v
-			   ->4
+   		    \    |        |
+		     \   |        6
+		      \  v
+		       ->4
 	Example 2:
 		Input: {1,2#2,3#3,1}
 		Output: [[1,2,3]]
