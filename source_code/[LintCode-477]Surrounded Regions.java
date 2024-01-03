@@ -231,7 +231,85 @@ public class Solution {
     }
 }
 
-//version3: BFS with Queue and Pair object
+//version-3: BFS
+class Solution {
+
+    private static int m; // row size
+    private static int n; // column size
+
+    private static final char MARKED = '1';
+
+    private static final int[] DIRECTION_X = new int[] {0, 1, -1, 0};
+    private static final int[] DIRECTION_Y = new int[] {1, 0, 0, -1};
+
+    public void solve(char[][] board) {
+        m = board.length;
+        n = board[0].length;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] = board[i][j] == 'O' ? MARKED : board[i][j];
+            }
+        }
+
+        for (int i = 0 ; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!isOnborder(i, j)) {
+                    continue;
+                }
+
+                bfs(board, i, j);
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                if (board[i][j] == MARKED) {
+                    board[i][j] = 'X';
+                    continue;
+                }
+
+            }
+        }
+    }
+
+    // helper method
+    private boolean isOnborder(int x, int y) {
+        return x == 0 || x == m - 1 || y == 0 || y == n - 1;
+    }
+
+    private void bfs(char[][] board, int x, int y) {
+
+        if (board[x][y] != MARKED) {
+            return;
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(x * n + y);
+        board[x][y] = 'O';
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            int currentX = current / n;
+            int currentY = current % n;
+
+            for (int i = 0; i < 4; i++) {
+                int nextX = currentX + DIRECTION_X[i];
+                int nextY = currentY + DIRECTION_Y[i];
+
+                if (nextX < 0 || nextX >= m || nextY < 0 || nextY >= n || board[nextX][nextY] != MARKED) {
+                    continue;
+                }
+
+                board[nextX][nextY] = 'O';
+                queue.offer(nextX * n + nextY);
+            }
+        }
+    }
+}
+
+//version4: BFS with Queue and Pair object
 class Solution {
     private final char MARKER = 'M';
     private int n;// row size
