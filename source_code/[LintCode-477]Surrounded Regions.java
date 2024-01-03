@@ -2,29 +2,34 @@
 * LintCode 477. Surrounded Regions
 Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
 A region is captured by flipping all 'O''s into 'X''s in that surrounded region.
-Example
-	Example 1:
-		Input:
-		  X X X X
-		  X O O X
-		  X X O X
-		  X O X X
-		Output:
-		  X X X X
-		  X X X X
-		  X X X X
-		  X O X X
-	Example 2:
-		Input:
-		  X X X X
-		  X O O X
-		  X O O X
-		  X O X X
-		Output:
-		  X X X X
-		  X O O X
-		  X O O X
-		  X O X X
+
+Example 1
+    Input:
+        X X X X
+        X O O X
+        X X O X
+        X O X X
+    Output:
+        X X X X
+        X X X X
+        X X X X
+        X O X X
+	
+Example 2
+    Input:
+        X X X X
+        X O O X
+        X O O X
+        X O X X
+    Output:
+        X X X X
+        X O O X
+        X O O X
+        X O X X
+
+Link:
+    LintCode: https://lintcode.com/problem/477/
+    LeetCode: https://leetcode.com/problems/surrounded-regions/
 ***/
 //version-1: BFS
 /*
