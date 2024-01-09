@@ -102,7 +102,7 @@ public class Solution {
     } 
 }
 
-/ verison-2 : DFS-2
+// verison-2 : DFS-2
 public class Solution {
     private final int[] DIRECTION_X = new int[] {0, 1, -1, 0};
     private final int[] DIRECTION_Y = new int[] {1, 0, 0, -1};
@@ -285,5 +285,134 @@ public class Solution {
         result.put(word, true);
         
         return result;
+    }
+}
+
+//version-4: DFS + trie
+class Solution {
+
+    private static final int[] DIRECTION_X = new int[] {0, 1, -1, 0};
+    private static final int[] DIRECTION_Y = new int[] {1, 0, 0, -1};
+
+    private static int m; // row size
+    private static int n; // column size
+
+    private Trie trie;
+
+    public boolean exist(char[][] board, String word) {
+        m = board.length;
+        n = board[0].length;
+
+        trie = new Trie();
+        trie.insert(word);
+
+        boolean[][] visited = new boolean[m][n];
+
+        boolean isExist = false;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                visited[i][j] = true;
+                if (find(board, i, j, visited, String.valueOf(board[i][j]))) {
+                    isExist = true;
+                    break;
+                }
+                visited[i][j] = false;
+            }
+        }
+
+        return isExist;
+    }
+
+    // helper method
+    private boolean find(char[][] board, int x, int y, boolean[][] visited, String str) {
+
+        if (!trie.search(str)) {
+            return false;
+        }
+
+        if (trie.searchWord(str)) {
+            return true;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            int nextX = x + DIRECTION_X[i];
+            int nextY = y + DIRECTION_Y[i];
+
+            if (nextX < 0 || nextX >= m || nextY < 0 || nextY >= n || visited[nextX][nextY]) {
+                continue;
+            }
+
+            visited[nextX][nextY] = true;
+            if (find(board, nextX, nextY, visited, str + board[nextX][nextY])) {
+                return true;
+            }
+            visited[nextX][nextY] = false;
+        }
+
+        return false;
+    }
+}
+
+class Trie {
+    private TrieNode root;
+
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    public void insert(String word) {
+        if (word == null || word.isEmpty()) {
+            return;
+        }
+
+        TrieNode node = root;
+        for (char ch : word.toCharArray()) {
+            if (node.children[ch] == null) {
+                node.children[ch] = new TrieNode();
+            }
+            node = node.children[ch];
+        }
+
+        node.isWord = true;
+    }
+
+    public boolean search(String prefix) {
+        TrieNode node = find(prefix);
+        return node != null;
+    }
+
+    public boolean searchWord(String word) {
+        TrieNode node = find(word);
+        return node != null && node.isWord;
+    }
+
+    private TrieNode find(String word) {
+        if (word == null || word.isEmpty()) {
+            return null;
+        }
+
+        TrieNode node = root;
+        for (char ch : word.toCharArray()) {
+            if (node == null || node.children[ch] == null) {
+                return null;
+            }
+
+            node = node.children[ch];
+        }
+
+        return node;
+    }
+}
+
+class TrieNode {
+    // field
+    TrieNode[] children;
+    boolean isWord;
+
+    // constructor
+    public TrieNode() {
+        children = new TrieNode[256];
+        isWord = false;
     }
 }
