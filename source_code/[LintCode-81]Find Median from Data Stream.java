@@ -95,3 +95,54 @@ public class Solution {
         return result;
     }
 }
+
+//version-2
+public class Solution {
+
+    private Queue<Integer> minHeap = new PriorityQueue<>();
+    private Queue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+    private int numOfElements = 0;
+
+    /**
+     * @param val: a num from the data stream.
+     * @return: nothing
+     */
+    public void add(int val) {
+        // write your code here
+        maxHeap.offer(val);
+
+        numOfElements += 1;
+
+        // re-balance
+        if (numOfElements % 2 == 0) {
+            minHeap.offer(maxHeap.poll());
+        }
+        else {
+            if (minHeap.isEmpty()) {
+                return;
+            }
+
+            if (maxHeap.peek() > minHeap.peek()) {
+                exChangePeak(maxHeap, minHeap);
+            }
+        }
+
+    }
+
+    /**
+     * @return: return the median of the all numbers
+     */
+    public int getMedian() {
+        // write your code here
+        return maxHeap.peek();
+    }
+
+    private void exChangePeak(Queue<Integer> maxHeap, Queue<Integer> minHeap) {
+        int maxPeak = maxHeap.poll();
+        int minPeak = minHeap.poll();
+
+        maxHeap.offer(minPeak);
+        minHeap.offer(maxPeak);
+    }
+}
