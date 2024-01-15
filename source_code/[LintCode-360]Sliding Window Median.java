@@ -5,32 +5,32 @@ move the window at each iteration from the start of the array,
 find the median of the element inside the window at each moving. 
 (If there are even numbers in the array, return the N/2-th number after sorting the element in the window. )
 
-Example
-	Example 1:
-		Input:
-			[1,2,7,8,5]
-			3
-		Output:
-			[2,7,7]
-		Explanation:
-			At first the window is at the start of the array like this'[ | 1,2,7 | ,8,5]', return the median'2';
-			then the window move one step forward.'[1, | 2,7,8 | ,5]', return the median'7';
-			then the window move one step forward again.'[1,2, | 7,8,5 | ]', return the median'7';
 
-	Example 2:
-		Input:
-			[1,2,3,4,5,6,7]
-			4
-		Output:
-			[2,3,4,5]
-		Explanation:
-			At first the window is at the start of the array like this'[ | 1,2,3,4, | 5,6,7]', return the median'2';
-			then the window move one step forward.'[1,| 2,3,4,5 | 6,7]', return the median'3';
-			then the window move one step forward again.'[1,2, | 3,4,5,6 | 7 ]', return the median'4';
-			then the window move one step forward again.'[1,2,3,| 4,5,6,7 ]', return the median'5';
+Example 1
+    Input:
+        [1,2,7,8,5]
+        3
+    Output:
+        [2,7,7]
+    Explanation:
+        At first the window is at the start of the array like this'[ | 1,2,7 | ,8,5]', return the median'2';
+        then the window move one step forward.'[1, | 2,7,8 | ,5]', return the median'7';
+        then the window move one step forward again.'[1,2, | 7,8,5 | ]', return the median'7';
+
+Example 2
+    Input:
+        [1,2,3,4,5,6,7]
+        4
+    Output:
+        [2,3,4,5]
+    Explanation:
+        At first the window is at the start of the array like this'[ | 1,2,3,4, | 5,6,7]', return the median'2';
+        then the window move one step forward.'[1,| 2,3,4,5 | 6,7]', return the median'3';
+        then the window move one step forward again.'[1,2, | 3,4,5,6 | 7 ]', return the median'4';
+        then the window move one step forward again.'[1,2,3,| 4,5,6,7 ]', return the median'5';
 
 Challenge
-	O(nlog(n)) time
+    O(nlog(n)) time
 ***/
 public class Solution {
     /**
@@ -40,65 +40,65 @@ public class Solution {
      */
     public List<Integer> medianSlidingWindow(int[] nums, int k) {
         List<Integer> result = new ArrayList<Integer>();
-		// check corner case
-		if (nums == null || nums.length == 0 || k < 1) {
-			return result;
-		}
-		
-		PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>((a,b)->(b - a));
-		PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
-		k = Math.min(k, nums.length);
-		int currentMedian;
-		
-		// initial loading to the window
-		if (k > 1) {
-			maxHeap.offer(nums[0]);
-			for (int i = 1; i < k - 1; i++) {
-				int maxRoot = maxHeap.peek();
-				if (nums[i] <= maxRoot) {
-					maxHeap.offer(nums[i]);
-				}
-				else {
-					minHeap.offer(nums[i]);
-				}
-			}
-		}
-		
-		currentMedian = (k > 1) ? maxHeap.peek() : 0; //default value
-		
-		// moving the window
-		for (int i = k - 1; i < nums.length; i++) {
-			// insert
-			if (nums[i] <= currentMedian) {
-				maxHeap.offer(nums[i]);
-			}
-			else {
-				minHeap.offer(nums[i]);
-			}
-			
-			// keep balanced
-			while (maxHeap.size() > minHeap.size() + 1) {
-				minHeap.offer(maxHeap.poll());
-			}
-			while (maxHeap.size() < minHeap.size()) {
-				maxHeap.offer(minHeap.poll());
-			}
-			
-			// get the current median of this window
-			currentMedian = maxHeap.peek();			
-			result.add(currentMedian);
-			
-			// remove the start item of last window
-			int item = nums[i - (k - 1)];
-			if (item <= maxHeap.peek()) {
-				maxHeap.remove(item);
-			}
-			else {
-				minHeap.remove(item);
-			}
-		}
-		
-		return result;
+        // check corner case
+        if (nums == null || nums.length == 0 || k < 1) {
+            return result;
+        }
+
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>((a,b)->(b - a));
+        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+        k = Math.min(k, nums.length);
+        int currentMedian;
+
+        // initial loading to the window
+        if (k > 1) {
+            maxHeap.offer(nums[0]);
+            for (int i = 1; i < k - 1; i++) {
+                int maxRoot = maxHeap.peek();
+                if (nums[i] <= maxRoot) {
+                    maxHeap.offer(nums[i]);
+                }
+                else {
+                    minHeap.offer(nums[i]);
+                }
+            }
+        }
+
+        currentMedian = (k > 1) ? maxHeap.peek() : 0; //default value
+
+        // moving the window
+        for (int i = k - 1; i < nums.length; i++) {
+            // insert
+            if (nums[i] <= currentMedian) {
+                maxHeap.offer(nums[i]);
+            }
+            else {
+                minHeap.offer(nums[i]);
+            }
+
+            // keep balanced
+            while (maxHeap.size() > minHeap.size() + 1) {
+                minHeap.offer(maxHeap.poll());
+            }
+            while (maxHeap.size() < minHeap.size()) {
+                maxHeap.offer(minHeap.poll());
+            }
+
+            // get the current median of this window
+            currentMedian = maxHeap.peek();			
+            result.add(currentMedian);
+
+            // remove the start item of last window
+            int item = nums[i - (k - 1)];
+            if (item <= maxHeap.peek()) {
+                maxHeap.remove(item);
+            }
+            else {
+                minHeap.remove(item);
+            }
+        }
+
+        return result;
     }
 }
 
