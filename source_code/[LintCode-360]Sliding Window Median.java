@@ -419,3 +419,76 @@ class Median {
  }
 
 //version-5: quick select
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @param k: An integer
+     * @return: The median of the element inside the window at each moving
+     */
+    public List<Integer> medianSlidingWindow(int[] nums, int k) {
+        // write your code here
+        if (nums == null || nums.length == 0) {
+            return Collections.emptyList();
+        }
+
+        List<Integer> result = new ArrayList<>();
+        int n = nums.length;
+        k = Math.min(n, k);
+        k = k;
+
+        int i,j;
+        for (i = 0; i < n - k + 1; i++) {
+            j = i + k;
+            int[] values = Arrays.copyOfRange(nums, i, j);
+            int medianPos = (k - 1)/ 2;
+            //System.out.println("values = " + Arrays.toString(values) + ", i = " + i + ", j = " + j + ", medianPos = " + medianPos);
+            //System.out.println(String.format("values = %s, i = %d, j = %d, medianPos = %d", Arrays.toString(values), i, j, medianPos));
+            int candidate = quickSelect(values, 0, values.length - 1, medianPos);
+            result.add(candidate);
+        }
+
+        return result;
+    }
+
+    // helper method
+    private int quickSelect(int[] nums, int start, int end, int k) {
+        if (start >= end) {
+            return nums[start];
+        }
+
+        int left = start;
+        int right = end;
+
+        int mid = left + (right - left) / 2;
+        int pivot = nums[mid];
+
+        while (left <= right) {
+            while (left <= right && nums[left] < pivot) {
+                left++;
+            }
+
+            while (left <= right && nums[right] > pivot) {
+                right--;
+            }
+
+            if (left <= right) {
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+
+                left++;
+                right--;
+            }
+        }
+
+        if (k <= right) {
+            return quickSelect(nums, start, right, k);
+        }
+
+        if (k >= left) {
+            return quickSelect(nums, left, end, k);
+        }
+
+        return nums[k];
+    }
+}
