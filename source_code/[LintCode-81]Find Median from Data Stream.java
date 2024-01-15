@@ -21,13 +21,14 @@ Clarification
 	-Balance
 		0 <= [smaller.size()] - [larger.size()] <= 1
 		     |<------------total size--------->|
-				if (total-size-diff = 1) {
-					check 
-					if (minHeap.peek() > maxHeap.peek()) {
-						swap(minHeap.peek(), maxHeap.peek());
-					}
-				}
-	-return maxHeap.peek();
+
+    if (total-size-diff = 1) { 
+        if (minHeap.peek() > maxHeap.peek()) {
+            swap(minHeap.peek(), maxHeap.peek());
+        }
+    }
+-return maxHeap.peek();
+
 ***/
 // version-1
 public class Solution {
