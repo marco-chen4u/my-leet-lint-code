@@ -163,9 +163,9 @@ public class Solution {
 	         *  this Deque，keeping the elements as descending order. for instance: deque[3,2,1]，
 	         *  so deque.peekFirst()==3, deque.peekLast()==1. 
 	         *  if wo do such operation based on above elements, deque.pollFirst(), 
-             *            then, it would be: deque[2,1]. 
-             *  if deque.pollLast, 
-             *            then, it would be: deque[3,2].
+                 *            then, it would be: deque[2,1]. 
+                 *  if deque.pollLast, 
+                 *            then, it would be: deque[3,2].
 	        **/
 	        while (!deque.isEmpty() && deque.peekLast() < num) {
 	            deque.pollLast();
