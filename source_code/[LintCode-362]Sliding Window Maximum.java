@@ -186,3 +186,55 @@ public class Solution {
         return result;
     }	
 }
+
+//version-3 (Deque)
+public class Solution {
+    // field
+    int[] values;
+	
+    /**
+     * @param nums: A list of integers.
+     * @param k: An integer
+     * @return: The maximum number inside the window at each moving.
+     */
+    public List<Integer> maxSlidingWindow(int[] nums, int k) {
+        List<Integer> result = new ArrayList<Integer>();
+        // check corner cases
+        if (nums == null || nums.length == 0 || k <= 0) {
+            return result;
+        }
+
+        int size = nums.length;
+        k = Math.min(k, size);
+        this.values = nums;
+        Deque<Integer> deque = new ArrayDeque<Integer>();
+        // loading the window
+        for (int i = 0; i < k - 1; i++) {
+            inQueue(deque, i);
+        }
+
+        for (int i = k - 1; i < size; i++) {
+            inQueue(deque, i);
+            result.add(nums[deque.peekFirst()]);
+
+            outQueue(deque, i - k + 1);
+        }
+
+        return result;
+    }
+
+    // helper method
+    private void inQueue(Deque<Integer> deque, int pos) {
+        while (!deque.isEmpty() && values[pos] > values[deque.peekLast()]) {
+            deque.pollLast();
+        }
+
+        deque.offer(pos);
+    }
+
+    private void outQueue(Deque<Integer> deque, int pos) {
+        if (deque.peekFirst() == pos) {
+            deque.pollFirst();
+        }
+    }
+}
