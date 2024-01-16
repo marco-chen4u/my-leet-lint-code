@@ -4,51 +4,62 @@ Given an array of n integer with duplicate number, and a moving window(size k),
 move the window at each iteration from the start of the array, 
 find the maximum number inside the window at each moving.
 
-Example
-	Example 1:
-		Input:
-			[1,2,7,7,8]
-			3
-		Output:
-			[7,7,8]
-		Explanation:
-			At first the window is at the start of the array like this '[|1, 2, 7| ,7, 8]' , return the maximum '7';
-			then the window move one step forward.'[1, |2, 7 ,7|, 8]', return the maximum '7';
-			then the window move one step forward again.'[1, 2, |7, 7, 8|]', return the maximum '8';
+Example 1:
+    Input:
+        [1,2,7,7,8]
+        3
+    Output:
+        [7,7,8]
+    Explanation:
+        At first the window is at the start of the array like this '[|1, 2, 7| ,7, 8]' , return the maximum '7';
+        then the window move one step forward.'[1, |2, 7 ,7|, 8]', return the maximum '7';
+        then the window move one step forward again.'[1, 2, |7, 7, 8|]', return the maximum '8';
 
-	Example 2:
-		Input:
-			[1,2,3,1,2,3]
-			5
-		Output:
-			[3,3]
-		Explanation:
-			At first, the state of the window is as follows: '[,2,3,1,2,1 | , 3]', a maximum of '3';
-			And then the window to the right one. '[1, | 2,3,1,2,3 |]', a maximum of '3';
+Example 2:
+    Input:
+        [1,2,3,1,2,3]
+        5
+    Output:
+        [3,3]
+    Explanation:
+        At first, the state of the window is as follows: '[,2,3,1,2,1 | , 3]', a maximum of '3';
+        And then the window to the right one. '[1, | 2,3,1,2,3 |]', a maximum of '3';
 
 Challenge
-	O(n) time and O(k) memory
+    O(n) time and O(k) memory
 ***/
 
-
 // version-1: segment tree
-// Helper class
-class SegmentTreeNode {
-	// fields
-	int start;
-	int end;
-	int maxValue;
-	SegmentTreeNode left;
-	SegmentTreeNode right;
-	// constructor
-	public SegmentTreeNode(int start, int end, int maxValue) {
-		this.start = start;
-		this.end = end;
-		this.maxValue = maxValue;
-	}
-}
-
 public class Solution {    
+    /**
+     * @param nums: A list of integers.
+     * @param k: An integer
+     * @return: The maximum number inside the window at each moving.
+     */
+    public List<Integer> maxSlidingWindow(int[] nums, int k) {
+        List<Integer> result = new ArrayList<Integer>();
+        // check corner case
+        if (nums == null || nums.length == 0 || k <= 0) {
+            return result;
+        }
+        
+        int size = nums.length;
+        k = Math.min(k, size);
+        
+        SegmentTreeNode root = build(nums, 0, size - 1);
+        
+        int windowCount = size - k;
+        for (int i = 0; i <= windowCount; i++) {
+            int start = i;
+            int end = i + (k - 1);
+            int value = query(root, start, end);
+            
+            result.add(value);
+        }
+        
+        return result;
+    }
+
     // helper methods
     private SegmentTreeNode build(int[] nums, int start, int end) {
         // check corner case
@@ -109,33 +120,20 @@ public class Solution {
         
         return Math.max(leftMax, rightMax);
     }
-    
-    /**
-     * @param nums: A list of integers.
-     * @param k: An integer
-     * @return: The maximum number inside the window at each moving.
-     */
-    public List<Integer> maxSlidingWindow(int[] nums, int k) {
-        List<Integer> result = new ArrayList<Integer>();
-        // check corner case
-        if (nums == null || nums.length == 0 || k <= 0) {
-            return result;
-        }
-        
-        int size = nums.length;
-        k = Math.min(k, size);
-        
-        SegmentTreeNode root = build(nums, 0, size - 1);
-        
-        int windowCount = size - k;
-        for (int i = 0; i <= windowCount; i++) {
-            int start = i;
-            int end = i + (k - 1);
-            int value = query(root, start, end);
-            
-            result.add(value);
-        }
-        
-        return result;
+}
+// Helper class
+class SegmentTreeNode {
+    // fields
+    int start;
+    int end;
+    int maxValue;
+    SegmentTreeNode left;
+    SegmentTreeNode right;
+
+    // constructor
+    public SegmentTreeNode(int start, int end, int maxValue) {
+        this.start = start;
+        this.end = end;
+        this.maxValue = maxValue;
     }
 }
