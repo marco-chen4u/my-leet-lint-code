@@ -238,3 +238,68 @@ public class Solution {
         }
     }
 }
+
+//version-4: quick select
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int[] result = new int[0];
+        
+        if (nums == null || nums.length == 0) {
+            return result;
+        }
+
+        int n = nums.length;
+        k = Math.min(k, n);
+
+        result = new int[n - k + 1];
+        int index = 0;
+        for (int i =0; i < n - k + 1; i++) {
+            int j = i + k;
+            int[] values = Arrays.copyOfRange(nums, i, j);
+            //System.out.println(String.format("values = %s, i = %d, j = %d", Arrays.toString(values), i, j));
+            int candidate = quickSelect(values, 0, values.length - 1, values.length - 1);
+            result[index++] = candidate;
+        }
+
+        return result;
+    }
+
+    private int quickSelect(int[] nums, int start, int end, int k) {
+        if (start >= end) {
+            return nums[start];
+        }
+
+        int left = start;
+        int right = end;
+        int mid = left + (right - left) / 2;
+        int pivot = nums[mid];
+
+        while (left <= right) {
+            while (left <= right && nums[left] < pivot) {
+                left++;
+            }
+
+            while (left <= right && nums[right] > pivot) {
+                right--;
+            }
+
+            if (left <= right) {
+                int tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+                left++;
+                right--;
+            }
+        }
+
+        if (k <= right) {
+            return quickSelect(nums, start, right, k);
+        }
+
+        if (k >= left) {
+            return quickSelect(nums, left, end, k);
+        }
+
+        return nums[k];
+    }
+}
