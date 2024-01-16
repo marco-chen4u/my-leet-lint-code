@@ -167,13 +167,15 @@ public class Solution {
             *  if deque.pollLast, 
             *            then, it would be: deque[3,2].
             **/
+
+            //[1]loading the first (k-1) elements and in-deque operation, make those elements inside should be descending order
             while (!deque.isEmpty() && deque.peekLast() < num) {
                 deque.pollLast();
             }
 
             deque.offer(num);
 	
-            // remove the head-item of last silding window 
+            //[2] out-deque operaiton, remove the head-item of last silding window 
             if (index > k && deque.peekFirst() == nums[index - (k + 1)]) {
                 deque.pollFirst();
             }
