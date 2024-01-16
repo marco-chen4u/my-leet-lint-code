@@ -137,3 +137,52 @@ class SegmentTreeNode {
         this.maxValue = maxValue;
     }
 }
+
+// version-2: Deque
+public class Solution {
+    /**
+     * @param nums: A list of integers.
+     * @param k: An integer
+     * @return: The maximum number inside the window at each moving.
+     */
+    public List<Integer> maxSlidingWindow(int[] nums, int k) {
+        List<Integer> result = new ArrayList<Integer>();
+        // check corner cases
+        if (nums == null || nums.length == 0 || k < 1) {
+            return result;
+        }
+
+        int size = nums.length;
+        k = Math.min(size, k);
+
+        int index = 0;
+        for (int num : nums) {
+            index++;
+	
+	        /**
+	         *  this Deque，keeping the elements as descending order. for instance: deque[3,2,1]，
+	         *  so deque.peekFirst()==3, deque.peekLast()==1. 
+	         *  if wo do such operation based on above elements, deque.pollFirst(), 
+             *            then, it would be: deque[2,1]. 
+             *  if deque.pollLast, 
+             *            then, it would be: deque[3,2].
+	        **/
+	        while (!deque.isEmpty() && deque.peekLast() < num) {
+	            deque.pollLast();
+	        }
+	
+	        deque.offer(num);
+	
+	        // remove the head-item of last silding window 
+	        if (index > k && deque.peekFirst() == nums[index - (k + 1)]) {
+	            deque.pollFirst();
+	        }
+
+            if (index >= k) {
+                result.add(deque.peekFirst());
+            }
+        }
+
+        return result;
+    }	
+}
