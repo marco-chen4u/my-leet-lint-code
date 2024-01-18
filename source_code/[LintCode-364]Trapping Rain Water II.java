@@ -93,7 +93,7 @@ public class Solution {
             visited[i][m - 1] = true;
         }
 
-        while (!minHeap.isEmpty()) {
+        while (!minHeap.isEmpty()) { // minHeap could help us to find the lowest pillar of the surrounding bucket for the first time
             Element current = minHeap.poll();
 
             for (int i = 0; i < 4; i++) {
