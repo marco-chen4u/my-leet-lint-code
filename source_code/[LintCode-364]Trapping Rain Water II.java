@@ -3,119 +3,118 @@
 Given n x m non-negative integers representing an elevation map 2d where the area of each cell is 1 x 1, 
 compute how much water it is able to trap after raining.
 
-Example
-	Example 1:
-		Given `5*4` matrix 
-		Input:
-			[[12,13,0,12],
-			 [13,4,13,12],
-			 [13,8,10,12],
-			 [12,13,12,12],
-			 [13,13,13,13]]
-		Output:
-			14
+Example 1
+    Given `5*4` matrix 
+    Input:
+        [[12,13,0,12],
+         [13,4,13,12],
+         [13,8,10,12],
+         [12,13,12,12],
+         [13,13,13,13]]
+    Output:
+        14
 
-	Example 2:
-		Input:
-			[[2,2,2,2],
-			 [2,2,3,4],
-			 [3,3,3,1],
-			 [2,3,4,5]]
-		Output:
-			0
+Example 2:
+    Input:
+        [[2,2,2,2],
+         [2,2,3,4],
+         [3,3,3,1],
+         [2,3,4,5]]
+    Output:
+        0
 
 ***/
 class Element {
-	// fields
-	int x;
-	int y;
-	int height;
-	// constructors
-	public Element() {
-	};
-	
-	public Element(int x, int y, int height) {
-		this.x = x;
-		this.y = y;
-		this.height = height;
-	}
+    // fields
+    int x;
+    int y;
+    int height;
+    // constructors
+    public Element() {
+    };
+
+    public Element(int x, int y, int height) {
+        this.x = x;
+        this.y = y;
+        this.height = height;
+    }
 }
 
 public class Solution {
-	// fields
-	private final int[] DIRECTION_X = new int[] {0, 1, -1, 0};
-	private final int[] DIRECTION_Y = new int[] {1, 0, 0, -1};
+    // fields
+    private final int[] DIRECTION_X = new int[] {0, 1, -1, 0};
+    private final int[] DIRECTION_Y = new int[] {1, 0, 0, -1};
 	
     /**
      * @param heights: a matrix of integers
      * @return: an integer
      */
     public int trapRainWater(int[][] heights) {
-		int result = 0;
+        int result = 0;
         // check corner case
-		if (heights == null || heights.length == 0) {
-			return result;
-		}
-		
-		int n = heights.length; // row size
-		int m = heights[0].length; // column size;
-		boolean[][] visited = new boolean[n][m];
-		
-		Comparator<Element> comparator = new Comparator<Element>() {
-			@Override
-			public int compare(Element a, Element b) {
-				return a.height - b.height;
-			}
-		};
-		
-		Queue<Element> minHeap = new PriorityQueue<Element>(comparator);
-		
-		// upper line
-		for (int j = 0; j < m; j++) {
-			minHeap.offer(new Element(0, j, heights[0][j]));
-			visited[0][j] = true;
-		}
-		
-		// bottom line 
-		for (int j = 0; j < m; j++) {
-			minHeap.offer(new Element(n - 1, j, heights[n - 1][j]));
-			visited[n - 1][j] = true;
-		}
-		
-		// left line
-		for (int i = 1; i < n - 1; i++) {
-			minHeap.offer(new Element(i, 0, heights[i][0]));
-			visited[i][0] = true;
-		}
-		
-		// right line
-		for (int i = 1; i < n - 1; i++) {
-			minHeap.offer(new Element(i, m - 1, heights[i][m - 1]));
-			visited[i][m - 1] = true;
-		}
-		
-		while (!minHeap.isEmpty()) {
-			Element current = minHeap.poll();
-			
-			for (int i = 0; i < 4; i++) {
-				int nextX = current.x + DIRECTION_X[i];
-				int nextY = current.y + DIRECTION_Y[i];
-				
-				if (nextX < 0 || nextX >= n || nextY < 0 || nextY >= m) {
-					continue;
-				}
-				
-				if (visited[nextX][nextY]) {
-					continue;
-				}
-				
-				visited[nextX][nextY] = true;
-				minHeap.offer(new Element(nextX, nextY, Math.max(current.height, heights[nextX][nextY])));
-				result += Math.max(0, current.height - heights[nextX][nextY]);
-			}
-			
-		}
-		
-		return result;
+        if (heights == null || heights.length == 0) {
+            return result;
+        }
+
+        int n = heights.length; // row size
+        int m = heights[0].length; // column size;
+        boolean[][] visited = new boolean[n][m];
+
+        Comparator<Element> comparator = new Comparator<Element>() {
+            @Override
+            public int compare(Element a, Element b) {
+                return a.height - b.height;
+            }
+        };
+
+        Queue<Element> minHeap = new PriorityQueue<Element>(comparator);
+
+        // upper line
+        for (int j = 0; j < m; j++) {
+            minHeap.offer(new Element(0, j, heights[0][j]));
+            visited[0][j] = true;
+        }
+
+        // bottom line 
+        for (int j = 0; j < m; j++) {
+            minHeap.offer(new Element(n - 1, j, heights[n - 1][j]));
+            visited[n - 1][j] = true;
+        }
+
+        // left line
+        for (int i = 1; i < n - 1; i++) {
+            minHeap.offer(new Element(i, 0, heights[i][0]));
+            visited[i][0] = true;
+        }
+
+        // right line
+        for (int i = 1; i < n - 1; i++) {
+            minHeap.offer(new Element(i, m - 1, heights[i][m - 1]));
+            visited[i][m - 1] = true;
+        }
+
+        while (!minHeap.isEmpty()) {
+            Element current = minHeap.poll();
+
+            for (int i = 0; i < 4; i++) {
+                int nextX = current.x + DIRECTION_X[i];
+                int nextY = current.y + DIRECTION_Y[i];
+
+                if (nextX < 0 || nextX >= n || nextY < 0 || nextY >= m) {
+                    continue;
+                }
+
+                if (visited[nextX][nextY]) {
+                    continue;
+                }
+
+                visited[nextX][nextY] = true;
+                minHeap.offer(new Element(nextX, nextY, Math.max(current.height, heights[nextX][nextY])));
+                result += Math.max(0, current.height - heights[nextX][nextY]);
+            }
+	
+        }
+
+        return result;
     }
 }
