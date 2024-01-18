@@ -23,16 +23,18 @@ Example 2
     Output:
         0
 
+Link: 
+    LintCode: https://www.lintcode.com/problem/364/
+    LeetCode : https://leetcode.com/problems/trapping-rain-water-ii/
 ***/
+//version-1: minHeap, time complexity is log(2*(m + n)) -> log(m + n)
 class Element {
     // fields
     int x;
     int y;
     int height;
-    // constructors
-    public Element() {
-    };
 
+    // constructors
     public Element(int x, int y, int height) {
         this.x = x;
         this.y = y;
@@ -109,7 +111,7 @@ public class Solution {
                 }
 
                 visited[nextX][nextY] = true;
-                minHeap.offer(new Element(nextX, nextY, Math.max(current.height, heights[nextX][nextY])));
+                minHeap.offer(new Element(nextX, nextY, Math.max(current.height, heights[nextX][nextY]))); // *note* it's important here to guarentee the surrounding bucket to hold the water 
                 result += Math.max(0, current.height - heights[nextX][nextY]);
             }
 	
