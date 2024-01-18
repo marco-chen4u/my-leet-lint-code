@@ -14,7 +14,7 @@ Example 1
     Output:
         14
 
-Example 2:
+Example 2
     Input:
         [[2,2,2,2],
          [2,2,3,4],
