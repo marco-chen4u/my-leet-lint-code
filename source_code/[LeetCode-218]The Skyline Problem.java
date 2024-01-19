@@ -33,7 +33,7 @@ Example 2:
 Link: https://leetcode.com/problems/the-skyline-problem/
 ***/
 
-//version-1: sweep-line + maxHeap
+//version-1: sweep-line + maxHeap, time-complexity: sorting(nlogn) + process-sweep-line(2n*log) -> O(nlogn)
 class Solution {
     public List<List<Integer>> getSkyline(int[][] buildings) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
