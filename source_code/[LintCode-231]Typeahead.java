@@ -68,7 +68,7 @@ public class Typeahead {
 	    return result;
 	}
 	
-	//public methods
+    //public methods
     /*
     * @param dict: A dictionary of words dict
     */
