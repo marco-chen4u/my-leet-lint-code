@@ -20,6 +20,7 @@ Example 2
     Output:
         ["Li Ma","Lisi"]
 ***/
+//version-1: prefix map
 public class Typeahead {
     // fields
     private final String SEPERATOR = " ";
@@ -99,5 +100,124 @@ public class Typeahead {
     private List<String> getAllValues() {
         List<String> result = new ArrayList(prefixMap.values());
         return result;
+    }
+}
+
+// trie
+public class Typeahead {
+
+    private Trie trie;
+
+    /*
+    * @param dict: A dictionary of words dict
+    */
+    public Typeahead(Set<String> dict) {
+        // do intialization if necessary
+        trie = new Trie();
+        for (String word : dict) {
+            int n = word.length();
+            for (int i = 0; i < n; i++) {
+                for (int j = i + 1; j <= n; j++) {
+                    String prefix = word.substring(i, j);
+                        trie.insert(prefix, word);
+                }
+            }
+        }
+    }
+
+    /*
+     * @param str: a string
+     * @return: a list of words
+     */
+    public List<String> search(String str) {
+        // write your code here
+        Set<String> words = trie.search(str);
+        return new ArrayList<>(words);
+    }
+}
+
+class Trie {
+    private TrieNode root;
+
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    // public void insert(String word) {
+    //     if (word == null || word.isEmpty()) {
+    //         return;
+    //     }
+
+    //     TrieNode node = root;
+    //     for (char ch : word.toCharArray()) {
+
+    //         if (node.children[ch] == null) {
+    //             node.children[ch] = new TrieNode();
+    //         }
+
+    //         node = node.children[ch];
+    //         node.wordSet.add(word);
+    //     }
+
+    //     node.isWord = true;
+    // }
+
+    public void insert(String prefix, String word) {
+        if (prefix == null || prefix.isEmpty()) {
+            return;
+        }
+
+        TrieNode node = root;
+        for (char ch : prefix.toCharArray()) {
+
+            if (node.children[ch] == null) {
+                node.children[ch] = new TrieNode();
+            }
+
+            node = node.children[ch];
+            node.wordSet.add(word);
+        }
+    }
+
+    public Set<String> search(String str) {
+        Set<String> words = new HashSet<>();
+
+        TrieNode node = find(str);
+        if (node == null) {
+            return words;
+        }
+
+        words = node.wordSet;
+
+        return words;
+    }
+
+    private TrieNode find(String str) {
+        if (str == null || str.isEmpty()) {
+            return null;
+        }
+
+        TrieNode node = root;
+        for (char ch : str.toCharArray()) {
+            if (node == null || node.children[ch] == null) {
+                return null;
+            }
+
+            node = node.children[ch];
+        }
+
+        return node;
+    }
+}
+
+class TrieNode {
+    TrieNode[] children;
+    boolean isWord;
+    Set<String> wordSet;
+
+    public TrieNode() {
+        children = new TrieNode[256];
+        isWord = false;
+        wordSet = new HashSet<>();
     }
 }
