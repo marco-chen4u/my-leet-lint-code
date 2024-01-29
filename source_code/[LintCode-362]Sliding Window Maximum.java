@@ -241,7 +241,7 @@ public class Solution {
     }
 }
 
-//version-4: quick select
+//version-4: quick select, time-complexity: O(n*k*logk)
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int[] result = new int[0];
