@@ -28,7 +28,13 @@ Example 2:
 Challenge
     O(n) time and O(k) memory
 ***/
-
+/*
+sumary:
+    method-1: quick-select in every k elements, time complexity: O(n*klogk)
+    method-2: max(max_value, every-element-in-k-elements), using looping inside k elements, time compexity: O(n*k)
+    method-3: maxHeap or Balanced-Binary-Search-Tree, time-complexity: (n*logk)
+    method-4: deque, montonic decreasing(max...middle..min), time complexity: O(n)
+*/
 // version-1: segment tree
 public class Solution {    
     /**
