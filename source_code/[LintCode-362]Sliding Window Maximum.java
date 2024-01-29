@@ -138,7 +138,7 @@ class SegmentTreeNode {
     }
 }
 
-// version-2: Deque
+// version-2: Deque, time-complexity: O(n) [on average, every operation in deque is O(1)]
 public class Solution {
     /**
      * @param nums: A list of integers.
