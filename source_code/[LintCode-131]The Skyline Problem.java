@@ -249,30 +249,28 @@ public class Solution {
 
 // helper class
 class OutLinePoint {
-	// fields
-	int position;
-	int height;
-	//constructor
-	public OutLinePoint(int position, int height) {
-		this.position = position;
-		this.height = height;
-	}
-	
-
+    // fields
+    int position;
+    int height;
+    //constructor
+    public OutLinePoint(int position, int height) {
+        this.position = position;
+        this.height = height;
+    }
 }
 
 class Element implements Comparable<Element> {
-	// fields
-	int position;
-	int height;
-	int state;// 1 = start, 0 = end
-	// constructor
-	public Element(int position, int height, int state) {
-		this.position = position;
-		this.height = height;
-		this.state = state;
-	}
-	
+    // fields
+    int position;
+    int height;
+    int state;// 1 = start, 0 = end
+    // constructor
+    public Element(int position, int height, int state) {
+        this.position = position;
+        this.height = height;
+        this.state = state;
+    }
+
     @Override
     public int compareTo(Element other) {
         if (this.position != other.position) {
