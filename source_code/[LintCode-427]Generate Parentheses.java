@@ -39,7 +39,7 @@ public class Solution {
     private void helper(List<String> result, String parentheses, int left, int right) {
         // check corner case
         if (left == n && right == n) {
-            result.add(parentheses.toString();
+            result.add(parentheses.toString());
             return;
         }
 
