@@ -9,9 +9,14 @@ Example 1
 Example 2
     Input: 2
     Output: ["()()", "(())"]
+
+Link: 
+    LintCode: https://www.lintcode.com/problem/427
+    LeetCode: https://leetcode.com/problems/generate-parentheses/
 ***/
 public class Solution {
     // fileds
+    private static int n;
     private final String LEFT_PARENTHESE = "(";
     private final String RIGHT_PARENTHESE = ")";
 	
