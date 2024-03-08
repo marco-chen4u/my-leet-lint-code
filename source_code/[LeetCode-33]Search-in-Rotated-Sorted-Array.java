@@ -169,34 +169,44 @@ class Solution {
 }
 
 //version-3: binary search + pivot with hte last element
-public class Solution {
-    /**
-     * @param nums: a rotated sorted array
-     * @return: the minimum number in the array
-     */
-    public int findMin(int[] nums) {
-        int size = nums.length;
+class Solution {
+    public int search(int[] nums, int target) {
         int left = 0;
-        int right = size - 1;
-        int pivot = nums[right];
+        int right = nums.length - 1;
 
         while (left + 1 < right) {
             int mid = left + (right - left) / 2;
+            int pivot = nums[mid];
 
-            if (nums[mid] >= pivot) {
-                left = mid;
+            // (a) pivot might fall into 1st ascending part
+            if (pivot > nums[right]) {
+                
+                if (target >= nums[left] && target <= pivot) {
+                    right = mid;
+                }
+                else {
+                    left = mid;
+                }
+
+                continue;
             }
-            else {
-                right = mid;
+            // (b) pivot might fall into 2nd ascending part
+            if (pivot <= nums[right]) {
+                if (target >= pivot && target <= nums[right]) {
+                    left = mid;
+                }
+                else {
+                    right = mid;
+                }
             }
         }
 
-        if (nums[left] <= pivot) {
-            return nums[left];
+        if (nums[left] == target) {
+            return left;
         }
 
-        if (nums[right] <= pivot) {
-            return nums[right];
+        if (nums[right] == target) {
+            return right;
         }
 
         return -1;
