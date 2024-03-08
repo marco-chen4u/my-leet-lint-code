@@ -30,33 +30,33 @@ public class Solution {
         if (n <= 0) {
             return result;
         }
-        
+
         int left = 0;
         int right = 0;
         StringBuilder parentheses = new StringBuilder();
-        helper (result, parentheses, left, right);
-        
+        findValidPair(result,  parentheses, left, right);
+
         return result;
     }
-    
+	
     // helper method
-    private void helper(List<String> result, StringBuilder parentheses, int left, int right) {
+    private void findValidPair(List<String> result, StringBuilder parentheses, int left, int right) {
         // check corner case
         if (left == n && right == n) {
             result.add(parentheses.toString());
             return;
         }
-        
+
         if (left < n) {
             parentheses.append(LEFT_PARENTHESE);
-            helper(result, parentheses, left + 1, right);
-            parentheses.deleteCharAt(parentheses.length() - 1);
+            findValidPair(result, parentheses, left + 1, right);
+            parentheses.setLength(parentheses.length() - 1);
         }
-        
-        if (left > right) {
+
+        if (right < n && left > right) {
             parentheses.append(RIGHT_PARENTHESE);
-            helper(result, parentheses, left, right + 1);
-            parentheses.deleteCharAt(parentheses.length() - 1);
+            findValidPair(result, parentheses, left, right + 1);
+            parentheses.setLength(parentheses.length() - 1);
         }
     }
 }
