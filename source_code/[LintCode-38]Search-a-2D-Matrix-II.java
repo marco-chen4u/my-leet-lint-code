@@ -66,3 +66,74 @@ public class Solution {
         return count;
     }
 }
+
+//version-2: binary search
+class Solution {
+
+    private static int m; // row size
+    private static int n; // column size
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        m = matrix.length;
+        n = matrix[0].length;
+
+        int k = Math.min(m, n);
+
+        for (int i = 0; i < k; i++) {
+            if (binarySearch(matrix, i, target, true) || binarySearch(matrix, i, target, false)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // helper method
+    private boolean binarySearch(int[][] matrix, int current, int target, boolean isVertical) {
+        int low = current;
+        int high = isVertical ? n - 1 : m - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (isVertical) {// searching a column
+
+                if (matrix[current][mid] < target) {
+                    low = mid + 1;
+                    continue;
+                }
+                
+                if (matrix[current][mid] > target) {
+                    high = mid - 1;
+                    continue;
+                }
+
+                if (matrix[current][mid] == target) {
+                    return true;
+                }
+
+                continue;
+            }
+
+            if (!isVertical) { // searching a row
+                
+                if (matrix[mid][current] < target) {
+                    low = mid + 1;
+                    continue;
+                }
+
+                if (matrix[mid][current] > target) {
+                    high = mid - 1;
+                    continue;
+                }
+
+                if (matrix[mid][current] == target) {
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
+    }
+}
