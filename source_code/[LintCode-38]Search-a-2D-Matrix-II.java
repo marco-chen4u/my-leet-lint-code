@@ -89,14 +89,14 @@ class Solution {
     }
 
     // helper method
-    private boolean binarySearch(int[][] matrix, int current, int target, boolean isVertical) {
+    private boolean binarySearch(int[][] matrix, int current, int target, boolean isSearchByColumns) {
         int low = current;
-        int high = isVertical ? n - 1 : m - 1;
+        int high = isSearchByColumns ? n - 1 : m - 1;
 
         while (low <= high) {
             int mid = low + (high - low) / 2;
 
-            if (isVertical) {// searching a column
+            if (isSearchByColumns) {// searching a column
 
                 if (matrix[current][mid] < target) {
                     low = mid + 1;
@@ -115,7 +115,7 @@ class Solution {
                 continue;
             }
 
-            if (!isVertical) { // searching a row
+            if (!isSearchByColumns) { // searching a row
                 
                 if (matrix[mid][current] < target) {
                     low = mid + 1;
